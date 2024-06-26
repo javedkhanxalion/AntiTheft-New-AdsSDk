@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainBg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/sliderImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/intro_1"
+        app:layout_constraintBottom_toTopOf="@+id/sliderHeading"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sliderHeading"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_20sdp"
+        app:layout_constraintBottom_toTopOf="@+id/sliderDesc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sliderImage" />
+
+    <TextView
+        android:id="@+id/skipApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_20sdp"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/_10sdp"
+        android:singleLine="true"
+        android:text="@string/skip"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintEnd_toEndOf="@id/sliderImage"
+        app:layout_constraintTop_toTopOf="@id/sliderImage" />
+
+    <TextView
+        android:id="@+id/sliderDesc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:gravity="center_horizontal"
+        android:maxLines="2"
+        android:text="@string/app_name"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12sdp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/skipAppHide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sliderHeading"
+        app:layout_constraintWidth_percent="0.75" />
+
+    <TextView
+        android:id="@+id/nextApp"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:background="@drawable/rect_btn_intro_new"
+        android:gravity="center"
+        android:text="@string/next"
+        android:textColor="#0904FF"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintBottom_toBottomOf="@id/skipAppHide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/skipAppHide"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+        android:id="@+id/worm_dots_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_20sdp"
+        app:dotsColor="@color/grey600"
+        app:dotsCornerRadius="8dp"
+        app:dotsSize="@dimen/_5sdp"
+        app:dotsSpacing="2dp"
+        app:dotsStrokeWidth="@dimen/_3sdp"
+        app:dotsWidthFactor="2.5"
+        app:layout_constraintBottom_toBottomOf="@id/skipAppHide"
+        app:layout_constraintEnd_toEndOf="@+id/skipAppHide"
+        app:layout_constraintStart_toStartOf="@id/skipAppHide"
+        app:layout_constraintTop_toTopOf="@+id/skipAppHide"
+        app:progressMode="true"
+        app:selectedDotColor="#0029FF" />
+
+    <TextView
+        android:id="@+id/skipAppHide"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginVertical="@dimen/_10sdp"
+        android:background="@drawable/rect_btn_intro"
+        android:gravity="center"
+        android:text="@string/skip"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14sdp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/main_ads_native"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sliderDesc"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    <com.bmik.android.sdk.widgets.IkmWidgetAdView
+        android:id="@+id/main_ads_native"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        app:ikwad_preview_layout="@layout/shimmer_loading_native"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
