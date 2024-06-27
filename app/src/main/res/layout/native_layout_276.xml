@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="190dp"
     android:padding="@dimen/_5sdp"
     android:layout_margin="@dimen/_5sdp"
     android:background="@drawable/ads_rect_new"
@@ -12,7 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="276dp"
+        android:layout_height="270dp"
         android:layout_marginHorizontal="@dimen/ads_padding"
         android:layout_marginVertical="@dimen/ads_padding">
 
@@ -37,7 +37,7 @@
                 android:id="@+id/ads"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:background="@drawable/bg_text_ads_normal"
                 android:gravity="center"
                 android:paddingHorizontal="2dp"
@@ -83,7 +83,7 @@
         <com.bmik.android.sdk.widgets.IkmWidgetMediaView
             android:id="@+id/custom_media"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/sdk_native_height"
+            android:layout_height="0dp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="4dp"

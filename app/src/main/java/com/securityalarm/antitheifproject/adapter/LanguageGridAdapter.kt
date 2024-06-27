@@ -72,7 +72,7 @@ class LanguageGridAdapter(private val items: List<LanguageAppModel>,
         } else {
             val adHolder = holder as AdViewHolder
             val adLayout = LayoutInflater.from(context).inflate(
-                getNativeLayout(languageinapp_scroll,holder.bindingAds?.nativeExitAd!!),
+                getNativeLayout(languageinapp_scroll,holder.bindingAds?.nativeExitAd!!,context?:return),
                 null, false
             ) as? IkmWidgetAdLayout
             adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)

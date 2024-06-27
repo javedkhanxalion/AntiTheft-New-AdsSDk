@@ -106,7 +106,7 @@
 //        adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
 //        adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
 //        _binding?.mainAdsNative?.loadAd(
-//            activity ?: return, R.layout.shimmer_loading_native,
+//            activity ?: return,  R.layout.shimmer_loding_native,
 //            adLayout!!, "onboarding1_bottom",
 //            "onboarding1_bottom", object : CustomSDKAdsListenerAdapter() {
 //
@@ -134,7 +134,7 @@
 //        adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
 //        adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
 //        _binding?.mainAdsNative?.loadAd(
-//            activity ?: return, R.layout.shimmer_loading_native,
+//            activity ?: return,  R.layout.shimmer_loding_native,
 //            adLayout!!, "onboarding2_bottom",
 //            "onboarding2_bottom", object : CustomSDKAdsListenerAdapter() {
 //                override fun onAdsLoaded() {
@@ -160,7 +160,7 @@
 //        adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
 //        adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
 //        _binding?.mainAdsNative?.loadAd(
-//            activity ?: return, R.layout.shimmer_loading_native,
+//            activity ?: return,  R.layout.shimmer_loding_native,
 //            adLayout!!, "onboarding3_bottom",
 //            "onboarding3_bottom", object : CustomSDKAdsListenerAdapter() {
 //

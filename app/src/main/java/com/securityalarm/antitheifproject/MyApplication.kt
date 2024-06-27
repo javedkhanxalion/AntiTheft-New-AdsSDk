@@ -3,6 +3,7 @@ package com.securityalarm.antitheifproject
 import com.bmik.android.sdk.IkmSdkController
 import com.bmik.android.sdk.SDKBaseApplication
 import com.bmik.android.sdk.listener.keep.SDKIAPProductIDProvider
+import com.securityalarm.antitheifproject.utilities.registerAppLifecycleCallbacks
 
 class MyApplication : SDKBaseApplication() {
     override fun configIAPData(): SDKIAPProductIDProvider {
@@ -54,5 +55,6 @@ class MyApplication : SDKBaseApplication() {
         IkmSdkController.addActivityEnableShowResumeAd(MainActivity::class.java)
         IkmSdkController.setEnableShowResumeAds(true)
         IkmSdkController.setEnableShowLoadingResumeAds(false)
+        registerAppLifecycleCallbacks()
     }
 }

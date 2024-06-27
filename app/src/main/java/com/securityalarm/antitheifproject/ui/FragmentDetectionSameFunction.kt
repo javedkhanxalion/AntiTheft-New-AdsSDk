@@ -2,6 +2,7 @@ package com.securityalarm.antitheifproject.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
@@ -9,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentDetailModuleBinding
 import com.bmik.android.sdk.IkmSdkController
+import com.bmik.android.sdk.SDKBaseController
 import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
 import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
 import com.securityalarm.antitheifproject.helper_class.Constants.isServiceRunning
@@ -44,6 +46,18 @@ class FragmentDetectionSameFunction :
         arguments?.let {
             model = it.getParcelable(ANTI_TITLE) ?: return@let
         }
+        SDKBaseController.getInstance().preloadNativeAd(
+            activity ?: return, model?.nativeSoundId?:return,
+            model?.nativeSoundId?:return, object : CustomSDKAdsListenerAdapter() {
+                override fun onAdsLoaded() {
+                    super.onAdsLoaded()
+                    Log.d("check_ads", "onAdsLoaded: Load Ad")
+                }
+                override fun onAdsLoadFail() {
+                    super.onAdsLoadFail()
+                }
+            }
+        )
         _binding?.topLay?.title?.text = model?.maniTextTitle
         _binding?.textView3?.text = model?.bottomText
         sharedPrefUtils = DbHelper(context ?: return)
@@ -287,7 +301,7 @@ class FragmentDetectionSameFunction :
 
         private fun loadNativeGrid() {
             val adLayout = LayoutInflater.from(context).inflate(
-                getNativeLayout(model?.nativeLayout?:return,_binding?.gridLayout?.nativeExitAd!!),
+                getNativeLayout(model?.nativeLayout?:return,_binding?.gridLayout?.nativeExitAd!!,context?:return),
                 null, false
             ) as? IkmWidgetAdLayout
             adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -296,7 +310,7 @@ class FragmentDetectionSameFunction :
             adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
             adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
             _binding?.gridLayout?.nativeExitAd?.loadAd(
-                activity ?: return, R.layout.shimmer_loading_native,
+                activity ?: return,  R.layout.shimmer_loding_native,
                 adLayout!!, model?.nativeId?:return,
                 model?.nativeId?:return, object : CustomSDKAdsListenerAdapter() {
 
@@ -311,7 +325,7 @@ class FragmentDetectionSameFunction :
 
         private fun loadNativeList() {
             val adLayout = LayoutInflater.from(context).inflate(
-                getNativeLayout(model?.nativeLayout?:return,_binding?.linearlayout?.nativeExitAd!!),
+                getNativeLayout(model?.nativeLayout?:return,_binding?.linearlayout?.nativeExitAd!!,context?:return),
                 null, false
             ) as? IkmWidgetAdLayout
             adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -320,7 +334,7 @@ class FragmentDetectionSameFunction :
             adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
             adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
             _binding?.linearlayout?.nativeExitAd?.loadAd(
-                    activity ?: return, R.layout.shimmer_loading_native,
+                    activity ?: return,  R.layout.shimmer_loding_native,
                     adLayout!!, model?.nativeId?:return,
                     model?.nativeId?:return, object : CustomSDKAdsListenerAdapter() {
 

@@ -6,6 +6,7 @@ import android.content.ComponentName
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,6 +16,7 @@ import androidx.exifinterface.media.ExifInterface
 import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentInturderDetectionDetailBinding
+import com.bmik.android.sdk.SDKBaseController
 import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
 import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
 import com.securityalarm.antitheifproject.Admin
@@ -62,6 +64,18 @@ class FragmentInturderDetectionDetail :
             }
         }
         loadBanner()
+        SDKBaseController.getInstance().preloadNativeAd(
+            activity ?: return, "intruder_native",
+            "intruder_native", object : CustomSDKAdsListenerAdapter() {
+                override fun onAdsLoaded() {
+                    super.onAdsLoaded()
+                    Log.d("check_ads", "onAdsLoaded: Load Ad")
+                }
+                override fun onAdsLoadFail() {
+                    super.onAdsLoadFail()
+                }
+            }
+        )
         dbHelper?.getBooleanData(context ?: return, IS_GRID, true)?.let {
             isGridLayout = it
             loadLayoutDirection(it)
@@ -375,7 +389,7 @@ class FragmentInturderDetectionDetail :
 
     private fun loadNativeGrid() {
         val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(intruderimage_bottom,_binding?.gridLayout?.nativeExitAd!!),
+            getNativeLayout(intruderimage_bottom,_binding?.gridLayout?.nativeExitAd!!,context?:return),
             null, false
         ) as? IkmWidgetAdLayout
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -384,7 +398,7 @@ class FragmentInturderDetectionDetail :
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.gridLayout?.nativeExitAd?.loadAd(
-            activity ?: return, R.layout.shimmer_loading_native,
+            activity ?: return,  R.layout.shimmer_loding_native,
             adLayout!!, "intruder_native",
             "intruder_native", object : CustomSDKAdsListenerAdapter() {
 
@@ -399,7 +413,7 @@ class FragmentInturderDetectionDetail :
 
     private fun loadNativeList() {
         val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(intruderimage_bottom,_binding?.linearlayout?.nativeExitAd!!),
+            getNativeLayout(intruderimage_bottom,_binding?.linearlayout?.nativeExitAd!!,context?:return),
             null, false
         ) as? IkmWidgetAdLayout
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -408,7 +422,7 @@ class FragmentInturderDetectionDetail :
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.linearlayout?.nativeExitAd?.loadAd(
-            activity ?: return, R.layout.shimmer_loading_native,
+            activity ?: return,  R.layout.shimmer_loding_native,
             adLayout!!, "intruder_native",
             "intruder_native", object : CustomSDKAdsListenerAdapter() {
 

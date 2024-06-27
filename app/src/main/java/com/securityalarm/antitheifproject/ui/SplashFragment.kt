@@ -101,10 +101,8 @@ class SplashFragment :
         }
 
         inter_frequency_count = 0
-
         loadRemote()
         loadBanner()
-        initView()
         if (dbHelper?.getBooleanData(
                 requireContext(),
                 IS_FIRST,
@@ -114,7 +112,6 @@ class SplashFragment :
             SDKBaseController.getInstance().preloadNativeAd(
                 activity ?: return, "language_bottom",
                 "language_bottom", object : CustomSDKAdsListenerAdapter() {
-
                     override fun onAdsLoaded() {
                         super.onAdsLoaded()
                         Log.d("check_ads", "onAdsLoaded: Load Ad")
@@ -174,22 +171,19 @@ class SplashFragment :
         mOpenMainAction = {
             getIntentMove()
         }
-
         timerWaitAds =
             SDKBaseController.getInstance().showFirstOpenAppAds(activity,
                 object : CommonAdsListenerAdapter() {
                     override fun onAdsShowed(priority: Int) {
                         super.onAdsShowed(priority)
-
+                        getIntentMove()
                     }
 
                     override fun onAdsDismiss() {
-                        getIntentMove()
                     }
 
                     override fun onAdsShowFail(errorCode: Int) {
                         getIntentMove()
-
                     }
 
                     override fun onAdsShowTimeout() {
@@ -199,7 +193,6 @@ class SplashFragment :
                     }
 
                 })
-
     }
     private fun getIntentMove() {
         when (sessionOpenlanguage) {
@@ -339,12 +332,10 @@ class SplashFragment :
                 Log.d("check_language", "onSuccess: $test_ui_native")
                 Log.d("check_language", "onSuccess: $language_first_r_scroll")
             }
-
             override fun onFail() {
-
             }
-
         })
+        initView()
     }
     private fun parseJsonWithGson(jsonString: String) {
         if (jsonString != null && jsonString.isNotEmpty()) {

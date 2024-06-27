@@ -34,7 +34,7 @@ class BottomSheetFragment(val activity: Activity) : BottomSheetDialogFragment() 
 
     fun loadNative() {
         val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(exitdialog_bottom, view?.findViewById<com.bmik.android.sdk.widgets.IkmWidgetAdView>(R.id.nativeExitAd)!!),
+            getNativeLayout(exitdialog_bottom, view?.findViewById<com.bmik.android.sdk.widgets.IkmWidgetAdView>(R.id.nativeExitAd)!!,context?:return),
             null, false
         ) as? IkmWidgetAdLayout
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -43,7 +43,7 @@ class BottomSheetFragment(val activity: Activity) : BottomSheetDialogFragment() 
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         view?.findViewById<com.bmik.android.sdk.widgets.IkmWidgetAdView>(R.id.nativeExitAd)?.loadAd(
-            context, R.layout.shimmer_loading_native,
+            context,  R.layout.shimmer_loding_native,
             adLayout!!, "exitdialog_bottom",
             "exitdialog_bottom", object : CustomSDKAdsListenerAdapter() {
 

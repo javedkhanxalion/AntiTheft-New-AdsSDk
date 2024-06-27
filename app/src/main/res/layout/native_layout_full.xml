@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/menuBgColor"
-    app:layout_anchorGravity="bottom"
-    >
+    app:layout_anchorGravity="bottom">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainLayout"
@@ -21,7 +20,7 @@
             android:contentDescription="@string/app_name"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@id/call_to_action"
-            app:layout_constraintStart_toStartOf="@id/media" />
+            app:layout_constraintStart_toStartOf="@id/mediaView" />
 
         <TextView
             android:id="@+id/ad"
@@ -76,16 +75,27 @@
             app:layout_constraintStart_toStartOf="@id/ad"
             app:layout_constraintTop_toBottomOf="@id/headline" />
 
-        <com.bmik.android.sdk.widgets.IkmWidgetMediaView
-            android:id="@+id/media"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mediaView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:layout_marginVertical="@dimen/_5sdp"
-            app:layout_constraintBottom_toTopOf="@id/ad"
+            android:layout_marginVertical="@dimen/_200sdp"
+            app:layout_constraintBottom_toTopOf="@+id/headline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.bmik.android.sdk.widgets.IkmWidgetMediaView
+                android:id="@+id/media"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/call_to_action"

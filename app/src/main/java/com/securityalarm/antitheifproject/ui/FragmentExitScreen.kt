@@ -33,7 +33,7 @@ class FragmentExitScreen :
     private fun loadNative() {
 
         val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(thankyou_bottom,_binding?.nativeExitAd!!),
+            getNativeLayout(thankyou_bottom,_binding?.nativeExitAd!!,context?:return),
             null, false
         ) as? IkmWidgetAdLayout
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -42,7 +42,7 @@ class FragmentExitScreen :
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.nativeExitAd?.loadAd(
-            context, R.layout.shimmer_loading_native,
+            context,  R.layout.shimmer_loding_native,
             adLayout!!, "thankyou_bottom",
             "thankyou_bottom", object : CustomSDKAdsListenerAdapter() {
 

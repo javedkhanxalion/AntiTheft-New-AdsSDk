@@ -58,7 +58,6 @@ class OnBordScreenNewScreen :
         sharedPrefUtils = DbHelper(context ?: return)
 
         setupBackPressedCallback {
-            if(currentpage==3) {
                 firebaseAnalytics(
                     "intro_fragment_move_to_next",
                     "intro_fragment_move_to_next -->  Click"
@@ -67,9 +66,6 @@ class OnBordScreenNewScreen :
                 findNavController().navigate(
                     R.id.myMainMenuFragment
                 )
-            }else{
-                _binding?.viewPager?.setCurrentItem(3, true)
-            }
         }
 
     }
@@ -102,7 +98,15 @@ class OnBordScreenNewScreen :
     }
     private fun onNextSkipClicked() {
         Log.d("check_click", "onViewCreated: 2")
-        _binding?.viewPager?.setCurrentItem(3, true)
+//        _binding?.viewPager?.setCurrentItem(3, true)
+        firebaseAnalytics(
+            "intro_fragment_move_to_next",
+            "intro_fragment_move_to_next -->  Click"
+        )
+        sharedPrefUtils?.saveData(context ?: requireContext(), IS_INTRO, true)
+        findNavController().navigate(
+            R.id.myMainMenuFragment
+        )
     }
 
     override fun onPause() {

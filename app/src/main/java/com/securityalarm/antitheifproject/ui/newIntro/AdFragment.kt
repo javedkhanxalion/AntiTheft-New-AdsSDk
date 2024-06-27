@@ -41,12 +41,10 @@ class AdFragment : Fragment() {
         // Apply constraints to the view
         val set = ConstraintSet().apply {
             clone(constraintLayout)
-
             connect(myView.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
             connect(myView.id, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
             connect(myView.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
             connect(myView.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
-
             constrainWidth(myView.id, ConstraintSet.MATCH_CONSTRAINT)
             constrainHeight(myView.id, ConstraintSet.MATCH_CONSTRAINT)
         }
@@ -74,7 +72,7 @@ class AdFragment : Fragment() {
         adLayout?.callToActionView = adLayout?.findViewById(R.id.call_to_action)
         adLayout?.mediaView = adLayout?.findViewById(R.id.media)
         _binding?.mainAdsNative?.loadAd(
-            activity ?: return, R.layout.shimmer_loading_native,
+            activity ?: return,  R.layout.shimmer_loding_native,
             adLayout!!, "onboarding_fullnative",
             "onboarding_fullnative", object : CustomSDKAdsListenerAdapter() {
 

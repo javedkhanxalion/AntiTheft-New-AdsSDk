@@ -139,7 +139,7 @@ class ImageFragment : Fragment() {
 
     fun loadNewNative1() {
         val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(onboarding1_bottom,_binding?.mainAdsNative!!),
+            getNativeLayout(onboarding1_bottom,_binding?.mainAdsNative!!,context?:return),
             null, false
         ) as? IkmWidgetAdLayout
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -148,7 +148,7 @@ class ImageFragment : Fragment() {
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.mainAdsNative?.loadAd(
-            activity ?: return, R.layout.shimmer_loading_native,
+            activity ?: return,  R.layout.shimmer_loding_native,
             adLayout!!, "onboarding1_bottom",
             "onboarding1_bottom", object : CustomSDKAdsListenerAdapter() {
 
@@ -168,7 +168,7 @@ class ImageFragment : Fragment() {
 
     fun loadNewNative2() {
         val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(onboarding2_bottom,_binding?.mainAdsNative!!),
+            getNativeLayout(onboarding2_bottom,_binding?.mainAdsNative!!,context?:return),
             null, false
         ) as? IkmWidgetAdLayout
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -177,7 +177,7 @@ class ImageFragment : Fragment() {
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.mainAdsNative?.loadAd(
-            activity ?: return, R.layout.shimmer_loading_native,
+            activity ?: return,  R.layout.shimmer_loding_native,
             adLayout!!, "onboarding2_bottom",
             "onboarding2_bottom", object : CustomSDKAdsListenerAdapter() {
                 override fun onAdsLoaded() {
@@ -196,7 +196,7 @@ class ImageFragment : Fragment() {
 
     fun loadNewNative3() {
         val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(onboarding3_bottom,_binding?.mainAdsNative!!),
+            getNativeLayout(onboarding3_bottom,_binding?.mainAdsNative!!,context?:return),
             null, false
         ) as? IkmWidgetAdLayout
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -205,7 +205,7 @@ class ImageFragment : Fragment() {
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.mainAdsNative?.loadAd(
-            activity ?: return, R.layout.shimmer_loading_native,
+            activity ?: return,  R.layout.shimmer_loding_native,
             adLayout!!, "onboarding3_bottom",
             "onboarding3_bottom", object : CustomSDKAdsListenerAdapter() {
 

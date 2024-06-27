@@ -92,7 +92,7 @@ class MainMenuGridAdapter(
 
         fun bind(){
             val adLayout = LayoutInflater.from(context).inflate(
-                getNativeLayout(home_native,binding.nativeExitAd!!),
+                getNativeLayout(home_native,binding.nativeExitAd!!,context?:return),
                 null, false
             ) as? IkmWidgetAdLayout
             adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -101,7 +101,7 @@ class MainMenuGridAdapter(
             adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
             adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
             binding.nativeExitAd.loadAd(
-                context, R.layout.shimmer_loading_native,
+                context,  R.layout.shimmer_loding_native,
                 adLayout!!, "intruder_native",
                 "intruder_native", object : CustomSDKAdsListenerAdapter() {
 

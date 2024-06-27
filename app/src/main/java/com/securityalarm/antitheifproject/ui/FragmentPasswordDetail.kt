@@ -5,6 +5,7 @@ import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentDetailModuleBinding
 import com.bmik.android.sdk.IkmSdkController
+import com.bmik.android.sdk.SDKBaseController
 import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
 import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
 import com.securityalarm.antitheifproject.Admin
@@ -50,6 +52,18 @@ class FragmentPasswordDetail :
         arguments?.let {
             model = it.getParcelable(ANTI_TITLE) ?: return
         }
+        SDKBaseController.getInstance().preloadNativeAd(
+            activity ?: return, model?.nativeSoundId?:return,
+            model?.nativeSoundId?:return, object : CustomSDKAdsListenerAdapter() {
+                override fun onAdsLoaded() {
+                    super.onAdsLoaded()
+                    Log.d("check_ads", "onAdsLoaded: Load Ad")
+                }
+                override fun onAdsLoadFail() {
+                    super.onAdsLoadFail()
+                }
+            }
+        )
         _binding?.textView3?.text = model?.bottomText
         mDevicePolicyManager =
             context?.getSystemService(AppCompatActivity.DEVICE_POLICY_SERVICE) as DevicePolicyManager
@@ -312,7 +326,7 @@ class FragmentPasswordDetail :
 
         private fun loadNativeGrid() {
             val adLayout = LayoutInflater.from(context).inflate(
-                getNativeLayout(model?.nativeLayout?:return,_binding?.gridLayout?.nativeExitAd!!),
+                getNativeLayout(model?.nativeLayout?:return,_binding?.gridLayout?.nativeExitAd!!,context?:return),
                 null, false
             ) as? IkmWidgetAdLayout
             adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -321,7 +335,7 @@ class FragmentPasswordDetail :
             adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
             adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
             _binding?.gridLayout?.nativeExitAd?.loadAd(
-                activity ?: return, R.layout.shimmer_loading_native,
+                activity ?: return,  R.layout.shimmer_loding_native,
                 adLayout!!, "password_native",
                 "password_native", object : CustomSDKAdsListenerAdapter() {
 
@@ -336,7 +350,7 @@ class FragmentPasswordDetail :
 
         private fun loadNativeList() {
             val adLayout = LayoutInflater.from(context).inflate(
-                getNativeLayout(model?.nativeLayout?:return,_binding?.linearlayout?.nativeExitAd!!),
+                getNativeLayout(model?.nativeLayout?:return,_binding?.linearlayout?.nativeExitAd!!,context?:return),
                 null, false
             ) as? IkmWidgetAdLayout
             adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -345,7 +359,7 @@ class FragmentPasswordDetail :
             adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
             adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
             _binding?.linearlayout?.nativeExitAd?.loadAd(
-                activity ?: return, R.layout.shimmer_loading_native,
+                activity ?: return,  R.layout.shimmer_loding_native,
                 adLayout!!, "password_native",
                 "password_native", object : CustomSDKAdsListenerAdapter() {
 

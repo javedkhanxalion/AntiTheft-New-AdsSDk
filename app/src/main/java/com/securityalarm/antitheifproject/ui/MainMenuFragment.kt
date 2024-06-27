@@ -103,15 +103,6 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                 loadLayoutDirection(!(isGridLayout ?: return@clickWithThrottle))
             }
             mainLayout.topLay.settingBtn.clickWithThrottle {
-//                if (isNetworkAvailable(context)) {
-//                firebaseAnalytics("purchase_dialog_continue_btn", "makingPurchase")
-//                findNavController().navigate(
-//                    R.id.FragmentInAppScreen,
-//                    bundleOf("Is_From_Splash" to true)
-//                )
-//                } else {
-//                    FunctionClass.toast(requireActivity(), getString(R.string.no_internet))
-//                }
             }
             navView.rateUsView.clickWithThrottle {
                 showRatingDialog(onPositiveButtonClick = { it, _dialog ->
@@ -133,13 +124,6 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                 requireContext().privacyPolicy()
                 drawerLayout.closeDrawer(GravityCompat.START)
             }
-            /*navView.viewTop.clickWithThrottle {
-                findNavController().navigate(
-                    R.id.FragmentInAppScreen,
-                    bundleOf("Is_From_Splash" to false)
-                )
-                drawerLayout.closeDrawer(GravityCompat.START)
-            }*/
             navView.moreAppView.clickWithThrottle {
                 requireContext().moreApp()
                 drawerLayout.closeDrawer(GravityCompat.START)
@@ -192,11 +176,13 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                 }
 
                 override fun onDrawerOpened(view: View) {
-                    _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
+                    _binding?.mainLayout?.recycler?.visibility = View.INVISIBLE
+                    _binding?.mainLayout?.bannerAds?.visibility = View.INVISIBLE
                 }
 
                 override fun onDrawerClosed(view: View) {
-                    _binding?.mainLayout?.hideAd?.visibility = View.INVISIBLE
+                    _binding?.mainLayout?.recycler?.visibility = View.VISIBLE
+                    _binding?.mainLayout?.bannerAds?.visibility = View.VISIBLE
                 }
 
                 override fun onDrawerStateChanged(i: Int) {

@@ -211,7 +211,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
     private fun loadNative() {
         _binding?.mainAdsNative?.visibility = View.VISIBLE
         val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(language_bottom,_binding?.mainAdsNative!!),
+            getNativeLayout(language_bottom,_binding?.mainAdsNative!!,context?:return),
             null, false
         ) as? IkmWidgetAdLayout
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -220,7 +220,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.mainAdsNative?.loadAd(
-            activity ?: return, R.layout.shimmer_loading_native,
+            activity ?: return,  R.layout.shimmer_loding_native,
             adLayout!!, "language_bottom",
             "language_bottom", object : CustomSDKAdsListenerAdapter() {
 

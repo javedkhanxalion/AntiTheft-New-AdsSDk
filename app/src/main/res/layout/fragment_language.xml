@@ -62,17 +62,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/editText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
-        android:visibility="gone"
-        app:iconifiedByDefault="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topConstraint" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/conversation_detail"
         android:layout_width="0dp"
@@ -82,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:spanCount="2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/topConstraint"
         tools:listitem="@layout/language_app_item"
         />
 
@@ -99,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_5sdp"
         android:visibility="gone"
-        app:ikwad_preview_layout="@layout/shimmer_loading_native"
+        app:ikwad_preview_layout="@layout/shimmer_loding_native"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

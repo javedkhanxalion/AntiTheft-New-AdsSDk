@@ -140,7 +140,7 @@ class FragmentShowIntruder :
 
     private fun loadNative() {
         val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(1,_binding?.nativeExitAd!!),
+            getNativeLayout(1,_binding?.nativeExitAd!!,context?:return),
             null, false
         ) as? IkmWidgetAdLayout
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -149,7 +149,7 @@ class FragmentShowIntruder :
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.nativeExitAd?.loadAd(
-            activity ?: return, R.layout.shimmer_loading_native,
+            activity ?: return,  R.layout.shimmer_loding_native,
             adLayout!!, "intruderimage_bottom",
             "intruderimage_bottom", object : CustomSDKAdsListenerAdapter() {
 

@@ -2,6 +2,7 @@ package com.securityalarm.antitheifproject.utilities
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Application
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -17,12 +18,13 @@ import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.provider.Settings
+import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowInsetsController
 import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.Switch
@@ -37,7 +39,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
+import com.bmik.android.sdk.widgets.IkmWidgetAdView
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.securityalarm.antitheifproject.helper_class.Constants.Battery_Detection
 import com.securityalarm.antitheifproject.helper_class.Constants.Battery_Detection_Check
 import com.securityalarm.antitheifproject.helper_class.Constants.Battery_Detection_Flash
@@ -78,10 +85,6 @@ import com.securityalarm.antitheifproject.model.SoundModel
 import com.securityalarm.antitheifproject.service.SystemEventsService
 import com.securityalarm.antitheifproject.ui.FragmentDetectionSameFunction
 import com.securityalarm.antitheifproject.ui.MainMenuFragment
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
 import java.util.Locale
 
 var counter = 0
@@ -1093,41 +1096,50 @@ fun openMobileDataSettings(context: Context) {
     context.startActivity(intent)
 }
 
-fun getNativeLayout(position: Int,layout : FrameLayout): Int {
+fun getNativeLayout(position: Int,layout : IkmWidgetAdView,context :Context): Int {
+    Log.d("check_layout", "getNativeLayout: $position")
     when (position) {
         1 -> {
-            layout.minimumHeight = 80
+            layout.minimumHeight = convertDpToPixel(80F,context).toInt()
             return R.layout.layout_native_80
         }
 
         2 -> {
-            layout.minimumHeight = 140
+            layout.minimumHeight = convertDpToPixel(140F,context).toInt()
             return R.layout.layout_native_140
         }
 
         3 -> {
-            layout.minimumHeight = 176
+            layout.minimumHeight = convertDpToPixel(176F,context).toInt()
             return R.layout.layout_native_176
         }
 
         4 -> {
-            layout.minimumHeight = 190
+            layout.minimumHeight = convertDpToPixel(190F,context).toInt()
             return R.layout.native_layout_190
         }
 
         5 -> {
-            layout.minimumHeight = 276
+            layout.minimumHeight = convertDpToPixel(276F,context).toInt()
             return R.layout.native_layout_276
         }
 
         6 -> {
-            layout.minimumHeight = 260
+            layout.minimumHeight = convertDpToPixel(260F,context).toInt()
             return R.layout.layout_native_260
         }
     }
+    layout.minimumHeight = convertDpToPixel(80F,context).toInt()
     return R.layout.layout_native_80
 }
 
+private fun convertDpToPixel(valueDp: Float, context: Context): Float {
+    val displayMetrics = context.resources.displayMetrics
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP, valueDp,
+        displayMetrics
+    )
+}
 fun getBannerId(position: String): String {
     when (position) {
         Pocket_Detection -> {
@@ -1158,11 +1170,39 @@ fun getBannerId(position: String): String {
             return "battery_banner"
         }
     }
-    return Pocket_Detection
+    return "pocket_banner"
 }
 
 fun Fragment.restartApp() {
     val intent = context?.packageManager?.getLaunchIntentForPackage(context?.packageName?:return)
     intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
     context?.startActivity(intent)
+}
+
+private var isAppInBackground = true
+
+fun Context.isAppInBackground(): Boolean {
+    return isAppInBackground
+}
+
+fun Application.registerAppLifecycleCallbacks() {
+    registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
+
+        override fun onActivityStarted(activity: Activity) {}
+
+        override fun onActivityResumed(activity: Activity) {
+            isAppInBackground = false
+        }
+
+        override fun onActivityPaused(activity: Activity) {
+            isAppInBackground = true
+        }
+
+        override fun onActivityStopped(activity: Activity) {}
+
+        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+
+        override fun onActivityDestroyed(activity: Activity) {}
+    })
 }

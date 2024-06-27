@@ -1,6 +1,7 @@
 package com.securityalarm.antitheifproject.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.navigation.fragment.findNavController
@@ -11,6 +12,7 @@ import com.securityalarm.antitheifproject.adapter.SoundSelectGridAdapter
 import com.securityalarm.antitheifproject.adapter.SoundSelectLinearAdapter
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentSoundSelectionBinding
 import com.bmik.android.sdk.IkmSdkController
+import com.bmik.android.sdk.SDKBaseController
 import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
 import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
 import com.securityalarm.antitheifproject.helper_class.DbHelper
@@ -44,6 +46,19 @@ class FragmentSoundSelection :
         arguments?.let {
             position = it.getParcelable(ANTI_TITLE) ?: return@let
         }
+        SDKBaseController.getInstance().preloadNativeAd(
+            activity ?: return, position?.nativeId?:return,
+            position?.nativeId?:return, object : CustomSDKAdsListenerAdapter() {
+                override fun onAdsLoaded() {
+                    super.onAdsLoaded()
+                    Log.d("check_ads", "onAdsLoaded: Load Ad")
+                }
+                override fun onAdsLoadFail() {
+                    super.onAdsLoadFail()
+                    Log.d("check_ads", "onAdsLoadFail: Load No")
+                }
+            }
+        )
         sharedPrefUtils = DbHelper(context ?: return)
         sharedPrefUtils?.getBooleanData(context ?: return, IS_GRID, true)?.let {
             loadLayoutDirection(it)
@@ -105,7 +120,7 @@ class FragmentSoundSelection :
     private fun loadNative() {
 
         val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(position?.nativeSoundLayout?:return,_binding?.nativeExitAd!!),
+            getNativeLayout(position?.nativeSoundLayout?:return,_binding?.nativeExitAd!!,context?:return),
             null, false
         ) as? IkmWidgetAdLayout
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -114,7 +129,7 @@ class FragmentSoundSelection :
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.nativeExitAd?.loadAd(
-            activity ?: return, R.layout.shimmer_loading_native,
+            activity ?: return,  R.layout.shimmer_loding_native,
             adLayout!!, position?.nativeSoundId?:return,
             position?.nativeSoundId?:return, object : CustomSDKAdsListenerAdapter() {
 
@@ -126,8 +141,6 @@ class FragmentSoundSelection :
         )
 
     }
-
-
 
     override fun onPause() {
         super.onPause()
