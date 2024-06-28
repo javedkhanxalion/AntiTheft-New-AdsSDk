@@ -30,6 +30,7 @@ import com.securityalarm.antitheifproject.utilities.IS_GRID
 import com.securityalarm.antitheifproject.utilities.autoServiceFunctionIntruder
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
+import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
 import com.securityalarm.antitheifproject.utilities.intruderimage_bottom
 import com.securityalarm.antitheifproject.utilities.loadImage
 import com.securityalarm.antitheifproject.utilities.requestCameraPermission
@@ -398,7 +399,7 @@ class FragmentInturderDetectionDetail :
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.gridLayout?.nativeExitAd?.loadAd(
-            activity ?: return,  R.layout.shimmer_loding_native,
+            activity ?: return,  getNativeLayoutShimmer(intruderimage_bottom),
             adLayout!!, "intruder_native",
             "intruder_native", object : CustomSDKAdsListenerAdapter() {
 
@@ -422,7 +423,7 @@ class FragmentInturderDetectionDetail :
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.linearlayout?.nativeExitAd?.loadAd(
-            activity ?: return,  R.layout.shimmer_loding_native,
+            activity ?: return,  getNativeLayoutShimmer(intruderimage_bottom),
             adLayout!!, "intruder_native",
             "intruder_native", object : CustomSDKAdsListenerAdapter() {
 

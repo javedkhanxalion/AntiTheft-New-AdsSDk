@@ -17,6 +17,8 @@ import com.securityalarm.antitheifproject.model.IntruderModels
 import com.securityalarm.antitheifproject.utilities.BaseFragment
 import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
+import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
+import com.securityalarm.antitheifproject.utilities.intruderimage_bottom
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
 import com.securityalarm.antitheifproject.utilities.openWifiSettings
@@ -140,7 +142,7 @@ class FragmentShowIntruder :
 
     private fun loadNative() {
         val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(1,_binding?.nativeExitAd!!,context?:return),
+            getNativeLayout(intruderimage_bottom,_binding?.nativeExitAd!!,context?:return),
             null, false
         ) as? IkmWidgetAdLayout
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
@@ -149,7 +151,7 @@ class FragmentShowIntruder :
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.nativeExitAd?.loadAd(
-            activity ?: return,  R.layout.shimmer_loding_native,
+            activity ?: return,  getNativeLayoutShimmer(intruderimage_bottom),
             adLayout!!, "intruderimage_bottom",
             "intruderimage_bottom", object : CustomSDKAdsListenerAdapter() {
 

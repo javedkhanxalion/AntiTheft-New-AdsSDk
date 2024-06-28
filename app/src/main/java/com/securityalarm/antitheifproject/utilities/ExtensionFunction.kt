@@ -143,7 +143,6 @@ var language_reload = 0
 var Onboarding_Full_Native = 0
 var sessionOpenlanguage = 1
 var sessionOnboarding = 1
-
 var fisrt_ad_line_threshold = 2
 var line_count = 2
 
@@ -1131,6 +1130,36 @@ fun getNativeLayout(position: Int,layout : IkmWidgetAdView,context :Context): In
     }
     layout.minimumHeight = convertDpToPixel(80F,context).toInt()
     return R.layout.layout_native_80
+}
+
+fun getNativeLayoutShimmer(position: Int): Int {
+    Log.d("check_layout", "getNativeLayout: $position")
+    when (position) {
+        1 -> {
+            return R.layout.shimmer_loadong_native_80
+        }
+
+        2 -> {
+            return R.layout.shimmer_loading_native_140
+        }
+
+        3 -> {
+            return R.layout.shimmer_loading_native_176
+        }
+
+        4 -> {
+            return R.layout.shimmer_loading_native_190
+        }
+
+        5 -> {
+            return R.layout.shimmer_loading_native_276
+        }
+
+        6 -> {
+            return R.layout.shimmer_loading_native_260
+        }
+    }
+    return R.layout.shimmer_loadong_native_80
 }
 
 private fun convertDpToPixel(valueDp: Float, context: Context): Float {

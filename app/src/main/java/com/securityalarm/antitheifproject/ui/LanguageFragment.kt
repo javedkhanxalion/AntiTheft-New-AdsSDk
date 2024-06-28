@@ -27,6 +27,7 @@ import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.fisrt_ad_line_threshold
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
+import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.language_bottom
 import com.securityalarm.antitheifproject.utilities.language_reload
@@ -220,7 +221,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.mainAdsNative?.loadAd(
-            activity ?: return,  R.layout.shimmer_loding_native,
+            activity ?: return,  getNativeLayoutShimmer(language_bottom),
             adLayout!!, "language_bottom",
             "language_bottom", object : CustomSDKAdsListenerAdapter() {
 

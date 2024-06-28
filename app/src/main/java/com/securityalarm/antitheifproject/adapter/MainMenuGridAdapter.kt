@@ -12,6 +12,7 @@ import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
 import com.securityalarm.antitheifproject.model.MainMenuModel
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
+import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
 import com.securityalarm.antitheifproject.utilities.home_native
 import com.securityalarm.antitheifproject.utilities.loadImage
 
@@ -101,7 +102,7 @@ class MainMenuGridAdapter(
             adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
             adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
             binding.nativeExitAd.loadAd(
-                context,  R.layout.shimmer_loding_native,
+                context,  getNativeLayoutShimmer(home_native),
                 adLayout!!, "intruder_native",
                 "intruder_native", object : CustomSDKAdsListenerAdapter() {
 

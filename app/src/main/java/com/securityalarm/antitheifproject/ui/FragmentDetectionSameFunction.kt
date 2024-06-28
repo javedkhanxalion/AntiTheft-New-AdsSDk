@@ -23,6 +23,7 @@ import com.securityalarm.antitheifproject.utilities.autoServiceFunctionInternalM
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.getBannerId
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
+import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.loadImage
 import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
@@ -310,7 +311,7 @@ class FragmentDetectionSameFunction :
             adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
             adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
             _binding?.gridLayout?.nativeExitAd?.loadAd(
-                activity ?: return,  R.layout.shimmer_loding_native,
+                activity ?: return,  getNativeLayoutShimmer(model?.nativeLayout?:return),
                 adLayout!!, model?.nativeId?:return,
                 model?.nativeId?:return, object : CustomSDKAdsListenerAdapter() {
 
@@ -334,7 +335,7 @@ class FragmentDetectionSameFunction :
             adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
             adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
             _binding?.linearlayout?.nativeExitAd?.loadAd(
-                    activity ?: return,  R.layout.shimmer_loding_native,
+                    activity ?: return,  getNativeLayoutShimmer(model?.nativeLayout?:return),
                     adLayout!!, model?.nativeId?:return,
                     model?.nativeId?:return, object : CustomSDKAdsListenerAdapter() {
 

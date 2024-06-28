@@ -10,6 +10,7 @@ import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
 import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
 import com.securityalarm.antitheifproject.utilities.BaseFragment
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
+import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
 import com.securityalarm.antitheifproject.utilities.thankyou_bottom
 import kotlinx.coroutines.delay
@@ -42,7 +43,7 @@ class FragmentExitScreen :
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.nativeExitAd?.loadAd(
-            context,  R.layout.shimmer_loding_native,
+            context,  getNativeLayoutShimmer(thankyou_bottom),
             adLayout!!, "thankyou_bottom",
             "thankyou_bottom", object : CustomSDKAdsListenerAdapter() {
 

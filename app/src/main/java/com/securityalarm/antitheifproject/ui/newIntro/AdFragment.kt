@@ -27,29 +27,29 @@ class AdFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val constraintLayout = view.findViewById<ConstraintLayout>(R.id.mainLayout)
-
-        // Create a new View
-        val myView = View(context).apply {
-            id = View.generateViewId()
-            setBackgroundColor(resources.getColor(android.R.color.white, null))
-        }
-
-        // Add the view to the ConstraintLayout
-        constraintLayout.addView(myView, 0)
-
-        // Apply constraints to the view
-        val set = ConstraintSet().apply {
-            clone(constraintLayout)
-            connect(myView.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
-            connect(myView.id, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
-            connect(myView.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
-            connect(myView.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
-            constrainWidth(myView.id, ConstraintSet.MATCH_CONSTRAINT)
-            constrainHeight(myView.id, ConstraintSet.MATCH_CONSTRAINT)
-        }
-
-        set.applyTo(constraintLayout)
+//        val constraintLayout = view.findViewById<ConstraintLayout>(R.id.mainLayout)
+//
+//        // Create a new View
+//        val myView = View(context).apply {
+//            id = View.generateViewId()
+//            setBackgroundColor(resources.getColor(android.R.color.white, null))
+//        }
+//
+//        // Add the view to the ConstraintLayout
+//        constraintLayout.addView(myView, 0)
+//
+//        // Apply constraints to the view
+//        val set = ConstraintSet().apply {
+//            clone(constraintLayout)
+//            connect(myView.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
+//            connect(myView.id, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
+//            connect(myView.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
+//            connect(myView.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+//            constrainWidth(myView.id, ConstraintSet.MATCH_CONSTRAINT)
+//            constrainHeight(myView.id, ConstraintSet.MATCH_CONSTRAINT)
+//        }
+//
+//        set.applyTo(constraintLayout)
         loadNative()
         SDKBaseController.getInstance().preloadNativeAd(
             activity ?: return, "onboarding3_bottom",
@@ -72,7 +72,7 @@ class AdFragment : Fragment() {
         adLayout?.callToActionView = adLayout?.findViewById(R.id.call_to_action)
         adLayout?.mediaView = adLayout?.findViewById(R.id.media)
         _binding?.mainAdsNative?.loadAd(
-            activity ?: return,  R.layout.shimmer_loding_native,
+            activity ?: return,  R.layout.shimmer_loading_native_140,
             adLayout!!, "onboarding_fullnative",
             "onboarding_fullnative", object : CustomSDKAdsListenerAdapter() {
 

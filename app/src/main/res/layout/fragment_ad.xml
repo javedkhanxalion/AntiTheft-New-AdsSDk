@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintHeight_percent="1.0"
-        app:ikwad_preview_layout="@layout/native_layout_full"
+        app:ikwad_preview_layout="@layout/shimmer_native_layout"
         app:layout_constraintBottom_toBottomOf="@id/mainView"
         app:layout_constraintEnd_toEndOf="@id/mainView"
         app:layout_constraintStart_toStartOf="@id/mainView"

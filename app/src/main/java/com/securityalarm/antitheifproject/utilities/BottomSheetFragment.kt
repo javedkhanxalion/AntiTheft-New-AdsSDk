@@ -43,7 +43,7 @@ class BottomSheetFragment(val activity: Activity) : BottomSheetDialogFragment() 
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         view?.findViewById<com.bmik.android.sdk.widgets.IkmWidgetAdView>(R.id.nativeExitAd)?.loadAd(
-            context,  R.layout.shimmer_loding_native,
+            context,  getNativeLayoutShimmer(exitdialog_bottom),
             adLayout!!, "exitdialog_bottom",
             "exitdialog_bottom", object : CustomSDKAdsListenerAdapter() {
 

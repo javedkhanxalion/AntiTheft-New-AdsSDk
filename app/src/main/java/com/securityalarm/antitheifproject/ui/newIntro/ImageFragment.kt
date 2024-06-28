@@ -15,6 +15,7 @@ import com.bmik.android.sdk.listener.SdkAppOpenAdsCallback
 import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
+import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
 import com.securityalarm.antitheifproject.utilities.introDetailText
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.onboarding1_bottom
@@ -148,7 +149,7 @@ class ImageFragment : Fragment() {
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.mainAdsNative?.loadAd(
-            activity ?: return,  R.layout.shimmer_loding_native,
+            activity ?: return,  getNativeLayoutShimmer(onboarding1_bottom),
             adLayout!!, "onboarding1_bottom",
             "onboarding1_bottom", object : CustomSDKAdsListenerAdapter() {
 
@@ -177,7 +178,7 @@ class ImageFragment : Fragment() {
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.mainAdsNative?.loadAd(
-            activity ?: return,  R.layout.shimmer_loding_native,
+            activity ?: return,  getNativeLayoutShimmer(onboarding2_bottom),
             adLayout!!, "onboarding2_bottom",
             "onboarding2_bottom", object : CustomSDKAdsListenerAdapter() {
                 override fun onAdsLoaded() {
@@ -205,7 +206,7 @@ class ImageFragment : Fragment() {
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.mainAdsNative?.loadAd(
-            activity ?: return,  R.layout.shimmer_loding_native,
+            activity ?: return,  getNativeLayoutShimmer(onboarding3_bottom),
             adLayout!!, "onboarding3_bottom",
             "onboarding3_bottom", object : CustomSDKAdsListenerAdapter() {
 

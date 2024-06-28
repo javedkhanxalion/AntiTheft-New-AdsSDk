@@ -72,9 +72,9 @@
     <string name="spanish">Spanish</string>
     <string name="hindi">Hindi</string>
     <string name="arabic">Arabic</string>
-    <string name="french">French</string>
     <string name="german">German</string>
     <string name="japanese">Japanese</string>
+    <string name="french">French</string>
     <string name="dutch">Dutch</string>
 
     <string name="tone_1">Siren, alarm, warning</string>

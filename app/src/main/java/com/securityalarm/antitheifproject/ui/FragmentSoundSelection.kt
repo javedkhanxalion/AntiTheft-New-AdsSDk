@@ -22,6 +22,7 @@ import com.securityalarm.antitheifproject.utilities.BaseFragment
 import com.securityalarm.antitheifproject.utilities.IS_GRID
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
+import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.loadImage
 import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
@@ -129,7 +130,7 @@ class FragmentSoundSelection :
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
         _binding?.nativeExitAd?.loadAd(
-            activity ?: return,  R.layout.shimmer_loding_native,
+            activity ?: return,  getNativeLayoutShimmer(position?.nativeSoundLayout?:return),
             adLayout!!, position?.nativeSoundId?:return,
             position?.nativeSoundId?:return, object : CustomSDKAdsListenerAdapter() {
 

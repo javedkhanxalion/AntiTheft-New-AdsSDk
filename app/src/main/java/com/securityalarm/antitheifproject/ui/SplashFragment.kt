@@ -19,7 +19,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.securityalarm.antitheifproject.helper_class.DbHelper
 import com.securityalarm.antitheifproject.model.AdSettings
-import com.securityalarm.antitheifproject.model.DataModel
 import com.securityalarm.antitheifproject.model.NativeDesignType
 import com.securityalarm.antitheifproject.utilities.BaseFragment
 import com.securityalarm.antitheifproject.utilities.IS_FIRST
