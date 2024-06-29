@@ -1,6 +1,7 @@
 package com.securityalarm.antitheifproject.ui
 
 import MainMenuGridAdapter
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -31,6 +32,7 @@ import com.securityalarm.antitheifproject.utilities.BottomSheetFragment
 import com.securityalarm.antitheifproject.utilities.IS_GRID
 import com.securityalarm.antitheifproject.utilities.IS_NOTIFICATION
 import com.securityalarm.antitheifproject.utilities.LANG_SCREEN
+import com.securityalarm.antitheifproject.utilities.NOTIFICATION_PERMISSION
 import com.securityalarm.antitheifproject.utilities.PHONE_PERMISSION
 import com.securityalarm.antitheifproject.utilities.autoServiceFunction
 import com.securityalarm.antitheifproject.utilities.checkNotificationPermission
@@ -39,12 +41,16 @@ import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.getMenuListGrid
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.moreApp
+import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
+import com.securityalarm.antitheifproject.utilities.openWifiSettings
 import com.securityalarm.antitheifproject.utilities.privacyPolicy
 import com.securityalarm.antitheifproject.utilities.rateUs
 import com.securityalarm.antitheifproject.utilities.requestCameraPermissionAudio
+import com.securityalarm.antitheifproject.utilities.requestCameraPermissionNotification
 import com.securityalarm.antitheifproject.utilities.setImage
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
 import com.securityalarm.antitheifproject.utilities.shareApp
+import com.securityalarm.antitheifproject.utilities.showInternetDialog
 import com.securityalarm.antitheifproject.utilities.showRatingDialog
 import com.securityalarm.antitheifproject.utilities.showServiceDialog
 import com.securityalarm.antitheifproject.utilities.showToast
@@ -164,8 +170,7 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                 isGridLayout = it
             }
         }
-
-        checkNotificationPermission()
+//        checkNotificationPermission(_binding?.mainLayout?.hideAd!!)
         val drawerView: View = view.findViewById(R.id.drawerLayout)
         if (drawerView is DrawerLayout) {
             drawerView.setDrawerListener(object : DrawerListener {
@@ -246,8 +251,8 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
             0 -> {
                 SDKBaseController.getInstance().showInterstitialAds(
                     activity ?: return,
-                    screen = model.idAds,
-                    trackingScreen = model.idAds,
+                    screen = "home_tabanyfuntion",
+                    trackingScreen = "home_tabanyfuntion",
                     showLoading = true,
                     loadingCallback = object : SDKDialogLoadingCallback {
                         override fun onClose() {
@@ -273,8 +278,8 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
             2 -> {
                 SDKBaseController.getInstance().showInterstitialAds(
                     activity ?: return,
-                    screen = model.idAds,
-                    trackingScreen = model.idAds,
+                    screen = "home_tabanyfuntion",
+                    trackingScreen = "home_tabanyfuntion",
                     showLoading = true,
                     loadingCallback = object : SDKDialogLoadingCallback {
                         override fun onClose() {
@@ -315,8 +320,8 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                 ) {
                     SDKBaseController.getInstance().showInterstitialAds(
                         activity ?: return,
-                        screen = model.idAds,
-                        trackingScreen = model.idAds,
+                        screen = "home_tabanyfuntion",
+                        trackingScreen = "home_tabanyfuntion",
                         showLoading = true,
                         loadingCallback = object : SDKDialogLoadingCallback {
                             override fun onClose() {
@@ -345,6 +350,7 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                     )
                 } else {
                     isInternetPermission=false
+                    _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
                     requestCameraPermissionAudio()
                 }
             }
@@ -358,26 +364,34 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
 
     override fun onResume() {
         super.onResume()
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(requireContext(), NOTIFICATION_PERMISSION) != 0) {
+                _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
+                requestCameraPermissionNotification(_binding?.mainLayout?.hideAd)
+            }else{
+                _binding?.mainLayout?.hideAd?.visibility=View.GONE
+            }
+        }else{
+            _binding?.mainLayout?.hideAd?.visibility=View.GONE
+        }
         sharedPrefUtils?.getBooleanData(context ?: return, IS_NOTIFICATION, false)?.let {
             _binding?.navView?.customSwitch?.isChecked = it
         }
-
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
-//                showInternetDialog(
-//                    onPositiveButtonClick = {
-//                        isInternetDialog = true
-//                        openMobileDataSettings(context ?: requireContext())
-//                    },
-//                    onNegitiveButtonClick = {
-//                        isInternetDialog = true
-//                        openWifiSettings(context ?: requireContext())
-//                    },
-//                    onCloseButtonClick = {
-//                    }
-//                )
+                showInternetDialog(
+                    onPositiveButtonClick = {
+                        isInternetDialog = true
+                        openMobileDataSettings(context ?: requireContext())
+                    },
+                    onNegitiveButtonClick = {
+                        isInternetDialog = true
+                        openWifiSettings(context ?: requireContext())
+                    },
+                    onCloseButtonClick = {
+                    }
+                )
                 return
             }else{
                 IkmSdkController.setEnableShowResumeAds(true)
@@ -387,7 +401,14 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
 
     override fun onPause() {
         super.onPause()
-        if (!isInternetAvailable(context ?: return)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(requireContext(), NOTIFICATION_PERMISSION) != 0) {
+                _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
+            }
+        }else{
+            _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
+        }
+         if (!isInternetAvailable(context ?: return)) {
             IkmSdkController.setEnableShowResumeAds(false)
         }
         if(isInternetPermission) {

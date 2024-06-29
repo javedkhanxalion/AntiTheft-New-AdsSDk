@@ -16,7 +16,10 @@ import com.securityalarm.antitheifproject.model.IntruderModels
 import com.securityalarm.antitheifproject.utilities.BaseFragment
 import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
+import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
+import com.securityalarm.antitheifproject.utilities.openWifiSettings
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
+import com.securityalarm.antitheifproject.utilities.showInternetDialog
 import com.securityalarm.antitheifproject.utilities.showToast
 import java.io.File
 
@@ -128,18 +131,18 @@ class ShowFullImageFragment :
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
-//                showInternetDialog(
-//                    onPositiveButtonClick = {
-//                        isInternetDialog = true
-//                        openMobileDataSettings(context ?: requireContext())
-//                    },
-//                    onNegitiveButtonClick = {
-//                        isInternetDialog = true
-//                        openWifiSettings(context ?: requireContext())
-//                    },
-//                    onCloseButtonClick = {
-//                    }
-//                )
+                showInternetDialog(
+                    onPositiveButtonClick = {
+                        isInternetDialog = true
+                        openMobileDataSettings(context ?: requireContext())
+                    },
+                    onNegitiveButtonClick = {
+                        isInternetDialog = true
+                        openWifiSettings(context ?: requireContext())
+                    },
+                    onCloseButtonClick = {
+                    }
+                )
                 return
             }else{
                 IkmSdkController.setEnableShowResumeAds(true)

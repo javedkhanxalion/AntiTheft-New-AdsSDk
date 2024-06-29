@@ -25,8 +25,11 @@ import com.securityalarm.antitheifproject.utilities.getNativeLayout
 import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.loadImage
+import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
+import com.securityalarm.antitheifproject.utilities.openWifiSettings
 import com.securityalarm.antitheifproject.utilities.setImage
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
+import com.securityalarm.antitheifproject.utilities.showInternetDialog
 import com.securityalarm.antitheifproject.utilities.soundData
 
 
@@ -153,18 +156,18 @@ class FragmentSoundSelection :
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
-//                showInternetDialog(
-//                    onPositiveButtonClick = {
-//                        isInternetDialog = true
-//                        openMobileDataSettings(context ?: requireContext())
-//                    },
-//                    onNegitiveButtonClick = {
-//                        isInternetDialog = true
-//                        openWifiSettings(context ?: requireContext())
-//                    },
-//                    onCloseButtonClick = {
-//                    }
-//                )
+                showInternetDialog(
+                    onPositiveButtonClick = {
+                        isInternetDialog = true
+                        openMobileDataSettings(context ?: requireContext())
+                    },
+                    onNegitiveButtonClick = {
+                        isInternetDialog = true
+                        openWifiSettings(context ?: requireContext())
+                    },
+                    onCloseButtonClick = {
+                    }
+                )
                 return
             }else{
                 IkmSdkController.setEnableShowResumeAds(true)

@@ -31,10 +31,13 @@ import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.language_bottom
 import com.securityalarm.antitheifproject.utilities.language_reload
 import com.securityalarm.antitheifproject.utilities.line_count
+import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
+import com.securityalarm.antitheifproject.utilities.openWifiSettings
 import com.securityalarm.antitheifproject.utilities.restartApp
 import com.securityalarm.antitheifproject.utilities.sessionOnboarding
 import com.securityalarm.antitheifproject.utilities.setLocaleMain
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
+import com.securityalarm.antitheifproject.utilities.showInternetDialog
 
 
 class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
@@ -379,7 +382,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
-              /*  showInternetDialog(
+              showInternetDialog(
                     onPositiveButtonClick = {
                         isInternetDialog = true
                         openMobileDataSettings(context ?: requireContext())
@@ -390,7 +393,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                     },
                     onCloseButtonClick = {
                     }
-                )*/
+                )
                 return
             }else{
                 IkmSdkController.setEnableShowResumeAds(true)

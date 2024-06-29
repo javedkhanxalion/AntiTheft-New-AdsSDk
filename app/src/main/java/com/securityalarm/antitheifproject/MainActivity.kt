@@ -28,12 +28,12 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
-//        if (!isInternetAvailable(this)) {
-//            IkmSdkController.setEnableShowResumeAds(false)
-//            return
-//        }else{
-//            IkmSdkController.setEnableShowResumeAds(true)
-//        }
+        if (!isInternetAvailable(this)) {
+            IkmSdkController.setEnableShowResumeAds(false)
+            return
+        } else {
+            IkmSdkController.setEnableShowResumeAds(true)
+        }
     }
 
 }

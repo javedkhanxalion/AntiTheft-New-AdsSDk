@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "91485908665",
-    "project_id": "pub-microzone-antitheft-debug",
-    "storage_bucket": "pub-microzone-antitheft-debug.appspot.com"
+    "project_number": "282172752455",
+    "project_id": "pub-microzone-antitheft-2",
+    "storage_bucket": "pub-microzone-antitheft-2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:91485908665:android:c1f11afa2549e255b2f568",
+        "mobilesdk_app_id": "1:282172752455:android:cb473a312ddf2cc76b6762",
         "android_client_info": {
-          "package_name": "com.antitheftalarm.dont.touch.phone.finder.phonesecurity.debug"
+          "package_name": "com.antitheftalarm.dont.touch.phone.finder.phonesecurity"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCbQfQ4k6eOMJuzh5O5xRntYwzo9hnSDxQ"
+          "current_key": "AIzaSyB8TycPHroHJvwFElhq6tV4xU0WEknqQbw"
         }
       ],
       "services": {

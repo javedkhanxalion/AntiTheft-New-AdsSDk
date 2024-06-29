@@ -692,6 +692,7 @@ fun Fragment.showInternetDialog(
     ratingDialog?.show()
 
 }
+
 fun Activity.showInternetDialog(
     onPositiveButtonClick: () -> Unit,
     onNegitiveButtonClick: () -> Unit,
@@ -889,38 +890,40 @@ fun Fragment.requestCameraPermissionAudio() {
     }
 }
 
-fun Fragment.requestCameraPermissionNotification() {
+fun Fragment.requestCameraPermissionNotification(hideAd: View?) {
     if (ActivityCompat.shouldShowRequestPermissionRationale(
             requireActivity(),
             NOTIFICATION_PERMISSION
         )
     ) {
-        showNotificationPermissionDialog()
+        showNotificationPermissionDialog(hideAd)
     } else {
-        showNotificationPermissionDialog()
+        showNotificationPermissionDialog(hideAd)
     }
 }
 
-fun Fragment.showNotificationPermissionDialog(
-) {
+fun Fragment.showNotificationPermissionDialog(hideAd: View?) {
     val dialogView = layoutInflater.inflate(R.layout.notification_dialog, null)
     ratingService = AlertDialog.Builder(requireContext()).create()
     ratingService?.setView(dialogView)
+    ratingDialog?.setCancelable(false)
     ratingService?.window?.setBackgroundDrawableResource(android.R.color.transparent)
     val no = dialogView.findViewById<Button>(R.id.cancl_btn)
     val yes = dialogView.findViewById<Button>(R.id.cnfrm_del_btn)
     yes.setOnClickListener {
+        hideAd?.visibility = View.GONE
         if (isVisible && isAdded && !isDetached) {
             ratingService?.dismiss()
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(NOTIFICATION_PERMISSION),
+                2
+            )
         }
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(NOTIFICATION_PERMISSION),
-            2
-        )
     }
 
     no.setOnClickListener {
+        hideAd?.visibility = View.GONE
         if (isVisible && isAdded && !isDetached) {
             ratingService?.dismiss()
         }
@@ -1059,12 +1062,18 @@ fun firebaseAnalytics(Item_id: String, Item_name: String) {
     }
 }
 
-fun Fragment.checkNotificationPermission() {
+fun Fragment.checkNotificationPermission(layout1: View) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
         return
     }
     if (ContextCompat.checkSelfPermission(requireContext(), NOTIFICATION_PERMISSION) != 0) {
-        requestCameraPermissionNotification()
+        layout1.visibility = View.VISIBLE
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(NOTIFICATION_PERMISSION),
+            2
+        )
+//        requestCameraPermissionNotification(layout1)
     }
 
 }
@@ -1076,20 +1085,23 @@ fun isInternetAvailable(context: Context): Boolean {
         val network = connectivityManager.activeNetwork ?: return false
         val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
         return when {
-            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ->{
-                isInternetAvailable= true
-                true
-            }
-            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ->{
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
                 isInternetAvailable = true
                 true
             }
-            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) ->{
+
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
                 isInternetAvailable = true
                 true
             }
-            else ->{
-                isInternetAvailable =false
+
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
+                isInternetAvailable = true
+                true
+            }
+
+            else -> {
+                isInternetAvailable = false
                 false
             }
         }
@@ -1102,7 +1114,8 @@ fun isInternetAvailable(context: Context): Boolean {
 
 
 fun isNetworkAvailable(context: Context): Boolean {
-    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         val network = connectivityManager.activeNetwork ?: return false
         val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
@@ -1131,40 +1144,40 @@ fun openMobileDataSettings(context: Context) {
     context.startActivity(intent)
 }
 
-fun getNativeLayout(position: Int,layout : IkmWidgetAdView,context :Context): Int {
+fun getNativeLayout(position: Int, layout: IkmWidgetAdView, context: Context): Int {
     Log.d("check_layout", "getNativeLayout: $position")
     when (position) {
         1 -> {
-            layout.minimumHeight = convertDpToPixel(80F,context).toInt()
+            layout.minimumHeight = convertDpToPixel(80F, context).toInt()
             return R.layout.layout_native_80
         }
 
         2 -> {
-            layout.minimumHeight = convertDpToPixel(140F,context).toInt()
+            layout.minimumHeight = convertDpToPixel(140F, context).toInt()
             return R.layout.layout_native_140
         }
 
         3 -> {
-            layout.minimumHeight = convertDpToPixel(176F,context).toInt()
+            layout.minimumHeight = convertDpToPixel(176F, context).toInt()
             return R.layout.layout_native_176
         }
 
         4 -> {
-            layout.minimumHeight = convertDpToPixel(190F,context).toInt()
+            layout.minimumHeight = convertDpToPixel(190F, context).toInt()
             return R.layout.native_layout_190
         }
 
         5 -> {
-            layout.minimumHeight = convertDpToPixel(276F,context).toInt()
+            layout.minimumHeight = convertDpToPixel(276F, context).toInt()
             return R.layout.native_layout_276
         }
 
         6 -> {
-            layout.minimumHeight = convertDpToPixel(260F,context).toInt()
+            layout.minimumHeight = convertDpToPixel(260F, context).toInt()
             return R.layout.layout_native_260
         }
     }
-    layout.minimumHeight = convertDpToPixel(80F,context).toInt()
+    layout.minimumHeight = convertDpToPixel(80F, context).toInt()
     return R.layout.layout_native_80
 }
 
@@ -1205,6 +1218,7 @@ private fun convertDpToPixel(valueDp: Float, context: Context): Float {
         displayMetrics
     )
 }
+
 fun getBannerId(position: String): String {
     when (position) {
         Pocket_Detection -> {
@@ -1239,7 +1253,7 @@ fun getBannerId(position: String): String {
 }
 
 fun Fragment.restartApp() {
-    val intent = context?.packageManager?.getLaunchIntentForPackage(context?.packageName?:return)
+    val intent = context?.packageManager?.getLaunchIntentForPackage(context?.packageName ?: return)
     intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
     context?.startActivity(intent)
 }

@@ -14,7 +14,10 @@ import com.securityalarm.antitheifproject.utilities.IS_INTRO
 import com.securityalarm.antitheifproject.utilities.Onboarding_Full_Native
 import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
+import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
+import com.securityalarm.antitheifproject.utilities.openWifiSettings
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
+import com.securityalarm.antitheifproject.utilities.showInternetDialog
 
 class OnBordScreenNewScreen :
     BaseFragment<IntroMainActivityBinding>(IntroMainActivityBinding::inflate) {
@@ -125,18 +128,18 @@ class OnBordScreenNewScreen :
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
-//                showInternetDialog(
-//                    onPositiveButtonClick = {
-//                        isInternetDialog = true
-//                        openMobileDataSettings(context ?: requireContext())
-//                    },
-//                    onNegitiveButtonClick = {
-//                        isInternetDialog = true
-//                        openWifiSettings(context ?: requireContext())
-//                    },
-//                    onCloseButtonClick = {
-//                    }
-//                )
+                showInternetDialog(
+                    onPositiveButtonClick = {
+                        isInternetDialog = true
+                        openMobileDataSettings(context ?: requireContext())
+                    },
+                    onNegitiveButtonClick = {
+                        isInternetDialog = true
+                        openWifiSettings(context ?: requireContext())
+                    },
+                    onCloseButtonClick = {
+                    }
+                )
                 return
             }else{
                 if(currentpage==1){
