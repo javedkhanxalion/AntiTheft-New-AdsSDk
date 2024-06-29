@@ -27,10 +27,13 @@ class ViewPagerAdapter(
         ImageFragment.newInstance(2, false, viewPager2, functionNext, function),
     )
 
-    override fun getItemCount(): Int = if(isInternetAvailable(context) || Onboarding_Full_Native==0)
+    override fun getItemCount(): Int = if(isInternetAvailable && Onboarding_Full_Native==1)
         fragments.size
     else
         fragments1.size
 
-    override fun createFragment(position: Int): Fragment = fragments[position]
+    override fun createFragment(position: Int): Fragment = if(isInternetAvailable && Onboarding_Full_Native==1)
+        fragments[position]
+    else
+        fragments1[position]
 }

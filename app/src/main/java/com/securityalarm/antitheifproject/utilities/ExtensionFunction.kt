@@ -102,6 +102,7 @@ var val_ad_native_Battery_Detection_screen = true
 var val_ad_native_Pocket_Detection_screen = true
 var val_ad_native_main_menu_screen = true
 var val_exit_dialog_native = true
+var isInternetAvailable = true
 
 var val_ad_native_app_open_screen = true
 
@@ -1075,8 +1076,40 @@ fun isInternetAvailable(context: Context): Boolean {
         val network = connectivityManager.activeNetwork ?: return false
         val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
         return when {
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ->{
+                isInternetAvailable= true
+                true
+            }
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ->{
+                isInternetAvailable = true
+                true
+            }
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) ->{
+                isInternetAvailable = true
+                true
+            }
+            else ->{
+                isInternetAvailable =false
+                false
+            }
+        }
+    } else {
+        val networkInfo = connectivityManager.activeNetworkInfo ?: return false
+        isInternetAvailable = networkInfo.isConnected
+        return networkInfo.isConnected
+    }
+}
+
+
+fun isNetworkAvailable(context: Context): Boolean {
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val network = connectivityManager.activeNetwork ?: return false
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return when {
             activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
             activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
             else -> false
         }
     } else {
@@ -1084,6 +1117,9 @@ fun isInternetAvailable(context: Context): Boolean {
         return networkInfo.isConnected
     }
 }
+
+
+// Usage example
 
 fun openWifiSettings(context: Context) {
     val intent = Intent(Settings.ACTION_WIFI_SETTINGS)

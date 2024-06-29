@@ -26,26 +26,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-
     override fun onResume() {
         super.onResume()
-        if (!isInternetAvailable(this)) {
-            IkmSdkController.setEnableShowResumeAds(false)
-//            showInternetDialog(
-//                onPositiveButtonClick = {
-//                    openMobileDataSettings(this)
-//                },
-//                onNegitiveButtonClick = {
-//                    openWifiSettings(this)
-//                },
-//                onCloseButtonClick = {
-//                }
-//            )
-            return
-        }else{
-            IkmSdkController.setEnableShowResumeAds(true)
-        }
+//        if (!isInternetAvailable(this)) {
+//            IkmSdkController.setEnableShowResumeAds(false)
+//            return
+//        }else{
+//            IkmSdkController.setEnableShowResumeAds(true)
+//        }
     }
 
 }

@@ -39,8 +39,6 @@ import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.getMenuListGrid
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.moreApp
-import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
-import com.securityalarm.antitheifproject.utilities.openWifiSettings
 import com.securityalarm.antitheifproject.utilities.privacyPolicy
 import com.securityalarm.antitheifproject.utilities.rateUs
 import com.securityalarm.antitheifproject.utilities.requestCameraPermissionAudio

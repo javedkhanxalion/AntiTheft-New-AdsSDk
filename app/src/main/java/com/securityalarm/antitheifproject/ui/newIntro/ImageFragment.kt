@@ -13,6 +13,7 @@ import com.bmik.android.sdk.IkmSdkController
 import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
 import com.bmik.android.sdk.listener.SdkAppOpenAdsCallback
 import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
+import com.securityalarm.antitheifproject.utilities.Onboarding_Full_Native
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
 import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
@@ -45,12 +46,22 @@ class ImageFragment : Fragment() {
             com.securityalarm.antitheifproject.utilities.introHeading[position]
         _binding?.sliderDesc?.text = introDetailText[position]
         _binding?.wormDotsIndicator?.attachTo(viewPager22 ?: return)
-        if (position == 3) {
-            _binding?.nextApp?.visibility = View.VISIBLE
-            _binding?.skipApp?.visibility = View.INVISIBLE
-        } else {
-            _binding?.nextApp?.visibility = View.VISIBLE
-            _binding?.skipApp?.visibility = View.VISIBLE
+        if(isInternetAvailable && Onboarding_Full_Native ==0){
+            if (position == 2) {
+                _binding?.nextApp?.visibility = View.VISIBLE
+                _binding?.skipApp?.visibility = View.INVISIBLE
+            } else {
+                _binding?.nextApp?.visibility = View.VISIBLE
+                _binding?.skipApp?.visibility = View.VISIBLE
+            }
+        }else{
+            if (position == 3) {
+                _binding?.nextApp?.visibility = View.VISIBLE
+                _binding?.skipApp?.visibility = View.INVISIBLE
+            } else {
+                _binding?.nextApp?.visibility = View.VISIBLE
+                _binding?.skipApp?.visibility = View.VISIBLE
+            }
         }
         _binding?.nextApp?.clickWithThrottle {
             fragmentN?.invoke()

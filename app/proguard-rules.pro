@@ -167,3 +167,4 @@
 #-keep class com.bumptech.glide.load.data.ParcelFileDescriptorRewinder$InternalRewinder {
 #  *** rewind();
 #}
+#-keep public class com.google.android.gms.** { public protected *; }

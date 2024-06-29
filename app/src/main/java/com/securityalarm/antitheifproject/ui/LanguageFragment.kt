@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import androidx.core.app.ActivityCompat.recreate
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
@@ -32,8 +31,6 @@ import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.language_bottom
 import com.securityalarm.antitheifproject.utilities.language_reload
 import com.securityalarm.antitheifproject.utilities.line_count
-import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
-import com.securityalarm.antitheifproject.utilities.openWifiSettings
 import com.securityalarm.antitheifproject.utilities.restartApp
 import com.securityalarm.antitheifproject.utilities.sessionOnboarding
 import com.securityalarm.antitheifproject.utilities.setLocaleMain

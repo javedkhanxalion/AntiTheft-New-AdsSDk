@@ -85,7 +85,6 @@ class AdFragment : Fragment() {
                 override fun onAdsLoadFail() {
                     super.onAdsLoadFail()
                     _binding?.mainAdsNative?.visibility = View.GONE
-                    _binding?.mainAdsNative?.visibility = View.GONE
                 }
             }
         )
