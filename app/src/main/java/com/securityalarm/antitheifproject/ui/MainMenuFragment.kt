@@ -1,13 +1,20 @@
 package com.securityalarm.antitheifproject.ui
 
 import MainMenuGridAdapter
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.registerReceiver
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.navigation.fragment.findNavController
@@ -15,6 +22,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentMainMenuActivityBinding
+import com.applovin.impl.sdk.AppLovinBroadcastManager.unregisterReceiver
 import com.bmik.android.sdk.IkmSdkController
 import com.bmik.android.sdk.SDKBaseController
 import com.bmik.android.sdk.listener.CommonAdsListenerAdapter
@@ -34,8 +42,8 @@ import com.securityalarm.antitheifproject.utilities.IS_NOTIFICATION
 import com.securityalarm.antitheifproject.utilities.LANG_SCREEN
 import com.securityalarm.antitheifproject.utilities.NOTIFICATION_PERMISSION
 import com.securityalarm.antitheifproject.utilities.PHONE_PERMISSION
+import com.securityalarm.antitheifproject.utilities.WifiStateReceiver
 import com.securityalarm.antitheifproject.utilities.autoServiceFunction
-import com.securityalarm.antitheifproject.utilities.checkNotificationPermission
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.getMenuListGrid
@@ -63,19 +71,57 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
     private var isGridLayout: Boolean? = null
     private var isInternetDialog: Boolean = false
     private var isInternetPermission: Boolean = true
+    private val wifiStateReceiver = WifiStateReceiver()
 
+    private val localBroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == WifiStateReceiver.WIFI_STATE_CHANGE_ACTION) {
+                val wifiState = intent.getIntExtra(WifiStateReceiver.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_UNKNOWN)
+                if (wifiState == WifiManager.WIFI_STATE_DISABLED) {
+                    // WiFi is disabled, handle action here
+                    showInternetDialog(
+                        onPositiveButtonClick = {
+                            isInternetDialog = true
+                            openMobileDataSettings(context ?: requireContext())
+                        },
+                        onNegitiveButtonClick = {
+                            isInternetDialog = true
+                            openWifiSettings(context ?: requireContext())
+                        },
+                        onCloseButtonClick = {
+                            context?.unregisterReceiver(wifiStateReceiver)
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        context?.unregisterReceiver(wifiStateReceiver)
+        context?.unregisterReceiver(localBroadcastReceiver)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAnalytics("main_menu_fragment_open", "main_menu_fragment_open -->  Click")
         sharedPrefUtils = DbHelper(context ?: return)
+        // Register the receiver for local broadcasts
+//        val localFilter = IntentFilter(WifiStateReceiver.WIFI_STATE_CHANGE_ACTION)
+//        context?.registerReceiver(localBroadcastReceiver, localFilter)
+//        context?.registerReceiver(localBroadcastReceiver, localFilter, null, null)
+
+        // Register the receiver for WiFi state changes
+        val wifiFilter = IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION)
+        context?.registerReceiver(wifiStateReceiver, wifiFilter)
         if(IkmSdkUtils.isUserIAPAvailable()){
-            _binding?.navView?.viewTop?.visibility=View.INVISIBLE
-            _binding?.navView?.buyText?.visibility=View.INVISIBLE
-            _binding?.navView?.rateUs?.visibility=View.INVISIBLE
+            _binding?.navViewLayout?.viewTop?.visibility=View.INVISIBLE
+            _binding?.navViewLayout?.buyText?.visibility=View.INVISIBLE
+            _binding?.navViewLayout?.rateUs?.visibility=View.INVISIBLE
         }
         setupBackPressedCallback {
-            if (_binding?.drawerLayout?.isDrawerOpen(GravityCompat.START) == true) {
-                _binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            if (_binding?.navViewLayout?.navigationMain?.isVisible == true) {
+                _binding?.navViewLayout?.navigationMain?.visibility =View.GONE
             } else {
                 SDKBaseController.getInstance().showInterstitialAds(
                     activity,
@@ -108,7 +154,7 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
             }
             mainLayout.topLay.settingBtn.clickWithThrottle {
             }
-            navView.rateUsView.clickWithThrottle {
+            navViewLayout.rateUsView.clickWithThrottle {
                 showRatingDialog(onPositiveButtonClick = { it, _dialog ->
                     if (it >= 1F && it < 3F) {
                         _dialog.dismiss()
@@ -118,41 +164,41 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                         requireContext().rateUs()
                     }
                 })
-                drawerLayout.closeDrawer(GravityCompat.START)
+                _binding?.navViewLayout?.navigationMain?.visibility=View.GONE
             }
-            navView.shareAppView.clickWithThrottle {
+            navViewLayout.shareAppView.clickWithThrottle {
                 requireContext().shareApp()
-                drawerLayout.closeDrawer(GravityCompat.START)
+                _binding?.navViewLayout?.navigationMain?.visibility=View.GONE
             }
-            navView.privacyView.clickWithThrottle {
+            navViewLayout.privacyView.clickWithThrottle {
                 requireContext().privacyPolicy()
-                drawerLayout.closeDrawer(GravityCompat.START)
+                _binding?.navViewLayout?.navigationMain?.visibility=View.GONE
             }
-            navView.moreAppView.clickWithThrottle {
+            navViewLayout.moreAppView.clickWithThrottle {
                 requireContext().moreApp()
-                drawerLayout.closeDrawer(GravityCompat.START)
+                _binding?.navViewLayout?.navigationMain?.visibility=View.GONE
             }
-            navView.languageView.clickWithThrottle {
+            navViewLayout.languageView.clickWithThrottle {
                 firebaseAnalytics(
                     "main_menu_fragment_language_open",
                     "main_menu_fragment_language_open -->  Click"
                 )
                 findNavController().navigate(R.id.LanguageFragment, bundleOf(LANG_SCREEN to false))
-                drawerLayout.closeDrawer(GravityCompat.START)
+                _binding?.navViewLayout?.navigationMain?.visibility=View.GONE
             }
-            navView.navigationMain.setOnClickListener { }
-            navView.customSwitch.setOnCheckedChangeListener { compoundButton, bool ->
+            navViewLayout.navigationMain.setOnClickListener { }
+            navViewLayout.customSwitch.setOnCheckedChangeListener { compoundButton, bool ->
                 if (compoundButton.isPressed) {
                     if (bool) {
                         if (!isServiceRunning()) {
                             autoServiceFunction(true)
-                            drawerLayout.closeDrawer(GravityCompat.START)
+                            _binding?.navViewLayout?.navigationMain?.visibility=View.GONE
                         }
                     } else {
-                        drawerLayout.closeDrawer(GravityCompat.START)
+                        _binding?.navViewLayout?.navigationMain?.visibility=View.GONE
                         showServiceDialog(
                             onPositiveNoClick = {
-                                navView.customSwitch.isChecked = true
+                                navViewLayout.customSwitch.isChecked = true
                             },
                             onPositiveYesClick = {
                                 if (isServiceRunning()) {
@@ -163,14 +209,13 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                 }
             }
             mainLayout.topLay.navMenu.clickWithThrottle {
-                drawerLayout.openDrawer(GravityCompat.START)
+                _binding?.navViewLayout?.navigationMain?.visibility=View.VISIBLE
             }
             sharedPrefUtils?.getBooleanData(context ?: return, IS_GRID, true)?.let {
                 loadLayoutDirection(it)
                 isGridLayout = it
             }
         }
-//        checkNotificationPermission(_binding?.mainLayout?.hideAd!!)
         val drawerView: View = view.findViewById(R.id.drawerLayout)
         if (drawerView is DrawerLayout) {
             drawerView.setDrawerListener(object : DrawerListener {
@@ -375,12 +420,12 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
             _binding?.mainLayout?.hideAd?.visibility=View.GONE
         }
         sharedPrefUtils?.getBooleanData(context ?: return, IS_NOTIFICATION, false)?.let {
-            _binding?.navView?.customSwitch?.isChecked = it
+            _binding?.navViewLayout?.customSwitch?.isChecked = it
         }
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
-                showInternetDialog(
+             /*   showInternetDialog(
                     onPositiveButtonClick = {
                         isInternetDialog = true
                         openMobileDataSettings(context ?: requireContext())
@@ -391,7 +436,7 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                     },
                     onCloseButtonClick = {
                     }
-                )
+                )*/
                 return
             }else{
                 IkmSdkController.setEnableShowResumeAds(true)

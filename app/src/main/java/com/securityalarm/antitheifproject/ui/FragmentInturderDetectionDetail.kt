@@ -100,6 +100,51 @@ class FragmentInturderDetectionDetail :
                 topLay.setLayoutBtn.setImage(R.drawable.icon_grid)
                 gridLayout.topGrid.visibility = View.VISIBLE
                 linearlayout.topLinear.visibility = View.GONE
+                activeAnimationView.clickWithThrottle {
+                    if ((dbHelper?.getBooleanData(context?:return@clickWithThrottle,Intruder_Selfie,true)==true)!!) {
+                            startLottieAnimation(
+                                activeAnimationView,
+                                activeAnimationViewText,
+                                false
+                            )
+                            dbHelper?.setBroadCast(Intruder_Selfie, false)
+                        gridLayout.inturderAlertSwitch.isChecked=false
+                        }
+                        else if (ContextCompat.checkSelfPermission(
+                                context ?: return@clickWithThrottle,
+                                CAMERA_PERMISSION
+                            ) == 0
+                        ) {
+                            val devicePolicyManager = mDevicePolicyManager
+                            if (devicePolicyManager == null || devicePolicyManager.isAdminActive(
+                                    (mComponentName) ?: return@clickWithThrottle
+                                )
+                            ) {
+                                startLottieAnimation(
+                                    activeAnimationView,
+                                    activeAnimationViewText,
+                                    true
+                                )
+                                dbHelper?.setBroadCast(Intruder_Selfie, true)
+                                gridLayout.inturderAlertSwitch.isChecked=true
+                                if (!isServiceRunning()) {
+                                    autoServiceFunctionIntruder(true, dbHelper)
+                                }
+                                return@clickWithThrottle
+                            } else {
+                                val intent = Intent("android.app.action.ADD_DEVICE_ADMIN")
+                                intent.putExtra("android.app.extra.DEVICE_ADMIN", mComponentName)
+                                intent.putExtra(
+                                    "android.app.extra.ADD_EXPLANATION",
+                                    "Administrator description"
+                                )
+                                cameraActivityResultLauncher.launch(intent)
+                            }
+                        } else {
+                            requestCameraPermission(gridLayout.inturderAlertSwitch)
+                        }
+
+                }
                 gridLayout.inturderAlertSwitch.setOnCheckedChangeListener { compoundButton, bool ->
                     if (compoundButton.isPressed) {
                         if (!bool) {
@@ -214,6 +259,52 @@ class FragmentInturderDetectionDetail :
                 gridLayout.topGrid.visibility = View.GONE
                 linearlayout.inturderAlertSwitch.isChecked =
                     dbHelper?.chkBroadCast(Intruder_Selfie) ?: return
+                activeAnimationView.clickWithThrottle {
+
+                    if (dbHelper?.getBooleanData(context?:return@clickWithThrottle,Intruder_Selfie,true)!!) {
+                        startLottieAnimation(
+                            activeAnimationView,
+                            activeAnimationViewText,
+                            false
+                        )
+                        dbHelper?.setBroadCast(Intruder_Selfie, false)
+                        gridLayout.inturderAlertSwitch.isChecked=false
+                    } else if (ContextCompat.checkSelfPermission(
+                            context ?: return@clickWithThrottle,
+                            CAMERA_PERMISSION
+                        ) == 0
+                    ) {
+                        val devicePolicyManager = mDevicePolicyManager
+                        if (devicePolicyManager == null || devicePolicyManager.isAdminActive(
+                                (mComponentName) ?: return@clickWithThrottle
+                            )
+                        ) {
+                            startLottieAnimation(
+                                activeAnimationView,
+                                activeAnimationViewText,
+                                true
+                            )
+                            dbHelper?.setBroadCast(Intruder_Selfie, true)
+                            gridLayout.inturderAlertSwitch.isChecked=true
+                            if (!isServiceRunning()) {
+                                autoServiceFunctionIntruder(true, dbHelper)
+                            }
+                            return@clickWithThrottle
+                        } else {
+                            val intent = Intent("android.app.action.ADD_DEVICE_ADMIN")
+                            intent.putExtra("android.app.extra.DEVICE_ADMIN", mComponentName)
+                            intent.putExtra(
+                                "android.app.extra.ADD_EXPLANATION",
+                                "Administrator description"
+                            )
+                            cameraActivityResultLauncher.launch(intent)
+                        }
+                    } else {
+                        requestCameraPermission(
+                            linearlayout.inturderAlertSwitch
+                        )
+                    }
+                }
                 linearlayout.inturderAlertSwitch.setOnCheckedChangeListener { compoundButton, bool ->
                     if (compoundButton.isPressed) {
                         if (!bool) {

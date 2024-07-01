@@ -114,6 +114,44 @@ class FragmentPasswordDetail :
                 gridLayout.topGrid.visibility = View.VISIBLE
                 linearlayout.topLinear.visibility = View.GONE
                 gridLayout.titleText.text = model?.maniTextTitle ?: return
+                activeAnimationView.clickWithThrottle {
+                    if ((dbHelper?.getBooleanData(context?:return@clickWithThrottle,Intruder_Alarm,true)==true)) {
+                            startLottieAnimation(
+                                activeAnimationView,
+                                activeAnimationViewText,
+                                false
+                            )
+                            dbHelper?.setBroadCast(Intruder_Alarm, false)
+                        gridLayout.customSwitch.isChecked=false
+                        } else {
+                            val devicePolicyManager = mDevicePolicyManager
+                            if (devicePolicyManager == null || devicePolicyManager.isAdminActive(
+                                    (mComponentName) ?: return@clickWithThrottle
+                                )
+                            ) {
+                                startLottieAnimation(
+                                    activeAnimationView,
+                                    activeAnimationViewText,
+                                    true
+                                )
+                                dbHelper?.setBroadCast(Intruder_Alarm, true)
+                                gridLayout.customSwitch.isChecked=true
+                                if (!isServiceRunning()) {
+                                    autoServiceFunctionIntruder(true, dbHelper)
+                                }
+                                return@clickWithThrottle
+                            } else {
+                                val intent = Intent("android.app.action.ADD_DEVICE_ADMIN")
+                                intent.putExtra("android.app.extra.DEVICE_ADMIN", mComponentName)
+                                intent.putExtra(
+                                    "android.app.extra.ADD_EXPLANATION",
+                                    "Administrator description"
+                                )
+                                startActivityForResult(intent, 3)
+                            }
+                        }
+
+                }
                 gridLayout.customSwitch.setOnCheckedChangeListener { compoundButton, bool ->
                     if (compoundButton.isPressed) {
                         if (!bool) {
@@ -190,6 +228,44 @@ class FragmentPasswordDetail :
                 linearlayout.topLinear.visibility = View.VISIBLE
                 gridLayout.topGrid.visibility = View.GONE
                 linearlayout.titleText.text = model?.maniTextTitle ?: return
+                activeAnimationView.clickWithThrottle {
+                    if ((dbHelper?.getBooleanData(context?:return@clickWithThrottle,Intruder_Alarm,true)==true)!!) {
+                            startLottieAnimation(
+                                activeAnimationView,
+                                activeAnimationViewText,
+                                false
+                            )
+                            dbHelper?.setBroadCast(Intruder_Alarm, false)
+                        gridLayout.customSwitch.isChecked=false
+                        } else {
+                        val devicePolicyManager = mDevicePolicyManager
+                        if (devicePolicyManager == null || devicePolicyManager.isAdminActive(
+                                (mComponentName) ?: return@clickWithThrottle
+                            )
+                        ) {
+                            startLottieAnimation(
+                                activeAnimationView,
+                                activeAnimationViewText,
+                                true
+                            )
+                            dbHelper?.setBroadCast(Intruder_Alarm, true)
+                            gridLayout.customSwitch.isChecked=true
+                            if (!isServiceRunning()) {
+                                autoServiceFunctionIntruder(true, dbHelper)
+                            }
+                            return@clickWithThrottle
+                        } else {
+                            val intent = Intent("android.app.action.ADD_DEVICE_ADMIN")
+                            intent.putExtra("android.app.extra.DEVICE_ADMIN", mComponentName)
+                            intent.putExtra(
+                                "android.app.extra.ADD_EXPLANATION",
+                                "Administrator description"
+                            )
+                            startActivityForResult(intent, 3)
+                        }
+                    }
+
+                }
                 linearlayout.customSwitch.setOnCheckedChangeListener { compoundButton, bool ->
                     if (compoundButton.isPressed) {
                         if (!bool) {

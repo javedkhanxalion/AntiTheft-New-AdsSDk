@@ -67,14 +67,14 @@
 
     <TextView
         android:id="@+id/nextApp"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_22sdp"
         android:layout_marginEnd="@dimen/_20sdp"
         android:background="@drawable/rect_btn_intro_new"
         android:gravity="center"
         android:text="@string/next"
         android:textColor="#0904FF"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="@id/skipAppHide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/skipAppHide"

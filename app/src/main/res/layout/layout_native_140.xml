@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="140dp"
+    android:layout_height="wrap_content"
     android:padding="@dimen/_5sdp"
     android:layout_margin="@dimen/_5sdp"
     android:background="@drawable/ads_rect_new"
@@ -86,7 +86,7 @@
         <TextView
             android:id="@+id/custom_call_to_action"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ads_button_size"
+            android:layout_height="@dimen/_35sdp"
             android:layout_alignParentEnd="true"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="8dp"

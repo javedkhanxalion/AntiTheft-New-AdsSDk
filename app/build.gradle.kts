@@ -6,6 +6,11 @@ plugins {
     id("com.google.firebase.firebase-perf")
 }
 
+/*applovin {
+    apiKey = "VATVl7pTJ6oNIoMM7otDADAmy-0JbXZ-D38K6Lbz1SFBbZOFNX2epHOE5qJtllf3NoIbG1ShbnGGv-FuHhmwmt"
+}*/
+
+
 android {
     signingConfigs {
         create("release") {
@@ -27,6 +32,8 @@ android {
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "AntiThief_v$versionName($versionCode)")
+
+
     }
 
 
@@ -110,6 +117,7 @@ dependencies {
     implementation("com.google.ads.interactivemedia.v3:interactivemedia:3.33.0")
     implementation("androidx.multidex:multidex:2.0.1")
     implementation ("com.google.code.gson:gson:2.8.8")
+    implementation ("com.applovin:applovin-sdk:11.8.0")
 //    implementation ("net.pubnative:hybid.sdk:3.0.0")
 }
 
