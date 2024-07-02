@@ -113,12 +113,11 @@ dependencies {
     //shimmer
     implementation("com.facebook.shimmer:shimmer:0.5.0")
 //    implementation("com.ikame.android-sdk:ikm-sdk-debug:2.6.530")
-//    implementation ("com.ikame.android-sdk:pub-microzone-antithef-release:2.6.740-beta")
     implementation ("com.ikame.android-sdk:pub-microzone-antithef-release:2.6.750-beta")
     implementation("com.google.ads.interactivemedia.v3:interactivemedia:3.33.0")
     implementation("androidx.multidex:multidex:2.0.1")
     implementation ("com.google.code.gson:gson:2.8.8")
-    implementation ("com.applovin:applovin-sdk:12.1.0")
+//    implementation ("com.applovin:applovin-sdk:12.1.0")
 //    implementation ("net.pubnative:hybid.sdk:3.0.0")
 }
 

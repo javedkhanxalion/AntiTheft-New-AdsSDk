@@ -48,7 +48,6 @@ class AdFragment : Fragment() {
 //            constrainWidth(myView.id, ConstraintSet.MATCH_CONSTRAINT)
 //            constrainHeight(myView.id, ConstraintSet.MATCH_CONSTRAINT)
 //        }
-//
 //        set.applyTo(constraintLayout)
         loadNative()
         SDKBaseController.getInstance().preloadNativeAd(
@@ -79,12 +78,15 @@ class AdFragment : Fragment() {
                 override fun onAdsLoaded() {
                     super.onAdsLoaded()
                     _binding?.mainAdsNative?.visibility = View.VISIBLE
+                    _binding?.adContent?.visibility = View.INVISIBLE
                     _binding?.progressBar?.visibility = View.INVISIBLE
                 }
 
                 override fun onAdsLoadFail() {
                     super.onAdsLoadFail()
-                    _binding?.mainAdsNative?.visibility = View.GONE
+                    _binding?.mainAdsNative?.visibility = View.INVISIBLE
+                    _binding?.adContent?.visibility = View.VISIBLE
+                    _binding?.progressBar?.visibility = View.VISIBLE
                 }
             }
         )

@@ -820,7 +820,12 @@ fun Fragment.requestCameraPermission(view: Switch) {
             CAMERA_PERMISSION
         )
     ) {
-        android.app.AlertDialog.Builder(context).setTitle(getString(R.string.permission_needed))
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(CAMERA_PERMISSION),
+            2
+        )
+      /*  android.app.AlertDialog.Builder(context).setTitle(getString(R.string.permission_needed))
             .setMessage(getString(R.string.camera_permission)).setPositiveButton(
                 getString(R.string.ok)
             ) { _, _ ->
@@ -834,7 +839,7 @@ fun Fragment.requestCameraPermission(view: Switch) {
             ) { dialogInterface, _ ->
                 view.isChecked = false
                 dialogInterface.dismiss()
-            }.create().show()
+            }.create().show()*/
     } else {
         ActivityCompat.requestPermissions(
             requireActivity(),
@@ -854,6 +859,7 @@ fun Fragment.requestCameraPermissionAudio() {
         ) != 0
     ) {
         android.app.AlertDialog.Builder(context).setTitle(getString(R.string.permission_needed))
+        android.app.AlertDialog.Builder(context).setCancelable(false)
             .setMessage(getString(R.string.camera_permission)).setPositiveButton(
                 getString(R.string.ok)
             ) { _, _ ->

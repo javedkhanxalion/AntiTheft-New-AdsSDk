@@ -80,6 +80,7 @@ class SplashFragment :
         dbHelper?.getStringData(requireContext(), LANG_CODE, "en")?.let {
             setLocaleMain(it)
         }
+
         if (!isInternetAvailable(context ?: return)) {
           showInternetDialog(
                 onPositiveButtonClick = {
@@ -101,8 +102,13 @@ class SplashFragment :
         }else{
             isSplashDialog=false
         }
+        SDKBaseController.getInstance().onDataInitSuccessListener = CommonAdsAction {
+            //do something
+        }
+        SDKBaseController.getInstance().onDataGetSuccessListener = {
+            //do something
+        }
         loadBanner()
-        loadRemote()
         if (dbHelper?.getBooleanData(
                 requireContext(),
                 IS_FIRST,
@@ -153,6 +159,7 @@ class SplashFragment :
                 "home_native"
             )
         }
+        loadRemote()
         setupBackPressedCallback {
             //Do Nothing
         }
@@ -162,12 +169,7 @@ class SplashFragment :
         outState.clear()
     }
     private fun initView() {
-        SDKBaseController.getInstance().onDataInitSuccessListener = CommonAdsAction {
-            //do something
-        }
-        SDKBaseController.getInstance().onDataGetSuccessListener = {
-            //do something
-        }
+
         mOpenMainAction = {
             getIntentMove()
         }
@@ -203,16 +205,9 @@ class SplashFragment :
                             "loading_fragment_load_next_btn_main",
                             "loading_fragment_load_next_btn_main -->  Click"
                         )
-//                        if (IkmSdkUtils.isUserIAPAvailable()) {
                         return findNavController().navigate(
                             R.id.myMainMenuFragment
                         )
-//                        } else {
-//                            findNavController().navigate(
-//                                R.id.FragmentInAppScreen,
-//                                bundleOf("Is_From_Splash" to true)
-//                            )
-//                        }
                     }
 
                     1 -> {
@@ -232,16 +227,9 @@ class SplashFragment :
                                 "loading_fragment_load_next_btn_main",
                                 "loading_fragment_load_next_btn_main -->  Click"
                             )
-//                            return if (IkmSdkUtils.isUserIAPAvailable()) {
                             return findNavController().navigate(
                                 R.id.myMainMenuFragment
                             )
-//                            } else {
-//                                findNavController().navigate(
-//                                    R.id.FragmentInAppScreen,
-//                                    bundleOf("Is_From_Splash" to true)
-//                                )
-//                            }
                         }
                     }
 
@@ -275,16 +263,9 @@ class SplashFragment :
                         "loading_fragment_load_next_btn_main",
                         "loading_fragment_load_next_btn_main -->  Click"
                     )
-//                    return if (IkmSdkUtils.isUserIAPAvailable()) {
                     return findNavController().navigate(
                         R.id.myMainMenuFragment
                     )
-//                    } else {
-//                        findNavController().navigate(
-//                            R.id.FragmentInAppScreen,
-//                            bundleOf("Is_From_Splash" to true)
-//                        )
-//                    }
 
                 }
             }
@@ -336,6 +317,7 @@ class SplashFragment :
             override fun onFail() {
             }
         })
+
         initView()
     }
     private fun parseJsonWithGson(jsonString: String) {
