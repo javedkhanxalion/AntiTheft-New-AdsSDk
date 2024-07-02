@@ -46,7 +46,6 @@ class FragmentInturderDetectionDetail :
     private var mDevicePolicyManager: DevicePolicyManager? = null
     private var isGridLayout: Boolean? = null
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -65,18 +64,16 @@ class FragmentInturderDetectionDetail :
             }
         }
         loadBanner()
-        SDKBaseController.getInstance().preloadNativeAd(
-            activity ?: return, "intruder_native",
-            "intruder_native", object : CustomSDKAdsListenerAdapter() {
+        SDKBaseController.getInstance().preloadNativeAd(activity ?: return,
+            "intruder_native",
+            "intruder_native",
+            object : CustomSDKAdsListenerAdapter() {
                 override fun onAdsLoaded() {
                     super.onAdsLoaded()
                     Log.d("check_ads", "onAdsLoaded: Load Ad")
                 }
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                }
-            }
-        )
+
+            })
         dbHelper?.getBooleanData(context ?: return, IS_GRID, true)?.let {
             isGridLayout = it
             loadLayoutDirection(it)
@@ -100,18 +97,59 @@ class FragmentInturderDetectionDetail :
                 topLay.setLayoutBtn.setImage(R.drawable.icon_grid)
                 gridLayout.topGrid.visibility = View.VISIBLE
                 linearlayout.topLinear.visibility = View.GONE
+                activeAnimationView.clickWithThrottle {
+                    if ((dbHelper?.getBooleanData(
+                            context ?: return@clickWithThrottle,
+                            Intruder_Selfie,
+                            true
+                        ) == true)
+                    ) {
+                        startLottieAnimation(
+                            activeAnimationView, activeAnimationViewText, false
+                        )
+                        dbHelper?.setBroadCast(Intruder_Selfie, false)
+                        gridLayout.inturderAlertSwitch.isChecked = false
+                    } else if (ContextCompat.checkSelfPermission(
+                            context ?: return@clickWithThrottle, CAMERA_PERMISSION
+                        ) == 0
+                    ) {
+                        val devicePolicyManager = mDevicePolicyManager
+                        if (devicePolicyManager == null || devicePolicyManager.isAdminActive(
+                                (mComponentName) ?: return@clickWithThrottle
+                            )
+                        ) {
+                            startLottieAnimation(
+                                activeAnimationView, activeAnimationViewText, true
+                            )
+                            dbHelper?.setBroadCast(Intruder_Selfie, true)
+                            gridLayout.inturderAlertSwitch.isChecked = true
+                            if (!isServiceRunning()) {
+                                autoServiceFunctionIntruder(true, dbHelper)
+                            }
+                            return@clickWithThrottle
+                        } else {
+                            val intent = Intent("android.app.action.ADD_DEVICE_ADMIN")
+                            intent.putExtra("android.app.extra.DEVICE_ADMIN", mComponentName)
+                            intent.putExtra(
+                                "android.app.extra.ADD_EXPLANATION", "Administrator description"
+                            )
+                            cameraActivityResultLauncher.launch(intent)
+                        }
+                    } else {
+                        isHideAds(true)
+                        requestCameraPermission(gridLayout.inturderAlertSwitch)
+                    }
+
+                }
                 gridLayout.inturderAlertSwitch.setOnCheckedChangeListener { compoundButton, bool ->
                     if (compoundButton.isPressed) {
                         if (!bool) {
                             startLottieAnimation(
-                                activeAnimationView,
-                                activeAnimationViewText,
-                                false
+                                activeAnimationView, activeAnimationViewText, false
                             )
                             dbHelper?.setBroadCast(Intruder_Selfie, false)
                         } else if (ContextCompat.checkSelfPermission(
-                                context ?: return@setOnCheckedChangeListener,
-                                CAMERA_PERMISSION
+                                context ?: return@setOnCheckedChangeListener, CAMERA_PERMISSION
                             ) == 0
                         ) {
                             val devicePolicyManager = mDevicePolicyManager
@@ -120,9 +158,7 @@ class FragmentInturderDetectionDetail :
                                 )
                             ) {
                                 startLottieAnimation(
-                                    activeAnimationView,
-                                    activeAnimationViewText,
-                                    true
+                                    activeAnimationView, activeAnimationViewText, true
                                 )
                                 dbHelper?.setBroadCast(Intruder_Selfie, true)
                                 if (!isServiceRunning()) {
@@ -133,12 +169,12 @@ class FragmentInturderDetectionDetail :
                                 val intent = Intent("android.app.action.ADD_DEVICE_ADMIN")
                                 intent.putExtra("android.app.extra.DEVICE_ADMIN", mComponentName)
                                 intent.putExtra(
-                                    "android.app.extra.ADD_EXPLANATION",
-                                    "Administrator description"
+                                    "android.app.extra.ADD_EXPLANATION", "Administrator description"
                                 )
                                 cameraActivityResultLauncher.launch(intent)
                             }
                         } else {
+                            isHideAds(true)
                             requestCameraPermission(gridLayout.inturderAlertSwitch)
                         }
                     }
@@ -214,18 +250,61 @@ class FragmentInturderDetectionDetail :
                 gridLayout.topGrid.visibility = View.GONE
                 linearlayout.inturderAlertSwitch.isChecked =
                     dbHelper?.chkBroadCast(Intruder_Selfie) ?: return
+                activeAnimationView.clickWithThrottle {
+
+                    if (dbHelper?.getBooleanData(
+                            context ?: return@clickWithThrottle,
+                            Intruder_Selfie,
+                            true
+                        )!!
+                    ) {
+                        startLottieAnimation(
+                            activeAnimationView, activeAnimationViewText, false
+                        )
+                        dbHelper?.setBroadCast(Intruder_Selfie, false)
+                        gridLayout.inturderAlertSwitch.isChecked = false
+                    } else if (ContextCompat.checkSelfPermission(
+                            context ?: return@clickWithThrottle, CAMERA_PERMISSION
+                        ) == 0
+                    ) {
+                        val devicePolicyManager = mDevicePolicyManager
+                        if (devicePolicyManager == null || devicePolicyManager.isAdminActive(
+                                (mComponentName) ?: return@clickWithThrottle
+                            )
+                        ) {
+                            startLottieAnimation(
+                                activeAnimationView, activeAnimationViewText, true
+                            )
+                            dbHelper?.setBroadCast(Intruder_Selfie, true)
+                            gridLayout.inturderAlertSwitch.isChecked = true
+                            if (!isServiceRunning()) {
+                                autoServiceFunctionIntruder(true, dbHelper)
+                            }
+                            return@clickWithThrottle
+                        } else {
+                            val intent = Intent("android.app.action.ADD_DEVICE_ADMIN")
+                            intent.putExtra("android.app.extra.DEVICE_ADMIN", mComponentName)
+                            intent.putExtra(
+                                "android.app.extra.ADD_EXPLANATION", "Administrator description"
+                            )
+                            cameraActivityResultLauncher.launch(intent)
+                        }
+                    } else {
+                        isHideAds(true)
+                        requestCameraPermission(
+                            linearlayout.inturderAlertSwitch
+                        )
+                    }
+                }
                 linearlayout.inturderAlertSwitch.setOnCheckedChangeListener { compoundButton, bool ->
                     if (compoundButton.isPressed) {
                         if (!bool) {
                             startLottieAnimation(
-                                activeAnimationView,
-                                activeAnimationViewText,
-                                false
+                                activeAnimationView, activeAnimationViewText, false
                             )
                             dbHelper?.setBroadCast(Intruder_Selfie, false)
                         } else if (ContextCompat.checkSelfPermission(
-                                context ?: return@setOnCheckedChangeListener,
-                                CAMERA_PERMISSION
+                                context ?: return@setOnCheckedChangeListener, CAMERA_PERMISSION
                             ) == 0
                         ) {
                             val devicePolicyManager = mDevicePolicyManager
@@ -234,9 +313,7 @@ class FragmentInturderDetectionDetail :
                                 )
                             ) {
                                 startLottieAnimation(
-                                    activeAnimationView,
-                                    activeAnimationViewText,
-                                    true
+                                    activeAnimationView, activeAnimationViewText, true
                                 )
                                 dbHelper?.setBroadCast(Intruder_Selfie, true)
                                 if (!isServiceRunning()) {
@@ -247,12 +324,12 @@ class FragmentInturderDetectionDetail :
                                 val intent = Intent("android.app.action.ADD_DEVICE_ADMIN")
                                 intent.putExtra("android.app.extra.DEVICE_ADMIN", mComponentName)
                                 intent.putExtra(
-                                    "android.app.extra.ADD_EXPLANATION",
-                                    "Administrator description"
+                                    "android.app.extra.ADD_EXPLANATION", "Administrator description"
                                 )
                                 cameraActivityResultLauncher.launch(intent)
                             }
                         } else {
+                            isHideAds(true)
                             requestCameraPermission(
                                 linearlayout.inturderAlertSwitch
                             )
@@ -329,13 +406,10 @@ class FragmentInturderDetectionDetail :
         if (result.resultCode == RESULT_OK) {
             // Extract data from the result Intent if needed
             if (ContextCompat.checkSelfPermission(
-                    context ?: return@registerForActivityResult,
-                    CAMERA_PERMISSION
-                ) == 0
-                && (mDevicePolicyManager == null || mDevicePolicyManager!!.isAdminActive(
+                    context ?: return@registerForActivityResult, CAMERA_PERMISSION
+                ) == 0 && (mDevicePolicyManager == null || mDevicePolicyManager!!.isAdminActive(
                     (mComponentName) ?: return@registerForActivityResult
-                )
-                        )
+                ))
             ) {
                 dbHelper?.setBroadCast(Intruder_Selfie, true)
             }
@@ -344,6 +418,7 @@ class FragmentInturderDetectionDetail :
 
     override fun onResume() {
         super.onResume()
+        isHideAds(false)
         checkSwitch()
         checkPinAttempt()
     }
@@ -380,8 +455,7 @@ class FragmentInturderDetectionDetail :
                 dbHelper?.chkBroadCast(Intruder_Selfie) ?: return
             linearlayout.inturderAlertSwitch.isChecked =
                 dbHelper?.chkBroadCast(Intruder_Selfie) ?: return
-            gridLayout.stopAlertSwitch.isChecked =
-                dbHelper?.chkBroadCast(Intruder_Alarm) ?: return
+            gridLayout.stopAlertSwitch.isChecked = dbHelper?.chkBroadCast(Intruder_Alarm) ?: return
             linearlayout.stopAlertSwitch.isChecked =
                 dbHelper?.chkBroadCast(Intruder_Alarm) ?: return
 
@@ -390,61 +464,88 @@ class FragmentInturderDetectionDetail :
 
     private fun loadNativeGrid() {
         val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(intruderimage_bottom,_binding?.gridLayout?.nativeExitAd!!,context?:return),
-            null, false
+            getNativeLayout(
+                intruderimage_bottom,
+                _binding?.gridLayout?.nativeExitAd!!,
+                context ?: return
+            ), null, false
         ) as? IkmWidgetAdLayout
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
         adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
         adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-        _binding?.gridLayout?.nativeExitAd?.loadAd(
-            activity ?: return,  getNativeLayoutShimmer(intruderimage_bottom),
-            adLayout!!, "intruder_native",
-            "intruder_native", object : CustomSDKAdsListenerAdapter() {
+        _binding?.gridLayout?.nativeExitAd?.loadAd(activity ?: return,
+            getNativeLayoutShimmer(intruderimage_bottom),
+            adLayout!!,
+            "intruder_native",
+            "intruder_native",
+            object : CustomSDKAdsListenerAdapter() {
 
                 override fun onAdsLoadFail() {
                     super.onAdsLoadFail()
                     _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
                 }
-            }
-        )
+            })
 
     }
 
     private fun loadNativeList() {
         val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(intruderimage_bottom,_binding?.linearlayout?.nativeExitAd!!,context?:return),
-            null, false
+            getNativeLayout(
+                intruderimage_bottom,
+                _binding?.linearlayout?.nativeExitAd!!,
+                context ?: return
+            ), null, false
         ) as? IkmWidgetAdLayout
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
         adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
         adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
         adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
         adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-        _binding?.linearlayout?.nativeExitAd?.loadAd(
-            activity ?: return,  getNativeLayoutShimmer(intruderimage_bottom),
-            adLayout!!, "intruder_native",
-            "intruder_native", object : CustomSDKAdsListenerAdapter() {
+        _binding?.linearlayout?.nativeExitAd?.loadAd(activity ?: return,
+            getNativeLayoutShimmer(intruderimage_bottom),
+            adLayout!!,
+            "intruder_native",
+            "intruder_native",
+            object : CustomSDKAdsListenerAdapter() {
 
                 override fun onAdsLoadFail() {
                     super.onAdsLoadFail()
                     _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
                 }
-            }
-        )
+            })
     }
 
     private fun loadBanner() {
-        binding?.bannerAds?.loadAd(
-            activity, "antithef_banner",
-            "antithef_banner", object : CustomSDKAdsListenerAdapter() {
+        binding?.bannerAds?.loadAd(activity,
+            "antithef_banner",
+            "antithef_banner",
+            object : CustomSDKAdsListenerAdapter() {
                 override fun onAdsLoadFail() {
                     super.onAdsLoadFail()
                     _binding?.bannerAds?.visibility = View.GONE
                 }
-            }
-        )
+            })
     }
+
+    private fun isHideAds(isBoolean: Boolean) {
+        if (isBoolean) {
+            _binding?.bannerAds?.visibility = View.GONE
+            if (isGridLayout == true) {
+                _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
+            } else {
+                _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
+            }
+        } else {
+            _binding?.bannerAds?.visibility = View.VISIBLE
+            if (isGridLayout == true) {
+                _binding?.gridLayout?.nativeExitAd?.visibility = View.VISIBLE
+            } else {
+                _binding?.linearlayout?.nativeExitAd?.visibility = View.VISIBLE
+            }
+        }
+    }
+
 
 }

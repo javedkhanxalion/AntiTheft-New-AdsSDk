@@ -131,7 +131,7 @@ class ShowFullImageFragment :
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
-                showInternetDialog(
+  /*              showInternetDialog(
                     onPositiveButtonClick = {
                         isInternetDialog = true
                         openMobileDataSettings(context ?: requireContext())
@@ -142,7 +142,7 @@ class ShowFullImageFragment :
                     },
                     onCloseButtonClick = {
                     }
-                )
+                )*/
                 return
             }else{
                 IkmSdkController.setEnableShowResumeAds(true)

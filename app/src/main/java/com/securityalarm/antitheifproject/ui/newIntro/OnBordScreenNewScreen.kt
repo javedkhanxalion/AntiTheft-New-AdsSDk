@@ -110,10 +110,15 @@ class OnBordScreenNewScreen :
             "intro_fragment_move_to_next",
             "intro_fragment_move_to_next -->  Click"
         )
-        sharedPrefUtils?.saveData(context ?: requireContext(), IS_INTRO, true)
-        findNavController().navigate(
-            R.id.myMainMenuFragment
-        )
+        if(isInternetAvailable && Onboarding_Full_Native ==0){
+            _binding?.viewPager?.setCurrentItem(getItem(+2), true)
+        }else {
+            _binding?.viewPager?.setCurrentItem(getItem(+3), true)
+        }
+//        sharedPrefUtils?.saveData(context ?: requireContext(), IS_INTRO, true)
+//        findNavController().navigate(
+//            R.id.myMainMenuFragment
+//        )
     }
 
     override fun onPause() {
@@ -128,18 +133,6 @@ class OnBordScreenNewScreen :
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
-                showInternetDialog(
-                    onPositiveButtonClick = {
-                        isInternetDialog = true
-                        openMobileDataSettings(context ?: requireContext())
-                    },
-                    onNegitiveButtonClick = {
-                        isInternetDialog = true
-                        openWifiSettings(context ?: requireContext())
-                    },
-                    onCloseButtonClick = {
-                    }
-                )
                 return
             }else{
                 if(currentpage==1){

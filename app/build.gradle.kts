@@ -4,6 +4,11 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
+    id("applovin-quality-service")
+}
+applovin {
+    apiKey =
+        "VATVl7pTJ6oNIoMM7otDADAmy-0JbXZ-D38K6Lbz1SFBbZOFNX2epHOE5qJtllf3NoIbG1ShbnGGv-FuHhmwmt"
 }
 
 android {
@@ -22,11 +27,13 @@ android {
         applicationId = "com.antitheftalarm.dont.touch.phone.finder.phonesecurity.debug"
         minSdk = 24
         targetSdk = 34
-        versionCode = 22
-        versionName = "3.2"
+        versionCode = 24
+        versionName = "3.4"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "AntiThief_v$versionName($versionCode)")
+
+
     }
 
 
@@ -46,6 +53,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
             signingConfig = signingConfigs.getByName("release")
         }
         buildFeatures {
@@ -75,7 +83,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
 // The default implementations
@@ -105,11 +113,11 @@ dependencies {
     //shimmer
     implementation("com.facebook.shimmer:shimmer:0.5.0")
 //    implementation("com.ikame.android-sdk:ikm-sdk-debug:2.6.530")
-//    implementation ("com.ikame.android-sdk:pub-microzone-antithef-release:2.6.740-beta")
     implementation ("com.ikame.android-sdk:pub-microzone-antithef-release:2.6.750-beta")
     implementation("com.google.ads.interactivemedia.v3:interactivemedia:3.33.0")
     implementation("androidx.multidex:multidex:2.0.1")
     implementation ("com.google.code.gson:gson:2.8.8")
+//    implementation ("com.applovin:applovin-sdk:12.1.0")
 //    implementation ("net.pubnative:hybid.sdk:3.0.0")
 }
 

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="190dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/ads_rect_new"
     android:padding="@dimen/_5sdp"
     android:layout_margin="@dimen/_5sdp"
@@ -14,13 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/ads_padding"
-        android:layout_marginVertical="@dimen/ads_padding">
+        android:layout_marginVertical="@dimen/ads_padding"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/custom_containerAds"
             android:layout_width="0dp"
-            android:layout_height="@dimen/sdk_native_height"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/custom_media"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/custom_media"
             app:layout_constraintTop_toTopOf="parent">
@@ -100,16 +102,13 @@
         <TextView
             android:id="@+id/custom_call_to_action"
             android:layout_width="0dp"
-            android:layout_height="34dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginHorizontal="6dp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_marginVertical="@dimen/_5sdp"
             android:background="@drawable/bg_btn_ads_round"
             android:fontFamily="@font/roboto_medium"
             android:gravity="center"
-            android:paddingHorizontal="8dp"
             android:textColor="@color/color_white_ads"
-            android:textSize="10dp"
+            android:textSize="@dimen/_14sdp"
             app:layout_constraintTop_toBottomOf="@id/custom_media"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

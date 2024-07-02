@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.navigation.fragment.findNavController
@@ -35,14 +35,11 @@ import com.securityalarm.antitheifproject.utilities.LANG_SCREEN
 import com.securityalarm.antitheifproject.utilities.NOTIFICATION_PERMISSION
 import com.securityalarm.antitheifproject.utilities.PHONE_PERMISSION
 import com.securityalarm.antitheifproject.utilities.autoServiceFunction
-import com.securityalarm.antitheifproject.utilities.checkNotificationPermission
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.getMenuListGrid
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.moreApp
-import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
-import com.securityalarm.antitheifproject.utilities.openWifiSettings
 import com.securityalarm.antitheifproject.utilities.privacyPolicy
 import com.securityalarm.antitheifproject.utilities.rateUs
 import com.securityalarm.antitheifproject.utilities.requestCameraPermissionAudio
@@ -50,12 +47,12 @@ import com.securityalarm.antitheifproject.utilities.requestCameraPermissionNotif
 import com.securityalarm.antitheifproject.utilities.setImage
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
 import com.securityalarm.antitheifproject.utilities.shareApp
-import com.securityalarm.antitheifproject.utilities.showInternetDialog
 import com.securityalarm.antitheifproject.utilities.showRatingDialog
 import com.securityalarm.antitheifproject.utilities.showServiceDialog
 import com.securityalarm.antitheifproject.utilities.showToast
 
-class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentMainMenuActivityBinding::inflate) {
+class MainMenuFragment :
+    BaseFragment<FragmentMainMenuActivityBinding>(FragmentMainMenuActivityBinding::inflate) {
 
     private var adapterGrid: MainMenuGridAdapter? = null
     private var adapterLinear: MainMenuLinearAdapter? = null
@@ -64,18 +61,23 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
     private var isInternetDialog: Boolean = false
     private var isInternetPermission: Boolean = true
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAnalytics("main_menu_fragment_open", "main_menu_fragment_open -->  Click")
         sharedPrefUtils = DbHelper(context ?: return)
-        if(IkmSdkUtils.isUserIAPAvailable()){
-            _binding?.navView?.viewTop?.visibility=View.INVISIBLE
-            _binding?.navView?.buyText?.visibility=View.INVISIBLE
-            _binding?.navView?.rateUs?.visibility=View.INVISIBLE
+        // Register the receiver for local broadcasts
+        // Register the receiver for connectivity changes
+
+
+        if (IkmSdkUtils.isUserIAPAvailable()) {
+            _binding?.navViewLayout?.viewTop?.visibility = View.INVISIBLE
+            _binding?.navViewLayout?.buyText?.visibility = View.INVISIBLE
+            _binding?.navViewLayout?.rateUs?.visibility = View.INVISIBLE
         }
         setupBackPressedCallback {
-            if (_binding?.drawerLayout?.isDrawerOpen(GravityCompat.START) == true) {
-                _binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+            if (_binding?.navViewLayout?.navigationMain?.isVisible == true) {
+                _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
             } else {
                 SDKBaseController.getInstance().showInterstitialAds(
                     activity,
@@ -86,15 +88,20 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                         override fun onClose() {
 //                            _binding?.mainLayout?.bannerAds?.visibility=View.GONE
                         }
+
                         override fun onShow() {
 //                            _binding?.mainLayout?.bannerAds?.visibility=View.VISIBLE
                         }
                     },
                     adsListener = object : CommonAdsListenerAdapter() {
                         override fun onAdsShowFail(errorCode: Int) {
-                            val bottomSheetFragment = BottomSheetFragment(activity?:return)
-                            bottomSheetFragment.show(fragmentManager?:return, bottomSheetFragment.tag)
+                            val bottomSheetFragment = BottomSheetFragment(activity ?: return)
+                            bottomSheetFragment.show(
+                                fragmentManager ?: return,
+                                bottomSheetFragment.tag
+                            )
                         }
+
                         override fun onAdsDismiss() {
                             findNavController().navigate(R.id.FragmentExitScreen)
                         }
@@ -103,12 +110,15 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
             }
         }
         _binding?.run {
+            navViewLayout.backBtn.clickWithThrottle {
+                _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
+            }
             mainLayout.topLay.setLayoutBtn.clickWithThrottle {
                 loadLayoutDirection(!(isGridLayout ?: return@clickWithThrottle))
             }
             mainLayout.topLay.settingBtn.clickWithThrottle {
             }
-            navView.rateUsView.clickWithThrottle {
+            navViewLayout.rateUsView.clickWithThrottle {
                 showRatingDialog(onPositiveButtonClick = { it, _dialog ->
                     if (it >= 1F && it < 3F) {
                         _dialog.dismiss()
@@ -118,43 +128,44 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                         requireContext().rateUs()
                     }
                 })
-                drawerLayout.closeDrawer(GravityCompat.START)
+                _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
             }
-            navView.shareAppView.clickWithThrottle {
+            navViewLayout.shareAppView.clickWithThrottle {
                 requireContext().shareApp()
-                drawerLayout.closeDrawer(GravityCompat.START)
+                _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
             }
-            navView.privacyView.clickWithThrottle {
+            navViewLayout.privacyView.clickWithThrottle {
                 requireContext().privacyPolicy()
-                drawerLayout.closeDrawer(GravityCompat.START)
+                _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
             }
-            navView.moreAppView.clickWithThrottle {
+            navViewLayout.moreAppView.clickWithThrottle {
                 requireContext().moreApp()
-                drawerLayout.closeDrawer(GravityCompat.START)
+                _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
             }
-            navView.languageView.clickWithThrottle {
+            navViewLayout.languageView.clickWithThrottle {
                 firebaseAnalytics(
                     "main_menu_fragment_language_open",
                     "main_menu_fragment_language_open -->  Click"
                 )
                 findNavController().navigate(R.id.LanguageFragment, bundleOf(LANG_SCREEN to false))
-                drawerLayout.closeDrawer(GravityCompat.START)
+                _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
             }
-            navView.navigationMain.setOnClickListener { }
-            navView.customSwitch.setOnCheckedChangeListener { compoundButton, bool ->
+            navViewLayout.navigationMain.setOnClickListener { }
+            navViewLayout.customSwitch.setOnCheckedChangeListener { compoundButton, bool ->
                 if (compoundButton.isPressed) {
                     if (bool) {
                         if (!isServiceRunning()) {
                             autoServiceFunction(true)
-                            drawerLayout.closeDrawer(GravityCompat.START)
+                            _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
                         }
                     } else {
-                        drawerLayout.closeDrawer(GravityCompat.START)
                         showServiceDialog(
                             onPositiveNoClick = {
-                                navView.customSwitch.isChecked = true
+                                navViewLayout.customSwitch.isChecked = true
+                                _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
                             },
                             onPositiveYesClick = {
+                                _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
                                 if (isServiceRunning()) {
                                     autoServiceFunction(false)
                                 }
@@ -163,14 +174,13 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                 }
             }
             mainLayout.topLay.navMenu.clickWithThrottle {
-                drawerLayout.openDrawer(GravityCompat.START)
+                _binding?.navViewLayout?.navigationMain?.visibility = View.VISIBLE
             }
             sharedPrefUtils?.getBooleanData(context ?: return, IS_GRID, true)?.let {
                 loadLayoutDirection(it)
                 isGridLayout = it
             }
         }
-//        checkNotificationPermission(_binding?.mainLayout?.hideAd!!)
         val drawerView: View = view.findViewById(R.id.drawerLayout)
         if (drawerView is DrawerLayout) {
             drawerView.setDrawerListener(object : DrawerListener {
@@ -249,18 +259,22 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
         firebaseAnalytics(model.maniTextTitle, "${model.maniTextTitle}_open -->  Click")
         when (position) {
             0 -> {
-                SDKBaseController.getInstance().showInterstitialAds(
-                    activity ?: return,
+                SDKBaseController.getInstance().preloadNativeAd(
+                    activity ?: return, model.nativeId,
+                    model.nativeId,
+                    null
+                )
+                SDKBaseController.getInstance().showInterstitialAds(activity ?: return,
                     screen = "home_tabanyfuntion",
                     trackingScreen = "home_tabanyfuntion",
                     showLoading = true,
                     loadingCallback = object : SDKDialogLoadingCallback {
                         override fun onClose() {
-                            _binding?.mainLayout?.bannerAds?.visibility=View.GONE
+                            _binding?.mainLayout?.bannerAds?.visibility = View.GONE
                         }
 
                         override fun onShow() {
-                            _binding?.mainLayout?.bannerAds?.visibility=View.VISIBLE
+                            _binding?.mainLayout?.bannerAds?.visibility = View.VISIBLE
                         }
                     },
                     adsListener = object : CommonAdsListenerAdapter() {
@@ -271,65 +285,66 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                         override fun onAdsDismiss() {
                             findNavController().navigate(R.id.FragmentInturderDetectionDetail)
                         }
-                    }
-                )
+                    })
             }
 
             2 -> {
-                SDKBaseController.getInstance().showInterstitialAds(
-                    activity ?: return,
+                SDKBaseController.getInstance().preloadNativeAd(
+                    activity ?: return, model.nativeId,
+                    model.nativeId,
+                    null
+                )
+                SDKBaseController.getInstance().showInterstitialAds(activity ?: return,
                     screen = "home_tabanyfuntion",
                     trackingScreen = "home_tabanyfuntion",
                     showLoading = true,
                     loadingCallback = object : SDKDialogLoadingCallback {
                         override fun onClose() {
-                            _binding?.mainLayout?.bannerAds?.visibility=View.GONE
+                            _binding?.mainLayout?.bannerAds?.visibility = View.GONE
                         }
 
                         override fun onShow() {
-                            _binding?.mainLayout?.bannerAds?.visibility=View.VISIBLE
+                            _binding?.mainLayout?.bannerAds?.visibility = View.VISIBLE
                         }
                     },
                     adsListener = object : CommonAdsListenerAdapter() {
                         override fun onAdsShowFail(errorCode: Int) {
                             findNavController().navigate(
-                                R.id.FragmentPasswordDetail,
-                                bundleOf(ANTI_TITLE to model)
+                                R.id.FragmentPasswordDetail, bundleOf(ANTI_TITLE to model)
                             )
                         }
 
                         override fun onAdsDismiss() {
                             findNavController().navigate(
-                                R.id.FragmentPasswordDetail,
-                                bundleOf(ANTI_TITLE to model)
+                                R.id.FragmentPasswordDetail, bundleOf(ANTI_TITLE to model)
                             )
                         }
-                    }
-                )
+                    })
             }
 
             else -> {
                 if (ContextCompat.checkSelfPermission(
-                        context ?: return,
-                        AUDIO_PERMISSION
-                    ) == 0 &&
-                    ContextCompat.checkSelfPermission(
-                        context ?: return,
-                        PHONE_PERMISSION
+                        context ?: return, AUDIO_PERMISSION
+                    ) == 0 && ContextCompat.checkSelfPermission(
+                        context ?: return, PHONE_PERMISSION
                     ) == 0
                 ) {
-                    SDKBaseController.getInstance().showInterstitialAds(
-                        activity ?: return,
+                    SDKBaseController.getInstance().preloadNativeAd(
+                        activity ?: return, model.nativeId,
+                        model.nativeId,
+                        null
+                    )
+                    SDKBaseController.getInstance().showInterstitialAds(activity ?: return,
                         screen = "home_tabanyfuntion",
                         trackingScreen = "home_tabanyfuntion",
                         showLoading = true,
                         loadingCallback = object : SDKDialogLoadingCallback {
                             override fun onClose() {
-                                _binding?.mainLayout?.bannerAds?.visibility=View.GONE
+                                _binding?.mainLayout?.bannerAds?.visibility = View.GONE
                             }
 
                             override fun onShow() {
-                                _binding?.mainLayout?.bannerAds?.visibility=View.VISIBLE
+                                _binding?.mainLayout?.bannerAds?.visibility = View.VISIBLE
                             }
                         },
                         adsListener = object : CommonAdsListenerAdapter() {
@@ -346,10 +361,9 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                                     bundleOf(ANTI_TITLE to model)
                                 )
                             }
-                        }
-                    )
+                        })
                 } else {
-                    isInternetPermission=false
+                    isInternetPermission = false
                     _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
                     requestCameraPermissionAudio()
                 }
@@ -368,32 +382,32 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
             if (ContextCompat.checkSelfPermission(requireContext(), NOTIFICATION_PERMISSION) != 0) {
                 _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
                 requestCameraPermissionNotification(_binding?.mainLayout?.hideAd)
-            }else{
-                _binding?.mainLayout?.hideAd?.visibility=View.GONE
+            } else {
+                _binding?.mainLayout?.hideAd?.visibility = View.GONE
             }
-        }else{
-            _binding?.mainLayout?.hideAd?.visibility=View.GONE
+        } else {
+            _binding?.mainLayout?.hideAd?.visibility = View.GONE
         }
         sharedPrefUtils?.getBooleanData(context ?: return, IS_NOTIFICATION, false)?.let {
-            _binding?.navView?.customSwitch?.isChecked = it
+            _binding?.navViewLayout?.customSwitch?.isChecked = it
         }
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
-                showInternetDialog(
-                    onPositiveButtonClick = {
-                        isInternetDialog = true
-                        openMobileDataSettings(context ?: requireContext())
-                    },
-                    onNegitiveButtonClick = {
-                        isInternetDialog = true
-                        openWifiSettings(context ?: requireContext())
-                    },
-                    onCloseButtonClick = {
-                    }
-                )
+                /*   showInternetDialog(
+                       onPositiveButtonClick = {
+                           isInternetDialog = true
+                           openMobileDataSettings(context ?: requireContext())
+                       },
+                       onNegitiveButtonClick = {
+                           isInternetDialog = true
+                           openWifiSettings(context ?: requireContext())
+                       },
+                       onCloseButtonClick = {
+                       }
+                   )*/
                 return
-            }else{
+            } else {
                 IkmSdkController.setEnableShowResumeAds(true)
             }
         }
@@ -405,13 +419,13 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
             if (ContextCompat.checkSelfPermission(requireContext(), NOTIFICATION_PERMISSION) != 0) {
                 _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
             }
-        }else{
+        } else {
             _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
         }
-         if (!isInternetAvailable(context ?: return)) {
+        if (!isInternetAvailable(context ?: return)) {
             IkmSdkController.setEnableShowResumeAds(false)
         }
-        if(isInternetPermission) {
+        if (isInternetPermission) {
             isInternetDialog = true
         }
     }
@@ -428,5 +442,6 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
             }
         )
     }
+
 
 }

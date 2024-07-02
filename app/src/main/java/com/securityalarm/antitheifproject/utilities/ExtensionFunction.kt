@@ -20,6 +20,7 @@ import android.os.SystemClock
 import android.provider.Settings
 import android.util.Log
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -87,11 +88,8 @@ import com.securityalarm.antitheifproject.ui.FragmentDetectionSameFunction
 import com.securityalarm.antitheifproject.ui.MainMenuFragment
 import java.util.Locale
 
-var counter = 0
-var monthly_price = ""
-var yearly_price = ""
 var isIntroLanguageShow = true
-var isFlowOne = true
+var isSplashDialog = true
 
 var val_ad_native_Motion_Detection_screen = true
 var val_ad_native_Whistle_Detection_screen = true
@@ -100,19 +98,7 @@ var val_ad_native_clap_detection_screen = true
 var val_ad_native_Remove_Charger_screen = true
 var val_ad_native_Battery_Detection_screen = true
 var val_ad_native_Pocket_Detection_screen = true
-var val_ad_native_main_menu_screen = true
-var val_exit_dialog_native = true
 var isInternetAvailable = true
-
-var val_ad_native_app_open_screen = true
-
-var val_ad_native_loading_screen_is_H = true
-var val_ad_native_intro_screen_is_H = true
-var val_ad_native_language_screen_is_H = true
-var val_ad_native_sound_screen_is_H = true
-var val_ad_native_intruder_list_screen_is_H = true
-var val_ad_native_show_image_screen_is_H = true
-var val_ad_native_intruder_detection_screen_is_H = true
 var val_ad_native_password_screen_is_H = true
 var val_ad_native_Motion_Detection_screen_is_H = true
 var val_ad_native_Whistle_Detection_screen_is_H = true
@@ -121,13 +107,7 @@ var val_ad_native_clap_detection_screen_is_H = true
 var val_ad_native_Remove_Charger_screen_is_H = true
 var val_ad_native_Battery_Detection_screen_is_H = true
 var val_ad_native_Pocket_Detection_screen_is_H = true
-var val_ad_native_main_menu_screen_is_H = true
-var val_exit_dialog_native_is_H = true
 
-var val_ad_instertital_main_menu_screen_is_B = false
-var val_ad_instertital_sound_screen_is_B = false
-var val_ad_instertital_intruder_list_screen_is_B = false
-var val_ad_instertital_show_image_screen_is_B = false
 var val_ad_instertital_intruder_detection_screen_is_B = false
 var val_ad_instertital_password_screen_is_B = false
 var val_ad_instertital_Motion_Detection_screen_is_B = false
@@ -137,8 +117,6 @@ var val_ad_instertital_clap_detection_screen_is_B = false
 var val_ad_instertital_Remove_Charger_screen_is_B = false
 var val_ad_instertital_Battery_Detection_screen_is_B = false
 var val_ad_instertital_Pocket_Detection_screen_is_B = false
-var val_ad_instertital_exit_dialog_is_B = false
-var val_banner_1 = false
 
 var language_reload = 0
 var Onboarding_Full_Native = 0
@@ -176,30 +154,6 @@ var battery_selectsound_bottom = 1
 var test_ui_native = ""
 var language_first_r_scroll = ""
 
-var inter_frequency_count = 0
-var id_frequency_counter = 3
-var id_inter_counter = 3
-var id_inter_main_medium = "ca-app-pub-5267896740455550/8084474775"
-var id_inter_main_normal = "ca-app-pub-5267896740455550/8084474775"
-var id_native_loading_screen = ""
-var id_native_intro_screen = ""
-var id_native_language_screen = ""
-var id_native_sound_screen = ""
-var id_native_intruder_list_screen = ""
-var id_native_show_image_screen = ""
-var id_native_intruder_detection_screen = ""
-var id_native_password_screen = ""
-var id_native_Pocket_Detection_screen = ""
-var id_native_Motion_Detection_screen = ""
-var id_native_Whistle_Detection_screen = ""
-var id_native_hand_free_screen = ""
-var id_native_clap_detection_screen = ""
-var id_native_Remove_Charger_screen = ""
-var id_native_Battery_Detection_screen = ""
-var id_native_main_menu_screen = ""
-var id_native_app_open_screen = ""
-var id_exit_dialog_native = ""
-var id_banner_1: String = ""
 
 const val NOTIFY_CHANNEL_ID = "AppNameBackgroundService"
 
@@ -693,6 +647,37 @@ fun Fragment.showInternetDialog(
 
 }
 
+fun showInternetDialogNew(
+    context: Context,
+    onPositiveButtonClick: () -> Unit,
+    onNegitiveButtonClick: () -> Unit,
+    onCloseButtonClick: () -> Unit,
+) {
+    val dialogView = LayoutInflater.from(context).inflate(R.layout.internet_dialog, null)
+    ratingDialog = AlertDialog.Builder(context).create()
+    ratingDialog?.setView(dialogView)
+    ratingDialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
+    val cancel = dialogView.findViewById<TextView>(R.id.cancl_btn)
+    val yes = dialogView.findViewById<TextView>(R.id.cnfrm_del_btn)
+    val close = dialogView.findViewById<TextView>(R.id.closeBtn)
+
+    yes.setOnClickListener {
+        ratingDialog?.dismiss()
+        onPositiveButtonClick.invoke()
+    }
+    cancel.setOnClickListener {
+        ratingDialog?.dismiss()
+        onNegitiveButtonClick.invoke()
+    }
+    close.setOnClickListener {
+        ratingDialog?.dismiss()
+        onCloseButtonClick.invoke()
+    }
+    ratingDialog?.show()
+
+}
+
+/*
 fun Activity.showInternetDialog(
     onPositiveButtonClick: () -> Unit,
     onNegitiveButtonClick: () -> Unit,
@@ -721,6 +706,7 @@ fun Activity.showInternetDialog(
     ratingDialog?.show()
 
 }
+*/
 
 //var inAppDialog: AlertDialog? = null
 //var billingManager: BillingManager? = null
@@ -834,7 +820,12 @@ fun Fragment.requestCameraPermission(view: Switch) {
             CAMERA_PERMISSION
         )
     ) {
-        android.app.AlertDialog.Builder(context).setTitle(getString(R.string.permission_needed))
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(CAMERA_PERMISSION),
+            2
+        )
+      /*  android.app.AlertDialog.Builder(context).setTitle(getString(R.string.permission_needed))
             .setMessage(getString(R.string.camera_permission)).setPositiveButton(
                 getString(R.string.ok)
             ) { _, _ ->
@@ -848,7 +839,7 @@ fun Fragment.requestCameraPermission(view: Switch) {
             ) { dialogInterface, _ ->
                 view.isChecked = false
                 dialogInterface.dismiss()
-            }.create().show()
+            }.create().show()*/
     } else {
         ActivityCompat.requestPermissions(
             requireActivity(),
@@ -868,6 +859,7 @@ fun Fragment.requestCameraPermissionAudio() {
         ) != 0
     ) {
         android.app.AlertDialog.Builder(context).setTitle(getString(R.string.permission_needed))
+        android.app.AlertDialog.Builder(context).setCancelable(false)
             .setMessage(getString(R.string.camera_permission)).setPositiveButton(
                 getString(R.string.ok)
             ) { _, _ ->

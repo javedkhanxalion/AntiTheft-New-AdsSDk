@@ -3,6 +3,7 @@ pluginManagement {
         google()
         mavenCentral()
         jcenter()
+        maven("https://artifacts.applovin.com/android")
         gradlePluginPortal()
     }
 }
@@ -12,6 +13,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         jcenter()
+        maven("https://artifacts.applovin.com/android")
         maven("https://jitpack.io")
         maven("https://jcenter.bintray.com")
         maven("https://artifact.bytedance.com/repository/pangle")

@@ -116,6 +116,35 @@ class FragmentDetectionSameFunction :
                 gridLayout.titleText.text = model?.maniTextTitle
                 model?.subMenuIcon?.let { gridLayout.topImage.loadImage(context, it) }
                 gridLayout.soundImage.loadImage(context, R.drawable.icon_sound)
+                activeAnimationView.clickWithThrottle {
+                            if (sharedPrefUtils?.getBooleanData(context?:return@clickWithThrottle,model?.isActive,true)==false) {
+
+                                startLottieAnimation(
+                                    activeAnimationView,
+                                    activeAnimationViewText,
+                                    true
+                                )
+                                if (!isServiceRunning()) {
+                                    autoServiceFunctionInternalModule(true, model?.isActive)
+                                } else {
+                                    sharedPrefUtils?.setBroadCast(model?.isActive, true)
+                                }
+                                gridLayout.customSwitch.isChecked=true
+                            } else {
+                                startLottieAnimation(
+                                    activeAnimationView,
+                                    activeAnimationViewText,
+                                    false
+                                )
+                                if (isServiceRunning()) {
+                                    autoServiceFunctionInternalModule(false, model?.isActive)
+                                } else {
+                                    sharedPrefUtils?.setBroadCast(model?.isActive, false)
+                                }
+                                gridLayout.customSwitch.isChecked=false
+                            }
+
+                }
                 gridLayout.customSwitch.setOnCheckedChangeListener { compoundButton, bool ->
                     if (compoundButton.isPressed) {
                         if (compoundButton.isPressed) {
@@ -184,6 +213,35 @@ class FragmentDetectionSameFunction :
                 linearlayout.titleText.text = model?.maniTextTitle ?: return
                 model?.subMenuIcon?.let { linearlayout.topImage.loadImage(context, it) }
                 linearlayout.soundImage.loadImage(context, R.drawable.icon_sound)
+                activeAnimationView.clickWithThrottle {
+                    if (sharedPrefUtils?.getBooleanData(context?:return@clickWithThrottle,model?.isActive,true)==false) {
+
+                        startLottieAnimation(
+                            activeAnimationView,
+                            activeAnimationViewText,
+                            true
+                        )
+                        if (!isServiceRunning()) {
+                            autoServiceFunctionInternalModule(true, model?.isActive)
+                        } else {
+                            sharedPrefUtils?.setBroadCast(model?.isActive, true)
+                        }
+                        linearlayout.customSwitch.isChecked=true
+                    } else {
+                        startLottieAnimation(
+                            activeAnimationView,
+                            activeAnimationViewText,
+                            false
+                        )
+                        if (isServiceRunning()) {
+                            autoServiceFunctionInternalModule(false, model?.isActive)
+                        } else {
+                            sharedPrefUtils?.setBroadCast(model?.isActive, false)
+                        }
+                        linearlayout.customSwitch.isChecked=false
+                    }
+
+                }
                 linearlayout.customSwitch.setOnCheckedChangeListener { compoundButton, bool ->
                     if (compoundButton.isPressed) {
                         if (bool) {
@@ -260,7 +318,7 @@ class FragmentDetectionSameFunction :
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
-                showInternetDialog(
+/*                showInternetDialog(
                     onPositiveButtonClick = {
                         isInternetDialog = true
                         openMobileDataSettings(context ?: requireContext())
@@ -271,7 +329,7 @@ class FragmentDetectionSameFunction :
                     },
                     onCloseButtonClick = {
                     }
-                )
+                )*/
                 return
             } else {
                 IkmSdkController.setEnableShowResumeAds(true)

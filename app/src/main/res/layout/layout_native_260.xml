@@ -94,7 +94,7 @@
         <TextView
             android:id="@+id/custom_call_to_action"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ads_button_size"
+            android:layout_height="@dimen/_35sdp"
             android:layout_alignParentEnd="true"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="8dp"
@@ -102,10 +102,10 @@
             android:background="@drawable/bg_btn_ads_round"
             android:fontFamily="@font/roboto_medium"
             android:gravity="center"
-            android:minWidth="50dp"
+            android:minWidth="@dimen/_35sdp"
             android:paddingHorizontal="16dp"
             android:textColor="@color/color_white_ads"
-            android:textSize="12dp"
+            android:textSize="@dimen/_14sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/custom_media"
             tools:text="install" />
