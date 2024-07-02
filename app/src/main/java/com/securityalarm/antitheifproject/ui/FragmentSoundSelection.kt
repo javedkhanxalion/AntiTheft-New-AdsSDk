@@ -156,7 +156,7 @@ class FragmentSoundSelection :
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
-                showInternetDialog(
+/*                showInternetDialog(
                     onPositiveButtonClick = {
                         isInternetDialog = true
                         openMobileDataSettings(context ?: requireContext())
@@ -167,7 +167,7 @@ class FragmentSoundSelection :
                     },
                     onCloseButtonClick = {
                     }
-                )
+                )*/
                 return
             }else{
                 IkmSdkController.setEnableShowResumeAds(true)

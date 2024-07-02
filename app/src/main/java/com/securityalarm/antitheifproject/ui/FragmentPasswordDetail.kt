@@ -356,7 +356,7 @@ class FragmentPasswordDetail :
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
-                showInternetDialog(
+        /*        showInternetDialog(
                     onPositiveButtonClick = {
                         isInternetDialog = true
                         openMobileDataSettings(context ?: requireContext())
@@ -367,7 +367,7 @@ class FragmentPasswordDetail :
                     },
                     onCloseButtonClick = {
                     }
-                )
+                )*/
                 return
             } else {
                 IkmSdkController.setEnableShowResumeAds(true)

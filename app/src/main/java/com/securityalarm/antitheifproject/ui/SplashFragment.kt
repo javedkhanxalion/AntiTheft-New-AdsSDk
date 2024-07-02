@@ -36,10 +36,10 @@ import com.securityalarm.antitheifproject.utilities.fisrt_ad_line_threshold
 import com.securityalarm.antitheifproject.utilities.handfree_native
 import com.securityalarm.antitheifproject.utilities.handfree_selectsound_bottom
 import com.securityalarm.antitheifproject.utilities.home_native
-import com.securityalarm.antitheifproject.utilities.inter_frequency_count
 import com.securityalarm.antitheifproject.utilities.intruder_native
 import com.securityalarm.antitheifproject.utilities.intruderimage_bottom
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
+import com.securityalarm.antitheifproject.utilities.isSplashDialog
 import com.securityalarm.antitheifproject.utilities.language_bottom
 import com.securityalarm.antitheifproject.utilities.language_first_r_scroll
 import com.securityalarm.antitheifproject.utilities.language_reload
@@ -80,28 +80,29 @@ class SplashFragment :
         dbHelper?.getStringData(requireContext(), LANG_CODE, "en")?.let {
             setLocaleMain(it)
         }
-
-
         if (!isInternetAvailable(context ?: return)) {
-            showInternetDialog(
+          showInternetDialog(
                 onPositiveButtonClick = {
                     isInternetDialog = true
+                    isSplashDialog=false
                     openMobileDataSettings(context ?: requireContext())
                 },
                 onNegitiveButtonClick = {
                     isInternetDialog = true
+                    isSplashDialog=false
                     openWifiSettings(context ?: requireContext())
                 },
                 onCloseButtonClick = {
+                    isSplashDialog=false
                     getIntentMove()
                 }
             )
             return
+        }else{
+            isSplashDialog=false
         }
-
-        inter_frequency_count = 0
-        loadRemote()
         loadBanner()
+        loadRemote()
         if (dbHelper?.getBooleanData(
                 requireContext(),
                 IS_FIRST,

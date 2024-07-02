@@ -3,6 +3,7 @@ pluginManagement {
         google()
         mavenCentral()
         jcenter()
+        maven("https://artifacts.applovin.com/android")
         gradlePluginPortal()
     }
 }

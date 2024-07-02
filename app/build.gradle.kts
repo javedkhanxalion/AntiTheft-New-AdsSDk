@@ -4,12 +4,12 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
+    id("applovin-quality-service")
 }
-
-/*applovin {
-    apiKey = "VATVl7pTJ6oNIoMM7otDADAmy-0JbXZ-D38K6Lbz1SFBbZOFNX2epHOE5qJtllf3NoIbG1ShbnGGv-FuHhmwmt"
-}*/
-
+applovin {
+    apiKey =
+        "VATVl7pTJ6oNIoMM7otDADAmy-0JbXZ-D38K6Lbz1SFBbZOFNX2epHOE5qJtllf3NoIbG1ShbnGGv-FuHhmwmt"
+}
 
 android {
     signingConfigs {
@@ -27,8 +27,8 @@ android {
         applicationId = "com.antitheftalarm.dont.touch.phone.finder.phonesecurity"
         minSdk = 24
         targetSdk = 34
-        versionCode = 22
-        versionName = "3.2"
+        versionCode = 23
+        versionName = "3.3"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "AntiThief_v$versionName($versionCode)")
@@ -53,6 +53,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
             signingConfig = signingConfigs.getByName("release")
         }
         buildFeatures {
@@ -82,7 +83,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
 // The default implementations
@@ -117,7 +118,7 @@ dependencies {
     implementation("com.google.ads.interactivemedia.v3:interactivemedia:3.33.0")
     implementation("androidx.multidex:multidex:2.0.1")
     implementation ("com.google.code.gson:gson:2.8.8")
-    implementation ("com.applovin:applovin-sdk:11.8.0")
+    implementation ("com.applovin:applovin-sdk:12.1.0")
 //    implementation ("net.pubnative:hybid.sdk:3.0.0")
 }
 

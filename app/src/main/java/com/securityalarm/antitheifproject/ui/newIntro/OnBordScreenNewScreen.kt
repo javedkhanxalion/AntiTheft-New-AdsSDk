@@ -128,7 +128,7 @@ class OnBordScreenNewScreen :
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
-                showInternetDialog(
+     /*           showInternetDialog(
                     onPositiveButtonClick = {
                         isInternetDialog = true
                         openMobileDataSettings(context ?: requireContext())
@@ -139,7 +139,7 @@ class OnBordScreenNewScreen :
                     },
                     onCloseButtonClick = {
                     }
-                )
+                )*/
                 return
             }else{
                 if(currentpage==1){

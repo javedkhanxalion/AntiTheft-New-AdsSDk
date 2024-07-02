@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
@@ -71,49 +72,16 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
     private var isGridLayout: Boolean? = null
     private var isInternetDialog: Boolean = false
     private var isInternetPermission: Boolean = true
-    private val wifiStateReceiver = WifiStateReceiver()
 
-    private val localBroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent?.action == WifiStateReceiver.WIFI_STATE_CHANGE_ACTION) {
-                val wifiState = intent.getIntExtra(WifiStateReceiver.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_UNKNOWN)
-                if (wifiState == WifiManager.WIFI_STATE_DISABLED) {
-                    // WiFi is disabled, handle action here
-                    showInternetDialog(
-                        onPositiveButtonClick = {
-                            isInternetDialog = true
-                            openMobileDataSettings(context ?: requireContext())
-                        },
-                        onNegitiveButtonClick = {
-                            isInternetDialog = true
-                            openWifiSettings(context ?: requireContext())
-                        },
-                        onCloseButtonClick = {
-                            context?.unregisterReceiver(wifiStateReceiver)
-                        }
-                    )
-                }
-            }
-        }
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        context?.unregisterReceiver(wifiStateReceiver)
-        context?.unregisterReceiver(localBroadcastReceiver)
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAnalytics("main_menu_fragment_open", "main_menu_fragment_open -->  Click")
         sharedPrefUtils = DbHelper(context ?: return)
         // Register the receiver for local broadcasts
-//        val localFilter = IntentFilter(WifiStateReceiver.WIFI_STATE_CHANGE_ACTION)
-//        context?.registerReceiver(localBroadcastReceiver, localFilter)
-//        context?.registerReceiver(localBroadcastReceiver, localFilter, null, null)
+        // Register the receiver for connectivity changes
 
-        // Register the receiver for WiFi state changes
-        val wifiFilter = IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION)
-        context?.registerReceiver(wifiStateReceiver, wifiFilter)
+
         if(IkmSdkUtils.isUserIAPAvailable()){
             _binding?.navViewLayout?.viewTop?.visibility=View.INVISIBLE
             _binding?.navViewLayout?.buyText?.visibility=View.INVISIBLE
@@ -239,6 +207,10 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
             })
         }
         loadBanner()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     private fun loadLayoutDirection(isGrid: Boolean) {

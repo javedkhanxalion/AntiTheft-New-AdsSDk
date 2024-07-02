@@ -1,6 +1,7 @@
 package com.securityalarm.antitheifproject
 
 import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         // Register the receiver
-        val filter = IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION)
+        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         registerReceiver(wifiStateReceiver, filter)
     }
     override fun onResume() {
@@ -44,7 +45,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-
         // Unregister the receiver
         unregisterReceiver(wifiStateReceiver)
     }
