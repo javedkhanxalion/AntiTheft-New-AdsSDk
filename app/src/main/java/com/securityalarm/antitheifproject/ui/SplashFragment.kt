@@ -331,6 +331,7 @@ class SplashFragment :
                 Log.d("check_language", "onSuccess: $test_ui_native")
                 Log.d("check_language", "onSuccess: $language_first_r_scroll")
                 Log.d("check_language", "onSuccess: $Onboarding_Full_Native")
+                Log.d("check_language", "onSuccess: ${xx["full_ads_config"]?.getString().toString()}")
             }
             override fun onFail() {
             }
