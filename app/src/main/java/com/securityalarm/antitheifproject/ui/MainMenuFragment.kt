@@ -159,12 +159,13 @@ class MainMenuFragment :
                             _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
                         }
                     } else {
-                        _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
                         showServiceDialog(
                             onPositiveNoClick = {
                                 navViewLayout.customSwitch.isChecked = true
+                                _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
                             },
                             onPositiveYesClick = {
+                                _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
                                 if (isServiceRunning()) {
                                     autoServiceFunction(false)
                                 }
