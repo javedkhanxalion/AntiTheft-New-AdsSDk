@@ -71,7 +71,7 @@ class ImageFragment1 : Fragment() {
         } else {
             _binding1?.mainAdsNative?.visibility = View.GONE
         }
-        IkmSdkController.setAppOpenAdsCallback(callback =
+  /*      IkmSdkController.setAppOpenAdsCallback(callback =
         object : SdkAppOpenAdsCallback {
             override fun onAdDismiss() {
                 _binding1?.mainAdsNative?.visibility = View.VISIBLE
@@ -98,7 +98,7 @@ class ImageFragment1 : Fragment() {
                 Log.d("app_open_call_back", " onShowAdFail")
             }
 
-        })
+        })*/
 
 
     }
