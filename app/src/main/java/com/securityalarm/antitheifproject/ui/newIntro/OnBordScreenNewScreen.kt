@@ -14,10 +14,7 @@ import com.securityalarm.antitheifproject.utilities.IS_INTRO
 import com.securityalarm.antitheifproject.utilities.Onboarding_Full_Native
 import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
-import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
-import com.securityalarm.antitheifproject.utilities.openWifiSettings
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
-import com.securityalarm.antitheifproject.utilities.showInternetDialog
 
 class OnBordScreenNewScreen :
     BaseFragment<IntroMainActivityBinding>(IntroMainActivityBinding::inflate) {
@@ -29,7 +26,7 @@ class OnBordScreenNewScreen :
         firebaseAnalytics("intro_fragment_open", "intro_fragment_open -->  Click")
 
         val viewPagerAdapter = ViewPagerAdapter(
-            context?:return,
+            context ?: return,
             this,
             { onNextButtonClicked() },
             { onNextSkipClicked() },
@@ -51,29 +48,65 @@ class OnBordScreenNewScreen :
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                 currentpage = position
+                Log.d(
+                    "scroll_check_position",
+                    "onPageScrolled: $currentpage $position $positionOffset $positionOffsetPixels"
+                )
+                if(isInternetAvailable && Onboarding_Full_Native ==0){
+                    Log.d("NewonPageScrolled", "onPageScrolled: Yes")
+                }else{
+                    Log.d("NewonPageScrolled", "onPageScrolled: Yes")
+                }
+                when(currentpage){
+                    0->{
+                        if (positionOffset.toDouble() == 0.0)
+                            ImageFragment1.onAdVisibilityChanged(true)
+                        else
+                            ImageFragment1.onAdVisibilityChanged(false)
+                    }
+                    1->{
+                        ImageFragment1.onAdVisibilityChanged(false)
+                        ImageFragment2.onAdVisibilityChanged(false)
+                    }
+                    2->{
+                        if (positionOffset.toDouble() == 0.0)
+                            ImageFragment2.onAdVisibilityChanged(true)
+                        else
+                            ImageFragment2.onAdVisibilityChanged(false)
+                    }
+                    3->{
+                        if (positionOffset.toDouble() == 0.0)
+                            ImageFragment3.onAdVisibilityChanged(true)
+                        else
+                            ImageFragment3.onAdVisibilityChanged(false)
+                    }
+                }
+
             }
 
         })
         sharedPrefUtils = DbHelper(context ?: return)
 
         setupBackPressedCallback {
-                firebaseAnalytics(
-                    "intro_fragment_move_to_next",
-                    "intro_fragment_move_to_next -->  Click"
-                )
-                sharedPrefUtils?.saveData(context ?: requireContext(), IS_INTRO, true)
-                findNavController().navigate(
-                    R.id.myMainMenuFragment
-                )
+            firebaseAnalytics(
+                "intro_fragment_move_to_next",
+                "intro_fragment_move_to_next -->  Click"
+            )
+            sharedPrefUtils?.saveData(context ?: requireContext(), IS_INTRO, true)
+            findNavController().navigate(
+                R.id.myMainMenuFragment
+            )
         }
 
     }
+
     private fun getItem(i: Int): Int {
         return _binding?.viewPager?.currentItem!! + i
     }
+
     fun onNextButtonClicked() {
         Log.d("check_click", "onViewCreated: 1")
-        if(isInternetAvailable && Onboarding_Full_Native ==0){
+        if (isInternetAvailable && Onboarding_Full_Native == 0) {
             if (currentpage == 2) {
                 firebaseAnalytics(
                     "intro_fragment_move_to_next",
@@ -87,8 +120,7 @@ class OnBordScreenNewScreen :
             } else {
                 _binding?.viewPager?.setCurrentItem(getItem(+1), true)
             }
-        }else
-        {
+        } else {
             if (currentpage == 3) {
                 firebaseAnalytics(
                     "intro_fragment_move_to_next",
@@ -104,15 +136,16 @@ class OnBordScreenNewScreen :
             }
         }
     }
+
     private fun onNextSkipClicked() {
         Log.d("check_click", "onViewCreated: 2")
         firebaseAnalytics(
             "intro_fragment_move_to_next",
             "intro_fragment_move_to_next -->  Click"
         )
-        if(isInternetAvailable && Onboarding_Full_Native ==0){
+        if (isInternetAvailable && Onboarding_Full_Native == 0) {
             _binding?.viewPager?.setCurrentItem(getItem(+2), true)
-        }else {
+        } else {
             _binding?.viewPager?.setCurrentItem(getItem(+3), true)
         }
 //        sharedPrefUtils?.saveData(context ?: requireContext(), IS_INTRO, true)
@@ -123,21 +156,22 @@ class OnBordScreenNewScreen :
 
     override fun onPause() {
         super.onPause()
-        isInternetDialog=true
-        if(currentpage==1){
+        isInternetDialog = true
+        if (currentpage == 1) {
             IkmSdkController.setEnableShowResumeAds(false)
         }
     }
+
     override fun onResume() {
         super.onResume()
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
                 return
-            }else{
-                if(currentpage==1){
+            } else {
+                if (currentpage == 1) {
                     IkmSdkController.setEnableShowResumeAds(false)
-                }else{
+                } else {
                     IkmSdkController.setEnableShowResumeAds(true)
                 }
             }

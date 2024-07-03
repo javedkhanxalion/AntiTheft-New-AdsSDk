@@ -24,7 +24,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.antitheftalarm.dont.touch.phone.finder.phonesecurity.debug"
+        applicationId = "com.antitheftalarm.dont.touch.phone.finder.phonesecurity"
         minSdk = 24
         targetSdk = 34
         versionCode = 24

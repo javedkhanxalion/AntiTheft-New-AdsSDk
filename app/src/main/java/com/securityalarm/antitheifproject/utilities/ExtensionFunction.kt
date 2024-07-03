@@ -34,6 +34,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.constraintlayout.utils.widget.ImageFilterView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -625,11 +626,13 @@ fun Fragment.showInternetDialog(
 ) {
     val dialogView = layoutInflater.inflate(R.layout.internet_dialog, null)
     ratingDialog = AlertDialog.Builder(requireContext()).create()
+    ratingDialog?.setCancelable(false)
+    ratingDialog?.setCanceledOnTouchOutside(false)
     ratingDialog?.setView(dialogView)
     ratingDialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
     val cancel = dialogView.findViewById<TextView>(R.id.cancl_btn)
     val yes = dialogView.findViewById<TextView>(R.id.cnfrm_del_btn)
-    val close = dialogView.findViewById<TextView>(R.id.closeBtn)
+    val close = dialogView.findViewById<ImageFilterView>(R.id.closeBtn)
 
     yes.setOnClickListener {
         ratingDialog?.dismiss()
@@ -655,11 +658,13 @@ fun showInternetDialogNew(
 ) {
     val dialogView = LayoutInflater.from(context).inflate(R.layout.internet_dialog, null)
     ratingDialog = AlertDialog.Builder(context).create()
+    ratingDialog?.setCancelable(false)
+    ratingDialog?.setCanceledOnTouchOutside(false)
     ratingDialog?.setView(dialogView)
     ratingDialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
     val cancel = dialogView.findViewById<TextView>(R.id.cancl_btn)
     val yes = dialogView.findViewById<TextView>(R.id.cnfrm_del_btn)
-    val close = dialogView.findViewById<TextView>(R.id.closeBtn)
+    val close = dialogView.findViewById<ImageFilterView>(R.id.closeBtn)
 
     yes.setOnClickListener {
         ratingDialog?.dismiss()
@@ -790,6 +795,8 @@ fun Fragment.showServiceDialog(
 ) {
     val dialogView = layoutInflater.inflate(R.layout.service_dialog, null)
     ratingService = AlertDialog.Builder(requireContext()).create()
+    ratingDialog?.setCancelable(false)
+    ratingDialog?.setCanceledOnTouchOutside(false)
     ratingService?.setView(dialogView)
     ratingService?.window?.setBackgroundDrawableResource(android.R.color.transparent)
     val no = dialogView.findViewById<Button>(R.id.cancl_btn)
@@ -897,8 +904,9 @@ fun Fragment.requestCameraPermissionNotification(hideAd: View?) {
 fun Fragment.showNotificationPermissionDialog(hideAd: View?) {
     val dialogView = layoutInflater.inflate(R.layout.notification_dialog, null)
     ratingService = AlertDialog.Builder(requireContext()).create()
-    ratingService?.setView(dialogView)
     ratingDialog?.setCancelable(false)
+    ratingDialog?.setCanceledOnTouchOutside(false)
+    ratingService?.setView(dialogView)
     ratingService?.window?.setBackgroundDrawableResource(android.R.color.transparent)
     val no = dialogView.findViewById<Button>(R.id.cancl_btn)
     val yes = dialogView.findViewById<Button>(R.id.cnfrm_del_btn)

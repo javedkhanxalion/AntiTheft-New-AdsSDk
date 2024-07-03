@@ -318,7 +318,6 @@ class SplashFragment :
             override fun onFail() {
             }
         })
-
         initView()
     }
     private fun parseJsonWithGson(jsonString: String) {

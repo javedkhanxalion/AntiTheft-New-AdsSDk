@@ -51,8 +51,7 @@ import com.securityalarm.antitheifproject.utilities.showRatingDialog
 import com.securityalarm.antitheifproject.utilities.showServiceDialog
 import com.securityalarm.antitheifproject.utilities.showToast
 
-class MainMenuFragment :
-    BaseFragment<FragmentMainMenuActivityBinding>(FragmentMainMenuActivityBinding::inflate) {
+class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentMainMenuActivityBinding::inflate) {
 
     private var adapterGrid: MainMenuGridAdapter? = null
     private var adapterLinear: MainMenuLinearAdapter? = null
@@ -380,7 +379,7 @@ class MainMenuFragment :
         super.onResume()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(requireContext(), NOTIFICATION_PERMISSION) != 0) {
-                _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
+//                _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
                 requestCameraPermissionNotification(_binding?.mainLayout?.hideAd)
             } else {
                 _binding?.mainLayout?.hideAd?.visibility = View.GONE

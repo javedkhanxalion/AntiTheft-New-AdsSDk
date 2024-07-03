@@ -16,15 +16,15 @@ class ViewPagerAdapter(
 ) : FragmentStateAdapter(fragmentActivity) {
 
     private val fragments = listOf(
-        ImageFragment.newInstance(0, false, viewPager2, functionNext, function),
+        ImageFragment1.newInstance(0, false, viewPager2, functionNext, function),
         AdFragment(),
-        ImageFragment.newInstance(1, false, viewPager2, functionNext, function),
-        ImageFragment.newInstance(2, false, viewPager2, functionNext, function),
+        ImageFragment2.newInstance(1, false, viewPager2, functionNext, function),
+        ImageFragment3.newInstance(2, false, viewPager2, functionNext, function),
     )
     private val fragments1 = listOf(
-        ImageFragment.newInstance(0, false, viewPager2, functionNext, function),
-        ImageFragment.newInstance(1, false, viewPager2, functionNext, function),
-        ImageFragment.newInstance(2, false, viewPager2, functionNext, function),
+        ImageFragment1.newInstance(0, false, viewPager2, functionNext, function),
+        ImageFragment2.newInstance(1, false, viewPager2, functionNext, function),
+        ImageFragment3.newInstance(2, false, viewPager2, functionNext, function),
     )
 
     override fun getItemCount(): Int = if(isInternetAvailable && Onboarding_Full_Native==1)
@@ -36,4 +36,24 @@ class ViewPagerAdapter(
         fragments[position]
     else
         fragments1[position]
+
+//    fun setAdVisibility(visible: Boolean) {
+//        if(isInternetAvailable && Onboarding_Full_Native==1){
+//            fragments.forEach { fragment ->
+//                if (fragment is AdVisibilityListener) {
+//                    fragment.onAdVisibilityChanged(visible)
+//                }
+//            }
+//        }else{
+//            fragments1.forEach { fragment ->
+//                if (fragment is AdVisibilityListener) {
+//                    fragment.onAdVisibilityChanged(visible)
+//                }
+//            }
+//        }
+//    }
+
 }
+//interface AdVisibilityListener {
+//    fun onAdVisibilityChanged(visible: Boolean)
+//}

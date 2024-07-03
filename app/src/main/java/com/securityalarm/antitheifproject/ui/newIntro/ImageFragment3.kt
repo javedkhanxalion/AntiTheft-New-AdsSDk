@@ -24,17 +24,16 @@ import com.securityalarm.antitheifproject.utilities.onboarding2_bottom
 import com.securityalarm.antitheifproject.utilities.onboarding3_bottom
 import com.securityalarm.antitheifproject.utilities.slideImages
 
-class ImageFragment : Fragment() {
+class ImageFragment3 : Fragment()  {
 
-    private var _binding: FragmentMainIntroBinding? = null
-    private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainIntroBinding.inflate(inflater, container, false)
-        return binding.root
+        return _binding?.root!!
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,26 +69,14 @@ class ImageFragment : Fragment() {
             fragmentA?.invoke()
         }
         if (isInternetAvailable(context?:requireContext())) {
-            when (position) {
-                0 -> {
-                    loadNewNative1()
-                }
-
-                1 -> {
-                    loadNewNative2()
-                }
-
-                2 -> {
                     _binding?.skipApp?.visibility = View.INVISIBLE
                     _binding?.nextApp?.text = getString(R.string.start)
                     loadNewNative3()
-                }
-            }
         } else {
             _binding?.mainAdsNative?.visibility = View.GONE
+            _binding?.skipApp?.visibility = View.INVISIBLE
+            _binding?.nextApp?.text = getString(R.string.start)
         }
-
-
 
         IkmSdkController.setAppOpenAdsCallback(callback =
         object : SdkAppOpenAdsCallback {
@@ -120,7 +107,6 @@ class ImageFragment : Fragment() {
 
         })
 
-
     }
 
     override fun onDestroyView() {
@@ -129,6 +115,7 @@ class ImageFragment : Fragment() {
     }
 
     companion object {
+        var _binding: FragmentMainIntroBinding? = null
         var viewPager22: ViewPager2? = null
         var fragmentN: (() -> Unit)? = null
         var fragmentA: (() -> Unit)? = null
@@ -138,7 +125,7 @@ class ImageFragment : Fragment() {
             viewPager2: ViewPager2,
             fragmentNext: (() -> Unit),
             fragmentActivity: (() -> Unit)
-        ) = ImageFragment().apply {
+        ) = ImageFragment3().apply {
             viewPager22 = viewPager2
             fragmentN = fragmentNext
             fragmentA = fragmentActivity
@@ -147,63 +134,13 @@ class ImageFragment : Fragment() {
                 putBoolean("ads", ads)
             }
         }
-    }
+        fun onAdVisibilityChanged(visible: Boolean) {
+            Log.d("check_position", "onPageScrolled: Fragment--33333")
+            _binding!!.mainAdsNative!!.visibility = if (visible) View.VISIBLE
+            else
+                View.GONE
 
-    fun loadNewNative1() {
-        val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(onboarding1_bottom,_binding?.mainAdsNative!!,context?:return),
-            null, false
-        ) as? IkmWidgetAdLayout
-        adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
-        adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
-        adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
-        adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
-        adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-        _binding?.mainAdsNative?.loadAd(
-            activity ?: return,  getNativeLayoutShimmer(onboarding1_bottom),
-            adLayout!!, "onboarding1_bottom",
-            "onboarding1_bottom", object : CustomSDKAdsListenerAdapter() {
-
-                override fun onAdsLoaded() {
-                    super.onAdsLoaded()
-                    _binding?.mainAdsNative?.visibility = View.VISIBLE
-                }
-
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                    _binding?.mainAdsNative?.visibility = View.GONE
-                }
-            }
-        )
-
-    }
-
-    fun loadNewNative2() {
-        val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(onboarding2_bottom,_binding?.mainAdsNative!!,context?:return),
-            null, false
-        ) as? IkmWidgetAdLayout
-        adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
-        adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
-        adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
-        adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
-        adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-        _binding?.mainAdsNative?.loadAd(
-            activity ?: return,  getNativeLayoutShimmer(onboarding2_bottom),
-            adLayout!!, "onboarding2_bottom",
-            "onboarding2_bottom", object : CustomSDKAdsListenerAdapter() {
-                override fun onAdsLoaded() {
-                    super.onAdsLoaded()
-                    _binding?.mainAdsNative?.visibility = View.VISIBLE
-                }
-
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                    _binding?.mainAdsNative?.visibility = View.GONE
-                }
-            }
-        )
-
+        }
     }
 
     fun loadNewNative3() {
