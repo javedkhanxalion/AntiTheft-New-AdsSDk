@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.AdsItemBinding
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.LanguageAppItemBinding
-import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
-import com.bmik.android.sdk.widgets.IkmNativeAdView
-import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
+import com.google.android.gms.ads.nativead.NativeAdView
 import com.securityalarm.antitheifproject.model.LanguageAppModel
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
 import com.securityalarm.antitheifproject.utilities.languageinapp_scroll
@@ -20,7 +18,6 @@ class LanguageGridAdapter(private val items: List<LanguageAppModel>,
     private var clickItem: ((LanguageAppModel) -> Unit)) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var context: Context? = null
-    var adNative: IkmNativeAdView? = null
 
     companion object {
         const val ITEM_TYPE = 0
@@ -75,42 +72,7 @@ class LanguageGridAdapter(private val items: List<LanguageAppModel>,
                 getNativeLayout(languageinapp_scroll,holder.bindingAds?.nativeExitAd!!,context?:return),
                 null, false
             ) as NativeAdView
-            adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
-            adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
-            adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
-            adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
-            adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-            if (adNative != null)
-                adHolder.bindingAds.nativeExitAd.loadNativeWithAdView(
-                    context, 0, adLayout!!, "languageinapp_scroll",
-                    "languageinapp_scroll", adNative!!,
-                    object : CustomSDKAdsListenerAdapter() {
-                        override fun onAdsLoadFail() {
-                            super.onAdsLoadFail()
-                            adHolder.bindingAds.nativeExitAd.visibility = View.GONE
-                        }
 
-                        override fun onAdsLoaded() {
-                            super.onAdsLoaded()
-                            adHolder.bindingAds.nativeExitAd.visibility = View.VISIBLE
-                        }
-                    }
-                )
-            else adHolder.bindingAds.nativeExitAd.loadAd(
-                context, 0, adLayout!!, "languageinapp_scroll",
-                "languageinapp_scroll",
-                object : CustomSDKAdsListenerAdapter() {
-                    override fun onAdsLoadFail() {
-                        super.onAdsLoadFail()
-                        adHolder.bindingAds.nativeExitAd.visibility = View.GONE
-                    }
-
-                    override fun onAdsLoaded() {
-                        super.onAdsLoaded()
-                        adHolder.bindingAds.nativeExitAd.visibility = View.VISIBLE
-                    }
-                }
-            )
         }
     }
 

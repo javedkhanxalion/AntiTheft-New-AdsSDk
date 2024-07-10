@@ -2,17 +2,14 @@ package com.securityalarm.antitheifproject.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentDetailModuleBinding
-import com.bmik.android.sdk.IkmSdkController
-import com.bmik.android.sdk.SDKBaseController
-import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
-import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
+import com.google.android.gms.ads.nativead.NativeAdView
+import com.securityalarm.antitheifproject.ads_manager.AdsBanners
 import com.securityalarm.antitheifproject.helper_class.Constants.isServiceRunning
 import com.securityalarm.antitheifproject.helper_class.DbHelper
 import com.securityalarm.antitheifproject.model.MainMenuModel
@@ -24,14 +21,15 @@ import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.getBannerId
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
 import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
+import com.securityalarm.antitheifproject.utilities.id_banner_1
+import com.securityalarm.antitheifproject.utilities.id_banner_language_screen
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.loadImage
-import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
-import com.securityalarm.antitheifproject.utilities.openWifiSettings
 import com.securityalarm.antitheifproject.utilities.setImage
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
-import com.securityalarm.antitheifproject.utilities.showInternetDialog
 import com.securityalarm.antitheifproject.utilities.startLottieAnimation
+import com.securityalarm.antitheifproject.utilities.val_banner_1
+import com.securityalarm.antitheifproject.utilities.val_banner_language_screen
 
 class FragmentDetectionSameFunction :
     BaseFragment<FragmentDetailModuleBinding>(FragmentDetailModuleBinding::inflate) {
@@ -48,25 +46,10 @@ class FragmentDetectionSameFunction :
         arguments?.let {
             model = it.getParcelable(ANTI_TITLE) ?: return@let
         }
-        SDKBaseController.getInstance().preloadNativeAd(
-            activity ?: return, model?.nativeSoundId?:return,
-            model?.nativeSoundId?:return, object : CustomSDKAdsListenerAdapter() {
-                override fun onAdsLoaded() {
-                    super.onAdsLoaded()
-                    Log.d("check_ads", "onAdsLoaded: Load Ad")
-                }
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                }
-            }
-        )
         _binding?.topLay?.title?.text = model?.maniTextTitle
         _binding?.textView3?.text = model?.bottomText
         sharedPrefUtils = DbHelper(context ?: return)
-
-
         _binding?.topLay?.navMenu?.loadImage(context ?: return, R.drawable.back_btn)
-
         _binding?.run {
 
             topLay.navMenu.clickWithThrottle {
@@ -307,34 +290,11 @@ class FragmentDetectionSameFunction :
     override fun onPause() {
         super.onPause()
         isInternetDialog = true
-        if (!isInternetAvailable(context ?: return)) {
-            IkmSdkController.setEnableShowResumeAds(false)
-        }
     }
 
     override fun onResume() {
         super.onResume()
         checkSwitch()
-        if (isInternetDialog) {
-            if (!isInternetAvailable(context ?: return)) {
-                IkmSdkController.setEnableShowResumeAds(false)
-/*                showInternetDialog(
-                    onPositiveButtonClick = {
-                        isInternetDialog = true
-                        openMobileDataSettings(context ?: requireContext())
-                    },
-                    onNegitiveButtonClick = {
-                        isInternetDialog = true
-                        openWifiSettings(context ?: requireContext())
-                    },
-                    onCloseButtonClick = {
-                    }
-                )*/
-                return
-            } else {
-                IkmSdkController.setEnableShowResumeAds(true)
-            }
-        }
     }
 
     private fun checkSwitch() {
@@ -364,22 +324,6 @@ class FragmentDetectionSameFunction :
                 getNativeLayout(model?.nativeLayout?:return,_binding?.gridLayout?.nativeExitAd!!,context?:return),
                 null, false
             ) as NativeAdView
-            adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
-            adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
-            adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
-            adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
-            adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-            _binding?.gridLayout?.nativeExitAd?.loadAd(
-                activity ?: return,  getNativeLayoutShimmer(model?.nativeLayout?:return),
-                adLayout!!, model?.nativeId?:return,
-                model?.nativeId?:return, object : CustomSDKAdsListenerAdapter() {
-
-                    override fun onAdsLoadFail() {
-                        super.onAdsLoadFail()
-                        _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
-                    }
-                }
-            )
 
         }
 
@@ -388,31 +332,16 @@ class FragmentDetectionSameFunction :
                 getNativeLayout(model?.nativeLayout?:return,_binding?.linearlayout?.nativeExitAd!!,context?:return),
                 null, false
             ) as NativeAdView
-            adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
-            adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
-            adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
-            adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
-            adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-            _binding?.linearlayout?.nativeExitAd?.loadAd(
-                    activity ?: return,  getNativeLayoutShimmer(model?.nativeLayout?:return),
-                    adLayout!!, model?.nativeId?:return,
-                    model?.nativeId?:return, object : CustomSDKAdsListenerAdapter() {
 
-                        override fun onAdsLoadFail() {
-                            super.onAdsLoadFail()
-                            _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
-                        }
-                    }
-                )
         }
     private fun loadBanner() {
-        binding?.bannerAds?.loadAd(
-            activity, getBannerId(model?.maniTextTitle!!),
-            getBannerId(model?.maniTextTitle!!), object : CustomSDKAdsListenerAdapter() {
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                    _binding?.bannerAds?.visibility = View.GONE
-                }
+        AdsBanners.loadBanner(
+            activity = activity?:return,
+            view = _binding?.bannerAds!!,
+            addConfig = val_banner_1,
+            bannerId = id_banner_1,
+            bannerListener = {
+                _binding?.shimmerLayout?.visibility = View.GONE
             }
         )
     }

@@ -4,14 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentAdBinding
-import com.bmik.android.sdk.SDKBaseController
-import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
-import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
+import com.google.android.gms.ads.nativead.NativeAdView
 
 class AdFragment : Fragment() {
 
@@ -50,10 +46,7 @@ class AdFragment : Fragment() {
 //        }
 //        set.applyTo(constraintLayout)
         loadNative()
-        SDKBaseController.getInstance().preloadNativeAd(
-            activity ?: return, "onboarding3_bottom",
-            "onboarding3_bottom"
-        )
+
     }
 
     override fun onDestroyView() {
@@ -66,30 +59,7 @@ class AdFragment : Fragment() {
             R.layout.native_layout_full,
             null, false
         ) as NativeAdView
-        adLayout?.titleView = adLayout?.findViewById(R.id.headline)
-        adLayout?.bodyView = adLayout?.findViewById(R.id.body)
-        adLayout?.callToActionView = adLayout?.findViewById(R.id.call_to_action)
-        adLayout?.mediaView = adLayout?.findViewById(R.id.media)
-        _binding?.mainAdsNative?.loadAd(
-            activity ?: return,  R.layout.shimmer_loading_native_140,
-            adLayout!!, "onboarding_fullnative",
-            "onboarding_fullnative", object : CustomSDKAdsListenerAdapter() {
 
-                override fun onAdsLoaded() {
-                    super.onAdsLoaded()
-                    _binding?.mainAdsNative?.visibility = View.VISIBLE
-                    _binding?.adContent?.visibility = View.INVISIBLE
-                    _binding?.progressBar?.visibility = View.INVISIBLE
-                }
-
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                    _binding?.mainAdsNative?.visibility = View.INVISIBLE
-                    _binding?.adContent?.visibility = View.VISIBLE
-                    _binding?.progressBar?.visibility = View.VISIBLE
-                }
-            }
-        )
     }
 
 }

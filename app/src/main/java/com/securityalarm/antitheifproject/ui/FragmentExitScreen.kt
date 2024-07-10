@@ -6,8 +6,7 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentExitScreenBinding
-import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
-import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
+import com.google.android.gms.ads.nativead.NativeAdView
 import com.securityalarm.antitheifproject.utilities.BaseFragment
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
 import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
@@ -32,27 +31,11 @@ class FragmentExitScreen :
     }
 
     private fun loadNative() {
-
         val adLayout = LayoutInflater.from(context).inflate(
             getNativeLayout(thankyou_bottom,_binding?.nativeExitAd!!,context?:return),
             null, false
         ) as NativeAdView
-        adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
-        adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
-        adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
-        adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
-        adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-        _binding?.nativeExitAd?.loadAd(
-            context,  getNativeLayoutShimmer(thankyou_bottom),
-            adLayout!!, "thankyou_bottom",
-            "thankyou_bottom", object : CustomSDKAdsListenerAdapter() {
 
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                    _binding?.nativeExitAd?.visibility = View.GONE
-                }
-            }
-        )
     }
 
     private fun mCLickListener() {

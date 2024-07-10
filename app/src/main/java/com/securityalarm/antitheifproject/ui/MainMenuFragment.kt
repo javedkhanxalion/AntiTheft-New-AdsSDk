@@ -390,26 +390,6 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
         sharedPrefUtils?.getBooleanData(context ?: return, IS_NOTIFICATION, false)?.let {
             _binding?.navViewLayout?.customSwitch?.isChecked = it
         }
-        if (isInternetDialog) {
-            if (!isInternetAvailable(context ?: return)) {
-                IkmSdkController.setEnableShowResumeAds(false)
-                /*   showInternetDialog(
-                       onPositiveButtonClick = {
-                           isInternetDialog = true
-                           openMobileDataSettings(context ?: requireContext())
-                       },
-                       onNegitiveButtonClick = {
-                           isInternetDialog = true
-                           openWifiSettings(context ?: requireContext())
-                       },
-                       onCloseButtonClick = {
-                       }
-                   )*/
-                return
-            } else {
-                IkmSdkController.setEnableShowResumeAds(true)
-            }
-        }
     }
 
     override fun onPause() {
@@ -420,9 +400,6 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
             }
         } else {
             _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
-        }
-        if (!isInternetAvailable(context ?: return)) {
-            IkmSdkController.setEnableShowResumeAds(false)
         }
         if (isInternetPermission) {
             isInternetDialog = true
@@ -441,6 +418,5 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
             }
         )
     }
-
 
 }

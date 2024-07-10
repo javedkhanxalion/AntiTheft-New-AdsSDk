@@ -124,14 +124,8 @@ dependencies {
 //    implementation ("com.applovin:applovin-sdk:12.1.0")
 //    implementation ("net.pubnative:hybid.sdk:3.0.0")
     implementation ("com.facebook.android:audience-network-sdk:6.+")
+    implementation ("com.unity3d.ads:unity-ads:4.7.0")
 }
 
-
-/*tasks.withType(Test) {
-    maxParallelForks = 4
-    maxHeapSize = "4g"
-    forkEvery = 4
-    failFast = true
-}*/
 
 googleServices.disableVersionCheck = true

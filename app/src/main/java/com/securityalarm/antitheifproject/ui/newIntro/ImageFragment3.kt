@@ -9,10 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentMainIntroBinding
-import com.bmik.android.sdk.IkmSdkController
-import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
-import com.bmik.android.sdk.listener.SdkAppOpenAdsCallback
-import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
+import com.google.android.gms.ads.nativead.NativeAdView
 import com.securityalarm.antitheifproject.utilities.Onboarding_Full_Native
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
@@ -148,28 +145,7 @@ class ImageFragment3 : Fragment()  {
             getNativeLayout(onboarding3_bottom,_binding?.mainAdsNative!!,context?:return),
             null, false
         ) as NativeAdView
-        adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
-        adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
-        adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
-        adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
-        adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-        _binding?.mainAdsNative?.loadAd(
-            activity ?: return,  getNativeLayoutShimmer(onboarding3_bottom),
-            adLayout!!, "onboarding3_bottom",
-            "onboarding3_bottom", object : CustomSDKAdsListenerAdapter() {
 
-                override fun onAdsLoaded() {
-                    super.onAdsLoaded()
-                    _binding?.mainAdsNative?.visibility = View.VISIBLE
-                }
-
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                    _binding?.mainAdsNative?.visibility = View.GONE
-                }
-
-            }
-        )
     }
 
 }

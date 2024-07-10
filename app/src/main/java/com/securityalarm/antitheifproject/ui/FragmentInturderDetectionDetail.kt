@@ -64,16 +64,6 @@ class FragmentInturderDetectionDetail :
             }
         }
         loadBanner()
-        SDKBaseController.getInstance().preloadNativeAd(activity ?: return,
-            "intruder_native",
-            "intruder_native",
-            object : CustomSDKAdsListenerAdapter() {
-                override fun onAdsLoaded() {
-                    super.onAdsLoaded()
-                    Log.d("check_ads", "onAdsLoaded: Load Ad")
-                }
-
-            })
         dbHelper?.getBooleanData(context ?: return, IS_GRID, true)?.let {
             isGridLayout = it
             loadLayoutDirection(it)

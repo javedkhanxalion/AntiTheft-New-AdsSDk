@@ -3,24 +3,21 @@ package com.securityalarm.antitheifproject.adapter
 import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.AdsItemBinding
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.MenuItemLinearLayoutBinding
-import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
-import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
+import com.google.android.gms.ads.nativead.NativeAdView
 import com.securityalarm.antitheifproject.model.MainMenuModel
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
-import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
 import com.securityalarm.antitheifproject.utilities.home_native
 import com.securityalarm.antitheifproject.utilities.loadImage
 
 class MainMenuLinearAdapter(
     private val context: Activity,
-    private val menuItems: List<MainMenuModel>
+    private val menuItems: List<MainMenuModel>,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -94,25 +91,10 @@ class MainMenuLinearAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
             val adLayout = LayoutInflater.from(context).inflate(
-                getNativeLayout(home_native,binding?.nativeExitAd!!,context?:return),
+                getNativeLayout(home_native, binding.nativeExitAd, context),
                 null, false
             ) as NativeAdView
-            adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
-            adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
-            adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
-            adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
-            adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-            binding?.nativeExitAd?.loadAd(
-                context ?: return,  getNativeLayoutShimmer(home_native),
-                adLayout!!, "intruder_native",
-                "intruder_native", object : CustomSDKAdsListenerAdapter() {
 
-                    override fun onAdsLoadFail() {
-                        super.onAdsLoadFail()
-                        binding.nativeExitAd.visibility = View.GONE
-                    }
-                }
-            )
         }
     }
 

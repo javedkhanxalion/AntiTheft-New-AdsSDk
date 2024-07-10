@@ -1,3 +1,5 @@
+package com.securityalarm.antitheifproject.adapter
+
 import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.AdsItemBinding
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.MenuItemGridLayoutBinding
-import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
-import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
+import com.google.android.gms.ads.nativead.NativeAdView
 import com.securityalarm.antitheifproject.model.MainMenuModel
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
@@ -96,22 +97,7 @@ class MainMenuGridAdapter(
                 getNativeLayout(home_native,binding.nativeExitAd!!,context?:return),
                 null, false
             ) as NativeAdView
-            adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
-            adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
-            adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
-            adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
-            adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-            binding.nativeExitAd.loadAd(
-                context,  getNativeLayoutShimmer(home_native),
-                adLayout!!, "intruder_native",
-                "intruder_native", object : CustomSDKAdsListenerAdapter() {
 
-                    override fun onAdsLoadFail() {
-                        super.onAdsLoadFail()
-                        binding.nativeExitAd.visibility = View.GONE
-                    }
-                }
-            )
         }
     }
 

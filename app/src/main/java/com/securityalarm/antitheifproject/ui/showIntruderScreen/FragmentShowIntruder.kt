@@ -8,9 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.ShowIntruderFragmentBinding
-import com.bmik.android.sdk.IkmSdkController
-import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
-import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
+import com.google.android.gms.ads.nativead.NativeAdView
 import com.securityalarm.antitheifproject.adapter.IntruderAdapter
 import com.securityalarm.antitheifproject.helper_class.Constants.getAntiTheftDirectory
 import com.securityalarm.antitheifproject.model.IntruderModels
@@ -20,10 +18,7 @@ import com.securityalarm.antitheifproject.utilities.getNativeLayout
 import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
 import com.securityalarm.antitheifproject.utilities.intruderimage_bottom
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
-import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
-import com.securityalarm.antitheifproject.utilities.openWifiSettings
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
-import com.securityalarm.antitheifproject.utilities.showInternetDialog
 import java.io.File
 
 class FragmentShowIntruder :
@@ -111,34 +106,10 @@ class FragmentShowIntruder :
     override fun onPause() {
         super.onPause()
         isInternetDialog=true
-        if (!isInternetAvailable(context ?: return)) {
-            IkmSdkController.setEnableShowResumeAds(false)
-        }
     }
     override fun onResume() {
         super.onResume()
-
         dir?.let { getFile(it) }
-        if (isInternetDialog) {
-            if (!isInternetAvailable(context ?: return)) {
-                IkmSdkController.setEnableShowResumeAds(false)
-     /*           showInternetDialog(
-                    onPositiveButtonClick = {
-                        isInternetDialog = true
-                        openMobileDataSettings(context ?: requireContext())
-                    },
-                    onNegitiveButtonClick = {
-                        isInternetDialog = true
-                        openWifiSettings(context ?: requireContext())
-                    },
-                    onCloseButtonClick = {
-                    }
-                )*/
-                return
-            }else{
-                IkmSdkController.setEnableShowResumeAds(true)
-            }
-        }
     }
 
     private fun loadNative() {
@@ -146,22 +117,6 @@ class FragmentShowIntruder :
             getNativeLayout(intruderimage_bottom,_binding?.nativeExitAd!!,context?:return),
             null, false
         ) as NativeAdView
-        adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
-        adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
-        adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
-        adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
-        adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-        _binding?.nativeExitAd?.loadAd(
-            activity ?: return,  getNativeLayoutShimmer(intruderimage_bottom),
-            adLayout!!, "intruderimage_bottom",
-            "intruderimage_bottom", object : CustomSDKAdsListenerAdapter() {
-
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                    _binding?.nativeExitAd?.visibility = View.GONE
-                }
-            }
-        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

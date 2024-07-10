@@ -1,11 +1,9 @@
 package com.securityalarm.antitheifproject.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import android.widget.FrameLayout
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
@@ -15,6 +13,7 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.securityalarm.antitheifproject.adapter.LanguageGridAdapter
 import com.securityalarm.antitheifproject.adapter.LanguageGridAdapter.Companion.AD_TYPE
+import com.securityalarm.antitheifproject.ads_manager.AdsBanners
 import com.securityalarm.antitheifproject.ads_manager.AdsManager
 import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
 import com.securityalarm.antitheifproject.helper_class.DbHelper
@@ -28,20 +27,18 @@ import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.fisrt_ad_line_threshold
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
-import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
+import com.securityalarm.antitheifproject.utilities.id_banner_language_screen
 import com.securityalarm.antitheifproject.utilities.id_native_language_screen
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.language_bottom
 import com.securityalarm.antitheifproject.utilities.language_reload
 import com.securityalarm.antitheifproject.utilities.line_count
-import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
-import com.securityalarm.antitheifproject.utilities.openWifiSettings
 import com.securityalarm.antitheifproject.utilities.restartApp
 import com.securityalarm.antitheifproject.utilities.sessionOnboarding
 import com.securityalarm.antitheifproject.utilities.setLocaleMain
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
-import com.securityalarm.antitheifproject.utilities.showInternetDialog
 import com.securityalarm.antitheifproject.utilities.val_ad_native_language_screen
+import com.securityalarm.antitheifproject.utilities.val_banner_language_screen
 
 
 class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
@@ -259,12 +256,12 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
     fun loadBanner() {
         _binding?.adsView?.visibility = View.VISIBLE
         AdsBanners.loadBanner(
-            activity = this,
-            view = _binding.adsView,
+            activity = activity?:return,
+            view = _binding?.adsView!!,
             addConfig = val_banner_language_screen,
             bannerId = id_banner_language_screen,
             bannerListener = {
-                _binding.shimmerLayout.visibility = View.GONE
+                _binding?.shimmerLayout?.visibility = View.GONE
             }
         )
 
@@ -373,33 +370,9 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
 
     override fun onPause() {
         super.onPause()
-        isInternetDialog = true
-        if (!isInternetAvailable(context ?: return)) {
-            IkmSdkController.setEnableShowResumeAds(false)
-        }
     }
 
     override fun onResume() {
         super.onResume()
-        if (isInternetDialog) {
-            if (!isInternetAvailable(context ?: return)) {
-                IkmSdkController.setEnableShowResumeAds(false)
-                /*              showInternetDialog(
-                                    onPositiveButtonClick = {
-                                        isInternetDialog = true
-                                        openMobileDataSettings(context ?: requireContext())
-                                    },
-                                    onNegitiveButtonClick = {
-                                        isInternetDialog = true
-                                        openWifiSettings(context ?: requireContext())
-                                    },
-                                    onCloseButtonClick = {
-                                    }
-                                )*/
-                return
-            } else {
-                IkmSdkController.setEnableShowResumeAds(true)
-            }
-        }
     }
 }

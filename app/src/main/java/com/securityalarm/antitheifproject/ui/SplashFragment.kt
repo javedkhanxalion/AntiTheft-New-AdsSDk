@@ -113,6 +113,7 @@ import com.securityalarm.antitheifproject.ads_manager.AdsManager.isNetworkAvaila
 import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
 import com.securityalarm.antitheifproject.ads_manager.loadTwoInterAdsSplash
 import com.securityalarm.antitheifproject.utilities.counter
+import com.securityalarm.antitheifproject.utilities.id_banner_language_screen
 import com.securityalarm.antitheifproject.utilities.id_exit_screen_native
 import com.securityalarm.antitheifproject.utilities.inter_frequency_count
 import com.securityalarm.antitheifproject.utilities.isSplash
@@ -342,6 +343,8 @@ class SplashFragment :
         id_exit_dialog_native = remoteConfig.getString("id_exit_dialog_native")
         id_banner_1 = remoteConfig.getString("id_banner_1")
         id_exit_screen_native = remoteConfig.getString("id_exit_screen_native")
+
+        id_banner_language_screen = remoteConfig.getString("id_banner_language_screen")
 
         test_ui_native = remoteConfig.getString("test_ui_native")
         language_first_r_scroll = remoteConfig.getString("languageinapp_scrollnative")

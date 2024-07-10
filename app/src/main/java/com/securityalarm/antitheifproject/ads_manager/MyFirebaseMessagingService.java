@@ -18,7 +18,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R;
-import com.securityalarm.antitheifproject.activities.SplashActivity;
+import com.securityalarm.antitheifproject.MainActivity;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,7 +43,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 		Bundle bundle = new Bundle();
 		bundle.putString(FCM_PARAM, data.get(FCM_PARAM));
 
-		Intent intent = new Intent(this, SplashActivity.class);
+		Intent intent = new Intent(this, MainActivity.class);
 		intent.putExtras(bundle);
 
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -59,7 +59,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 					.setContentIntent(pendingIntent)
 					.setContentInfo("Hello")
 					.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
-					.setColor(getColor(R.color.colorAccent))
+					.setColor(getColor(R.color.color_ads))
 					.setLights(Color.RED, 1000, 300)
 					.setDefaults(Notification.DEFAULT_VIBRATE)
 					.setNumber(++numMessages)
