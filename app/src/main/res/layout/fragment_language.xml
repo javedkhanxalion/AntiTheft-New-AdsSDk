@@ -82,7 +82,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-    <com.bmik.android.sdk.widgets.IkmWidgetAdView
+    <FrameLayout
         android:id="@+id/main_ads_native"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,7 +93,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.bmik.android.sdk.widgets.IkmWidgetAdView
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/round_btn_ads"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shimmer_auto_start="true">
+
+            <include
+                android:id="@+id/shimmer_main"
+                layout="@layout/shimmer_native_layout" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+        <FrameLayout
         android:id="@+id/adsView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

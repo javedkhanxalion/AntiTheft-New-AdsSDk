@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:text="Action" />
 
-    <com.bmik.android.sdk.widgets.IkmWidgetAdView
+    <FrameLayout
         android:id="@+id/nativeExitAd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

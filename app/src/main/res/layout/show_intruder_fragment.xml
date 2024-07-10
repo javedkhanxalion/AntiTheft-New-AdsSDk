@@ -65,7 +65,7 @@
         app:layout_constraintBottom_toTopOf="@id/nativeExitAd"
         />
 
-    <com.bmik.android.sdk.widgets.IkmWidgetAdView
+    <FrameLayout
         android:id="@+id/nativeExitAd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

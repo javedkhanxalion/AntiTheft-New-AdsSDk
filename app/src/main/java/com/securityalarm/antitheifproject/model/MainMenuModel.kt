@@ -21,7 +21,6 @@ class MainMenuModel(
     val nativeSoundId: String,
     val nativeLayout: Int,
     val nativeSoundLayout: Int,
-    val backRemote: Boolean,
 ) : Parcelable {
 
     constructor(parcel: Parcel) : this(
@@ -42,7 +41,6 @@ class MainMenuModel(
         parcel.readString() ?: "",
         parcel.readInt(),
         parcel.readInt(),
-        parcel.readByte() != 0.toByte(),
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -63,7 +61,6 @@ class MainMenuModel(
         parcel.writeString(nativeSoundId)
         parcel.writeInt(nativeLayout)
         parcel.writeInt(nativeSoundLayout)
-        parcel.writeByte(if (backRemote) 1 else 0)
     }
 
     override fun describeContents(): Int {

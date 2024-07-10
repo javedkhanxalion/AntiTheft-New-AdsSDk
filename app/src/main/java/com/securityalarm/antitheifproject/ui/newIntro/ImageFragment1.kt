@@ -141,7 +141,7 @@ class ImageFragment1 : Fragment() {
         val adLayout = LayoutInflater.from(context).inflate(
             getNativeLayout(onboarding1_bottom, _binding1?.mainAdsNative!!, context ?: return),
             null, false
-        ) as? IkmWidgetAdLayout
+        ) as NativeAdView
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
         adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
         adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)

@@ -59,7 +59,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.bmik.android.sdk.widgets.IkmWidgetAdView
+    <FrameLayout
         android:id="@+id/bannerAds"
         android:layout_width="match_parent"
         app:ikwad_preview_layout="@layout/shimmer_loading_banner"

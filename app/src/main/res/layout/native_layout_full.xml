@@ -1,8 +1,8 @@
-<com.bmik.android.sdk.widgets.IkmWidgetAdLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.gms.ads.nativead.NativeAdView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/menuBgColor"
+    android:background="@color/white"
     app:layout_anchorGravity="bottom">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/app_icon"
+            android:id="@+id/custom_app_icon"
             android:layout_width="0dp"
             android:layout_height="@dimen/_25sdp"
             android:layout_gravity="center"
@@ -19,8 +19,8 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/app_name"
             android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@id/call_to_action"
-            app:layout_constraintStart_toStartOf="@id/mediaView" />
+            app:layout_constraintBottom_toTopOf="@id/custom_call_to_action"
+            app:layout_constraintStart_toStartOf="@id/custom_mediaView" />
 
         <TextView
             android:id="@+id/ad"
@@ -38,13 +38,13 @@
             android:textDirection="ltr"
             android:textSize="@dimen/_6sdp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/app_icon"
-            app:layout_constraintTop_toTopOf="@+id/app_icon"
+            app:layout_constraintStart_toEndOf="@id/custom_app_icon"
+            app:layout_constraintTop_toTopOf="@+id/custom_app_icon"
 
             />
 
         <TextView
-            android:id="@+id/headline"
+            android:id="@+id/custom_headline"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
@@ -56,38 +56,38 @@
             android:text="@string/app_name"
             android:textColor="@color/textColor"
             android:textSize="@dimen/_15sdp"
-            app:layout_constraintBottom_toTopOf="@id/body"
+            app:layout_constraintBottom_toTopOf="@id/custom_body"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ad"
             app:layout_constraintTop_toTopOf="@+id/ad" />
 
         <TextView
-            android:id="@+id/body"
+            android:id="@+id/custom_body"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:lines="2"
             android:maxLines="2"
-            android:text="@string/set_alarm_to_secure_your_phone_from_theft_or_find_your_phone"
+            android:text="@string/app_name"
             android:textColor="@color/textColor"
             android:textSize="@dimen/_9sdp"
-            app:layout_constraintBottom_toTopOf="@+id/call_to_action"
-            app:layout_constraintEnd_toEndOf="@id/headline"
+            app:layout_constraintBottom_toTopOf="@+id/custom_call_to_action"
+            app:layout_constraintEnd_toEndOf="@id/custom_headline"
             app:layout_constraintStart_toStartOf="@id/ad"
-            app:layout_constraintTop_toBottomOf="@id/headline" />
+            app:layout_constraintTop_toBottomOf="@id/custom_headline" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/mediaView"
+            android:id="@+id/custom_mediaView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginVertical="@dimen/_200sdp"
-            app:layout_constraintBottom_toTopOf="@+id/headline"
+            app:layout_constraintBottom_toTopOf="@+id/custom_headline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.bmik.android.sdk.widgets.IkmWidgetMediaView
-                android:id="@+id/media"
+            <com.google.android.gms.ads.nativead.MediaView
+                android:id="@+id/custom_media"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -98,11 +98,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/call_to_action"
+            android:id="@+id/custom_call_to_action"
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginVertical="@dimen/_8sdp"
-            android:background="@drawable/bg_btn_ads_round"
+            android:background="@drawable/bg_text_ads_normal"
             android:gravity="center"
             android:singleLine="true"
             android:text="@string/app_name"
@@ -112,9 +112,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/body"
+            app:layout_constraintTop_toBottomOf="@+id/custom_body"
             app:layout_constraintWidth_percent="0.87" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</com.bmik.android.sdk.widgets.IkmWidgetAdLayout>
+</com.google.android.gms.ads.nativead.NativeAdView >

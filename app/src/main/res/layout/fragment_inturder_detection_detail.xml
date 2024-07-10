@@ -75,7 +75,7 @@
 
     </ScrollView>
 
-    <com.bmik.android.sdk.widgets.IkmWidgetAdView
+    <FrameLayout
         android:id="@+id/bannerAds"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"

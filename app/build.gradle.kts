@@ -3,13 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
-    id("com.google.firebase.firebase-perf")
-    id("applovin-quality-service")
 }
-applovin {
-    apiKey =
-        "VATVl7pTJ6oNIoMM7otDADAmy-0JbXZ-D38K6Lbz1SFBbZOFNX2epHOE5qJtllf3NoIbG1ShbnGGv-FuHhmwmt"
-}
+
 
 android {
     signingConfigs {
@@ -45,6 +40,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            resValue( "string", "id_application_id", "ca-app-pub-3940256099942544~3347511713")
+            resValue ("string", "id_native", "")
+            resValue ("string", "id_fullscreen_splash", "")
+            resValue ("string", "app_open_splash1", "")
+            resValue ("string", "app_open_splash", "")
         }
         release {
             isMinifyEnabled = false
@@ -53,7 +53,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
+            resValue( "string", "id_application_id", "ca-app-pub-3940256099942544~3347511713")
+            resValue ("string", "id_native", "")
+            resValue ("string", "id_fullscreen_splash", "")
+            resValue ("string", "app_open_splash1", "")
+            resValue ("string", "app_open_splash", "")
             signingConfig = signingConfigs.getByName("release")
         }
         buildFeatures {
@@ -103,7 +107,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-common:2.6.2")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-//    implementation("com.google.android.gms:play-services-ads:23.1.0")
+    implementation("com.google.android.gms:play-services-ads:23.1.0")
     implementation(platform("com.google.firebase:firebase-bom:30.3.1"))
     implementation("com.google.firebase:firebase-config-ktx:21.6.0")
     implementation("com.google.firebase:firebase-analytics-ktx:21.5.0")
@@ -113,12 +117,13 @@ dependencies {
     //shimmer
     implementation("com.facebook.shimmer:shimmer:0.5.0")
 //    implementation("com.ikame.android-sdk:ikm-sdk-debug:2.6.530")
-    implementation ("com.ikame.android-sdk:pub-microzone-antithef-release:2.6.750-beta")
-    implementation("com.google.ads.interactivemedia.v3:interactivemedia:3.33.0")
+//    implementation ("com.ikame.android-sdk:pub-microzone-antithef-release:2.6.750-beta")
+//    implementation("com.google.ads.interactivemedia.v3:interactivemedia:3.33.0")
     implementation("androidx.multidex:multidex:2.0.1")
     implementation ("com.google.code.gson:gson:2.8.8")
 //    implementation ("com.applovin:applovin-sdk:12.1.0")
 //    implementation ("net.pubnative:hybid.sdk:3.0.0")
+    implementation ("com.facebook.android:audience-network-sdk:6.+")
 }
 
 

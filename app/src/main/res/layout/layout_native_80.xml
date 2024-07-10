@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.bmik.android.sdk.widgets.IkmWidgetAdLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.gms.ads.nativead.NativeAdView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_50sdp"
     android:padding="@dimen/_5sdp"
     android:layout_margin="@dimen/_5sdp"
-    android:background="@drawable/ads_rect_new">
+    android:background="@drawable/button_rate_bg">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/containerAds"
@@ -34,7 +34,7 @@
                 android:background="@drawable/bg_text_ads_normal"
                 android:gravity="center"
                 android:paddingHorizontal="2dp"
-                android:text="@string/txt_ad"
+                android:text="@string/ad"
                 android:textColor="@color/color_white_ads"
                 android:textSize="10dp"
                 app:layout_constraintStart_toEndOf="@id/custom_app_icon"
@@ -47,7 +47,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/ads_padding"
                 android:ellipsize="end"
-                android:fontFamily="@font/roboto_medium"
                 android:maxLines="1"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/_12sdp"
@@ -74,17 +73,18 @@
 
             <TextView
                 android:id="@+id/custom_call_to_action"
-                android:layout_width="@dimen/_95sdp"
-                android:layout_height="@dimen/_35sdp"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/ads_button_size"
                 android:layout_alignParentEnd="true"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_btn_ads_round"
-                android:fontFamily="@font/roboto_medium"
+                android:background="@drawable/bg_text_ads_normal"
                 android:gravity="center"
+                android:minWidth="50dp"
                 android:paddingHorizontal="16dp"
                 android:textColor="@color/color_white_ads"
-                android:textSize="@dimen/_14sdp"
+                android:textSize="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/custom_body"
                 app:layout_constraintTop_toTopOf="@id/custom_headline"
@@ -92,4 +92,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-</com.bmik.android.sdk.widgets.IkmWidgetAdLayout>
+</com.google.android.gms.ads.nativead.NativeAdView >

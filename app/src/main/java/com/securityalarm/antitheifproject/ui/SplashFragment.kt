@@ -1,20 +1,20 @@
 package com.securityalarm.antitheifproject.ui
 
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentSplashBinding
-import com.bmik.android.sdk.SDKBaseController
-import com.bmik.android.sdk.listener.CommonAdsListenerAdapter
-import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
-import com.bmik.android.sdk.listener.IKRemoteConfigCallback
-import com.bmik.android.sdk.model.dto.CommonAdsAction
-import com.bmik.android.sdk.model.dto.SdkRemoteConfigDto
+import com.google.firebase.FirebaseApp
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.google.firebase.remoteconfig.get
+import com.google.firebase.remoteconfig.ktx.get
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.securityalarm.antitheifproject.helper_class.DbHelper
@@ -36,6 +36,28 @@ import com.securityalarm.antitheifproject.utilities.fisrt_ad_line_threshold
 import com.securityalarm.antitheifproject.utilities.handfree_native
 import com.securityalarm.antitheifproject.utilities.handfree_selectsound_bottom
 import com.securityalarm.antitheifproject.utilities.home_native
+import com.securityalarm.antitheifproject.utilities.id_banner_1
+import com.securityalarm.antitheifproject.utilities.id_exit_dialog_native
+import com.securityalarm.antitheifproject.utilities.id_frequency_counter
+import com.securityalarm.antitheifproject.utilities.id_inter_counter
+import com.securityalarm.antitheifproject.utilities.id_inter_main_medium
+import com.securityalarm.antitheifproject.utilities.id_inter_main_normal
+import com.securityalarm.antitheifproject.utilities.id_native_Battery_Detection_screen
+import com.securityalarm.antitheifproject.utilities.id_native_Motion_Detection_screen
+import com.securityalarm.antitheifproject.utilities.id_native_Pocket_Detection_screen
+import com.securityalarm.antitheifproject.utilities.id_native_Remove_Charger_screen
+import com.securityalarm.antitheifproject.utilities.id_native_Whistle_Detection_screen
+import com.securityalarm.antitheifproject.utilities.id_native_app_open_screen
+import com.securityalarm.antitheifproject.utilities.id_native_clap_detection_screen
+import com.securityalarm.antitheifproject.utilities.id_native_hand_free_screen
+import com.securityalarm.antitheifproject.utilities.id_native_intro_screen
+import com.securityalarm.antitheifproject.utilities.id_native_intruder_detection_screen
+import com.securityalarm.antitheifproject.utilities.id_native_intruder_list_screen
+import com.securityalarm.antitheifproject.utilities.id_native_language_screen
+import com.securityalarm.antitheifproject.utilities.id_native_loading_screen
+import com.securityalarm.antitheifproject.utilities.id_native_main_menu_screen
+import com.securityalarm.antitheifproject.utilities.id_native_password_screen
+import com.securityalarm.antitheifproject.utilities.id_native_sound_screen
 import com.securityalarm.antitheifproject.utilities.intruder_native
 import com.securityalarm.antitheifproject.utilities.intruderimage_bottom
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
@@ -65,137 +87,113 @@ import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
 import com.securityalarm.antitheifproject.utilities.showInternetDialog
 import com.securityalarm.antitheifproject.utilities.test_ui_native
 import com.securityalarm.antitheifproject.utilities.thankyou_bottom
+import com.securityalarm.antitheifproject.utilities.val_ad_native_Battery_Detection_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_Motion_Detection_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_Pocket_Detection_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_Remove_Charger_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_Whistle_Detection_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_clap_detection_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_hand_free_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_intro_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_intruder_detection_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_intruder_list_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_language_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_loading_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_main_menu_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_password_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_show_image_screen
+import com.securityalarm.antitheifproject.utilities.val_ad_native_sound_screen
+import com.securityalarm.antitheifproject.utilities.val_banner_1
+import com.securityalarm.antitheifproject.utilities.val_exit_dialog_native
+import com.securityalarm.antitheifproject.utilities.val_inter_main_normal
 import com.securityalarm.antitheifproject.utilities.whistle_native
 import com.securityalarm.antitheifproject.utilities.whistle_selectsound_bottom
+import com.securityalarm.antitheifproject.ads_manager.AdsManager
+import com.securityalarm.antitheifproject.ads_manager.AdsManager.isNetworkAvailable
+import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
+import com.securityalarm.antitheifproject.ads_manager.loadTwoInterAdsSplash
+import com.securityalarm.antitheifproject.utilities.counter
+import com.securityalarm.antitheifproject.utilities.id_exit_screen_native
+import com.securityalarm.antitheifproject.utilities.inter_frequency_count
+import com.securityalarm.antitheifproject.utilities.isSplash
+import com.securityalarm.antitheifproject.utilities.val_banner_language_screen
+import com.securityalarm.antitheifproject.utilities.val_banner_main_menu_screen
+import com.securityalarm.antitheifproject.utilities.val_banner_splash_screen
+import com.securityalarm.antitheifproject.utilities.val_exit_screen_native
+import com.securityalarm.antitheifproject.utilities.val_inter_exit_screen
+import com.securityalarm.antitheifproject.utilities.val_native_Full_screen
+import com.securityalarm.antitheifproject.utilities.val_native_intro_screen
+import com.securityalarm.antitheifproject.utilities.val_native_intro_screen1
+import com.securityalarm.antitheifproject.utilities.val_native_intro_screen2
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SplashFragment :
     BaseFragment<FragmentSplashBinding>(FragmentSplashBinding::inflate) {
     private var isInternetDialog: Boolean = false
     private var dbHelper: DbHelper? = null
-    private var mOpenMainAction: (() -> Unit)? = null
-    private var timerWaitAds: CountDownTimer? = null
+    private var remoteConfig: FirebaseRemoteConfig? = null
+    private var adsManager: AdsManager? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dbHelper = DbHelper(context ?: return)
+        adsManager = AdsManager.appAdsInit(activity ?: return)
         dbHelper?.getStringData(requireContext(), LANG_CODE, "en")?.let {
             setLocaleMain(it)
         }
 
         if (!isInternetAvailable(context ?: return)) {
-          showInternetDialog(
+            showInternetDialog(
                 onPositiveButtonClick = {
                     isInternetDialog = true
-                    isSplashDialog=false
+                    isSplashDialog = false
                     openMobileDataSettings(context ?: requireContext())
                 },
                 onNegitiveButtonClick = {
                     isInternetDialog = true
-                    isSplashDialog=false
+                    isSplashDialog = false
                     openWifiSettings(context ?: requireContext())
                 },
                 onCloseButtonClick = {
-                    isSplashDialog=false
+                    isSplashDialog = false
                     getIntentMove()
                 }
             )
             return
-        }else{
-            isSplashDialog=false
-        }
-        SDKBaseController.getInstance().onDataInitSuccessListener = CommonAdsAction {
-            //do something
-        }
-        SDKBaseController.getInstance().onDataGetSuccessListener = {
-            //do something
-        }
-        loadBanner()
-        if (dbHelper?.getBooleanData(
-                requireContext(),
-                IS_FIRST,
-                false
-            ) == false
-        ) {
-            SDKBaseController.getInstance().preloadNativeAd(
-                activity ?: return, "language_bottom",
-                "language_bottom", object : CustomSDKAdsListenerAdapter() {
-                    override fun onAdsLoaded() {
-                        super.onAdsLoaded()
-                        Log.d("check_ads", "onAdsLoaded: Load Ad")
-                    }
-                    override fun onAdsLoadFail() {
-                        super.onAdsLoadFail()
-                        SDKBaseController.getInstance().preloadNativeAd(
-                            activity ?: return, "language_bottom",
-                            "language_bottom")
-                        Log.d("check_ads", "onAdsLoadFail: Load No")
-                    }
-                }
-            )
-        } else if (dbHelper?.getBooleanData(
-                requireContext(),
-                IS_INTRO,
-                false
-            ) == false
-        ) {
-            SDKBaseController.getInstance().preloadNativeAd(
-                activity ?: return, "onboarding1_bottom",
-                "onboarding1_bottom"
-            )
-            SDKBaseController.getInstance().preloadNativeAd(
-                activity ?: return, "onboarding_fullnative",
-                "onboarding_fullnative"
-            )
-            SDKBaseController.getInstance().preloadNativeAd(
-                activity ?: return, "onboarding2_bottom",
-                "onboarding2_bottom"
-            )
-            SDKBaseController.getInstance().preloadNativeAd(
-                activity ?: return, "onboarding3_bottom",
-                "onboarding3_bottom"
-            )
         } else {
-            SDKBaseController.getInstance().preloadNativeAd(
-                activity ?: return, "home_native",
-                "home_native"
-            )
+            isSplashDialog = false
         }
-        loadRemote()
+        CoroutineScope(Dispatchers.Main).launch {
+            isSplash = false
+            counter = 0
+            inter_frequency_count = 0
+            adsManager = AdsManager.appAdsInit(activity?:return@launch)
+            dbHelper = DbHelper(activity?.applicationContext?:return@launch)
+            if (isNetworkAvailable(context)) {
+                loadTwoInterAdsSplash(
+                    adsManager ?: return@launch,
+                    activity?:return@launch,
+                    remoteConfigNormal = true,
+                    adIdNormal = getString(R.string.id_fullscreen_splash),
+                    "splash"
+                )
+                loadBanner()
+                initRemoteIds()
+            } else {
+                getIntentMove()
+            }
+        }
         setupBackPressedCallback {
             //Do Nothing
         }
     }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.clear()
     }
-    private fun initView() {
 
-        mOpenMainAction = {
-            getIntentMove()
-        }
-        timerWaitAds =
-            SDKBaseController.getInstance().showFirstOpenAppAds(activity,
-                object : CommonAdsListenerAdapter() {
-                    override fun onAdsShowed(priority: Int) {
-                        super.onAdsShowed(priority)
-                        getIntentMove()
-                    }
-
-                    override fun onAdsDismiss() {
-                    }
-
-                    override fun onAdsShowFail(errorCode: Int) {
-                        getIntentMove()
-                    }
-
-                    override fun onAdsShowTimeout() {
-                        super.onAdsShowTimeout()
-                        Toast.makeText(context, "Ads show timeout", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-
-                })
-    }
     private fun getIntentMove() {
         when (sessionOpenlanguage) {
             0 -> {
@@ -242,7 +240,6 @@ class SplashFragment :
                     }
                 }
             }
-
             1 -> {
                 if ((dbHelper?.getBooleanData(
                         requireContext(),
@@ -269,7 +266,6 @@ class SplashFragment :
 
                 }
             }
-
             2 -> {
                 firebaseAnalytics(
                     "loading_fragment_load_next_btn_language",
@@ -281,45 +277,181 @@ class SplashFragment :
                 )
             }
         }
-
     }
+
     fun loadBanner() {
         _binding?.adsView?.visibility = View.VISIBLE
-        _binding?.adsView?.loadAd(
-            activity, "bn_s_adw",
-            "bn_s_adw", object : CustomSDKAdsListenerAdapter() {
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                    _binding?.adsView?.visibility = View.GONE
+//        _binding?.adsView?.loadAd(
+//            activity, "bn_s_adw",
+//            "bn_s_adw", object : CustomSDKAdsListenerAdapter() {
+//                override fun onAdsLoadFail() {
+//                    super.onAdsLoadFail()
+//                    _binding?.adsView?.visibility = View.GONE
+//                }
+//            }
+//        )
+    }
+
+    private fun initRemoteIds() {
+        val remoteConfig = FirebaseRemoteConfig.getInstance()
+        val configSettings = FirebaseRemoteConfigSettings.Builder()
+            .setMinimumFetchIntervalInSeconds(3600) // Set the minimum interval for fetching, in seconds
+            .build()
+        remoteConfig.setConfigSettingsAsync(configSettings)
+// Fetch the remote config values
+        remoteConfig.fetchAndActivate()
+            .addOnCompleteListener(activity ?: return) { task ->
+                if (task.isSuccessful) {
+                    // Apply the fetched values to your app
+                    applyAdIdsFromRemoteConfig(remoteConfig)
+                } else {
+                    // Handle the error
+                    // For example, use default values or log an error message
                 }
             }
-        )
     }
-    fun loadRemote() {
-        SDKBaseController.getInstance().fetchNewRemoteConfigData(object : IKRemoteConfigCallback {
-            override fun onSuccess(data: HashMap<String, SdkRemoteConfigDto>) {
-                val xx = data
-                test_ui_native = xx["test_ui_native"]?.getString().toString()
-                language_first_r_scroll = xx["languageinapp_scrollnative"]?.getString().toString()
-                language_reload = xx["language_reload"]?.getLong()?.toInt() ?: 0
-                Onboarding_Full_Native = xx["Onboarding_Full_Native"]?.getLong()?.toInt() ?: 0
-                sessionOpenlanguage = xx["sessionOpenlanguage"]?.getLong()?.toInt() ?: 1
-                sessionOnboarding = xx["sessionOnboarding"]?.getLong()?.toInt() ?: 1
-                parseJsonWithGson(test_ui_native)
-                parseJsonWithGsonLanguage(language_first_r_scroll)
-                Log.d("check_language", "onSuccess: $language_reload")
-                Log.d("check_language", "onSuccess: $sessionOpenlanguage")
-                Log.d("check_language", "onSuccess: $sessionOnboarding")
-                Log.d("check_language", "onSuccess: $test_ui_native")
-                Log.d("check_language", "onSuccess: $language_first_r_scroll")
-                Log.d("check_language", "onSuccess: $Onboarding_Full_Native")
-                Log.d("check_language", "onSuccess: ${xx["full_ads_config"]?.getString().toString()}")
-            }
-            override fun onFail() {
-            }
-        })
-        initView()
+
+    private fun applyAdIdsFromRemoteConfig(remoteConfig: FirebaseRemoteConfig) {
+
+        id_inter_counter = remoteConfig.getLong("id_inter_counter").toInt()
+        id_frequency_counter = remoteConfig.getLong("id_frequency_counter").toInt()
+        id_native_main_menu_screen = remoteConfig.getString("id_native_main_menu_screen")
+        id_inter_main_normal = remoteConfig.getString("id_inter_main_normal")
+        id_native_loading_screen = remoteConfig.getString("id_native_loading_screen")
+        id_native_loading_screen = remoteConfig.getString("id_native_loading_screen")
+        id_native_loading_screen = remoteConfig.getString("id_native_loading_screen")
+        id_native_intro_screen = remoteConfig.getString("id_native_intro_screen")
+        id_native_language_screen = remoteConfig.getString("id_native_language_screen")
+        id_native_sound_screen = remoteConfig.getString("id_native_sound_screen")
+        id_native_intruder_list_screen = remoteConfig.getString("id_native_intruder_list_screen")
+        id_native_intruder_detection_screen =
+            remoteConfig.getString("id_native_intruder_detection_screen")
+        id_native_password_screen = remoteConfig.getString("id_native_password_screen")
+        id_native_Pocket_Detection_screen =
+            remoteConfig.getString("id_native_Pocket_Detection_screen")
+        id_native_Motion_Detection_screen =
+            remoteConfig.getString("id_native_Motion_Detection_screen")
+        id_native_Whistle_Detection_screen =
+            remoteConfig.getString("id_native_Whistle_Detection_screen")
+        id_native_hand_free_screen = remoteConfig.getString("id_native_hand_free_screen")
+        id_native_clap_detection_screen = remoteConfig.getString("id_native_clap_detection_screen")
+        id_native_Remove_Charger_screen = remoteConfig.getString("id_native_Remove_Charger_screen")
+        id_native_Battery_Detection_screen =
+            remoteConfig.getString("id_native_Battery_Detection_screen")
+        id_native_app_open_screen = remoteConfig.getString("id_native_app_open_screen")
+        id_exit_dialog_native = remoteConfig.getString("id_exit_dialog_native")
+        id_banner_1 = remoteConfig.getString("id_banner_1")
+        id_exit_screen_native = remoteConfig.getString("id_exit_screen_native")
+
+        test_ui_native = remoteConfig.getString("test_ui_native")
+        language_first_r_scroll = remoteConfig.getString("languageinapp_scrollnative")
+        language_reload = remoteConfig.getString("language_reload").toInt()
+        Onboarding_Full_Native = remoteConfig.getString("Onboarding_Full_Native").toInt()
+        sessionOpenlanguage = remoteConfig.getString("sessionOpenlanguage").toInt()
+        sessionOnboarding = remoteConfig.getString("sessionOnboarding").toInt()
+        parseJsonWithGson(test_ui_native)
+        parseJsonWithGsonLanguage(language_first_r_scroll)
+
+        Log.d("check_language", "onSuccess: $language_reload")
+        Log.d("check_language", "onSuccess: $sessionOpenlanguage")
+        Log.d("check_language", "onSuccess: $sessionOnboarding")
+        Log.d("check_language", "onSuccess: $test_ui_native")
+        Log.d("check_language", "onSuccess: $language_first_r_scroll")
+        Log.d("check_language", "onSuccess: $Onboarding_Full_Native")
+        Log.d("remote_ids", "$id_inter_counter")
+        Log.d("remote_ids", "$id_frequency_counter")
+        Log.d("remote_ids", id_inter_main_medium)
+        Log.d("remote_ids", id_native_main_menu_screen)
+        Log.d("remote_ids", id_inter_main_normal)
+        Log.d("remote_ids", id_native_loading_screen)
+        Log.d("remote_ids", id_native_loading_screen)
+        Log.d("remote_ids", id_native_loading_screen)
+        Log.d("remote_ids", id_native_intro_screen)
+        Log.d("remote_ids", id_native_language_screen)
+        Log.d("remote_ids", id_native_sound_screen)
+        Log.d("remote_ids", id_native_intruder_list_screen)
+        Log.d("remote_ids", id_native_intruder_detection_screen)
+        Log.d("remote_ids", id_native_password_screen)
+        Log.d("remote_ids", id_native_Pocket_Detection_screen)
+        Log.d("remote_ids", id_native_Motion_Detection_screen)
+        Log.d("remote_ids", id_native_Whistle_Detection_screen)
+        Log.d("remote_ids", id_native_hand_free_screen)
+        Log.d("remote_ids", id_native_clap_detection_screen)
+        Log.d("remote_ids", id_native_Remove_Charger_screen)
+        Log.d("remote_ids", id_native_Battery_Detection_screen)
+        Log.d("remote_ids", id_exit_dialog_native)
+        Log.d("remote_ids", id_banner_1)
+
+        initRemoteConfig()
     }
+
+    private fun initRemoteConfig() {
+        try {
+            FirebaseApp.initializeApp(context ?: return)
+            remoteConfig = Firebase.remoteConfig
+            val configSettings = remoteConfigSettings {
+                minimumFetchIntervalInSeconds = 6
+            }
+            remoteConfig?.setConfigSettingsAsync(configSettings)
+            remoteConfig?.setDefaultsAsync(R.xml.remote_config_defaults)
+            remoteConfig?.fetchAndActivate()?.addOnCompleteListener(activity ?: return) { task ->
+                if (task.isSuccessful) {
+                    val updated = task.result
+                    Log.d("RemoteConfig", "Config params updated: $updated")
+                    val_banner_1 = remoteConfig!!["val_banner_1"].asBoolean()
+                    val_inter_main_normal = remoteConfig!!["val_inter_main_normal"].asBoolean()
+                    val_ad_native_main_menu_screen =remoteConfig!!["val_ad_native_main_menu_screen"].asBoolean()
+                    val_ad_native_loading_screen =remoteConfig!!["val_native_loading_screen"].asBoolean()
+                    val_ad_native_intro_screen =remoteConfig!!["val_ad_native_intro_screen"].asBoolean()
+                    val_ad_native_language_screen =remoteConfig!!["val_ad_native_language_screen"].asBoolean()
+                    val_ad_native_sound_screen =remoteConfig!!["val_ad_native_sound_screen"].asBoolean()
+                    val_ad_native_intruder_list_screen =remoteConfig!!["val_ad_native_intruder_list_screen"].asBoolean()
+                    val_ad_native_show_image_screen =remoteConfig!!["val_ad_native_show_image_screen"].asBoolean()
+                    val_ad_native_intruder_detection_screen =remoteConfig!!["val_ad_native_intruder_detection_screen"].asBoolean()
+                    val_ad_native_password_screen =remoteConfig!!["val_ad_native_password_screen"].asBoolean()
+                    val_ad_native_Motion_Detection_screen =remoteConfig!!["val_ad_native_Motion_Detection_screen"].asBoolean()
+                    val_ad_native_Whistle_Detection_screen =remoteConfig!!["val_ad_native_Whistle_Detection_screen"].asBoolean()
+                    val_ad_native_hand_free_screen =remoteConfig!!["val_ad_native_hand_free_screen"].asBoolean()
+                    val_ad_native_clap_detection_screen =remoteConfig!!["val_ad_native_clap_detection_screen"].asBoolean()
+                    val_ad_native_Remove_Charger_screen =remoteConfig!!["val_ad_native_Remove_Charger_screen"].asBoolean()
+                    val_ad_native_Battery_Detection_screen =remoteConfig!!["val_ad_native_Battery_Detection_screen"].asBoolean()
+                    val_ad_native_Pocket_Detection_screen =remoteConfig!!["val_ad_native_Pocket_Detection_screen"].asBoolean()
+                    val_exit_dialog_native = remoteConfig!!["val_exit_dialog_native"].asBoolean()
+
+                    val_inter_exit_screen = remoteConfig!!["val_inter_exit_screen"].asBoolean()
+                    val_ad_native_main_menu_screen =remoteConfig!!["val_ad_native_main_menu_screen"].asBoolean()
+                    val_ad_native_language_screen =remoteConfig!!["val_ad_native_language_screen"].asBoolean()
+                    val_exit_dialog_native = remoteConfig!!["val_exit_dialog_native"].asBoolean()
+                    val_exit_screen_native = remoteConfig!!["val_exit_screen_native"].asBoolean()
+
+                    val_banner_splash_screen = remoteConfig!!["val_banner_splash_screen"].asBoolean()
+                    val_banner_language_screen = remoteConfig!!["val_banner_language_screen"].asBoolean()
+                    val_banner_main_menu_screen = remoteConfig!!["val_banner_main_menu_screen"].asBoolean()
+
+                    val_native_Full_screen = remoteConfig!!["val_native_Full_screen"].asBoolean()
+                    val_native_intro_screen = remoteConfig!!["val_native_intro_screen"].asBoolean()
+                    val_native_intro_screen1 = remoteConfig!!["val_native_intro_screen1"].asBoolean()
+                    val_native_intro_screen2 = remoteConfig!!["val_native_intro_screen2"].asBoolean()
+
+
+                } else {
+                    Log.d("RemoteConfig", "Fetch failed")
+                }
+                adsManager?.nativeAdsMain()?.loadNativeAd(
+                    activity ?: return@addOnCompleteListener,
+                    true,
+                    getString(R.string.id_native_loading_screen),
+                    object : NativeListener {
+
+                    })
+                getIntentMove()
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     private fun parseJsonWithGson(jsonString: String) {
         if (jsonString != null && jsonString.isNotEmpty()) {
             val gson = Gson()
@@ -327,122 +459,134 @@ class SplashFragment :
             val dataMap: Map<String, List<NativeDesignType>> = gson.fromJson(jsonString, type)
             val onboarding1_bottom1 = dataMap["onboarding1_bottom"]?.map { it.native_design_type }
             onboarding1_bottom1?.forEach {
-                onboarding1_bottom=it.toInt()
+                onboarding1_bottom = it.toInt()
             }
             val onboarding2_bottom1 = dataMap["onboarding2_bottom"]?.map { it.native_design_type }
             onboarding2_bottom1?.forEach {
-                onboarding2_bottom=it.toInt()
+                onboarding2_bottom = it.toInt()
             }
             val onboarding3_bottom1 = dataMap["onboarding3_bottom"]?.map { it.native_design_type }
             onboarding3_bottom1?.forEach {
-                onboarding3_bottom=it.toInt()
+                onboarding3_bottom = it.toInt()
             }
             val exitdialog_bottom1 = dataMap["exitdialog_bottom"]?.map { it.native_design_type }
             exitdialog_bottom1?.forEach {
-                exitdialog_bottom=it.toInt()
+                exitdialog_bottom = it.toInt()
             }
             val thankyou_bottom1 = dataMap["thankyou_bottom"]?.map { it.native_design_type }
             thankyou_bottom1?.forEach {
-                thankyou_bottom=it.toInt()
+                thankyou_bottom = it.toInt()
             }
             val home_native1 = dataMap["home_native"]?.map { it.native_design_type }
             home_native1?.forEach {
-                home_native=it.toInt()
+                home_native = it.toInt()
             }
             val intruder_native1 = dataMap["intruder_native"]?.map { it.native_design_type }
             intruder_native1?.forEach {
-                intruder_native=it.toInt()
+                intruder_native = it.toInt()
             }
-            val intruderimage_bottom1 = dataMap["intruderimage_bottom"]?.map { it.native_design_type }
+            val intruderimage_bottom1 =
+                dataMap["intruderimage_bottom"]?.map { it.native_design_type }
             intruderimage_bottom1?.forEach {
-                intruderimage_bottom=it.toInt()
+                intruderimage_bottom = it.toInt()
             }
             val pocket_native1 = dataMap["pocket_native"]?.map { it.native_design_type }
             pocket_native1?.forEach {
-                pocket_native=it.toInt()
+                pocket_native = it.toInt()
             }
-            val pocket_selectsound_bottom1 = dataMap["pocket_selectsound_bottom"]?.map { it.native_design_type }
+            val pocket_selectsound_bottom1 =
+                dataMap["pocket_selectsound_bottom"]?.map { it.native_design_type }
             pocket_selectsound_bottom1?.forEach {
-                pocket_selectsound_bottom=it.toInt()
+                pocket_selectsound_bottom = it.toInt()
             }
             val password_native1 = dataMap["password_native"]?.map { it.native_design_type }
             password_native1?.forEach {
-                password_native=it.toInt()
+                password_native = it.toInt()
             }
-            val password_selectsound_bottom1 = dataMap["password_selectsound_bottom"]?.map { it.native_design_type }
+            val password_selectsound_bottom1 =
+                dataMap["password_selectsound_bottom"]?.map { it.native_design_type }
             password_selectsound_bottom1?.forEach {
-                password_selectsound_bottom=it.toInt()
+                password_selectsound_bottom = it.toInt()
             }
             val motion_native1 = dataMap["motion_native"]?.map { it.native_design_type }
             motion_native1?.forEach {
-                motion_native=it.toInt()
+                motion_native = it.toInt()
             }
-            val motion_selectsound_bottom1 = dataMap["motion_selectsound_bottom"]?.map { it.native_design_type }
+            val motion_selectsound_bottom1 =
+                dataMap["motion_selectsound_bottom"]?.map { it.native_design_type }
             motion_selectsound_bottom1?.forEach {
-                motion_selectsound_bottom=it.toInt()
+                motion_selectsound_bottom = it.toInt()
             }
             val whistle_native1 = dataMap["whistle_native"]?.map { it.native_design_type }
             whistle_native1?.forEach {
-                whistle_native=it.toInt()
+                whistle_native = it.toInt()
             }
-            val whistle_selectsound_bottom1 = dataMap["whistle_selectsound_bottom"]?.map { it.native_design_type }
+            val whistle_selectsound_bottom1 =
+                dataMap["whistle_selectsound_bottom"]?.map { it.native_design_type }
             whistle_selectsound_bottom1?.forEach {
-                whistle_selectsound_bottom=it.toInt()
+                whistle_selectsound_bottom = it.toInt()
             }
             val handfree_native1 = dataMap["handfree_native"]?.map { it.native_design_type }
             handfree_native1?.forEach {
-                handfree_native=it.toInt()
+                handfree_native = it.toInt()
             }
-            val handfree_selectsound_bottom1 = dataMap["handfree_selectsound_bottom"]?.map { it.native_design_type }
+            val handfree_selectsound_bottom1 =
+                dataMap["handfree_selectsound_bottom"]?.map { it.native_design_type }
             handfree_selectsound_bottom1?.forEach {
-                handfree_selectsound_bottom=it.toInt()
+                handfree_selectsound_bottom = it.toInt()
             }
             val clap_native1 = dataMap["clap_native"]?.map { it.native_design_type }
             clap_native1?.forEach {
-                clap_native=it.toInt()
+                clap_native = it.toInt()
             }
-            val clap_selectsound_bottom1 = dataMap["clap_selectsound_bottom"]?.map { it.native_design_type }
+            val clap_selectsound_bottom1 =
+                dataMap["clap_selectsound_bottom"]?.map { it.native_design_type }
             clap_selectsound_bottom1?.forEach {
-                clap_selectsound_bottom=it.toInt()
+                clap_selectsound_bottom = it.toInt()
             }
             val remove_native1 = dataMap["remove_native"]?.map { it.native_design_type }
             remove_native1?.forEach {
-                remove_native=it.toInt()
+                remove_native = it.toInt()
             }
-            val remove_selectsound_bottom1 = dataMap["remove_selectsound_bottom"]?.map { it.native_design_type }
+            val remove_selectsound_bottom1 =
+                dataMap["remove_selectsound_bottom"]?.map { it.native_design_type }
             remove_selectsound_bottom1?.forEach {
-                remove_selectsound_bottom=it.toInt()
+                remove_selectsound_bottom = it.toInt()
             }
             val battery_native1 = dataMap["battery_native"]?.map { it.native_design_type }
             battery_native1?.forEach {
-                battery_native=it.toInt()
+                battery_native = it.toInt()
             }
-            val battery_selectsound_bottom1 = dataMap["battery_selectsound_bottom"]?.map { it.native_design_type }
+            val battery_selectsound_bottom1 =
+                dataMap["battery_selectsound_bottom"]?.map { it.native_design_type }
             battery_selectsound_bottom1?.forEach {
-                battery_selectsound_bottom=it.toInt()
+                battery_selectsound_bottom = it.toInt()
             }
             val language_bottom1 = dataMap["language_bottom"]?.map { it.native_design_type }
             language_bottom1?.forEach {
-                language_bottom=it.toInt()
+                language_bottom = it.toInt()
             }
-            val languageinapp_scroll1 = dataMap["languageinapp_scroll"]?.map { it.native_design_type }
+            val languageinapp_scroll1 =
+                dataMap["languageinapp_scroll"]?.map { it.native_design_type }
             languageinapp_scroll1?.forEach {
-                languageinapp_scroll=it.toInt()
+                languageinapp_scroll = it.toInt()
             }
         }
     }
+
     private fun parseJsonWithGsonLanguage(jsonString1: String) {
         if (jsonString1 != null && jsonString1.isNotEmpty()) {
             val gson = Gson()
             val type = object : TypeToken<Map<String, List<AdSettings>>>() {}.type
-            val dataMap: Map<String, List<AdSettings>> = gson.fromJson(jsonString1, type)?:return
+            val dataMap: Map<String, List<AdSettings>> = gson.fromJson(jsonString1, type) ?: return
             val languageInAppScrollList = dataMap["languageinapp_scroll"]
             languageInAppScrollList?.forEach {
-                fisrt_ad_line_threshold=it.fisrt_ad_line_threshold.toInt()
-                line_count=it.line_count.toInt()
+                fisrt_ad_line_threshold = it.fisrt_ad_line_threshold.toInt()
+                line_count = it.line_count.toInt()
             }
         }
     }
+
     override fun onResume() {
         super.onResume()
         if (isInternetDialog) {

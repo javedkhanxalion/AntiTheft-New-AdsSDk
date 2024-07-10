@@ -125,7 +125,7 @@
         app:layout_constraintStart_toStartOf="@id/sound_title_text"
         app:layout_constraintTop_toBottomOf="@id/sound_title_text" />
 
-    <com.bmik.android.sdk.widgets.IkmWidgetAdView
+    <FrameLayout
         android:id="@+id/nativeExitAd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.MainActivityApplicationBinding
-import com.bmik.android.sdk.IkmSdkController
 import com.securityalarm.antitheifproject.utilities.WifiStateReceiver
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
@@ -35,12 +34,6 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
-        if (!isInternetAvailable(this)) {
-            IkmSdkController.setEnableShowResumeAds(false)
-            return
-        } else {
-            IkmSdkController.setEnableShowResumeAds(true)
-        }
     }
 
     override fun onDestroy() {

@@ -7,7 +7,7 @@
     android:layout_gravity="center"
     app:layout_anchorGravity="center">
 
-    <com.bmik.android.sdk.widgets.IkmWidgetAdView
+    <FrameLayout
         android:id="@+id/nativeExitAd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -25,4 +25,36 @@
     <color name="button_color_2">#FFFF005C</color>
     <color name="grey600">#757575</color>
 
+    <color name="ads_black">#212121</color>
+    <color name="ads_blue_button">#2C76F3</color>
+    <color name="ads_blue_color">#0979FD</color>
+    <color name="ads_grey">#888888</color>
+    <color name="ads_purple_1">#E73D76</color>
+    <color name="ads_purple_1_press">#EA2064</color>
+    <color name="ads_purple_2">#EC6B5D</color>
+    <color name="ads_purple_2_press">#F15140</color>
+    <color name="color_ads">#0984e3</color>
+    <color name="color_ads_bg">#F6F6F6</color>
+    <color name="color_ads_border">#BFBFC1</color>
+    <color name="color_ads_text_bg">#0979FD</color>
+    <color name="color_ads_text_grey">#aaaaaa</color>
+    <color name="color_atc_dialog">#66000000</color>
+    <color name="color_blue_ads">#0979FD</color>
+    <color name="color_gray_2_ads">#fff8f8f8</color>
+    <color name="color_nt_des">#6C6C6C</color>
+    <color name="color_nt_tt">#161616</color>
+    <color name="color_shimmer">#cccccc</color>
+    <color name="color_text_ads_des">#838383</color>
+    <color name="color_text_ads_des_inter">#cccccc</color>
+    <color name="color_text_cancel">#ADB7C9</color>
+    <color name="color_text_update">#2C76F3</color>
+    <color name="color_white_ads">#ffffff</color>
+    <color name="colorindicator">#0984e3</color>
+    <color name="ikm_bg_inter_nex_transparent">#4D000000</color>
+    <color name="ikm_bg_transparent">#1F000000</color>
+    <color name="light_transparent">#16000000</color>
+    <color name="sdk_load_bg_color">#99000000</color>
+    <color name="sdk_load_bg_color_30">#4DCCCCCC</color>
+    <color name="stocke_card">#5E58595A</color>
+
 </resources>

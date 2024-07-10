@@ -5,16 +5,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.FrameLayout
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentLanguageBinding
-import com.bmik.android.sdk.IkmSdkController
-import com.bmik.android.sdk.SDKBaseController
-import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
-import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdView
 import com.securityalarm.antitheifproject.adapter.LanguageGridAdapter
 import com.securityalarm.antitheifproject.adapter.LanguageGridAdapter.Companion.AD_TYPE
+import com.securityalarm.antitheifproject.ads_manager.AdsManager
+import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
 import com.securityalarm.antitheifproject.helper_class.DbHelper
 import com.securityalarm.antitheifproject.model.LanguageAppModel
 import com.securityalarm.antitheifproject.utilities.BaseFragment
@@ -27,6 +29,7 @@ import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.fisrt_ad_line_threshold
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
 import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
+import com.securityalarm.antitheifproject.utilities.id_native_language_screen
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.language_bottom
 import com.securityalarm.antitheifproject.utilities.language_reload
@@ -38,6 +41,7 @@ import com.securityalarm.antitheifproject.utilities.sessionOnboarding
 import com.securityalarm.antitheifproject.utilities.setLocaleMain
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
 import com.securityalarm.antitheifproject.utilities.showInternetDialog
+import com.securityalarm.antitheifproject.utilities.val_ad_native_language_screen
 
 
 class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
@@ -49,12 +53,14 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
     private var adapter: LanguageGridAdapter? = null
     var list: ArrayList<LanguageAppModel> = ArrayList()
     private var isInternetDialog: Boolean = false
+    private var adsManager: AdsManager? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         try {
             firebaseAnalytics("language_fragment_open", "language_fragment_open -->  Click")
             requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
             initializeData()
+            adsManager = AdsManager.appAdsInit(activity ?: return)
             arguments?.let {
                 isLangScreen = it.getBoolean(LANG_SCREEN)
             }
@@ -63,23 +69,6 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             }
             if (isLangScreen) {
                 loadNative()
-                SDKBaseController.getInstance().preloadNativeAd(
-                    activity ?: return, "onboarding1_bottom",
-                    "onboarding1_bottom",
-                    null
-                )
-                SDKBaseController.getInstance().preloadNativeAd(
-                    activity ?: return, "onboarding_fullnative",
-                    "onboarding_fullnative"
-                )
-                SDKBaseController.getInstance().preloadNativeAd(
-                    activity ?: return, "onboarding2_bottom",
-                    "onboarding2_bottom"
-                )
-                SDKBaseController.getInstance().preloadNativeAd(
-                    activity ?: return, "onboarding3_bottom",
-                    "onboarding3_bottom"
-                )
                 _binding?.backBtn?.visibility = View.GONE
             } else {
                 loadBanner()
@@ -209,45 +198,51 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             e.printStackTrace()
         }
     }
+
     private fun loadNative() {
         _binding?.mainAdsNative?.visibility = View.VISIBLE
-        val adLayout = LayoutInflater.from(context).inflate(
-            getNativeLayout(language_bottom,_binding?.mainAdsNative!!,context?:return),
+        val adView = LayoutInflater.from(context).inflate(
+            getNativeLayout(language_bottom, _binding?.mainAdsNative!!, context ?: return),
             null, false
-        ) as? IkmWidgetAdLayout
-        adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
-        adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
-        adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
-        adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
-        adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-        _binding?.mainAdsNative?.loadAd(
-            activity ?: return,  getNativeLayoutShimmer(language_bottom),
-            adLayout!!, "language_bottom",
-            "language_bottom", object : CustomSDKAdsListenerAdapter() {
-
-                override fun onAdsLoaded() {
-                    super.onAdsLoaded()
-                        Log.d("check_ads", "onAdsLoadFail: Load Yes")
+        ) as NativeAdView
+        adsManager?.nativeAdsMain()?.loadNativeAd(
+            activity ?: return,
+            val_ad_native_language_screen,
+            id_native_language_screen,
+            object : NativeListener {
+                override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                     _binding?.mainAdsNative?.visibility = View.VISIBLE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    adsManager?.nativeAdsMain()?.nativeViewMedia(currentNativeAd ?: return, adView)
+                    _binding?.mainAdsNative?.removeAllViews()
+                    _binding?.mainAdsNative?.addView(adView)
+                    super.nativeAdLoaded(currentNativeAd)
                 }
 
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                    Log.d("check_ads", "onAdsLoadFail: Load No")
+                override fun nativeAdFailed(loadAdError: LoadAdError) {
                     _binding?.mainAdsNative?.visibility = View.GONE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    super.nativeAdFailed(loadAdError)
                 }
-            }
-        )
+
+                override fun nativeAdValidate(string: String) {
+                    _binding?.mainAdsNative?.visibility = View.GONE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    super.nativeAdValidate(string)
+                }
+            })
+
     }
+
     private fun reCall() {
         when (language_reload) {
             1 -> {
-                _binding?.mainAdsNative?.reCallLoadAd()
+                loadNative()
             }
 
             2 -> {
                 if (recallActive == 2) {
-                    _binding?.mainAdsNative?.reCallLoadAd()
+                    loadNative()
                     recallActive = 0
                 } else {
                     recallActive += 1
@@ -255,24 +250,26 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             }
         }
     }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.clear()
     }
+
     fun loadBanner() {
         _binding?.adsView?.visibility = View.VISIBLE
-        _binding?.adsView?.loadAd(
-            activity, "languageinapp_banner",
-            "languageinapp_banner", object : CustomSDKAdsListenerAdapter() {
-
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                    _binding?.adsView?.visibility = View.GONE
-                }
+        AdsBanners.loadBanner(
+            activity = this,
+            view = _binding.adsView,
+            addConfig = val_banner_language_screen,
+            bannerId = id_banner_language_screen,
+            bannerListener = {
+                _binding.shimmerLayout.visibility = View.GONE
             }
         )
 
     }
+
     private fun initializeData() {
         list.add(LanguageAppModel(getString(R.string.english), "en", R.drawable.usa, false))
         list.add(LanguageAppModel(getString(R.string.spanish), "es", R.drawable.spain, false))
@@ -313,6 +310,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             )
         )
     }
+
     private fun insertAds() {
         val adPosition = getFirstAdPosition(fisrt_ad_line_threshold)
         val repeatAdPosition = getRepeatAdPosition(line_count)
@@ -322,6 +320,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             currentPos += repeatAdPosition
         }
     }
+
     private fun getFirstAdPosition(position: Int): Int {
         when (position) {
             1 -> {
@@ -346,6 +345,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
         }
         return 2
     }
+
     private fun getRepeatAdPosition(position: Int): Int {
         when (position) {
             1 -> {
@@ -370,32 +370,34 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
         }
         return 2
     }
+
     override fun onPause() {
         super.onPause()
-        isInternetDialog=true
+        isInternetDialog = true
         if (!isInternetAvailable(context ?: return)) {
             IkmSdkController.setEnableShowResumeAds(false)
         }
     }
+
     override fun onResume() {
         super.onResume()
         if (isInternetDialog) {
             if (!isInternetAvailable(context ?: return)) {
                 IkmSdkController.setEnableShowResumeAds(false)
-/*              showInternetDialog(
-                    onPositiveButtonClick = {
-                        isInternetDialog = true
-                        openMobileDataSettings(context ?: requireContext())
-                    },
-                    onNegitiveButtonClick = {
-                        isInternetDialog = true
-                        openWifiSettings(context ?: requireContext())
-                    },
-                    onCloseButtonClick = {
-                    }
-                )*/
+                /*              showInternetDialog(
+                                    onPositiveButtonClick = {
+                                        isInternetDialog = true
+                                        openMobileDataSettings(context ?: requireContext())
+                                    },
+                                    onNegitiveButtonClick = {
+                                        isInternetDialog = true
+                                        openWifiSettings(context ?: requireContext())
+                                    },
+                                    onCloseButtonClick = {
+                                    }
+                                )*/
                 return
-            }else{
+            } else {
                 IkmSdkController.setEnableShowResumeAds(true)
             }
         }

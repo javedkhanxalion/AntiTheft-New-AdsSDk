@@ -8,7 +8,7 @@
 //import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
 //import com.bmik.android.sdk.widgets.IkmNativeAdView
 //import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
-//import com.bmik.android.sdk.widgets.IkmWidgetAdView
+//import FrameLayout
 //import com.securityalarm.antitheifproject.model.LanguageAppModel
 //
 //class CustomAdapter(private val mList: List<LanguageAppModel>) :
@@ -47,7 +47,7 @@
 //                val adLayout = LayoutInflater.from(content.context).inflate(
 //                    R.layout.layout_custom_ad_native,
 //                    null, false
-//                ) as? IkmWidgetAdLayout
+//                ) as NativeAdView
 //                adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
 //                adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
 //                adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)

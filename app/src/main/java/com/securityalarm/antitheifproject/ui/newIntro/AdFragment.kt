@@ -65,7 +65,7 @@ class AdFragment : Fragment() {
         val adLayout = LayoutInflater.from(context).inflate(
             R.layout.native_layout_full,
             null, false
-        ) as? IkmWidgetAdLayout
+        ) as NativeAdView
         adLayout?.titleView = adLayout?.findViewById(R.id.headline)
         adLayout?.bodyView = adLayout?.findViewById(R.id.body)
         adLayout?.callToActionView = adLayout?.findViewById(R.id.call_to_action)

@@ -36,7 +36,7 @@ class FragmentExitScreen :
         val adLayout = LayoutInflater.from(context).inflate(
             getNativeLayout(thankyou_bottom,_binding?.nativeExitAd!!,context?:return),
             null, false
-        ) as? IkmWidgetAdLayout
+        ) as NativeAdView
         adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
         adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
         adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
