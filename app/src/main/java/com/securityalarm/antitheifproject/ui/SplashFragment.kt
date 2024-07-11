@@ -7,6 +7,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentSplashBinding
+import com.google.android.gms.ads.nativead.NativeAd
 import com.google.firebase.FirebaseApp
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -16,6 +17,7 @@ import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.securityalarm.antitheifproject.ads_manager.AdsBanners
 import com.securityalarm.antitheifproject.helper_class.DbHelper
 import com.securityalarm.antitheifproject.model.AdSettings
 import com.securityalarm.antitheifproject.model.NativeDesignType
@@ -112,6 +114,7 @@ import com.securityalarm.antitheifproject.ads_manager.AdsManager.isNetworkAvaila
 import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
 import com.securityalarm.antitheifproject.ads_manager.loadTwoInterAdsSplash
 import com.securityalarm.antitheifproject.utilities.counter
+import com.securityalarm.antitheifproject.utilities.fisrt_ad_line_threshold_main
 import com.securityalarm.antitheifproject.utilities.id_app_open_screen
 import com.securityalarm.antitheifproject.utilities.id_banner_language_screen
 import com.securityalarm.antitheifproject.utilities.id_banner_main_screen
@@ -124,6 +127,8 @@ import com.securityalarm.antitheifproject.utilities.id_native_intro_screen2
 import com.securityalarm.antitheifproject.utilities.id_native_intro_screen_full
 import com.securityalarm.antitheifproject.utilities.inter_frequency_count
 import com.securityalarm.antitheifproject.utilities.isSplash
+import com.securityalarm.antitheifproject.utilities.line_count_main
+import com.securityalarm.antitheifproject.utilities.main_native_scroll
 import com.securityalarm.antitheifproject.utilities.val_banner_language_screen
 import com.securityalarm.antitheifproject.utilities.val_banner_main_menu_screen
 import com.securityalarm.antitheifproject.utilities.val_banner_splash_screen
@@ -135,6 +140,7 @@ import com.securityalarm.antitheifproject.utilities.val_native_intro_screen1
 import com.securityalarm.antitheifproject.utilities.val_native_intro_screen2
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SplashFragment :
@@ -150,7 +156,6 @@ class SplashFragment :
         dbHelper?.getStringData(requireContext(), LANG_CODE, "en")?.let {
             setLocaleMain(it)
         }
-
         if (!isInternetAvailable(context ?: return)) {
             showInternetDialog(
                 onPositiveButtonClick = {
@@ -187,7 +192,9 @@ class SplashFragment :
                     "splash"
                 )
                 loadBanner()
-                initRemoteIds()
+                delay(5000)
+//                initRemoteIds()
+                getIntentMove()
             } else {
                 getIntentMove()
             }
@@ -309,7 +316,7 @@ class SplashFragment :
 // Fetch the remote config values
         remoteConfig.fetchAndActivate()
             .addOnCompleteListener(activity ?: return) { task ->
-                if (task.isSuccessful) {
+                if (task.isSuccessful ) {
                     // Apply the fetched values to your app
                     applyAdIdsFromRemoteConfig(remoteConfig)
                 } else {
@@ -321,85 +328,106 @@ class SplashFragment :
 
     private fun applyAdIdsFromRemoteConfig(remoteConfig: FirebaseRemoteConfig) {
 
-        id_inter_counter = remoteConfig.getLong("id_inter_counter").toInt()
-        id_frequency_counter = remoteConfig.getLong("id_frequency_counter").toInt()
-        id_native_main_menu_screen = remoteConfig.getString("id_native_main_menu_screen")
-        id_inter_main_normal = remoteConfig.getString("id_inter_main_normal")
-        id_native_loading_screen = remoteConfig.getString("id_native_loading_screen")
-        id_native_loading_screen = remoteConfig.getString("id_native_loading_screen")
-        id_native_loading_screen = remoteConfig.getString("id_native_loading_screen")
-        id_native_intro_screen = remoteConfig.getString("id_native_intro_screen")
-        id_native_language_screen = remoteConfig.getString("id_native_language_screen")
-        id_native_sound_screen = remoteConfig.getString("id_native_sound_screen")
-        id_native_intruder_list_screen = remoteConfig.getString("id_native_intruder_list_screen")
-        id_native_intruder_detection_screen =
-            remoteConfig.getString("id_native_intruder_detection_screen")
-        id_native_password_screen = remoteConfig.getString("id_native_password_screen")
-        id_native_Pocket_Detection_screen =
-            remoteConfig.getString("id_native_Pocket_Detection_screen")
-        id_native_Motion_Detection_screen =
-            remoteConfig.getString("id_native_Motion_Detection_screen")
-        id_native_Whistle_Detection_screen =
-            remoteConfig.getString("id_native_Whistle_Detection_screen")
-        id_native_hand_free_screen = remoteConfig.getString("id_native_hand_free_screen")
-        id_native_clap_detection_screen = remoteConfig.getString("id_native_clap_detection_screen")
-        id_native_Remove_Charger_screen = remoteConfig.getString("id_native_Remove_Charger_screen")
-        id_native_Battery_Detection_screen =
-            remoteConfig.getString("id_native_Battery_Detection_screen")
-        id_native_app_open_screen = remoteConfig.getString("id_native_app_open_screen")
-        id_exit_dialog_native = remoteConfig.getString("id_exit_dialog_native")
-        id_banner_1 = remoteConfig.getString("id_banner_1")
-        id_banner_main_screen = remoteConfig.getString("id_banner_main_screen")
-        id_exit_screen_native = remoteConfig.getString("id_exit_screen_native")
+        if(!AdsBanners.isDebug()) {
+            id_inter_counter = remoteConfig.getLong("id_inter_counter").toInt()
+            id_frequency_counter = remoteConfig.getLong("id_frequency_counter").toInt()
+            id_native_main_menu_screen = remoteConfig.getString("id_native_main_menu_screen")
+            id_inter_main_normal = remoteConfig.getString("id_inter_main_normal")
+            id_native_loading_screen = remoteConfig.getString("id_native_loading_screen")
+            id_native_loading_screen = remoteConfig.getString("id_native_loading_screen")
+            id_native_loading_screen = remoteConfig.getString("id_native_loading_screen")
+            id_native_intro_screen = remoteConfig.getString("id_native_intro_screen")
+            id_native_language_screen = remoteConfig.getString("id_native_language_screen")
+            id_native_sound_screen = remoteConfig.getString("id_native_sound_screen")
+            id_native_intruder_list_screen =
+                remoteConfig.getString("id_native_intruder_list_screen")
+            id_native_intruder_detection_screen =
+                remoteConfig.getString("id_native_intruder_detection_screen")
+            id_native_password_screen = remoteConfig.getString("id_native_password_screen")
+            id_native_Pocket_Detection_screen =
+                remoteConfig.getString("id_native_Pocket_Detection_screen")
+            id_native_Motion_Detection_screen =
+                remoteConfig.getString("id_native_Motion_Detection_screen")
+            id_native_Whistle_Detection_screen =
+                remoteConfig.getString("id_native_Whistle_Detection_screen")
+            id_native_hand_free_screen = remoteConfig.getString("id_native_hand_free_screen")
+            id_native_clap_detection_screen =
+                remoteConfig.getString("id_native_clap_detection_screen")
+            id_native_Remove_Charger_screen =
+                remoteConfig.getString("id_native_Remove_Charger_screen")
+            id_native_Battery_Detection_screen =
+                remoteConfig.getString("id_native_Battery_Detection_screen")
+            id_native_app_open_screen = remoteConfig.getString("id_native_app_open_screen")
+            id_exit_dialog_native = remoteConfig.getString("id_exit_dialog_native")
+            id_banner_1 = remoteConfig.getString("id_banner_1")
+            id_banner_main_screen = remoteConfig.getString("id_banner_main_screen")
+            id_exit_screen_native = remoteConfig.getString("id_exit_screen_native")
 
-        id_native_intro_screen1 = remoteConfig.getString("id_native_intro_screen1")
-        id_native_intro_screen2 = remoteConfig.getString("id_native_intro_screen2")
-        id_app_open_screen = remoteConfig.getString("id_app_open_screen")
-        id_native_intro_screen_full = remoteConfig.getString("id_native_intro_screen_full")
-        id_language_scroll_screen_native = remoteConfig.getString("id_language_scroll_screen_native")
-        id_native_Full_screen = remoteConfig.getString("id_native_Full_screen")
-        id_banner_splash_screen = remoteConfig.getString("id_banner_splash_screen")
+            id_native_intro_screen1 = remoteConfig.getString("id_native_intro_screen1")
+            id_native_intro_screen2 = remoteConfig.getString("id_native_intro_screen2")
+            id_app_open_screen = remoteConfig.getString("id_app_open_screen")
+            id_native_intro_screen_full = remoteConfig.getString("id_native_intro_screen_full")
+            id_language_scroll_screen_native =
+                remoteConfig.getString("id_language_scroll_screen_native")
+            id_native_Full_screen = remoteConfig.getString("id_native_Full_screen")
+            id_banner_splash_screen = remoteConfig.getString("id_banner_splash_screen")
 
-        test_ui_native = remoteConfig.getString("test_ui_native")
-        language_first_r_scroll = remoteConfig.getString("languageinapp_scrollnative")
-        language_reload = remoteConfig.getString("language_reload").toInt()
-        Onboarding_Full_Native = remoteConfig.getString("Onboarding_Full_Native").toInt()
-        sessionOpenlanguage = remoteConfig.getString("sessionOpenlanguage").toInt()
-        sessionOnboarding = remoteConfig.getString("sessionOnboarding").toInt()
-        parseJsonWithGson(test_ui_native)
-        parseJsonWithGsonLanguage(language_first_r_scroll)
+            test_ui_native = remoteConfig.getString("test_ui_native")
+            language_first_r_scroll = remoteConfig.getString("languageinapp_scrollnative")
+            language_reload = remoteConfig.getString("language_reload").toInt()
+            Onboarding_Full_Native = remoteConfig.getString("Onboarding_Full_Native").toInt()
+            sessionOpenlanguage = remoteConfig.getString("sessionOpenlanguage").toInt()
+            sessionOnboarding = remoteConfig.getString("sessionOnboarding").toInt()
+            parseJsonWithGson(test_ui_native)
+            parseJsonWithGsonLanguage(language_first_r_scroll)
+            parseJsonWithGsonMain(remoteConfig.getString("main_first_scroll"))
 
-        Log.d("check_language", "onSuccess: $language_reload")
-        Log.d("check_language", "onSuccess: $sessionOpenlanguage")
-        Log.d("check_language", "onSuccess: $sessionOnboarding")
-        Log.d("check_language", "onSuccess: $test_ui_native")
-        Log.d("check_language", "onSuccess: $language_first_r_scroll")
-        Log.d("check_language", "onSuccess: $Onboarding_Full_Native")
-        Log.d("remote_ids", "$id_inter_counter")
-        Log.d("remote_ids", "$id_frequency_counter")
-        Log.d("remote_ids", id_inter_main_medium)
-        Log.d("remote_ids", id_native_main_menu_screen)
-        Log.d("remote_ids", id_inter_main_normal)
-        Log.d("remote_ids", id_native_loading_screen)
-        Log.d("remote_ids", id_native_loading_screen)
-        Log.d("remote_ids", id_native_loading_screen)
-        Log.d("remote_ids", id_native_intro_screen)
-        Log.d("remote_ids", id_native_language_screen)
-        Log.d("remote_ids", id_native_sound_screen)
-        Log.d("remote_ids", id_native_intruder_list_screen)
-        Log.d("remote_ids", id_native_intruder_detection_screen)
-        Log.d("remote_ids", id_native_password_screen)
-        Log.d("remote_ids", id_native_Pocket_Detection_screen)
-        Log.d("remote_ids", id_native_Motion_Detection_screen)
-        Log.d("remote_ids", id_native_Whistle_Detection_screen)
-        Log.d("remote_ids", id_native_hand_free_screen)
-        Log.d("remote_ids", id_native_clap_detection_screen)
-        Log.d("remote_ids", id_native_Remove_Charger_screen)
-        Log.d("remote_ids", id_native_Battery_Detection_screen)
-        Log.d("remote_ids", id_exit_dialog_native)
-        Log.d("remote_ids", id_banner_1)
-
+            Log.d("check_language", "onSuccess: $language_reload")
+            Log.d("check_language", "onSuccess: $sessionOpenlanguage")
+            Log.d("check_language", "onSuccess: $sessionOnboarding")
+            Log.d("check_language", "onSuccess: $test_ui_native")
+            Log.d("check_language", "onSuccess: $language_first_r_scroll")
+            Log.d("check_language", "onSuccess: $Onboarding_Full_Native")
+            Log.d("remote_ids", "$id_inter_counter")
+            Log.d("remote_ids", "$id_frequency_counter")
+            Log.d("remote_ids", id_inter_main_medium)
+            Log.d("remote_ids", id_native_main_menu_screen)
+            Log.d("remote_ids", id_inter_main_normal)
+            Log.d("remote_ids", id_native_loading_screen)
+            Log.d("remote_ids", id_native_loading_screen)
+            Log.d("remote_ids", id_native_loading_screen)
+            Log.d("remote_ids", id_native_intro_screen)
+            Log.d("remote_ids", id_native_language_screen)
+            Log.d("remote_ids", id_native_sound_screen)
+            Log.d("remote_ids", id_native_intruder_list_screen)
+            Log.d("remote_ids", id_native_intruder_detection_screen)
+            Log.d("remote_ids", id_native_password_screen)
+            Log.d("remote_ids", id_native_Pocket_Detection_screen)
+            Log.d("remote_ids", id_native_Motion_Detection_screen)
+            Log.d("remote_ids", id_native_Whistle_Detection_screen)
+            Log.d("remote_ids", id_native_hand_free_screen)
+            Log.d("remote_ids", id_native_clap_detection_screen)
+            Log.d("remote_ids", id_native_Remove_Charger_screen)
+            Log.d("remote_ids", id_native_Battery_Detection_screen)
+            Log.d("remote_ids", id_exit_dialog_native)
+            Log.d("remote_ids", id_banner_1)
+        }
         initRemoteConfig()
+    }
+
+    private fun parseJsonWithGsonMain(jsonString1: String) {
+        Log.d("remote_ids", "$jsonString1")
+        if (jsonString1 != null && jsonString1.isNotEmpty()) {
+            val gson = Gson()
+            val type = object : TypeToken<Map<String, List<AdSettings>>>() {}.type
+            val dataMap: Map<String, List<AdSettings>> = gson.fromJson(jsonString1, type) ?: return
+            val mainScrollList = dataMap["main_scroll"]
+            mainScrollList?.forEach {
+                main_native_scroll = it.status.toInt()
+                fisrt_ad_line_threshold_main = it.fisrt_ad_line_threshold.toInt()
+                line_count_main = it.line_count.toInt()
+            }
+        }
     }
 
     private fun initRemoteConfig() {
@@ -460,7 +488,8 @@ class SplashFragment :
                     getString(R.string.id_native_loading_screen),
                     object : NativeListener {
 
-                    })
+                    }
+                )
                 getIntentMove()
             }
 
@@ -590,6 +619,7 @@ class SplashFragment :
             }
         }
     }
+
 
     private fun parseJsonWithGsonLanguage(jsonString1: String) {
         if (jsonString1 != null && jsonString1.isNotEmpty()) {

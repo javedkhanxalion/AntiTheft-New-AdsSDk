@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "282172752455",
-    "project_id": "pub-microzone-antitheft-2",
-    "storage_bucket": "pub-microzone-antitheft-2.appspot.com"
+    "project_number": "576164378070",
+    "project_id": "anti-theft-alarm-44980",
+    "storage_bucket": "anti-theft-alarm-44980.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:282172752455:android:cb473a312ddf2cc76b6762",
+        "mobilesdk_app_id": "1:576164378070:android:b0ecae341c841317232077",
         "android_client_info": {
           "package_name": "com.antitheftalarm.dont.touch.phone.finder.phonesecurity"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB8TycPHroHJvwFElhq6tV4xU0WEknqQbw"
+          "current_key": "AIzaSyDibbKlGy1blO-Y9q0tg04ogybLKssdMZM"
         }
       ],
       "services": {

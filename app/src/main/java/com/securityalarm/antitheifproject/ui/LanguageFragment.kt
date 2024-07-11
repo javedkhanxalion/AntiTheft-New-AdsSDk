@@ -144,7 +144,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             sharedPrefUtils = DbHelper(context ?: return)
             positionSelected =
                 sharedPrefUtils?.getStringData(requireContext(), LANG_CODE, "en") ?: "en"
-            adapter = LanguageGridAdapter(list,
+            adapter = LanguageGridAdapter(list,adsManager?:return,activity?:return,
                 clickItem = {
                     positionSelected = it.country_code
                     adapter?.selectLanguage(positionSelected)

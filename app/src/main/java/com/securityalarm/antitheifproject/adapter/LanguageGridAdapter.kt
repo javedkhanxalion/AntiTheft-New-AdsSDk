@@ -1,6 +1,7 @@
 package com.securityalarm.antitheifproject.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +10,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.AdsItemBinding
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.LanguageAppItemBinding
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
+import com.securityalarm.antitheifproject.ads_manager.AdsManager
+import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
 import com.securityalarm.antitheifproject.model.LanguageAppModel
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
+import com.securityalarm.antitheifproject.utilities.id_language_scroll_screen_native
+import com.securityalarm.antitheifproject.utilities.language_native_scroll
 import com.securityalarm.antitheifproject.utilities.languageinapp_scroll
 
 class LanguageGridAdapter(private val items: List<LanguageAppModel>,
-    private var clickItem: ((LanguageAppModel) -> Unit)) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                          private  val ads : AdsManager,
+                          private  val activity1 : Activity,
+                          private var clickItem: ((LanguageAppModel) -> Unit)) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var context: Context? = null
 
@@ -72,7 +81,32 @@ class LanguageGridAdapter(private val items: List<LanguageAppModel>,
                 getNativeLayout(languageinapp_scroll,holder.bindingAds?.nativeExitAd!!,context?:return),
                 null, false
             ) as NativeAdView
+            ads.nativeAdsMain().loadNativeAd(
+                activity1?:return,
+                language_native_scroll == 1,
+                id_language_scroll_screen_native,
+                object : NativeListener {
+                    override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
+                        adHolder.bindingAds.nativeExitAd.visibility = View.VISIBLE
+                        adHolder.bindingAds.shimmerLayout.visibility = View.GONE
+                        ads.nativeAdsMain().nativeViewMedia(currentNativeAd ?: return, adLayout)
+                        adHolder.bindingAds.nativeExitAd.removeAllViews()
+                        adHolder.bindingAds.nativeExitAd.addView(adLayout)
+                        super.nativeAdLoaded(currentNativeAd)
+                    }
 
+                    override fun nativeAdFailed(loadAdError: LoadAdError) {
+                        adHolder.bindingAds.nativeExitAd.visibility = View.GONE
+                        adHolder.bindingAds.shimmerLayout.visibility = View.GONE
+                        super.nativeAdFailed(loadAdError)
+                    }
+
+                    override fun nativeAdValidate(string: String) {
+                        adHolder.bindingAds.nativeExitAd.visibility = View.GONE
+                        adHolder.bindingAds.shimmerLayout.visibility = View.GONE
+                        super.nativeAdValidate(string)
+                    }
+                })
         }
     }
 

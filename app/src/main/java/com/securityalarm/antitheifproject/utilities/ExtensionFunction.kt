@@ -170,6 +170,11 @@ var sessionOpenlanguage = 1
 var sessionOnboarding = 1
 var fisrt_ad_line_threshold = 2
 var line_count = 2
+var language_native_scroll = 1
+var main_native_scroll = 1
+var fisrt_ad_line_threshold_main = 2
+var line_count_main = 2
+
 
 var language_bottom = 1
 var languageinapp_scroll = 1
@@ -199,7 +204,6 @@ var battery_native = 1
 var battery_selectsound_bottom = 1
 var test_ui_native = ""
 var language_first_r_scroll = ""
-
 
 const val NOTIFY_CHANNEL_ID = "AppNameBackgroundService"
 

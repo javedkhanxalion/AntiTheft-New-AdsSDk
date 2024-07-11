@@ -65,7 +65,6 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
     private var isInternetPermission: Boolean = true
     private var adsManager: AdsManager? = null
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAnalytics("main_menu_fragment_open", "main_menu_fragment_open -->  Click")
@@ -214,7 +213,7 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                 R.drawable.icon_grid
             )
             adapterGrid =
-                MainMenuGridAdapter(activity ?: return, getMenuListGrid(sharedPrefUtils ?: return))
+                MainMenuGridAdapter(activity ?: return,adsManager?:return, getMenuListGrid(sharedPrefUtils ?: return))
             val managerLayout = GridLayoutManager(context, 3)
             val spanSizeLookup1 = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
@@ -239,7 +238,7 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
             sharedPrefUtils?.saveData(context ?: return, IS_GRID, false)
             adapterLinear =
                 MainMenuLinearAdapter(
-                    activity ?: return,
+                    activity ?: return,adsManager?:return,
                     getMenuListGrid(sharedPrefUtils ?: return)
                 )
             _binding?.mainLayout?.topLay?.setLayoutBtn?.setImage(

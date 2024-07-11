@@ -3,20 +3,28 @@ package com.securityalarm.antitheifproject.adapter
 import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.AdsItemBinding
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.MenuItemLinearLayoutBinding
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
+import com.securityalarm.antitheifproject.ads_manager.AdsManager
+import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
 import com.securityalarm.antitheifproject.model.MainMenuModel
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
 import com.securityalarm.antitheifproject.utilities.home_native
+import com.securityalarm.antitheifproject.utilities.id_language_scroll_screen_native
+import com.securityalarm.antitheifproject.utilities.language_native_scroll
 import com.securityalarm.antitheifproject.utilities.loadImage
 
 class MainMenuLinearAdapter(
     private val context: Activity,
+    private val ads: AdsManager,
     private val menuItems: List<MainMenuModel>,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -90,11 +98,36 @@ class MainMenuLinearAdapter(
     inner class MenuItemTwoViewHolder(private val binding: AdsItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
-            val adLayout = LayoutInflater.from(context).inflate(
+            val adView = LayoutInflater.from(context).inflate(
                 getNativeLayout(home_native, binding.nativeExitAd, context),
                 null, false
             ) as NativeAdView
+            ads.nativeAdsMain().loadNativeAd(
+                context,
+                language_native_scroll == 1,
+                id_language_scroll_screen_native,
+                object : NativeListener {
+                    override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
+                        binding.nativeExitAd.visibility = View.VISIBLE
+                        binding.shimmerLayout.visibility = View.GONE
+                        ads.nativeAdsMain().nativeViewMedia(currentNativeAd ?: return, adView)
+                        binding.nativeExitAd.removeAllViews()
+                        binding.nativeExitAd.addView(adView)
+                        super.nativeAdLoaded(currentNativeAd)
+                    }
 
+                    override fun nativeAdFailed(loadAdError: LoadAdError) {
+                        binding.nativeExitAd.visibility = View.GONE
+                        binding.shimmerLayout.visibility = View.GONE
+                        super.nativeAdFailed(loadAdError)
+                    }
+
+                    override fun nativeAdValidate(string: String) {
+                        binding.nativeExitAd.visibility = View.GONE
+                        binding.shimmerLayout.visibility = View.GONE
+                        super.nativeAdValidate(string)
+                    }
+                })
         }
     }
 

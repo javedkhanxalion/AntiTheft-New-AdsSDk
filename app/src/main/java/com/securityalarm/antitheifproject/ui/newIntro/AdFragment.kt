@@ -12,7 +12,9 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.securityalarm.antitheifproject.ads_manager.AdsManager
 import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
+import com.securityalarm.antitheifproject.utilities.id_native_Full_screen
 import com.securityalarm.antitheifproject.utilities.id_native_intro_screen
+import com.securityalarm.antitheifproject.utilities.val_native_Full_screen
 
 class AdFragment : Fragment() {
 
@@ -45,8 +47,8 @@ class AdFragment : Fragment() {
         ads = AdsManager.appAdsInit(activity ?: return)
         ads?.nativeAdsMain()?.loadNativeAd(
             activity ?: return,
-            true,
-            id_native_intro_screen,
+            val_native_Full_screen,
+            id_native_Full_screen,
             object : NativeListener {
                 override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                     _binding?.mainAdsNative?.visibility = View.VISIBLE

@@ -10,6 +10,7 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
+import com.facebook.ads.AudienceNetworkAds
 import com.securityalarm.antitheifproject.ads_manager.AdOpenApp.Companion.openAdForSplash
 
 
@@ -34,6 +35,7 @@ object AdsManager {
     private fun instance(activity: Activity) {
         try {
             MobileAds.initialize(activity) {}
+            AudienceNetworkAds.initialize(activity)
             MobileAds.setRequestConfiguration(
                 RequestConfiguration.Builder()
                     .setTestDeviceIds(

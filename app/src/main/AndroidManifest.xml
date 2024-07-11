@@ -172,7 +172,19 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/button_color_1" />
+        <!-- Facebook Audience Network -->
+        <activity android:name="com.facebook.ads.AudienceNetworkActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"/>
 
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+
+        <!-- Unity Ads -->
+        <meta-data
+            android:name="com.google.android.gms.ads.mediation.unity.UnityAdapterInitialization"
+            android:value="enabled"/>
         <service
             android:name="com.securityalarm.antitheifproject.ads_manager.MyFirebaseMessagingService"
             android:exported="false">
