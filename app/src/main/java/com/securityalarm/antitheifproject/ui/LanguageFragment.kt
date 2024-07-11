@@ -197,7 +197,9 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
     }
 
     private fun loadNative() {
-        _binding?.mainAdsNative?.visibility = View.VISIBLE
+        _binding?.mainAdsNative?.visibility = View.INVISIBLE
+        _binding?.shimmerLayout?.visibility = View.VISIBLE
+        _binding?.adsView?.visibility = View.GONE
         val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(language_bottom, _binding?.mainAdsNative!!, context ?: return),
             null, false

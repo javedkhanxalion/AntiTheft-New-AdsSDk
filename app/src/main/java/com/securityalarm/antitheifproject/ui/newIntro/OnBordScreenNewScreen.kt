@@ -51,34 +51,59 @@ class OnBordScreenNewScreen :
                     "scroll_check_position",
                     "onPageScrolled: $currentpage $position $positionOffset $positionOffsetPixels"
                 )
-                if(isInternetAvailable && Onboarding_Full_Native ==0){
-                    Log.d("NewonPageScrolled", "onPageScrolled: Yes")
-                }else{
-                    Log.d("NewonPageScrolled", "onPageScrolled: Yes")
-                }
-                when(currentpage){
-                    0->{
-                        if (positionOffset.toDouble() == 0.0)
-                            ImageFragment1.onAdVisibilityChanged(true)
-                        else
+
+                if (isInternetAvailable && Onboarding_Full_Native == 1) {
+                    when (currentpage) {
+                        0 -> {
+                            if (positionOffset.toDouble() == 0.0)
+                                ImageFragment1.onAdVisibilityChanged(true)
+                            else
+                                ImageFragment1.onAdVisibilityChanged(false)
+                        }
+
+                        1 -> {
                             ImageFragment1.onAdVisibilityChanged(false)
-                    }
-                    1->{
-                        ImageFragment1.onAdVisibilityChanged(false)
-                        ImageFragment2.onAdVisibilityChanged(false)
-                    }
-                    2->{
-                        if (positionOffset.toDouble() == 0.0)
-                            ImageFragment2.onAdVisibilityChanged(true)
-                        else
                             ImageFragment2.onAdVisibilityChanged(false)
+                        }
+
+                        2 -> {
+                            if (positionOffset.toDouble() == 0.0)
+                                ImageFragment2.onAdVisibilityChanged(true)
+                            else
+                                ImageFragment2.onAdVisibilityChanged(false)
+                        }
+
+                        3 -> {
+                            if (positionOffset.toDouble() == 0.0)
+                                ImageFragment3.onAdVisibilityChanged(true)
+                            else
+                                ImageFragment3.onAdVisibilityChanged(false)
+                        }
                     }
-                    3->{
-                        if (positionOffset.toDouble() == 0.0)
-                            ImageFragment3.onAdVisibilityChanged(true)
-                        else
-                            ImageFragment3.onAdVisibilityChanged(false)
-                    }
+                } else {
+                    if (isInternetAvailable)
+                        when (currentpage) {
+                            0 -> {
+                                if (positionOffset.toDouble() == 0.0)
+                                    ImageFragment1.onAdVisibilityChanged(true)
+                                else
+                                    ImageFragment1.onAdVisibilityChanged(false)
+                            }
+
+                            1 -> {
+                                if (positionOffset.toDouble() == 0.0)
+                                    ImageFragment2.onAdVisibilityChanged(true)
+                                else
+                                    ImageFragment2.onAdVisibilityChanged(false)
+                            }
+
+                            2 -> {
+                                if (positionOffset.toDouble() == 0.0)
+                                    ImageFragment3.onAdVisibilityChanged(true)
+                                else
+                                    ImageFragment3.onAdVisibilityChanged(false)
+                            }
+                        }
                 }
 
             }
