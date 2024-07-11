@@ -8,17 +8,23 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.ShowIntruderFragmentBinding
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.securityalarm.antitheifproject.adapter.IntruderAdapter
+import com.securityalarm.antitheifproject.ads_manager.AdsManager
+import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
 import com.securityalarm.antitheifproject.helper_class.Constants.getAntiTheftDirectory
 import com.securityalarm.antitheifproject.model.IntruderModels
 import com.securityalarm.antitheifproject.utilities.BaseFragment
 import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
 import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
+import com.securityalarm.antitheifproject.utilities.id_native_intruder_list_screen
 import com.securityalarm.antitheifproject.utilities.intruderimage_bottom
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
+import com.securityalarm.antitheifproject.utilities.val_ad_native_intruder_list_screen
 import java.io.File
 
 class FragmentShowIntruder :
@@ -28,6 +34,7 @@ class FragmentShowIntruder :
     private var allIntruderList: ArrayList<IntruderModels> = ArrayList()
     private var dir: File? = null
     private var isInternetDialog: Boolean = false
+    private var adsManager: AdsManager? = null
     companion object{
          var uriPic: Uri? = null
     }
@@ -35,8 +42,8 @@ class FragmentShowIntruder :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adsManager = AdsManager.appAdsInit(activity ?: return)
         loadNative()
-
         setupViews()
         setupRecyclerView()
         setupBackPressedCallback {
@@ -117,6 +124,34 @@ class FragmentShowIntruder :
             getNativeLayout(intruderimage_bottom,_binding?.nativeExitAd!!,context?:return),
             null, false
         ) as NativeAdView
+        adsManager?.nativeAds()?.loadNativeAd(
+            activity ?: return,
+            val_ad_native_intruder_list_screen,
+            id_native_intruder_list_screen,
+            object : NativeListener {
+                override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
+                    _binding?.nativeExitAd?.visibility = View.VISIBLE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    if (isAdded && isVisible && !isDetached) {
+                        adsManager?.nativeAds()?.nativeViewPolicy(currentNativeAd ?: return, adLayout)
+                        _binding?.nativeExitAd?.removeAllViews()
+                        _binding?.nativeExitAd?.addView(adLayout)
+                    }
+                    super.nativeAdLoaded(currentNativeAd)
+                }
+
+                override fun nativeAdFailed(loadAdError: LoadAdError) {
+                    _binding?.nativeExitAd?.visibility = View.GONE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    super.nativeAdFailed(loadAdError)
+                }
+
+                override fun nativeAdValidate(string: String) {
+                    _binding?.nativeExitAd?.visibility = View.GONE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    super.nativeAdValidate(string)
+                }
+            })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

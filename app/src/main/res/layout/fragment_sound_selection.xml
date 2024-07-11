@@ -31,4 +31,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/round_btn_ads"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/nativeExitAd"
+        app:layout_constraintLeft_toLeftOf="@id/nativeExitAd"
+        app:layout_constraintRight_toRightOf="@id/nativeExitAd"
+        app:layout_constraintTop_toTopOf="@id/nativeExitAd"
+        app:shimmer_auto_start="true">
+
+    <include
+        android:id="@+id/shimmer_main"
+        layout="@layout/shimmer_native_layout" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

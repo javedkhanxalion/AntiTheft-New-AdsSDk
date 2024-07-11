@@ -7,7 +7,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.IntroMainActivityBinding
-import com.bmik.android.sdk.IkmSdkController
 import com.securityalarm.antitheifproject.helper_class.DbHelper
 import com.securityalarm.antitheifproject.utilities.BaseFragment
 import com.securityalarm.antitheifproject.utilities.IS_INTRO
@@ -113,7 +112,6 @@ class OnBordScreenNewScreen :
                     "intro_fragment_move_to_next -->  Click"
                 )
                 sharedPrefUtils?.saveData(context ?: requireContext(), IS_INTRO, true)
-                IkmSdkController.setEnableShowResumeAds(true)
                 findNavController().navigate(
                     R.id.myMainMenuFragment
                 )
@@ -127,7 +125,6 @@ class OnBordScreenNewScreen :
                     "intro_fragment_move_to_next -->  Click"
                 )
                 sharedPrefUtils?.saveData(context ?: requireContext(), IS_INTRO, true)
-                IkmSdkController.setEnableShowResumeAds(true)
                 findNavController().navigate(
                     R.id.myMainMenuFragment
                 )
@@ -157,25 +154,10 @@ class OnBordScreenNewScreen :
     override fun onPause() {
         super.onPause()
         isInternetDialog = true
-        if (currentpage == 1) {
-            IkmSdkController.setEnableShowResumeAds(false)
-        }
     }
 
     override fun onResume() {
         super.onResume()
-        if (isInternetDialog) {
-            if (!isInternetAvailable(context ?: return)) {
-                IkmSdkController.setEnableShowResumeAds(false)
-                return
-            } else {
-                if (currentpage == 1) {
-                    IkmSdkController.setEnableShowResumeAds(false)
-                } else {
-                    IkmSdkController.setEnableShowResumeAds(true)
-                }
-            }
-        }
     }
 
 }

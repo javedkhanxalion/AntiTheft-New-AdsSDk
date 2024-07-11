@@ -11,10 +11,11 @@ import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.securityalarm.antitheifproject.adapter.SoundSelectGridAdapter
 import com.securityalarm.antitheifproject.adapter.SoundSelectLinearAdapter
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentSoundSelectionBinding
-import com.bmik.android.sdk.IkmSdkController
-import com.bmik.android.sdk.SDKBaseController
-import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
-import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdView
+import com.securityalarm.antitheifproject.ads_manager.AdsManager
+import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
 import com.securityalarm.antitheifproject.helper_class.DbHelper
 import com.securityalarm.antitheifproject.model.MainMenuModel
 import com.securityalarm.antitheifproject.utilities.ANTI_TITLE
@@ -23,14 +24,13 @@ import com.securityalarm.antitheifproject.utilities.IS_GRID
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
 import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
+import com.securityalarm.antitheifproject.utilities.id_native_sound_screen
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.loadImage
-import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
-import com.securityalarm.antitheifproject.utilities.openWifiSettings
 import com.securityalarm.antitheifproject.utilities.setImage
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
-import com.securityalarm.antitheifproject.utilities.showInternetDialog
 import com.securityalarm.antitheifproject.utilities.soundData
+import com.securityalarm.antitheifproject.utilities.val_ad_native_sound_screen
 
 
 class FragmentSoundSelection :
@@ -42,26 +42,15 @@ class FragmentSoundSelection :
     private var adapterLinear: SoundSelectLinearAdapter? = null
     private var position: MainMenuModel? = null
     private var isInternetDialog: Boolean = false
+    private var adsManager: AdsManager? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             position = it.getParcelable(ANTI_TITLE) ?: return@let
         }
-        SDKBaseController.getInstance().preloadNativeAd(
-            activity ?: return, position?.nativeId?:return,
-            position?.nativeId?:return, object : CustomSDKAdsListenerAdapter() {
-                override fun onAdsLoaded() {
-                    super.onAdsLoaded()
-                    Log.d("check_ads", "onAdsLoaded: Load Ad")
-                }
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                    Log.d("check_ads", "onAdsLoadFail: Load No")
-                }
-            }
-        )
         sharedPrefUtils = DbHelper(context ?: return)
+        adsManager = AdsManager.appAdsInit(activity ?: return)
         sharedPrefUtils?.getBooleanData(context ?: return, IS_GRID, true)?.let {
             loadLayoutDirection(it)
             isGridLayout = it
@@ -121,58 +110,50 @@ class FragmentSoundSelection :
 
     private fun loadNative() {
 
-        val adLayout = LayoutInflater.from(context).inflate(
+        val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(position?.nativeSoundLayout?:return,_binding?.nativeExitAd!!,context?:return),
             null, false
         ) as NativeAdView
-        adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
-        adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
-        adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
-        adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
-        adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-        _binding?.nativeExitAd?.loadAd(
-            activity ?: return,  getNativeLayoutShimmer(position?.nativeSoundLayout?:return),
-            adLayout!!, position?.nativeSoundId?:return,
-            position?.nativeSoundId?:return, object : CustomSDKAdsListenerAdapter() {
-
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                    _binding?.nativeExitAd?.visibility = View.GONE
+        adsManager?.nativeAds()?.loadNativeAd(
+            activity ?: return,
+            val_ad_native_sound_screen,
+            id_native_sound_screen,
+            object : NativeListener {
+                override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
+                    if(!isAdded && !isVisible && isDetached){
+                        return
+                    }
+                    _binding?.nativeExitAd?.visibility = View.VISIBLE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    if(isAdded && isVisible && !isDetached) {
+                        adsManager?.nativeAds()?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                        _binding?.nativeExitAd?.removeAllViews()
+                        _binding?.nativeExitAd?.addView(adView)
+                    }
+                    super.nativeAdLoaded(currentNativeAd)
                 }
-            }
-        )
+
+                override fun nativeAdFailed(loadAdError: LoadAdError) {
+                    _binding?.nativeExitAd?.visibility = View.GONE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    super.nativeAdFailed(loadAdError)
+                }
+
+                override fun nativeAdValidate(string: String) {
+                    _binding?.nativeExitAd?.visibility = View.GONE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    super.nativeAdValidate(string)
+                }
+            })
 
     }
 
     override fun onPause() {
         super.onPause()
         isInternetDialog=true
-        if (!isInternetAvailable(context ?: return)) {
-            IkmSdkController.setEnableShowResumeAds(false)
-        }
     }
     override fun onResume() {
         super.onResume()
-        if (isInternetDialog) {
-            if (!isInternetAvailable(context ?: return)) {
-                IkmSdkController.setEnableShowResumeAds(false)
-/*                showInternetDialog(
-                    onPositiveButtonClick = {
-                        isInternetDialog = true
-                        openMobileDataSettings(context ?: requireContext())
-                    },
-                    onNegitiveButtonClick = {
-                        isInternetDialog = true
-                        openWifiSettings(context ?: requireContext())
-                    },
-                    onCloseButtonClick = {
-                    }
-                )*/
-                return
-            }else{
-                IkmSdkController.setEnableShowResumeAds(true)
-            }
-        }
     }
 
 }

@@ -9,12 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.InAppDialogFirstBinding
-import com.bmik.android.sdk.SDKBaseController
-import com.bmik.android.sdk.billing.BillingHelper
-import com.bmik.android.sdk.listener.SDKBillingPurchaseListener
-import com.bmik.android.sdk.listener.SDKBillingValueListener
-import com.bmik.android.sdk.tracking.SDKTrackingController
-import com.bmik.android.sdk.utils.IkmSdkUtils
 import com.securityalarm.antitheifproject.utilities.BaseFragment
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
@@ -39,7 +33,6 @@ class FragmentInAppScreen :
         arguments?.let {
             isSplashFrom = it.getBoolean("Is_From_Splash")
         }
-        val billingHelper = BillingHelper.getInstance()
         updateUI(
             binding?.yearlyCheck!!,
             binding?.yearlyButton!!,
@@ -127,7 +120,6 @@ class FragmentInAppScreen :
                         }
                     }
                 })*/
-            startPay(billingHelper)
         }
         _binding?.closeIcon?.clickWithThrottle {
             moveClose()
@@ -161,88 +153,6 @@ class FragmentInAppScreen :
     val TAG_ONE_MONTH = "OneMonth"
     val TAG_ONE_YEAR = "OneYear"
 
-    private fun startPay(billingHelper: BillingHelper) {
-        when (planId) {
-            "gold-plan-monthly" -> {
-                SDKTrackingController.logScreenAction(
-                    context?.applicationContext,
-                    TAG,
-                    TAG,
-                    TAG_ONE_MONTH,
-                    "click"
-                )
-                if (checkService())
-                    return
-
-                billingHelper.purchase(activity,"gold-plan-monthly", object :
-                    SDKBillingPurchaseListener {
-                    override fun onProductIsBilling(productId: String) {
-                        showDialogSuccess("IsBilling")
-                    }
-
-                    override fun onBillingFail(productId: String, errorCode: Int) {
-                        showDialogError("error")
-                    }
-                    override fun onBillingSuccess(productId: String) {
-                        showDialogSuccess("onBillingSuccess")
-                    }
-
-                })
-            }
-            "gold-plan-yearly" -> {
-                SDKTrackingController.logScreenAction(
-                    context?.applicationContext,
-                    TAG,
-                    TAG,
-                    TAG_ONE_YEAR,
-                    "click"
-                )
-                if (checkService())
-                    return
-
-                billingHelper.purchase(activity,"gold-plan-yearly", object :
-                    SDKBillingPurchaseListener {
-                    override fun onProductIsBilling(productId: String) {
-                        showDialogSuccess("IsBilling")
-                    }
-
-                    override fun onBillingFail(productId: String, errorCode: Int) {
-                        showDialogError("error")
-                    }
-                    override fun onBillingSuccess(productId: String) {
-                        showDialogSuccess("onBillingSuccess")
-                    }
-
-                })
-            }else->{
-            SDKTrackingController.logScreenAction(
-                context?.applicationContext,
-                TAG,
-                TAG,
-                TAG_ONE_MONTH,
-                "click"
-            )
-            if (checkService())
-                return
-
-            billingHelper.purchase(activity,"gold-plan-yearly", object :
-                SDKBillingPurchaseListener {
-                override fun onProductIsBilling(productId: String) {
-                    showDialogSuccess("IsBilling")
-                }
-
-                override fun onBillingFail(productId: String, errorCode: Int) {
-                    showDialogError("error")
-                }
-                override fun onBillingSuccess(productId: String) {
-                    showDialogSuccess("onBillingSuccess")
-                }
-
-            })
-
-            }
-        }
-    }
 
     private fun checkService(): Boolean {
         if (!mIsBillingIabServiceAvailable) {
@@ -276,59 +186,39 @@ class FragmentInAppScreen :
     }
 
     private fun initView() {
-        planId = SDKBaseController.getInstance().mOtherConfig["sale_percent"].toString()
-        val billingHelper = BillingHelper.getInstance()
-        if (!billingHelper.isIabServiceAvailable(context)) {
-            showDialogError(
-                R.string.error_message_text
-            )
-            mIsBillingIabServiceAvailable = false
-        }
-        lifecycleScope.launch(Dispatchers.Default) {
-            try {
-                val time = requireContext().packageManager.getPackageInfo(
-                    context?.packageName ?: return@launch, 0
-                ).firstInstallTime
-                mDayUseApp = TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - time)
-            } catch (e: Exception) {
-
-            }
-        }
-        BillingHelper.getInstance().initBilling(activity?.applicationContext ?: return)
-        lifecycleScope.launch(Dispatchers.Main) {
-            withContext(Dispatchers.Default) {
-                if (BillingHelper.getInstance().isConnected() == false)
-                    delay(500)
-                if (BillingHelper.getInstance().isConnected() == false)
-                    delay(500)
-            }
-            getAmountSubscribe()
-        }
-        if (!IkmSdkUtils.isConnectionAvailable()) {
-            showDialogError(R.string.no_internet)
-        }
+//        planId = SDKBaseController.getInstance().mOtherConfig["sale_percent"].toString()
+//        val billingHelper = BillingHelper.getInstance()
+//        if (!billingHelper.isIabServiceAvailable(context)) {
+//            showDialogError(
+//                R.string.error_message_text
+//            )
+//            mIsBillingIabServiceAvailable = false
+//        }
+//        lifecycleScope.launch(Dispatchers.Default) {
+//            try {
+//                val time = requireContext().packageManager.getPackageInfo(
+//                    context?.packageName ?: return@launch, 0
+//                ).firstInstallTime
+//                mDayUseApp = TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - time)
+//            } catch (e: Exception) {
+//
+//            }
+//        }
+//        BillingHelper.getInstance().initBilling(activity?.applicationContext ?: return)
+//        lifecycleScope.launch(Dispatchers.Main) {
+//            withContext(Dispatchers.Default) {
+//                if (BillingHelper.getInstance().isConnected() == false)
+//                    delay(500)
+//                if (BillingHelper.getInstance().isConnected() == false)
+//                    delay(500)
+//            }
+//            getAmountSubscribe()
+//        }
+//        if (!IkmSdkUtils.isConnectionAvailable()) {
+//            showDialogError(R.string.no_internet)
+//        }
     }
-    private fun getAmountSubscribe() {
-        val billingHelper = BillingHelper.getInstance()
-        billingHelper.getPricePurchase("gold-plan-monthly", 0, object :
-            SDKBillingValueListener {
-            override fun onResult(price: String, salePrice: String) {
-                price.let {
-                    _binding?.monthlyTextTDetail?.text = it
-                }
-            }
 
-        })
-        billingHelper.getPricePurchase("gold-plan-yearly", 0, object :
-            SDKBillingValueListener {
-            override fun onResult(price: String, salePrice: String) {
-                price.let {
-                    _binding?.yearlyTextTDetail?.text = it
-                }
-            }
-
-        })
-    }
     private fun showDialogError(@StringRes message: Int) {
         try {
             Toast.makeText(context?:return, message, Toast.LENGTH_SHORT).show()

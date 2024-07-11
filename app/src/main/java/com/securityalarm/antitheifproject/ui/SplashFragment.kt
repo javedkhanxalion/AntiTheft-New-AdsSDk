@@ -11,7 +11,6 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
-import com.google.firebase.remoteconfig.get
 import com.google.firebase.remoteconfig.ktx.get
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
@@ -113,8 +112,16 @@ import com.securityalarm.antitheifproject.ads_manager.AdsManager.isNetworkAvaila
 import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
 import com.securityalarm.antitheifproject.ads_manager.loadTwoInterAdsSplash
 import com.securityalarm.antitheifproject.utilities.counter
+import com.securityalarm.antitheifproject.utilities.id_app_open_screen
 import com.securityalarm.antitheifproject.utilities.id_banner_language_screen
+import com.securityalarm.antitheifproject.utilities.id_banner_main_screen
+import com.securityalarm.antitheifproject.utilities.id_banner_splash_screen
 import com.securityalarm.antitheifproject.utilities.id_exit_screen_native
+import com.securityalarm.antitheifproject.utilities.id_language_scroll_screen_native
+import com.securityalarm.antitheifproject.utilities.id_native_Full_screen
+import com.securityalarm.antitheifproject.utilities.id_native_intro_screen1
+import com.securityalarm.antitheifproject.utilities.id_native_intro_screen2
+import com.securityalarm.antitheifproject.utilities.id_native_intro_screen_full
 import com.securityalarm.antitheifproject.utilities.inter_frequency_count
 import com.securityalarm.antitheifproject.utilities.isSplash
 import com.securityalarm.antitheifproject.utilities.val_banner_language_screen
@@ -342,9 +349,16 @@ class SplashFragment :
         id_native_app_open_screen = remoteConfig.getString("id_native_app_open_screen")
         id_exit_dialog_native = remoteConfig.getString("id_exit_dialog_native")
         id_banner_1 = remoteConfig.getString("id_banner_1")
+        id_banner_main_screen = remoteConfig.getString("id_banner_main_screen")
         id_exit_screen_native = remoteConfig.getString("id_exit_screen_native")
 
-        id_banner_language_screen = remoteConfig.getString("id_banner_language_screen")
+        id_native_intro_screen1 = remoteConfig.getString("id_native_intro_screen1")
+        id_native_intro_screen2 = remoteConfig.getString("id_native_intro_screen2")
+        id_app_open_screen = remoteConfig.getString("id_app_open_screen")
+        id_native_intro_screen_full = remoteConfig.getString("id_native_intro_screen_full")
+        id_language_scroll_screen_native = remoteConfig.getString("id_language_scroll_screen_native")
+        id_native_Full_screen = remoteConfig.getString("id_native_Full_screen")
+        id_banner_splash_screen = remoteConfig.getString("id_banner_splash_screen")
 
         test_ui_native = remoteConfig.getString("test_ui_native")
         language_first_r_scroll = remoteConfig.getString("languageinapp_scrollnative")

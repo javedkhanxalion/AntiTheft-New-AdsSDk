@@ -1,60 +1,22 @@
 package com.securityalarm.antitheifproject
 
-import com.bmik.android.sdk.IkmSdkController
-import com.bmik.android.sdk.SDKBaseApplication
-import com.bmik.android.sdk.listener.keep.SDKIAPProductIDProvider
-import com.securityalarm.antitheifproject.utilities.registerAppLifecycleCallbacks
+import android.app.Application
+import android.util.Log
+import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
+import com.securityalarm.antitheifproject.ads_manager.AdOpenApp
 
-class MyApplication : SDKBaseApplication() {
-    override fun configIAPData(): SDKIAPProductIDProvider {
-        return object : SDKIAPProductIDProvider {
-            override val enableIAPFunction: Boolean
-                get() = true
-
-            /**
-             * Retrieves a list of product IDs for subscription products.
-             *
-             * @return An ArrayList of Strings containing the product IDs for subscription products.
-             */
-            override fun listProductIDsSubscription(): ArrayList<String> {
-                return arrayListOf()
-            }
-
-            /**
-             * Retrieves a list of product IDs for one-time purchase products.
-             *
-             * @return An ArrayList of Strings containing the product IDs for one-time purchase products.
-             */
-            override fun listProductIDsPurchase(): ArrayList<String> {
-                return arrayListOf()
-            }
-
-            /**
-             * Retrieves a list of product IDs for products that remove advertisements after purchase.
-             *
-             * @return An ArrayList of Strings containing the product IDs for ad-removal products.
-             */
-            override fun listProductIDsRemoveAd(): ArrayList<String> {
-                return arrayListOf()
-            }
-
-            /**
-             * Retrieves a list of product IDs for products that can be purchased multiple times.
-             *
-             * @return An ArrayList of Strings containing the product IDs for multi-purchase products.
-             */
-            override fun listProductIDsCanPurchaseMultiTime(): ArrayList<String> {
-                return arrayListOf()
-            }
-
-        }
-    }
+class MyApplication : Application(){
 
     override fun onCreate() {
         super.onCreate()
-        IkmSdkController.addActivityEnableShowResumeAd(MainActivity::class.java)
-        IkmSdkController.setEnableShowResumeAds(true)
-        IkmSdkController.setEnableShowLoadingResumeAds(false)
-        registerAppLifecycleCallbacks()
+        Log.d("application_class", "onCreate")
+//        if (val_ad_native_app_open_screen) {
+//            AppOpenManager(this,id_native_app_open_screen)
+//            AppOpenManager(this,getString(R.string.app_open_splash))
+            AdOpenApp(this,getString(R.string.app_open_splash))
+//        }
+
     }
+
+
 }

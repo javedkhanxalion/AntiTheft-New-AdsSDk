@@ -4,23 +4,29 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentShowFullImageScreenBinding
-import com.bmik.android.sdk.IkmSdkController
 import com.bumptech.glide.Glide
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdView
+import com.securityalarm.antitheifproject.ads_manager.AdsManager
+import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
 import com.securityalarm.antitheifproject.model.IntruderModels
 import com.securityalarm.antitheifproject.utilities.BaseFragment
 import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
+import com.securityalarm.antitheifproject.utilities.getNativeLayout
+import com.securityalarm.antitheifproject.utilities.id_native_show_image_screen
+import com.securityalarm.antitheifproject.utilities.intruderimage_bottom
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
-import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
-import com.securityalarm.antitheifproject.utilities.openWifiSettings
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
-import com.securityalarm.antitheifproject.utilities.showInternetDialog
 import com.securityalarm.antitheifproject.utilities.showToast
+import com.securityalarm.antitheifproject.utilities.val_ad_native_show_image_screen
 import java.io.File
 
 class ShowFullImageFragment :
@@ -29,6 +35,7 @@ class ShowFullImageFragment :
     var models: IntruderModels? = null
     var ratingDialogDelete: AlertDialog? = null
     private var isInternetDialog: Boolean = false
+    private var adsManager: AdsManager? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -37,7 +44,7 @@ class ShowFullImageFragment :
         arguments?.let {
             models = it.getSerializable("obj") as IntruderModels
         }
-
+        adsManager = AdsManager.appAdsInit(activity ?: return)
         Glide.with(this).load(Uri.fromFile(models?.file)).into(binding?.intruderimage!!)
         binding?.deleteBtn?.setOnClickListener {
             val dialogView = layoutInflater.inflate(R.layout.delete_dialog, null)
@@ -107,6 +114,44 @@ class ShowFullImageFragment :
 
     private fun loadNative() {
 
+        val adView = LayoutInflater.from(context).inflate(
+            getNativeLayout(intruderimage_bottom,_binding?.nativeExitAd!!,context?:return),
+            null, false
+        ) as NativeAdView
+        adsManager?.nativeAds()?.loadNativeAd(
+            activity ?: return,
+            val_ad_native_show_image_screen,
+            id_native_show_image_screen,
+            object : NativeListener {
+                override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
+                    if (!isAdded && !isVisible && isDetached) {
+                        _binding?.nativeExitAd?.visibility = View.GONE
+                        _binding?.adView?.visibility = View.GONE
+                        return
+                    }
+                    _binding?.nativeExitAd?.visibility = View.VISIBLE
+                    _binding?.adView?.visibility = View.GONE
+
+                    adsManager?.nativeAds()?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                    if (isAdded && isVisible && !isDetached) {
+                        _binding?.nativeExitAd?.removeAllViews()
+                        _binding?.nativeExitAd?.addView(adView)
+                    }
+                    super.nativeAdLoaded(currentNativeAd)
+                }
+
+                override fun nativeAdFailed(loadAdError: LoadAdError) {
+                    _binding?.nativeExitAd?.visibility = View.GONE
+                    _binding?.adView?.visibility = View.GONE
+                    super.nativeAdFailed(loadAdError)
+                }
+
+                override fun nativeAdValidate(string: String) {
+                    _binding?.nativeExitAd?.visibility = View.GONE
+                    _binding?.adView?.visibility = View.GONE
+                    super.nativeAdValidate(string)
+                }
+            })
     }
 
     private fun File.shareFile(context: Context) {
@@ -122,32 +167,9 @@ class ShowFullImageFragment :
     override fun onPause() {
         super.onPause()
         isInternetDialog=true
-        if (!isInternetAvailable(context ?: return)) {
-            IkmSdkController.setEnableShowResumeAds(false)
-        }
     }
     override fun onResume() {
         super.onResume()
-        if (isInternetDialog) {
-            if (!isInternetAvailable(context ?: return)) {
-                IkmSdkController.setEnableShowResumeAds(false)
-  /*              showInternetDialog(
-                    onPositiveButtonClick = {
-                        isInternetDialog = true
-                        openMobileDataSettings(context ?: requireContext())
-                    },
-                    onNegitiveButtonClick = {
-                        isInternetDialog = true
-                        openWifiSettings(context ?: requireContext())
-                    },
-                    onCloseButtonClick = {
-                    }
-                )*/
-                return
-            }else{
-                IkmSdkController.setEnableShowResumeAds(true)
-            }
-        }
     }
 
 }

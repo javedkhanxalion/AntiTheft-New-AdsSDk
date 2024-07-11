@@ -1,6 +1,5 @@
 package com.securityalarm.antitheifproject.ui
 
-import MainMenuGridAdapter
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -15,13 +14,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentMainMenuActivityBinding
-import com.bmik.android.sdk.IkmSdkController
-import com.bmik.android.sdk.SDKBaseController
-import com.bmik.android.sdk.listener.CommonAdsListenerAdapter
-import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
-import com.bmik.android.sdk.listener.SDKDialogLoadingCallback
-import com.bmik.android.sdk.utils.IkmSdkUtils
+import com.securityalarm.antitheifproject.adapter.MainMenuGridAdapter
 import com.securityalarm.antitheifproject.adapter.MainMenuLinearAdapter
+import com.securityalarm.antitheifproject.ads_manager.AdsManager
+import com.securityalarm.antitheifproject.ads_manager.showTwoInterAd
+import com.securityalarm.antitheifproject.ads_manager.showTwoInterAdExit
 import com.securityalarm.antitheifproject.helper_class.Constants.isServiceRunning
 import com.securityalarm.antitheifproject.helper_class.DbHelper
 import com.securityalarm.antitheifproject.model.MainMenuModel
@@ -38,6 +35,10 @@ import com.securityalarm.antitheifproject.utilities.autoServiceFunction
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.getMenuListGrid
+import com.securityalarm.antitheifproject.utilities.id_banner_1
+import com.securityalarm.antitheifproject.utilities.id_banner_main_screen
+import com.securityalarm.antitheifproject.utilities.id_inter_main_medium
+import com.securityalarm.antitheifproject.utilities.id_inter_main_normal
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.moreApp
 import com.securityalarm.antitheifproject.utilities.privacyPolicy
@@ -50,6 +51,9 @@ import com.securityalarm.antitheifproject.utilities.shareApp
 import com.securityalarm.antitheifproject.utilities.showRatingDialog
 import com.securityalarm.antitheifproject.utilities.showServiceDialog
 import com.securityalarm.antitheifproject.utilities.showToast
+import com.securityalarm.antitheifproject.utilities.val_banner_main_menu_screen
+import com.securityalarm.antitheifproject.utilities.val_inter_exit_screen
+import com.securityalarm.antitheifproject.utilities.val_inter_main_normal
 
 class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentMainMenuActivityBinding::inflate) {
 
@@ -59,53 +63,50 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
     private var isGridLayout: Boolean? = null
     private var isInternetDialog: Boolean = false
     private var isInternetPermission: Boolean = true
+    private var adsManager: AdsManager? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAnalytics("main_menu_fragment_open", "main_menu_fragment_open -->  Click")
         sharedPrefUtils = DbHelper(context ?: return)
+        adsManager = AdsManager.appAdsInit(activity ?: return)
         // Register the receiver for local broadcasts
         // Register the receiver for connectivity changes
 
 
-        if (IkmSdkUtils.isUserIAPAvailable()) {
-            _binding?.navViewLayout?.viewTop?.visibility = View.INVISIBLE
-            _binding?.navViewLayout?.buyText?.visibility = View.INVISIBLE
-            _binding?.navViewLayout?.rateUs?.visibility = View.INVISIBLE
-        }
+//        if (IkmSdkUtils.isUserIAPAvailable()) {
+//            _binding?.navViewLayout?.viewTop?.visibility = View.INVISIBLE
+//            _binding?.navViewLayout?.buyText?.visibility = View.INVISIBLE
+//            _binding?.navViewLayout?.rateUs?.visibility = View.INVISIBLE
+//        }
         setupBackPressedCallback {
             if (_binding?.navViewLayout?.navigationMain?.isVisible == true) {
                 _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
             } else {
-                SDKBaseController.getInstance().showInterstitialAds(
-                    activity,
-                    screen = "exit_app",
-                    trackingScreen = "exit_app",
-                    showLoading = true,
-                    loadingCallback = object : SDKDialogLoadingCallback {
-                        override fun onClose() {
-//                            _binding?.mainLayout?.bannerAds?.visibility=View.GONE
-                        }
-
-                        override fun onShow() {
-//                            _binding?.mainLayout?.bannerAds?.visibility=View.VISIBLE
-                        }
-                    },
-                    adsListener = object : CommonAdsListenerAdapter() {
-                        override fun onAdsShowFail(errorCode: Int) {
-                            val bottomSheetFragment = BottomSheetFragment(activity ?: return)
+                adsManager?.let {
+                    showTwoInterAdExit(
+                        ads = it,
+                        activity = activity ?: return@let,
+                        remoteConfigNormal = val_inter_exit_screen,
+                        adIdNormal = id_inter_main_medium,
+                        tagClass = "main_menu",
+                        layout = binding?.mainLayout?.adsLay!!,
+                        isBackPress = true,
+                        function = {
+                            findNavController().navigate(R.id.FragmentExitScreen)
+                        },
+                        functionFF = {
+                            val bottomSheetFragment =
+                                BottomSheetFragment(activity ?: return@showTwoInterAdExit)
                             bottomSheetFragment.show(
-                                fragmentManager ?: return,
+                                fragmentManager ?: return@showTwoInterAdExit,
                                 bottomSheetFragment.tag
                             )
-                        }
+                        },
+                    )
 
-                        override fun onAdsDismiss() {
-                            findNavController().navigate(R.id.FragmentExitScreen)
-                        }
-                    }
-                )
+                }
             }
         }
         _binding?.run {
@@ -256,13 +257,8 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
 
     private fun loadFunction(model: MainMenuModel, position: Int) {
         firebaseAnalytics(model.maniTextTitle, "${model.maniTextTitle}_open -->  Click")
-        when (position) {
+/*        when (position) {
             0 -> {
-                SDKBaseController.getInstance().preloadNativeAd(
-                    activity ?: return, model.nativeId,
-                    model.nativeId,
-                    null
-                )
                 SDKBaseController.getInstance().showInterstitialAds(activity ?: return,
                     screen = "home_tabanyfuntion",
                     trackingScreen = "home_tabanyfuntion",
@@ -288,11 +284,7 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
             }
 
             2 -> {
-                SDKBaseController.getInstance().preloadNativeAd(
-                    activity ?: return, model.nativeId,
-                    model.nativeId,
-                    null
-                )
+
                 SDKBaseController.getInstance().showInterstitialAds(activity ?: return,
                     screen = "home_tabanyfuntion",
                     trackingScreen = "home_tabanyfuntion",
@@ -319,6 +311,18 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                             )
                         }
                     })
+                adsManager?.let {
+                    showTwoInterAd(
+                        ads = it,
+                        activity = activity ?: return@let,
+                        remoteConfigNormal = val_inter_main_medium,
+                        adIdNormal = id_inter_main_medium,
+                        tagClass = "main_menu",
+                        layout = binding?.mainLayout?.adsLayDialog!!,
+                        isBackPress = true
+                    ) {
+                    }
+                }
             }
 
             else -> {
@@ -367,6 +371,68 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                     requestCameraPermissionAudio()
                 }
             }
+        }*/
+
+        when (position) {
+            0 -> {
+                adsManager?.let {
+                    showTwoInterAd(
+                        ads = it,
+                        activity = activity ?: return,
+                        remoteConfigNormal = val_inter_main_normal,
+                        adIdNormal = id_inter_main_normal,
+                        tagClass = model.maniTextTitle,
+                        isBackPress = false,
+                        layout = binding?.mainLayout?.adsLay!!
+                    ) {
+                        findNavController().navigate(R.id.FragmentInturderDetectionDetail)
+                    }
+                }
+            }
+
+            2 -> {
+                adsManager?.let {
+                    showTwoInterAd(
+                        ads = it,
+                        activity = activity ?: return,
+                        remoteConfigNormal = val_inter_main_normal,
+                        adIdNormal = id_inter_main_normal,
+                        tagClass = model.maniTextTitle,
+                        isBackPress = false,
+                        layout = binding?.mainLayout?.adsLay!!
+                    ) {
+                        findNavController().navigate(
+                            R.id.FragmentPasswordDetail,
+                            bundleOf(ANTI_TITLE to model)
+                        )
+                    }
+                }
+            }
+
+            else -> {
+                if (ContextCompat.checkSelfPermission(context ?: return, AUDIO_PERMISSION) == 0 &&
+                    ContextCompat.checkSelfPermission(context ?: return, PHONE_PERMISSION) == 0
+                ) {
+                    adsManager?.let {
+                        showTwoInterAd(
+                            ads = it,
+                            activity = activity ?: return,
+                            remoteConfigNormal = val_inter_main_normal,
+                            adIdNormal = id_inter_main_normal,
+                            tagClass = model.maniTextTitle,
+                            isBackPress = false,
+                            layout = binding?.mainLayout?.adsLay!!
+                        ) {
+                            findNavController().navigate(
+                                R.id.FragmentDetectionSameFunction,
+                                bundleOf(ANTI_TITLE to model)
+                            )
+                        }
+                    }
+                } else {
+                    requestCameraPermissionAudio()
+                }
+            }
         }
     }
 
@@ -407,16 +473,14 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
     }
 
     private fun loadBanner() {
-        binding?.mainLayout?.bannerAds?.loadAd(
-            activity, "home_banner",
-            "home_banner", object : CustomSDKAdsListenerAdapter() {
+        adsManager?.adsBanners()?.loadBanner(
+            activity = activity ?: return,
+            view = _binding?.mainLayout?.bannerAds!!,
+            addConfig = val_banner_main_menu_screen,
+            bannerId = id_banner_main_screen
+        ){
 
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                    _binding?.mainLayout?.bannerAds?.visibility = View.GONE
-                }
-            }
-        )
+        }
     }
 
 }

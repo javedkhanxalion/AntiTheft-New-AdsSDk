@@ -13,11 +13,13 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentDetailModuleBinding
-import com.bmik.android.sdk.IkmSdkController
-import com.bmik.android.sdk.SDKBaseController
-import com.bmik.android.sdk.listener.CustomSDKAdsListenerAdapter
-import com.bmik.android.sdk.widgets.IkmWidgetAdLayout
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdView
 import com.securityalarm.antitheifproject.Admin
+import com.securityalarm.antitheifproject.ads_manager.AdsBanners
+import com.securityalarm.antitheifproject.ads_manager.AdsManager
+import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
 import com.securityalarm.antitheifproject.helper_class.Constants.Intruder_Alarm
 import com.securityalarm.antitheifproject.helper_class.Constants.isServiceRunning
 import com.securityalarm.antitheifproject.helper_class.DbHelper
@@ -29,6 +31,8 @@ import com.securityalarm.antitheifproject.utilities.autoServiceFunctionIntruder
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
 import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
+import com.securityalarm.antitheifproject.utilities.id_banner_1
+import com.securityalarm.antitheifproject.utilities.id_native_password_screen
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.loadImage
 import com.securityalarm.antitheifproject.utilities.openMobileDataSettings
@@ -37,6 +41,8 @@ import com.securityalarm.antitheifproject.utilities.setImage
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
 import com.securityalarm.antitheifproject.utilities.showInternetDialog
 import com.securityalarm.antitheifproject.utilities.startLottieAnimation
+import com.securityalarm.antitheifproject.utilities.val_ad_native_password_screen
+import com.securityalarm.antitheifproject.utilities.val_banner_1
 
 class FragmentPasswordDetail :
     BaseFragment<FragmentDetailModuleBinding>(FragmentDetailModuleBinding::inflate) {
@@ -45,6 +51,7 @@ class FragmentPasswordDetail :
     private var model: MainMenuModel? = null
     private var dbHelper: DbHelper? = null
     private var mComponentName: ComponentName? = null
+    private var adsManager: AdsManager? = null
     private var mDevicePolicyManager: DevicePolicyManager? = null
     private var isInternetDialog: Boolean = false
 
@@ -54,18 +61,7 @@ class FragmentPasswordDetail :
         arguments?.let {
             model = it.getParcelable(ANTI_TITLE) ?: return
         }
-        SDKBaseController.getInstance().preloadNativeAd(
-            activity ?: return, model?.nativeSoundId?:return,
-            model?.nativeSoundId?:return, object : CustomSDKAdsListenerAdapter() {
-                override fun onAdsLoaded() {
-                    super.onAdsLoaded()
-                    Log.d("check_ads", "onAdsLoaded: Load Ad")
-                }
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                }
-            }
-        )
+        adsManager=AdsManager.appAdsInit(activity?:return)
         _binding?.textView3?.text = model?.bottomText
         mDevicePolicyManager =
             context?.getSystemService(AppCompatActivity.DEVICE_POLICY_SERVICE) as DevicePolicyManager
@@ -345,34 +341,11 @@ class FragmentPasswordDetail :
     override fun onPause() {
         super.onPause()
         isInternetDialog = true
-        if (!isInternetAvailable(context ?: return)) {
-            IkmSdkController.setEnableShowResumeAds(false)
-        }
     }
 
     override fun onResume() {
         super.onResume()
         checkSwitch()
-        if (isInternetDialog) {
-            if (!isInternetAvailable(context ?: return)) {
-                IkmSdkController.setEnableShowResumeAds(false)
-        /*        showInternetDialog(
-                    onPositiveButtonClick = {
-                        isInternetDialog = true
-                        openMobileDataSettings(context ?: requireContext())
-                    },
-                    onNegitiveButtonClick = {
-                        isInternetDialog = true
-                        openWifiSettings(context ?: requireContext())
-                    },
-                    onCloseButtonClick = {
-                    }
-                )*/
-                return
-            } else {
-                IkmSdkController.setEnableShowResumeAds(true)
-            }
-        }
     }
 
     private fun checkSwitch() {
@@ -403,60 +376,98 @@ class FragmentPasswordDetail :
 
 
         private fun loadNativeGrid() {
-            val adLayout = LayoutInflater.from(context).inflate(
+            val adView = LayoutInflater.from(context).inflate(
                 getNativeLayout(model?.nativeLayout?:return,_binding?.gridLayout?.nativeExitAd!!,context?:return),
                 null, false
             ) as NativeAdView
-            adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
-            adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
-            adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
-            adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
-            adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-            _binding?.gridLayout?.nativeExitAd?.loadAd(
-                activity ?: return,  getNativeLayoutShimmer(model?.nativeLayout?:return),
-                adLayout!!, "password_native",
-                "password_native", object : CustomSDKAdsListenerAdapter() {
-
-                    override fun onAdsLoadFail() {
-                        super.onAdsLoadFail()
-                        _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
+            adsManager?.nativeAds()?.loadNativeAd(
+                activity ?: return,
+                val_ad_native_password_screen,
+                id_native_password_screen,
+                object : NativeListener {
+                    override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
+                        if (isAdded && isVisible && !isDetached) {
+                            _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
+                            _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
+                            if (isAdded && isVisible && !isDetached) {
+                                adsManager?.nativeAds()
+                                    ?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                                _binding?.gridLayout?.nativeExitAd?.removeAllViews()
+                                _binding?.gridLayout?.nativeExitAd?.addView(adView)
+                            }
+                        }
+                        super.nativeAdLoaded(currentNativeAd)
                     }
-                }
-            )
 
+                    override fun nativeAdFailed(loadAdError: LoadAdError) {
+                        if (isAdded && isVisible && !isDetached) {
+                            _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
+                            _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
+                        }
+                        super.nativeAdFailed(loadAdError)
+                    }
+
+                    override fun nativeAdValidate(string: String) {
+                        if (isAdded && isVisible && !isDetached) {
+                            _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
+                            _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
+                        }
+                        super.nativeAdValidate(string)
+                    }
+
+                })
         }
 
         private fun loadNativeList() {
-            val adLayout = LayoutInflater.from(context).inflate(
+            val adView = LayoutInflater.from(context).inflate(
                 getNativeLayout(model?.nativeLayout?:return,_binding?.linearlayout?.nativeExitAd!!,context?:return),
                 null, false
             ) as NativeAdView
-            adLayout?.titleView = adLayout?.findViewById(R.id.custom_headline)
-            adLayout?.bodyView = adLayout?.findViewById(R.id.custom_body)
-            adLayout?.callToActionView = adLayout?.findViewById(R.id.custom_call_to_action)
-            adLayout?.iconView = adLayout?.findViewById(R.id.custom_app_icon)
-            adLayout?.mediaView = adLayout?.findViewById(R.id.custom_media)
-            _binding?.linearlayout?.nativeExitAd?.loadAd(
-                activity ?: return,  getNativeLayoutShimmer(model?.nativeLayout?:return),
-                adLayout!!, "password_native",
-                "password_native", object : CustomSDKAdsListenerAdapter() {
+            adsManager?.nativeAds()?.loadNativeAd(
+                activity ?: return,
+                val_ad_native_password_screen,
+                id_native_password_screen,
+                object : NativeListener {
+                    override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
+                        if (isAdded && isVisible && !isDetached) {
+                            _binding?.linearlayout?.nativeExitAd?.visibility = View.VISIBLE
+                            _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
 
-                    override fun onAdsLoadFail() {
-                        super.onAdsLoadFail()
-                        _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
+                            adsManager?.nativeAds()?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                            _binding?.linearlayout?.nativeExitAd?.removeAllViews()
+                            _binding?.linearlayout?.nativeExitAd?.addView(adView)
+                        }
+                        super.nativeAdLoaded(currentNativeAd)
                     }
-                }
-            )
+
+                    override fun nativeAdFailed(loadAdError: LoadAdError) {
+                        if (isAdded && isVisible && !isDetached) {
+                            _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
+                            _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
+                        }
+                        super.nativeAdFailed(loadAdError)
+                    }
+
+                    override fun nativeAdValidate(string: String) {
+                        if (isAdded && isVisible && !isDetached) {
+                            _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
+                            _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
+                        }
+                        super.nativeAdValidate(string)
+                    }
+
+
+                })
         }
 
     private fun loadBanner() {
-        binding?.bannerAds?.loadAd(
-            activity, "password_banner",
-            "password_banner", object : CustomSDKAdsListenerAdapter() {
-                override fun onAdsLoadFail() {
-                    super.onAdsLoadFail()
-                    _binding?.bannerAds?.visibility = View.GONE
-                }
+        AdsBanners.loadBanner(
+            activity = activity?:return,
+            view = _binding?.bannerAds!!,
+            addConfig = val_banner_1,
+            bannerId = id_banner_1,
+            bannerListener = {
+                _binding?.shimmerLayout?.visibility = View.GONE
             }
         )
     }

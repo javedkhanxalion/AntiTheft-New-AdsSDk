@@ -7,12 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentAdBinding
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
+import com.securityalarm.antitheifproject.ads_manager.AdsManager
+import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
+import com.securityalarm.antitheifproject.utilities.id_native_intro_screen
 
 class AdFragment : Fragment() {
 
     private var _binding: FragmentAdBinding? = null
     private val binding get() = _binding!!
+    private var ads: AdsManager? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,30 +29,7 @@ class AdFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val constraintLayout = view.findViewById<ConstraintLayout>(R.id.mainLayout)
-//
-//        // Create a new View
-//        val myView = View(context).apply {
-//            id = View.generateViewId()
-//            setBackgroundColor(resources.getColor(android.R.color.white, null))
-//        }
-//
-//        // Add the view to the ConstraintLayout
-//        constraintLayout.addView(myView, 0)
-//
-//        // Apply constraints to the view
-//        val set = ConstraintSet().apply {
-//            clone(constraintLayout)
-//            connect(myView.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
-//            connect(myView.id, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
-//            connect(myView.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
-//            connect(myView.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
-//            constrainWidth(myView.id, ConstraintSet.MATCH_CONSTRAINT)
-//            constrainHeight(myView.id, ConstraintSet.MATCH_CONSTRAINT)
-//        }
-//        set.applyTo(constraintLayout)
         loadNative()
-
     }
 
     override fun onDestroyView() {
@@ -55,11 +38,40 @@ class AdFragment : Fragment() {
     }
 
     private fun loadNative() {
-        val adLayout = LayoutInflater.from(context).inflate(
+        val adView =layoutInflater.inflate(
             R.layout.native_layout_full,
-            null, false
+            null
         ) as NativeAdView
+        ads = AdsManager.appAdsInit(activity ?: return)
+        ads?.nativeAdsMain()?.loadNativeAd(
+            activity ?: return,
+            true,
+            id_native_intro_screen,
+            object : NativeListener {
+                override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
+                    _binding?.mainAdsNative?.visibility = View.VISIBLE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    _binding?.progressBar?.visibility = View.GONE
+                    ads?.nativeAdsMain()?.nativeViewMedia(currentNativeAd ?: return, adView)
+                    _binding?.mainAdsNative?.removeAllViews()
+                    _binding?.mainAdsNative?.addView(adView)
+                    super.nativeAdLoaded(currentNativeAd)
+                }
 
+                override fun nativeAdFailed(loadAdError: LoadAdError) {
+                    _binding?.mainAdsNative?.visibility = View.GONE
+                    _binding?.progressBar?.visibility = View.GONE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    super.nativeAdFailed(loadAdError)
+                }
+
+                override fun nativeAdValidate(string: String) {
+                    _binding?.mainAdsNative?.visibility = View.GONE
+                    _binding?.progressBar?.visibility = View.GONE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    super.nativeAdValidate(string)
+                }
+            })
     }
 
 }

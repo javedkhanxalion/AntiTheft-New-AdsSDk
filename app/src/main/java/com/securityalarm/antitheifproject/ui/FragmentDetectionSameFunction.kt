@@ -8,8 +8,12 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentDetailModuleBinding
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.securityalarm.antitheifproject.ads_manager.AdsBanners
+import com.securityalarm.antitheifproject.ads_manager.AdsManager
+import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
 import com.securityalarm.antitheifproject.helper_class.Constants.isServiceRunning
 import com.securityalarm.antitheifproject.helper_class.DbHelper
 import com.securityalarm.antitheifproject.model.MainMenuModel
@@ -37,6 +41,7 @@ class FragmentDetectionSameFunction :
     private var isGridLayout: Boolean? = null
     private var model: MainMenuModel? = null
     var sharedPrefUtils: DbHelper? = null
+    private var adsManager: AdsManager? = null
     private var isInternetDialog: Boolean = false
 
     @SuppressLint("SetTextI18n")
@@ -46,6 +51,7 @@ class FragmentDetectionSameFunction :
         arguments?.let {
             model = it.getParcelable(ANTI_TITLE) ?: return@let
         }
+        adsManager= AdsManager.appAdsInit(activity?:return)
         _binding?.topLay?.title?.text = model?.maniTextTitle
         _binding?.textView3?.text = model?.bottomText
         sharedPrefUtils = DbHelper(context ?: return)
@@ -320,19 +326,84 @@ class FragmentDetectionSameFunction :
     }
 
         private fun loadNativeGrid() {
-            val adLayout = LayoutInflater.from(context).inflate(
+            val adView = LayoutInflater.from(context).inflate(
                 getNativeLayout(model?.nativeLayout?:return,_binding?.gridLayout?.nativeExitAd!!,context?:return),
                 null, false
             ) as NativeAdView
+            adsManager?.nativeAds()?.loadNativeAd(
+                activity ?: return,
+                model?.remoteValue ?: return,
+                model?.idAds ?: return,
+                object : NativeListener {
+                    override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
+                        if (!isAdded && !isVisible && isDetached) {
+                            return
+                        }
+                        _binding?.gridLayout?.nativeExitAd?.visibility = View.VISIBLE
+                        _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
+                        if (isAdded && isVisible && !isDetached) {
+                            adsManager?.nativeAds()?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                            _binding?.gridLayout?.nativeExitAd?.removeAllViews()
+                            _binding?.gridLayout?.nativeExitAd?.addView(adView)
+                        }
 
+                        super.nativeAdLoaded(currentNativeAd)
+                    }
+
+                    override fun nativeAdFailed(loadAdError: LoadAdError) {
+                        _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
+                        _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
+                        super.nativeAdFailed(loadAdError)
+                    }
+
+                    override fun nativeAdValidate(string: String) {
+                        _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
+                        _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
+                        super.nativeAdValidate(string)
+                    }
+
+
+                })
         }
 
         private fun loadNativeList() {
-            val adLayout = LayoutInflater.from(context).inflate(
+            val adView = LayoutInflater.from(context).inflate(
                 getNativeLayout(model?.nativeLayout?:return,_binding?.linearlayout?.nativeExitAd!!,context?:return),
                 null, false
             ) as NativeAdView
+            adsManager?.nativeAds()?.loadNativeAd(
+                activity ?: return,
+                model?.remoteValue ?: return,
+                model?.idAds ?: return,
+                object : NativeListener {
+                    override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
+                        if (!isAdded && !isVisible && isDetached) {
+                            return
+                        }
+                        _binding?.linearlayout?.nativeExitAd?.visibility = View.VISIBLE
+                        _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
+                        if (isAdded && isVisible && !isDetached) {
+                            adsManager?.nativeAds()?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                            _binding?.linearlayout?.nativeExitAd?.removeAllViews()
+                            _binding?.linearlayout?.nativeExitAd?.addView(adView)
+                        }
+                        super.nativeAdLoaded(currentNativeAd)
+                    }
 
+                    override fun nativeAdFailed(loadAdError: LoadAdError) {
+                        _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
+                        _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
+                        super.nativeAdFailed(loadAdError)
+                    }
+
+                    override fun nativeAdValidate(string: String) {
+                        _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
+                        _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
+                        super.nativeAdValidate(string)
+                    }
+
+
+                })
         }
     private fun loadBanner() {
         AdsBanners.loadBanner(

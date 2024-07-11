@@ -154,6 +154,15 @@ var id_exit_dialog_native = ""
 var id_exit_screen_native: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
 var id_banner_language_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/9214589741" else ""
 var id_banner_1: String = if (isDebug()) "ca-app-pub-3940256099942544/9214589741" else ""
+var id_banner_main_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/6300978111" else ""
+
+var id_native_intro_screen1: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
+var id_native_intro_screen2: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
+var id_app_open_screen: String = ""
+var id_native_intro_screen_full: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
+var id_language_scroll_screen_native: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
+var id_native_Full_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
+var id_banner_splash_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/6300978111" else ""
 
 var language_reload = 0
 var Onboarding_Full_Native = 0

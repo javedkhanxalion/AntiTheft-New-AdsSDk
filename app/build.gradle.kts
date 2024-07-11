@@ -107,7 +107,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-common:2.6.2")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    implementation("com.google.android.gms:play-services-ads:23.1.0")
+    implementation("com.google.android.gms:play-services-ads:23.2.0")
     implementation(platform("com.google.firebase:firebase-bom:30.3.1"))
     implementation("com.google.firebase:firebase-config-ktx:21.6.0")
     implementation("com.google.firebase:firebase-analytics-ktx:21.5.0")
@@ -123,8 +123,8 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.8.8")
 //    implementation ("com.applovin:applovin-sdk:12.1.0")
 //    implementation ("net.pubnative:hybid.sdk:3.0.0")
-    implementation ("com.facebook.android:audience-network-sdk:6.+")
-    implementation ("com.unity3d.ads:unity-ads:4.7.0")
+//    implementation ("com.facebook.android:audience-network-sdk:6.+")
+//    implementation ("com.unity3d.ads:unity-ads:4.7.0")
 }
 
 

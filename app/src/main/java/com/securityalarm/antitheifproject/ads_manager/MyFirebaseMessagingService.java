@@ -12,12 +12,13 @@ import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
+import androidx.core.app.NotificationCompat;
+
+import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R;
 import com.securityalarm.antitheifproject.MainActivity;
 
 import java.io.IOException;
@@ -48,23 +49,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-		NotificationCompat.Builder notificationBuilder = null;
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			notificationBuilder = new NotificationCompat.Builder(this, "default")
-					.setContentTitle(notification.getTitle())
-					.setContentText(notification.getBody())
-					.setAutoCancel(true)
-					.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-					//.setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.win))
-					.setContentIntent(pendingIntent)
-					.setContentInfo("Hello")
-					.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
-					.setColor(getColor(R.color.color_ads))
-					.setLights(Color.RED, 1000, 300)
-					.setDefaults(Notification.DEFAULT_VIBRATE)
-					.setNumber(++numMessages)
-					.setSmallIcon(R.drawable.ic_notification);
-		}
+		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "default")
+				.setContentTitle(notification.getTitle())
+				.setContentText(notification.getBody())
+				.setAutoCancel(true)
+				.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+				//.setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.win))
+				.setContentIntent(pendingIntent)
+				.setContentInfo("Hello")
+				.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
+				.setColor(getColor(R.color.button_color_1))
+				.setLights(Color.RED, 1000, 300)
+				.setDefaults(Notification.DEFAULT_VIBRATE)
+				.setNumber(++numMessages)
+				.setSmallIcon(R.drawable.ic_notification);
 
 		try {
 			String picture = data.get(FCM_PARAM);
