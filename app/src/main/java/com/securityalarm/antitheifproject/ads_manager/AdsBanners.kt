@@ -127,6 +127,7 @@ object AdsBanners {
                     firebaseAnalytics("bannerAdsFailed", "bannerAdsFailed->click")
                     bannerListener.invoke()
                     viewS.visibility=View.GONE
+                    view.visibility=View.GONE
                     Log.d(bannerLogs, "BannerWithSize : onAdFailedToLoad ${p0.message}")
                     super.onAdFailedToLoad(p0)
                 }

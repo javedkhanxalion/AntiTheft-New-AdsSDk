@@ -92,7 +92,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/round_btn_ads"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/bannerAds"
         app:layout_constraintLeft_toLeftOf="@id/bannerAds"
         app:layout_constraintRight_toRightOf="@id/bannerAds"

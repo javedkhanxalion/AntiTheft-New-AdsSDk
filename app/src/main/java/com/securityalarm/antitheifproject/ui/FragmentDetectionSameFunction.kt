@@ -413,6 +413,7 @@ class FragmentDetectionSameFunction :
             addConfig = val_banner_1,
             bannerId = id_banner_1,
             bannerListener = {
+                _binding?.shimmerLayout!!.visibility=View.GONE
             }
         )
     }

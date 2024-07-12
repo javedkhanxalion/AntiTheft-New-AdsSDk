@@ -1,6 +1,7 @@
 package com.securityalarm.antitheifproject.ui
 
 import android.os.Bundle
+import android.os.Debug
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
@@ -339,6 +340,8 @@ class SplashFragment :
             addConfig = val_banner_language_screen,
             bannerId = id_banner_language_screen,
             bannerListener = {
+
+                _binding?.shimmerLayout!!.visibility=View.GONE
             }
         )
     }
@@ -363,6 +366,12 @@ class SplashFragment :
     }
 
     private fun applyAdIdsFromRemoteConfig(remoteConfig: FirebaseRemoteConfig) {
+
+        if (!AdsBanners.isDebug()){
+            id_banner_1 = remoteConfig.getString("id_banner_1")
+            id_banner_main_screen = remoteConfig.getString("id_banner_main_screen")
+            id_banner_splash_screen = remoteConfig.getString("id_banner_splash_screen")
+        }
             id_inter_counter = remoteConfig.getLong("id_inter_counter").toInt()
             id_frequency_counter = remoteConfig.getLong("id_frequency_counter").toInt()
             id_native_main_menu_screen = remoteConfig.getString("id_native_main_menu_screen")
@@ -383,8 +392,6 @@ class SplashFragment :
             id_native_Battery_Detection_screen =remoteConfig.getString("id_native_Battery_Detection_screen")
             id_native_app_open_screen = remoteConfig.getString("id_native_app_open_screen")
             id_exit_dialog_native = remoteConfig.getString("id_exit_dialog_native")
-            id_banner_1 = remoteConfig.getString("id_banner_1")
-            id_banner_main_screen = remoteConfig.getString("id_banner_main_screen")
             id_exit_screen_native = remoteConfig.getString("id_exit_screen_native")
 
             id_native_intro_screen1 = remoteConfig.getString("id_native_intro_screen1")
@@ -393,7 +400,6 @@ class SplashFragment :
             id_native_intro_screen_full = remoteConfig.getString("id_native_intro_screen_full")
             id_language_scroll_screen_native =remoteConfig.getString("id_language_scroll_screen_native")
             id_native_Full_screen = remoteConfig.getString("id_native_Full_screen")
-            id_banner_splash_screen = remoteConfig.getString("id_banner_splash_screen")
 
             test_ui_native = remoteConfig.getString("test_ui_native")
             language_first_r_scroll = remoteConfig.getString("language_first_r_scroll")
