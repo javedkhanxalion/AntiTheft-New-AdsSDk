@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.BuildConfig
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.*
 import com.securityalarm.antitheifproject.ads_manager.AdsManager.isNetworkAvailable
@@ -93,6 +94,7 @@ object AdsBanners {
     fun loadBanner(
         activity: Activity,
         view: FrameLayout,
+        viewS: ShimmerFrameLayout,
         addConfig: Boolean,
         bannerId: String?,
         bannerListener: () -> Unit
@@ -105,8 +107,7 @@ object AdsBanners {
             view.addView(adView)
             adView?.adUnitId = if (isDebug()) bannerTestId else bannerId ?: bannerTestId
             adView?.setAdSize(AdSize.BANNER)
-            val adRequest =
-                AdRequest.Builder().build()
+            val adRequest =AdRequest.Builder().build()
             adView?.loadAd(adRequest)
 
             adView?.adListener = object : AdListener() {
@@ -118,15 +119,14 @@ object AdsBanners {
 
                 override fun onAdClosed() {
                     firebaseAnalytics("bannerAdsClosed", "bannerAdsClosed->click")
-
                     Log.d(bannerLogs, "BannerWithSize : onAdClosed")
                     super.onAdClosed()
                 }
 
                 override fun onAdFailedToLoad(p0: LoadAdError) {
                     firebaseAnalytics("bannerAdsFailed", "bannerAdsFailed->click")
-//                    bannerListener.bannerAdFailed(p0)
                     bannerListener.invoke()
+                    viewS.visibility=View.GONE
                     Log.d(bannerLogs, "BannerWithSize : onAdFailedToLoad ${p0.message}")
                     super.onAdFailedToLoad(p0)
                 }
@@ -134,13 +134,15 @@ object AdsBanners {
                 override fun onAdImpression() {
                     firebaseAnalytics("bannerAdsImpression", "bannerAdsImpression->click")
                     Log.d(bannerLogs, "BannerWithSize : onAdImpression")
+                    viewS.visibility=View.GONE
+                    bannerListener.invoke()
                     super.onAdImpression()
                 }
 
                 override fun onAdLoaded() {
                     firebaseAnalytics("bannerAdsLoaded", "bannerAdsLoaded->click")
-//                    bannerListener.bannerAdLoaded()
                     bannerListener.invoke()
+                    viewS.visibility=View.GONE
                     Log.d(bannerLogs, "BannerWithSize : onAdLoaded")
                     super.onAdLoaded()
                 }
@@ -154,7 +156,7 @@ object AdsBanners {
             }
         } else {
             Log.d(bannerLogs, "some value is false")
-//            bannerListener.bannerAdNoInternet()
+            viewS.visibility = View.GONE
             view.visibility = View.GONE
         }
     }

@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "576164378070",
-    "project_id": "anti-theft-alarm-44980",
-    "storage_bucket": "anti-theft-alarm-44980.appspot.com"
+    "project_number": "37577674950",
+    "project_id": "antitheftalarm-88478",
+    "storage_bucket": "antitheftalarm-88478.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:576164378070:android:b0ecae341c841317232077",
+        "mobilesdk_app_id": "1:37577674950:android:9ac35044ac1077e83187c7",
         "android_client_info": {
           "package_name": "com.antitheftalarm.dont.touch.phone.finder.phonesecurity"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDibbKlGy1blO-Y9q0tg04ogybLKssdMZM"
+          "current_key": "AIzaSyCjp3kcH0_ZIuSj-J-2F_m4zcMbArbAq2k"
         }
       ],
       "services": {

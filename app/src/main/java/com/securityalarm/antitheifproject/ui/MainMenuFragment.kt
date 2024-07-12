@@ -35,11 +35,9 @@ import com.securityalarm.antitheifproject.utilities.autoServiceFunction
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.getMenuListGrid
-import com.securityalarm.antitheifproject.utilities.id_banner_1
 import com.securityalarm.antitheifproject.utilities.id_banner_main_screen
 import com.securityalarm.antitheifproject.utilities.id_inter_main_medium
 import com.securityalarm.antitheifproject.utilities.id_inter_main_normal
-import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.moreApp
 import com.securityalarm.antitheifproject.utilities.privacyPolicy
 import com.securityalarm.antitheifproject.utilities.rateUs
@@ -55,7 +53,8 @@ import com.securityalarm.antitheifproject.utilities.val_banner_main_menu_screen
 import com.securityalarm.antitheifproject.utilities.val_inter_exit_screen
 import com.securityalarm.antitheifproject.utilities.val_inter_main_normal
 
-class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentMainMenuActivityBinding::inflate) {
+class MainMenuFragment :
+    BaseFragment<FragmentMainMenuActivityBinding>(FragmentMainMenuActivityBinding::inflate) {
 
     private var adapterGrid: MainMenuGridAdapter? = null
     private var adapterLinear: MainMenuLinearAdapter? = null
@@ -91,19 +90,19 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                         adIdNormal = id_inter_main_medium,
                         tagClass = "main_menu",
                         layout = binding?.mainLayout?.adsLay!!,
-                        isBackPress = true,
-                        function = {
+                        isBackPress = true
+                    ) {
+                        if (it == 1) {
                             findNavController().navigate(R.id.FragmentExitScreen)
-                        },
-                        functionFF = {
+                        } else {
                             val bottomSheetFragment =
                                 BottomSheetFragment(activity ?: return@showTwoInterAdExit)
                             bottomSheetFragment.show(
                                 fragmentManager ?: return@showTwoInterAdExit,
                                 bottomSheetFragment.tag
                             )
-                        },
-                    )
+                        }
+                    }
 
                 }
             }
@@ -213,7 +212,11 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                 R.drawable.icon_grid
             )
             adapterGrid =
-                MainMenuGridAdapter(activity ?: return,adsManager?:return, getMenuListGrid(sharedPrefUtils ?: return))
+                MainMenuGridAdapter(
+                    activity ?: return,
+                    adsManager ?: return,
+                    getMenuListGrid(sharedPrefUtils ?: return)
+                )
             val managerLayout = GridLayoutManager(context, 3)
             val spanSizeLookup1 = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
@@ -238,7 +241,7 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
             sharedPrefUtils?.saveData(context ?: return, IS_GRID, false)
             adapterLinear =
                 MainMenuLinearAdapter(
-                    activity ?: return,adsManager?:return,
+                    activity ?: return, adsManager ?: return,
                     getMenuListGrid(sharedPrefUtils ?: return)
                 )
             _binding?.mainLayout?.topLay?.setLayoutBtn?.setImage(
@@ -256,121 +259,6 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
 
     private fun loadFunction(model: MainMenuModel, position: Int) {
         firebaseAnalytics(model.maniTextTitle, "${model.maniTextTitle}_open -->  Click")
-/*        when (position) {
-            0 -> {
-                SDKBaseController.getInstance().showInterstitialAds(activity ?: return,
-                    screen = "home_tabanyfuntion",
-                    trackingScreen = "home_tabanyfuntion",
-                    showLoading = true,
-                    loadingCallback = object : SDKDialogLoadingCallback {
-                        override fun onClose() {
-                            _binding?.mainLayout?.bannerAds?.visibility = View.GONE
-                        }
-
-                        override fun onShow() {
-                            _binding?.mainLayout?.bannerAds?.visibility = View.VISIBLE
-                        }
-                    },
-                    adsListener = object : CommonAdsListenerAdapter() {
-                        override fun onAdsShowFail(errorCode: Int) {
-                            findNavController().navigate(R.id.FragmentInturderDetectionDetail)
-                        }
-
-                        override fun onAdsDismiss() {
-                            findNavController().navigate(R.id.FragmentInturderDetectionDetail)
-                        }
-                    })
-            }
-
-            2 -> {
-
-                SDKBaseController.getInstance().showInterstitialAds(activity ?: return,
-                    screen = "home_tabanyfuntion",
-                    trackingScreen = "home_tabanyfuntion",
-                    showLoading = true,
-                    loadingCallback = object : SDKDialogLoadingCallback {
-                        override fun onClose() {
-                            _binding?.mainLayout?.bannerAds?.visibility = View.GONE
-                        }
-
-                        override fun onShow() {
-                            _binding?.mainLayout?.bannerAds?.visibility = View.VISIBLE
-                        }
-                    },
-                    adsListener = object : CommonAdsListenerAdapter() {
-                        override fun onAdsShowFail(errorCode: Int) {
-                            findNavController().navigate(
-                                R.id.FragmentPasswordDetail, bundleOf(ANTI_TITLE to model)
-                            )
-                        }
-
-                        override fun onAdsDismiss() {
-                            findNavController().navigate(
-                                R.id.FragmentPasswordDetail, bundleOf(ANTI_TITLE to model)
-                            )
-                        }
-                    })
-                adsManager?.let {
-                    showTwoInterAd(
-                        ads = it,
-                        activity = activity ?: return@let,
-                        remoteConfigNormal = val_inter_main_medium,
-                        adIdNormal = id_inter_main_medium,
-                        tagClass = "main_menu",
-                        layout = binding?.mainLayout?.adsLayDialog!!,
-                        isBackPress = true
-                    ) {
-                    }
-                }
-            }
-
-            else -> {
-                if (ContextCompat.checkSelfPermission(
-                        context ?: return, AUDIO_PERMISSION
-                    ) == 0 && ContextCompat.checkSelfPermission(
-                        context ?: return, PHONE_PERMISSION
-                    ) == 0
-                ) {
-                    SDKBaseController.getInstance().preloadNativeAd(
-                        activity ?: return, model.nativeId,
-                        model.nativeId,
-                        null
-                    )
-                    SDKBaseController.getInstance().showInterstitialAds(activity ?: return,
-                        screen = "home_tabanyfuntion",
-                        trackingScreen = "home_tabanyfuntion",
-                        showLoading = true,
-                        loadingCallback = object : SDKDialogLoadingCallback {
-                            override fun onClose() {
-                                _binding?.mainLayout?.bannerAds?.visibility = View.GONE
-                            }
-
-                            override fun onShow() {
-                                _binding?.mainLayout?.bannerAds?.visibility = View.VISIBLE
-                            }
-                        },
-                        adsListener = object : CommonAdsListenerAdapter() {
-                            override fun onAdsShowFail(errorCode: Int) {
-                                findNavController().navigate(
-                                    R.id.FragmentDetectionSameFunction,
-                                    bundleOf(ANTI_TITLE to model)
-                                )
-                            }
-
-                            override fun onAdsDismiss() {
-                                findNavController().navigate(
-                                    R.id.FragmentDetectionSameFunction,
-                                    bundleOf(ANTI_TITLE to model)
-                                )
-                            }
-                        })
-                } else {
-                    isInternetPermission = false
-                    _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
-                    requestCameraPermissionAudio()
-                }
-            }
-        }*/
 
         when (position) {
             0 -> {
@@ -384,9 +272,9 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                         isBackPress = false,
                         layout = binding?.mainLayout?.adsLay!!
                     ) {
-                        findNavController().navigate(R.id.FragmentInturderDetectionDetail)
                     }
                 }
+                findNavController().navigate(R.id.FragmentInturderDetectionDetail)
             }
 
             2 -> {
@@ -400,12 +288,12 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                         isBackPress = false,
                         layout = binding?.mainLayout?.adsLay!!
                     ) {
-                        findNavController().navigate(
-                            R.id.FragmentPasswordDetail,
-                            bundleOf(ANTI_TITLE to model)
-                        )
                     }
                 }
+                findNavController().navigate(
+                    R.id.FragmentPasswordDetail,
+                    bundleOf(ANTI_TITLE to model)
+                )
             }
 
             else -> {
@@ -422,12 +310,12 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
                             isBackPress = false,
                             layout = binding?.mainLayout?.adsLay!!
                         ) {
-                            findNavController().navigate(
-                                R.id.FragmentDetectionSameFunction,
-                                bundleOf(ANTI_TITLE to model)
-                            )
                         }
                     }
+                    findNavController().navigate(
+                        R.id.FragmentDetectionSameFunction,
+                        bundleOf(ANTI_TITLE to model)
+                    )
                 } else {
                     requestCameraPermissionAudio()
                 }
@@ -445,12 +333,12 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(requireContext(), NOTIFICATION_PERMISSION) != 0) {
 //                _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
-                requestCameraPermissionNotification(_binding?.mainLayout?.hideAd)
+                requestCameraPermissionNotification()
             } else {
-                _binding?.mainLayout?.hideAd?.visibility = View.GONE
+//                _binding?.mainLayout?.hideAd?.visibility = View.GONE
             }
         } else {
-            _binding?.mainLayout?.hideAd?.visibility = View.GONE
+//            _binding?.mainLayout?.hideAd?.visibility = View.GONE
         }
         sharedPrefUtils?.getBooleanData(context ?: return, IS_NOTIFICATION, false)?.let {
             _binding?.navViewLayout?.customSwitch?.isChecked = it
@@ -461,10 +349,10 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
         super.onPause()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(requireContext(), NOTIFICATION_PERMISSION) != 0) {
-                _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
+//                _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
             }
         } else {
-            _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
+//            _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
         }
         if (isInternetPermission) {
             isInternetDialog = true
@@ -475,10 +363,10 @@ class MainMenuFragment : BaseFragment<FragmentMainMenuActivityBinding>(FragmentM
         adsManager?.adsBanners()?.loadBanner(
             activity = activity ?: return,
             view = _binding?.mainLayout?.bannerAds!!,
+            viewS = _binding?.mainLayout?.shimmerLayout!!,
             addConfig = val_banner_main_menu_screen,
             bannerId = id_banner_main_screen
-        ){
-
+        ) {
         }
     }
 

@@ -256,4 +256,9 @@
         <value>true</value>
     </entry>
 
+    <entry>
+        <key>val_app_open_main</key>
+        <value>true</value>
+    </entry>
+
 </defaultsMap>

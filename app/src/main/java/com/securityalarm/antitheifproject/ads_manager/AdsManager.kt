@@ -117,12 +117,16 @@ object AdsManager {
     }
 
 
-
-    fun showOpenAd( splashFragment: Activity) {
-        Log.d(TAG, "loadOpenAdSplash: SHow $openAdForSplash")
-        openAdForSplash?.show(splashFragment)
-        splashFragment.let { AdOpenApp(it.application, splashFragment.getString(R.string.app_open_splash)) }
-    }
+//    fun loadOpenAdSplash(context: Context) {
+//        openAdForSplash = AppOpenForSplash()
+//        openAdForSplash?.loadAd(context, context.getString(R.string.app_open_splash))
+//        Log.d(TAG, "loadOpenAdSplash: Load $openAdForSplash")
+//    }
+//    fun showOpenAd( splashFragment: Activity) {
+//        Log.d(TAG, "loadOpenAdSplash: SHow $openAdForSplash")
+//        openAdForSplash?.show(splashFragment)
+//        splashFragment.let { AdOpenApp(it.application, splashFragment.getString(R.string.app_open_splash)) }
+//    }
 
   /*  fun loadAdRewarded(context: Context, function: () -> Unit) {
         if(!val_show_reward_screen){

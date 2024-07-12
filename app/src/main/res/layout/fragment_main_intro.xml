@@ -73,6 +73,7 @@
         android:background="@drawable/rect_btn_intro_new"
         android:gravity="center"
         android:text="@string/next"
+        android:singleLine="true"
         android:textColor="#0904FF"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="@id/skipAppHide"

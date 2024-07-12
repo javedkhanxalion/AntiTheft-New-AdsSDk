@@ -2,16 +2,19 @@ package com.securityalarm.antitheifproject.ads_manager
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.securityalarm.antitheifproject.ads_manager.FunctionClass.firebaseAnalytics
 import com.securityalarm.antitheifproject.ads_manager.interfaces.AdMobAdListener
 import com.securityalarm.antitheifproject.ads_manager.interfaces.AdsListener
+import com.securityalarm.antitheifproject.utilities.id_inter_main_medium
 import com.securityalarm.antitheifproject.utilities.id_inter_main_normal
 
-
+var openAdForSplash: AppOpenForSplash? = null
 var iS_SPLASH_AD_DISMISS = false
 private const val TAGGED = "TwoInterAdsSplash"
 var IS_OPEN_SHOW = false
@@ -49,13 +52,10 @@ fun showNormalInterAdSingle(
     activity: Activity,
     remoteConfigNormal: Boolean,
     tagClass: String,
-    remoteConfigMedium: Boolean,
-    adIdMedium: String,
     adIdNormal: String,
     layout: ConstraintLayout,
     function: ()->Unit
 ) {
-    Log.d(TAGGED, "showNormalInterAd->adIdMedium: $adIdMedium")
     Log.d(TAGGED, "showNormalInterAd->adIdNormal: $adIdNormal")
     layout.visibility = View.VISIBLE
     Handler().postDelayed({
@@ -65,15 +65,15 @@ fun showNormalInterAdSingle(
 //            inter_frequency_count++
             firebaseAnalytics("inter_normal_show_$tagClass", "inter_Show")
             layout.visibility = View.GONE
-            ads.let {
-                loadTwoInterAds(
-                    ads = it,
-                    activity = activity,
-                    remoteConfigNormal = true,
-                    adIdNormal = id_inter_main_normal,
-                    tagClass = "home_pre_cache"
-                )
-            }
+//            ads.let {
+//                loadTwoInterAds(
+//                    ads = it,
+//                    activity = activity,
+//                    remoteConfigNormal = true,
+//                    adIdNormal = id_inter_main_normal,
+//                    tagClass = "home_pre_cache"
+//                )
+//            }
         }
 
         override fun fullScreenAdDismissed() {
@@ -99,8 +99,19 @@ fun showNormalInterAdSingle(
             function.invoke()
         }
 
-    }, "", object : AdsListener {
+    }, id_inter_main_medium, object : AdsListener {
     })
     }, 500)
 }
 
+fun loadOpenAdSplash(context: Context) {
+    openAdForSplash = AppOpenForSplash()
+    openAdForSplash?.loadAd(context, context.getString(R.string.app_open_splash))
+    Log.d(TAG, "loadOpenAdSplash: Load $openAdForSplash")
+}
+
+
+fun showOpenAd(activity: Activity) {
+    Log.d(TAG, "loadOpenAdSplash: SHow $openAdForSplash")
+    openAdForSplash?.showAdIfAvailable(activity)
+}

@@ -464,10 +464,10 @@ class FragmentPasswordDetail :
         AdsBanners.loadBanner(
             activity = activity?:return,
             view = _binding?.bannerAds!!,
+            viewS = _binding?.shimmerLayout!!,
             addConfig = val_banner_1,
             bannerId = id_banner_1,
             bannerListener = {
-                _binding?.shimmerLayout?.visibility = View.GONE
             }
         )
     }

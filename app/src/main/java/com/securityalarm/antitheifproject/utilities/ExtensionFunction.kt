@@ -95,6 +95,8 @@ var isSplash = true
 var isIntroLanguageShow = true
 var isSplashDialog = true
 
+var val_app_open_main = false
+
 var val_banner_splash_screen = true
 var val_banner_main_menu_screen = true
 var val_banner_language_screen = true
@@ -131,8 +133,8 @@ var counter = 0
 var inter_frequency_count = 0
 var id_frequency_counter = 3
 var id_inter_counter = 3
-var id_inter_main_medium = "ca-app-pub-5267896740455550/8084474775"
-var id_inter_main_normal = "ca-app-pub-5267896740455550/8084474775"
+var id_inter_main_medium = ""
+var id_inter_main_normal = ""
 var id_native_loading_screen = ""
 var id_native_intro_screen = ""
 var id_native_language_screen = ""
@@ -928,19 +930,19 @@ fun Fragment.requestCameraPermissionAudio() {
     }
 }
 
-fun Fragment.requestCameraPermissionNotification(hideAd: View?) {
+fun Fragment.requestCameraPermissionNotification() {
     if (ActivityCompat.shouldShowRequestPermissionRationale(
             requireActivity(),
             NOTIFICATION_PERMISSION
         )
     ) {
-        showNotificationPermissionDialog(hideAd)
+        showNotificationPermissionDialog()
     } else {
-        showNotificationPermissionDialog(hideAd)
+        showNotificationPermissionDialog()
     }
 }
 
-fun Fragment.showNotificationPermissionDialog(hideAd: View?) {
+fun Fragment.showNotificationPermissionDialog() {
     val dialogView = layoutInflater.inflate(R.layout.notification_dialog, null)
     ratingService = AlertDialog.Builder(requireContext()).create()
     ratingDialog?.setCancelable(false)
@@ -950,7 +952,7 @@ fun Fragment.showNotificationPermissionDialog(hideAd: View?) {
     val no = dialogView.findViewById<Button>(R.id.cancl_btn)
     val yes = dialogView.findViewById<Button>(R.id.cnfrm_del_btn)
     yes.setOnClickListener {
-        hideAd?.visibility = View.GONE
+//        hideAd?.visibility = View.GONE
         if (isVisible && isAdded && !isDetached) {
             ratingService?.dismiss()
             ActivityCompat.requestPermissions(
@@ -962,7 +964,7 @@ fun Fragment.showNotificationPermissionDialog(hideAd: View?) {
     }
 
     no.setOnClickListener {
-        hideAd?.visibility = View.GONE
+//        hideAd?.visibility = View.GONE
         if (isVisible && isAdded && !isDetached) {
             ratingService?.dismiss()
         }

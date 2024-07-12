@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentSplashBinding
@@ -112,7 +113,10 @@ import com.securityalarm.antitheifproject.utilities.whistle_selectsound_bottom
 import com.securityalarm.antitheifproject.ads_manager.AdsManager
 import com.securityalarm.antitheifproject.ads_manager.AdsManager.isNetworkAvailable
 import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
+import com.securityalarm.antitheifproject.ads_manager.loadOpenAdSplash
 import com.securityalarm.antitheifproject.ads_manager.loadTwoInterAdsSplash
+import com.securityalarm.antitheifproject.ads_manager.showNormalInterAdSingle
+import com.securityalarm.antitheifproject.ads_manager.showOpenAd
 import com.securityalarm.antitheifproject.utilities.counter
 import com.securityalarm.antitheifproject.utilities.fisrt_ad_line_threshold_main
 import com.securityalarm.antitheifproject.utilities.id_app_open_screen
@@ -129,6 +133,7 @@ import com.securityalarm.antitheifproject.utilities.inter_frequency_count
 import com.securityalarm.antitheifproject.utilities.isSplash
 import com.securityalarm.antitheifproject.utilities.line_count_main
 import com.securityalarm.antitheifproject.utilities.main_native_scroll
+import com.securityalarm.antitheifproject.utilities.val_app_open_main
 import com.securityalarm.antitheifproject.utilities.val_banner_language_screen
 import com.securityalarm.antitheifproject.utilities.val_banner_main_menu_screen
 import com.securityalarm.antitheifproject.utilities.val_banner_splash_screen
@@ -193,8 +198,7 @@ class SplashFragment :
                 )
                 loadBanner()
                 delay(5000)
-//                initRemoteIds()
-                getIntentMove()
+                initRemoteIds()
             } else {
                 getIntentMove()
             }
@@ -208,6 +212,38 @@ class SplashFragment :
         super.onSaveInstanceState(outState)
         outState.clear()
     }
+
+    private fun observeSplashLiveData() {
+        try {
+            lifecycleScope.launchWhenStarted {
+                if (val_app_open_main) {
+                    isSplash = true
+                    loadOpenAdSplash(context?:return@launchWhenStarted)
+                    delay(5000)
+                    showOpenAd(activity ?: return@launchWhenStarted)
+                    getIntentMove()
+                } else {
+                    delay(5000)
+                    isSplash = true
+                    adsManager?.let {
+                        showNormalInterAdSingle(
+                            it,
+                            activity ?: return@let,
+                            remoteConfigNormal = true,
+                            adIdNormal = getString(R.string.id_fullscreen_splash),
+                            layout = _binding?.adsLayDialog!!,
+                            tagClass = "splash"
+                        ) {
+                        }
+                    }
+                    getIntentMove()
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 
     private fun getIntentMove() {
         when (sessionOpenlanguage) {
@@ -296,15 +332,15 @@ class SplashFragment :
 
     fun loadBanner() {
         _binding?.adsView?.visibility = View.VISIBLE
-//        _binding?.adsView?.loadAd(
-//            activity, "bn_s_adw",
-//            "bn_s_adw", object : CustomSDKAdsListenerAdapter() {
-//                override fun onAdsLoadFail() {
-//                    super.onAdsLoadFail()
-//                    _binding?.adsView?.visibility = View.GONE
-//                }
-//            }
-//        )
+        AdsBanners.loadBanner(
+            activity = activity?:return,
+            view = _binding?.adsView!!,
+            viewS = _binding?.shimmerLayout!!,
+            addConfig = val_banner_language_screen,
+            bannerId = id_banner_language_screen,
+            bannerListener = {
+            }
+        )
     }
 
     private fun initRemoteIds() {
@@ -327,36 +363,24 @@ class SplashFragment :
     }
 
     private fun applyAdIdsFromRemoteConfig(remoteConfig: FirebaseRemoteConfig) {
-
-        if(!AdsBanners.isDebug()) {
             id_inter_counter = remoteConfig.getLong("id_inter_counter").toInt()
             id_frequency_counter = remoteConfig.getLong("id_frequency_counter").toInt()
             id_native_main_menu_screen = remoteConfig.getString("id_native_main_menu_screen")
             id_inter_main_normal = remoteConfig.getString("id_inter_main_normal")
             id_native_loading_screen = remoteConfig.getString("id_native_loading_screen")
-            id_native_loading_screen = remoteConfig.getString("id_native_loading_screen")
-            id_native_loading_screen = remoteConfig.getString("id_native_loading_screen")
             id_native_intro_screen = remoteConfig.getString("id_native_intro_screen")
             id_native_language_screen = remoteConfig.getString("id_native_language_screen")
             id_native_sound_screen = remoteConfig.getString("id_native_sound_screen")
-            id_native_intruder_list_screen =
-                remoteConfig.getString("id_native_intruder_list_screen")
-            id_native_intruder_detection_screen =
-                remoteConfig.getString("id_native_intruder_detection_screen")
+            id_native_intruder_list_screen =remoteConfig.getString("id_native_intruder_list_screen")
+            id_native_intruder_detection_screen =remoteConfig.getString("id_native_intruder_detection_screen")
             id_native_password_screen = remoteConfig.getString("id_native_password_screen")
-            id_native_Pocket_Detection_screen =
-                remoteConfig.getString("id_native_Pocket_Detection_screen")
-            id_native_Motion_Detection_screen =
-                remoteConfig.getString("id_native_Motion_Detection_screen")
-            id_native_Whistle_Detection_screen =
-                remoteConfig.getString("id_native_Whistle_Detection_screen")
+            id_native_Pocket_Detection_screen =remoteConfig.getString("id_native_Pocket_Detection_screen")
+            id_native_Motion_Detection_screen =remoteConfig.getString("id_native_Motion_Detection_screen")
+            id_native_Whistle_Detection_screen =remoteConfig.getString("id_native_Whistle_Detection_screen")
             id_native_hand_free_screen = remoteConfig.getString("id_native_hand_free_screen")
-            id_native_clap_detection_screen =
-                remoteConfig.getString("id_native_clap_detection_screen")
-            id_native_Remove_Charger_screen =
-                remoteConfig.getString("id_native_Remove_Charger_screen")
-            id_native_Battery_Detection_screen =
-                remoteConfig.getString("id_native_Battery_Detection_screen")
+            id_native_clap_detection_screen =remoteConfig.getString("id_native_clap_detection_screen")
+            id_native_Remove_Charger_screen =remoteConfig.getString("id_native_Remove_Charger_screen")
+            id_native_Battery_Detection_screen =remoteConfig.getString("id_native_Battery_Detection_screen")
             id_native_app_open_screen = remoteConfig.getString("id_native_app_open_screen")
             id_exit_dialog_native = remoteConfig.getString("id_exit_dialog_native")
             id_banner_1 = remoteConfig.getString("id_banner_1")
@@ -367,13 +391,12 @@ class SplashFragment :
             id_native_intro_screen2 = remoteConfig.getString("id_native_intro_screen2")
             id_app_open_screen = remoteConfig.getString("id_app_open_screen")
             id_native_intro_screen_full = remoteConfig.getString("id_native_intro_screen_full")
-            id_language_scroll_screen_native =
-                remoteConfig.getString("id_language_scroll_screen_native")
+            id_language_scroll_screen_native =remoteConfig.getString("id_language_scroll_screen_native")
             id_native_Full_screen = remoteConfig.getString("id_native_Full_screen")
             id_banner_splash_screen = remoteConfig.getString("id_banner_splash_screen")
 
             test_ui_native = remoteConfig.getString("test_ui_native")
-            language_first_r_scroll = remoteConfig.getString("languageinapp_scrollnative")
+            language_first_r_scroll = remoteConfig.getString("language_first_r_scroll")
             language_reload = remoteConfig.getString("language_reload").toInt()
             Onboarding_Full_Native = remoteConfig.getString("Onboarding_Full_Native").toInt()
             sessionOpenlanguage = remoteConfig.getString("sessionOpenlanguage").toInt()
@@ -411,7 +434,6 @@ class SplashFragment :
             Log.d("remote_ids", id_native_Battery_Detection_screen)
             Log.d("remote_ids", id_exit_dialog_native)
             Log.d("remote_ids", id_banner_1)
-        }
         initRemoteConfig()
     }
 
@@ -461,11 +483,8 @@ class SplashFragment :
                     val_ad_native_Remove_Charger_screen =remoteConfig!!["val_ad_native_Remove_Charger_screen"].asBoolean()
                     val_ad_native_Battery_Detection_screen =remoteConfig!!["val_ad_native_Battery_Detection_screen"].asBoolean()
                     val_ad_native_Pocket_Detection_screen =remoteConfig!!["val_ad_native_Pocket_Detection_screen"].asBoolean()
-                    val_exit_dialog_native = remoteConfig!!["val_exit_dialog_native"].asBoolean()
 
                     val_inter_exit_screen = remoteConfig!!["val_inter_exit_screen"].asBoolean()
-                    val_ad_native_main_menu_screen =remoteConfig!!["val_ad_native_main_menu_screen"].asBoolean()
-                    val_ad_native_language_screen =remoteConfig!!["val_ad_native_language_screen"].asBoolean()
                     val_exit_dialog_native = remoteConfig!!["val_exit_dialog_native"].asBoolean()
                     val_exit_screen_native = remoteConfig!!["val_exit_screen_native"].asBoolean()
 
@@ -477,6 +496,7 @@ class SplashFragment :
                     val_native_intro_screen = remoteConfig!!["val_native_intro_screen"].asBoolean()
                     val_native_intro_screen1 = remoteConfig!!["val_native_intro_screen1"].asBoolean()
                     val_native_intro_screen2 = remoteConfig!!["val_native_intro_screen2"].asBoolean()
+                    val_app_open_main = remoteConfig!!["val_app_open_main"].asBoolean()
 
 
                 } else {
@@ -485,12 +505,12 @@ class SplashFragment :
                 adsManager?.nativeAdsMain()?.loadNativeAd(
                     activity ?: return@addOnCompleteListener,
                     true,
-                    getString(R.string.id_native_loading_screen),
+                    id_native_main_menu_screen,
                     object : NativeListener {
 
                     }
                 )
-                getIntentMove()
+                observeSplashLiveData()
             }
 
         } catch (e: Exception) {

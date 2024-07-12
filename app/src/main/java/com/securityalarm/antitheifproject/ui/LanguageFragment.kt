@@ -260,6 +260,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
         AdsBanners.loadBanner(
             activity = activity?:return,
             view = _binding?.adsView!!,
+            viewS = _binding?.shimmerLayout!!,
             addConfig = val_banner_language_screen,
             bannerId = id_banner_language_screen,
             bannerListener = {

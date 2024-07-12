@@ -2,6 +2,8 @@ package com.securityalarm.antitheifproject.ads_manager
 
 import android.app.Activity
 import android.util.Log
+import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.BuildConfig
+import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -10,11 +12,9 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.analytics.logEvent
 import com.google.firebase.ktx.Firebase
-import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.BuildConfig
-import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
-import com.securityalarm.antitheifproject.ads_manager.FunctionClass.checkPurchased
+import com.securityalarm.antitheifproject.BillingUtil
 import com.securityalarm.antitheifproject.ads_manager.interfaces.AdMobAdListener
 import com.securityalarm.antitheifproject.ads_manager.interfaces.AdsListener
 
@@ -46,10 +46,12 @@ object FullScreenAds {
         fullScreenAdId: String,
         adsListener: AdsListener
     ) {
-        if (AdsManager.isNetworkAvailable(activity) && !checkPurchased(activity!!) && addConfig
+        if (AdsManager.isNetworkAvailable(activity) && !BillingUtil(
+                activity ?: return
+            ).checkPurchased(activity) && addConfig
         ) {
 //            fullScreenAdId =  if (NativeAds.isDebug()) "ca-app-pub-3940256099942544/1033173712" else fullScreenAdId
-            Log.d(fullScreenAdLog, "loadFullScreenAd: request with $fullScreenAdId")
+            Log.d(fullScreenAdLog, "loadFullScreenAd: request with ${fullScreenAdId}")
             if (mInterstitialAd == null && !isAdLoading) {
                 isAdLoading = true
                 val adRequest = AdRequest.Builder().build()
@@ -57,7 +59,7 @@ object FullScreenAds {
                     if (isDebug())
                         fullScreenAdTestIdVideo
                     else
-                        FullScreenAds.fullScreenAdId ?: fullScreenAdTestIdVideo,
+                        fullScreenAdId,
                     adRequest, object : InterstitialAdLoadCallback() {
                         override fun onAdFailedToLoad(adError: LoadAdError) {
                             Log.d(fullScreenAdLog, "loadFullScreenAd : ${adError.message}")
@@ -106,7 +108,7 @@ object FullScreenAds {
     ) {
         if (activity == null) return
 
-        if (mInterstitialAd != null && !checkPurchased(activity) && addConfig) {
+        if (mInterstitialAd != null && !BillingUtil(activity).checkPurchased(activity) && addConfig) {
 
             mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
@@ -115,7 +117,12 @@ object FullScreenAds {
                     mInterstitialAd = null
 //                    CheckForImage.IS_SHOW_OPEN_AD = true
                     if (loadNewAdWithId != "") {
-                        loadFullScreenAd(activity, addConfig, loadNewAdWithId, newAdListener)
+                        FullScreenAds.loadFullScreenAd(
+                            activity,
+                            addConfig,
+                            loadNewAdWithId,
+                            newAdListener
+                        )
                         logEventForAds(fullScreenAdLog, "load_new_ad", loadNewAdWithId)
                     }
                 }
