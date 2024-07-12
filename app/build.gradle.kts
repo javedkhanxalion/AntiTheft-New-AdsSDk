@@ -40,7 +40,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            resValue( "string", "facebook_app_id", "")
+//            resValue( "string", "facebook_app_id", "")
             resValue( "string", "id_application_id", "ca-app-pub-3940256099942544~3347511713")
             resValue ("string", "id_native", "")
             resValue ("string", "id_fullscreen_splash", "")
@@ -54,7 +54,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            resValue( "string", "facebook_app_id", "")
+//            resValue( "string", "facebook_app_id", "")
             resValue( "string", "id_application_id", "ca-app-pub-3940256099942544~3347511713")
             resValue ("string", "id_native", "")
             resValue ("string", "id_fullscreen_splash", "")
@@ -130,9 +130,9 @@ dependencies {
 //    implementation ("com.unity3d.ads:unity-ads:4.7.0")
 
     // Facebook Audience Network SDK
-    implementation ("com.google.ads.mediation:facebook:6.12.0.0")
+//    implementation ("com.google.ads.mediation:facebook:6.12.0.0")
     // Unity Ads SDK
-    implementation ("com.google.ads.mediation:unity:4.5.0.0")
+//    implementation ("com.google.ads.mediation:unity:4.5.0.0")
 
 }
 

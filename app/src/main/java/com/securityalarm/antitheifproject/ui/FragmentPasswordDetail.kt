@@ -69,6 +69,7 @@ class FragmentPasswordDetail :
         dbHelper = DbHelper(context ?: return)
         _binding?.topLay?.title?.text = model?.maniTextTitle
         _binding?.topLay?.navMenu?.loadImage(context ?: return, R.drawable.back_btn)
+        loadBanner()
         _binding?.run {
             topLay.navMenu.clickWithThrottle {
                 findNavController().navigateUp()
@@ -96,7 +97,6 @@ class FragmentPasswordDetail :
             loadLayoutDirection(it)
             isGridLayout = it
         }
-        loadBanner()
     }
 
     private fun loadLayoutDirection(isGrid: Boolean) {
@@ -461,14 +461,13 @@ class FragmentPasswordDetail :
         }
 
     private fun loadBanner() {
-        AdsBanners.loadBanner(
+        adsManager?.adsBanners()?.loadBanner(
             activity = activity?:return,
             view = _binding?.bannerAds!!,
             viewS = _binding?.shimmerLayout!!,
             addConfig = val_banner_1,
             bannerId = id_banner_1,
             bannerListener = {
-
                 _binding?.shimmerLayout!!.visibility=View.GONE
             }
         )

@@ -184,7 +184,6 @@ fun showTwoInterAdExit(
             AdMobAdListener {
             override fun fullScreenAdShow() {
                 inter_frequency_count++
-                layout.visibility = View.GONE
                 function.invoke(1)
                 Log.d(TAG, "fullScreenAdShow: normal inter ad show")
                 firebaseAnalytics("inter_normal_show_$tagClass", "inter_Show")

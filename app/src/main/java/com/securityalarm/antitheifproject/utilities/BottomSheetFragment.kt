@@ -68,16 +68,16 @@ class BottomSheetFragment(val activity: Activity) : BottomSheetDialogFragment() 
                 }
 
                 override fun nativeAdFailed(loadAdError: LoadAdError) {
-                    view?.findViewById<FrameLayout>(R.id.nativeExitAd)?.visibility = View.INVISIBLE
+                    view?.findViewById<FrameLayout>(R.id.nativeExitAd)?.visibility = View.GONE
                     view?.findViewById<ShimmerFrameLayout>(R.id.shimmerLayout)?.visibility =
-                        View.INVISIBLE
+                        View.GONE
                     super.nativeAdFailed(loadAdError)
                 }
 
                 override fun nativeAdValidate(string: String) {
-                    view?.findViewById<FrameLayout>(R.id.nativeExitAd)?.visibility = View.INVISIBLE
+                    view?.findViewById<FrameLayout>(R.id.nativeExitAd)?.visibility = View.GONE
                     view?.findViewById<ShimmerFrameLayout>(R.id.shimmerLayout)?.visibility =
-                        View.INVISIBLE
+                        View.GONE
                     super.nativeAdValidate(string)
                 }
             }

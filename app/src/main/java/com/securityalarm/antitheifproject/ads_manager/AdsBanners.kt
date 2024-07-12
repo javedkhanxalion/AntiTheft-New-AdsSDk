@@ -102,13 +102,14 @@ object AdsBanners {
 
         if (isNetworkAvailable(activity) && addConfig && !checkPurchased(activity)) {
             firebaseAnalytics("bannerAdsCalled", "bannerAdsCalled->click")
-//            view.removeAllViews()
+            view.removeAllViews()
             adView = AdView(activity)
             view.addView(adView)
             adView?.adUnitId = if (isDebug()) bannerTestId else bannerId ?: bannerTestId
             adView?.setAdSize(AdSize.BANNER)
             val adRequest =AdRequest.Builder().build()
             adView?.loadAd(adRequest)
+
 
             adView?.adListener = object : AdListener() {
                 override fun onAdClicked() {
@@ -125,9 +126,9 @@ object AdsBanners {
 
                 override fun onAdFailedToLoad(p0: LoadAdError) {
                     firebaseAnalytics("bannerAdsFailed", "bannerAdsFailed->click")
-                    bannerListener.invoke()
                     viewS.visibility=View.GONE
                     view.visibility=View.GONE
+                    bannerListener.invoke()
                     Log.d(bannerLogs, "BannerWithSize : onAdFailedToLoad ${p0.message}")
                     super.onAdFailedToLoad(p0)
                 }
@@ -142,15 +143,14 @@ object AdsBanners {
 
                 override fun onAdLoaded() {
                     firebaseAnalytics("bannerAdsLoaded", "bannerAdsLoaded->click")
-                    bannerListener.invoke()
                     viewS.visibility=View.GONE
+                    bannerListener.invoke()
                     Log.d(bannerLogs, "BannerWithSize : onAdLoaded")
                     super.onAdLoaded()
                 }
 
                 override fun onAdOpened() {
                     firebaseAnalytics("bannerAdsOpened", "bannerAdsOpened->click")
-
                     Log.d(bannerLogs, "BannerWithSize : onAdOpened")
                     super.onAdOpened()
                 }

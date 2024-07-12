@@ -340,7 +340,6 @@ class SplashFragment :
             addConfig = val_banner_language_screen,
             bannerId = id_banner_language_screen,
             bannerListener = {
-
                 _binding?.shimmerLayout!!.visibility=View.GONE
             }
         )
