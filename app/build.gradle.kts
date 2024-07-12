@@ -42,9 +42,7 @@ android {
             )
 //            resValue( "string", "facebook_app_id", "")
             resValue( "string", "id_application_id", "ca-app-pub-3940256099942544~3347511713")
-            resValue ("string", "id_native", "")
             resValue ("string", "id_fullscreen_splash", "")
-            resValue ("string", "app_open_splash1", "")
             resValue ("string", "app_open_splash", "")
         }
         release {
@@ -56,9 +54,7 @@ android {
             )
 //            resValue( "string", "facebook_app_id", "")
             resValue( "string", "id_application_id", "ca-app-pub-3940256099942544~3347511713")
-            resValue ("string", "id_native", "")
             resValue ("string", "id_fullscreen_splash", "")
-            resValue ("string", "app_open_splash1", "")
             resValue ("string", "app_open_splash", "")
             signingConfig = signingConfigs.getByName("release")
         }
