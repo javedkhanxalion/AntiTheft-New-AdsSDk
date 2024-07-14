@@ -63,14 +63,12 @@ class AdFragment : Fragment() {
                 override fun nativeAdFailed(loadAdError: LoadAdError) {
                     _binding?.mainAdsNative?.visibility = View.GONE
                     _binding?.progressBar?.visibility = View.GONE
-                    _binding?.shimmerLayout?.visibility = View.GONE
                     super.nativeAdFailed(loadAdError)
                 }
 
                 override fun nativeAdValidate(string: String) {
                     _binding?.mainAdsNative?.visibility = View.GONE
                     _binding?.progressBar?.visibility = View.GONE
-                    _binding?.shimmerLayout?.visibility = View.GONE
                     super.nativeAdValidate(string)
                 }
             })

@@ -22,8 +22,8 @@ android {
         applicationId = "com.antitheftalarm.dont.touch.phone.finder.phonesecurity"
         minSdk = 24
         targetSdk = 34
-        versionCode = 24
-        versionName = "3.4"
+        versionCode = 25
+        versionName = "3.5"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "AntiThief_v$versionName($versionCode)")
@@ -53,9 +53,9 @@ android {
                 "proguard-rules.pro"
             )
 //            resValue( "string", "facebook_app_id", "")
-            resValue( "string", "id_application_id", "ca-app-pub-3940256099942544~3347511713")
-            resValue ("string", "id_fullscreen_splash", "")
-            resValue ("string", "app_open_splash", "")
+            resValue( "string", "id_application_id", "ca-app-pub-5267896740455550~6650338408")
+            resValue ("string", "id_fullscreen_splash", "ca-app-pub-5267896740455550/8501679963")
+            resValue ("string", "app_open_splash", "ca-app-pub-5267896740455550/2519521707")
             signingConfig = signingConfigs.getByName("release")
         }
         buildFeatures {

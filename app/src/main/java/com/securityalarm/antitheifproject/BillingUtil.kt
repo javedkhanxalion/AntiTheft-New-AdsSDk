@@ -5,6 +5,7 @@ import android.app.ActivityManager
 import android.app.ActivityManager.RunningAppProcessInfo
 import android.content.Context
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.BuildConfig
+import com.securityalarm.antitheifproject.ads_manager.PurchasePrefs
 
 
 class BillingUtil(
