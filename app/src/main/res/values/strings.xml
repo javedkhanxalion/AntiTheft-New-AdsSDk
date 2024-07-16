@@ -85,6 +85,16 @@
     <string name="german">German</string>
     <string name="japanese">Japanese</string>
     <string name="dutch">Dutch</string>
+    <string name="portuguese">Portuguese</string>
+    <string name="russian">Russian</string>
+    <string name="chinese">Chinese</string>
+    <string name="turkish">Turkish</string>
+    <string name="korean">Korean</string>
+    <string name="vietnamese">Vietnamese</string>
+    <string name="italian">Italian</string>
+    <string name="indonesian">Indonesian</string>
+    <string name="turkey">Turkish</string>
+    <string name="thai">Thai</string>
 
     <string name="tone_1">Siren, alarm, warning</string>
     <string name="tone_2">Personal high pitched</string>
@@ -137,16 +147,7 @@
     <string name="wi_fi">Wi-Fi</string>
     <string name="mobile_data">Mobile Data</string>
 
-    <string name="portuguese">Portuguese</string>
-    <string name="russian">Russian</string>
-    <string name="chinese">Chinese</string>
-    <string name="turkish">Turkish</string>
-    <string name="korean">Korean</string>
-    <string name="vietnamese">Vietnamese</string>
-    <string name="italian">Italian</string>
-    <string name="indonesian">Indonesian</string>
-    <string name="turkey">Turkish</string>
-    <string name="thai">Thai</string>
+
     <string name="this_action_can_content_advertising">This action can content advertising</string>
 
 </resources>

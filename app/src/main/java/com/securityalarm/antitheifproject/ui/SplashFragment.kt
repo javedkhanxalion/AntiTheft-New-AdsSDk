@@ -337,8 +337,8 @@ class SplashFragment :
             activity = activity?:return,
             view = _binding?.adsView!!,
             viewS = _binding?.shimmerLayout!!,
-            addConfig = val_banner_language_screen,
-            bannerId = id_banner_language_screen,
+            addConfig = val_banner_splash_screen,
+            bannerId = id_banner_splash_screen,
             bannerListener = {
                 _binding?.shimmerLayout!!.visibility=View.GONE
             }

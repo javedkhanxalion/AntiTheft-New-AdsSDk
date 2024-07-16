@@ -1,4 +1,4 @@
-package com.securityalarm.antitheifproject.ui
+package com.securityalarm.antitheifproject.ui.newIntro
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -267,7 +267,6 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                 _binding?.shimmerLayout?.visibility = View.GONE
             }
         )
-
     }
 
     private fun initializeData() {

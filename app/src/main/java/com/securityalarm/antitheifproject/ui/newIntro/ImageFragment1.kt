@@ -107,6 +107,9 @@ class ImageFragment1 : Fragment() {
 
         fun onAdVisibilityChanged(visible: Boolean) {
             Log.d("check_position", "onPageScrolled: Fragment--1111 $visible")
+            if(!val_native_intro_screen){
+                return
+            }
             _binding1!!.mainAdsNative!!.visibility = if (visible) View.VISIBLE
             else
                 View.INVISIBLE

@@ -25,6 +25,7 @@ import com.securityalarm.antitheifproject.utilities.onboarding1_bottom
 import com.securityalarm.antitheifproject.utilities.onboarding2_bottom
 import com.securityalarm.antitheifproject.utilities.onboarding3_bottom
 import com.securityalarm.antitheifproject.utilities.slideImages
+import com.securityalarm.antitheifproject.utilities.val_native_intro_screen
 import com.securityalarm.antitheifproject.utilities.val_native_intro_screen2
 
 class ImageFragment3 : Fragment()  {
@@ -141,6 +142,9 @@ class ImageFragment3 : Fragment()  {
         }
         fun onAdVisibilityChanged(visible: Boolean) {
             Log.d("check_position", "onPageScrolled: Fragment--33333")
+            if(!val_native_intro_screen2){
+                return
+            }
             _binding!!.mainAdsNative!!.visibility = if (visible) View.VISIBLE
             else
                 View.INVISIBLE

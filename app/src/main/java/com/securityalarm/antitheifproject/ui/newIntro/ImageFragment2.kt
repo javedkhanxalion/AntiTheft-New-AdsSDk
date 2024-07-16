@@ -25,6 +25,8 @@ import com.securityalarm.antitheifproject.utilities.onboarding1_bottom
 import com.securityalarm.antitheifproject.utilities.onboarding2_bottom
 import com.securityalarm.antitheifproject.utilities.onboarding3_bottom
 import com.securityalarm.antitheifproject.utilities.slideImages
+import com.securityalarm.antitheifproject.utilities.val_native_intro_screen
+import com.securityalarm.antitheifproject.utilities.val_native_intro_screen1
 import com.securityalarm.antitheifproject.utilities.val_native_intro_screen2
 
 class ImageFragment2 : Fragment()  {
@@ -138,6 +140,10 @@ class ImageFragment2 : Fragment()  {
         }
         fun onAdVisibilityChanged(visible: Boolean) {
             Log.d("check_position", "onPageScrolled: Fragment--2222")
+
+            if(!val_native_intro_screen1){
+                return
+            }
             _binding!!.mainAdsNative!!.visibility = if (visible) View.VISIBLE
             else
                 View.INVISIBLE
@@ -152,7 +158,7 @@ class ImageFragment2 : Fragment()  {
         ) as NativeAdView
         ads?.nativeAdsMain()?.loadNativeAd(
             activity ?: return,
-            val_native_intro_screen2,
+            val_native_intro_screen1,
             id_native_intro_screen1,
             object : NativeListener {
                 override fun nativeAdLoaded(currentNativeAd: NativeAd?) {

@@ -15,9 +15,11 @@ import com.securityalarm.antitheifproject.utilities.BaseFragment
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
 import com.securityalarm.antitheifproject.utilities.getNativeLayoutShimmer
 import com.securityalarm.antitheifproject.utilities.id_exit_dialog_native
+import com.securityalarm.antitheifproject.utilities.id_exit_screen_native
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
 import com.securityalarm.antitheifproject.utilities.thankyou_bottom
 import com.securityalarm.antitheifproject.utilities.val_exit_dialog_native
+import com.securityalarm.antitheifproject.utilities.val_exit_screen_native
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -50,8 +52,8 @@ class FragmentExitScreen :
             ) as NativeAdView
             adsManager?.nativeAdsMain()?.loadNativeAd(
                 activity ?: return@launchWhenResumed,
-                val_exit_dialog_native,
-                id_exit_dialog_native,
+                val_exit_screen_native,
+                id_exit_screen_native,
                 object : NativeListener {
                     override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                         if (isAdded && isVisible && !isDetached) {

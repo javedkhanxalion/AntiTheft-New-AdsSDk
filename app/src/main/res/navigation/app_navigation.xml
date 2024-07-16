@@ -36,7 +36,7 @@
         tools:layout="@layout/fragment_detail_module" />
     <fragment
         android:id="@+id/LanguageFragment"
-        android:name="com.securityalarm.antitheifproject.ui.LanguageFragment"
+        android:name="com.securityalarm.antitheifproject.ui.newIntro.LanguageFragment"
         android:label="LanguageFragment"
         tools:layout="@layout/fragment_language" />
     <fragment
