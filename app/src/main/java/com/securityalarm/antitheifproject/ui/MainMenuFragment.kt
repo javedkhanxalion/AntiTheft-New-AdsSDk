@@ -69,15 +69,7 @@ class MainMenuFragment :
         firebaseAnalytics("main_menu_fragment_open", "main_menu_fragment_open -->  Click")
         sharedPrefUtils = DbHelper(context ?: return)
         adsManager = AdsManager.appAdsInit(activity ?: return)
-        // Register the receiver for local broadcasts
-        // Register the receiver for connectivity changes
 
-
-//        if (IkmSdkUtils.isUserIAPAvailable()) {
-//            _binding?.navViewLayout?.viewTop?.visibility = View.INVISIBLE
-//            _binding?.navViewLayout?.buyText?.visibility = View.INVISIBLE
-//            _binding?.navViewLayout?.rateUs?.visibility = View.INVISIBLE
-//        }
         setupBackPressedCallback {
             if (_binding?.navViewLayout?.navigationMain?.isVisible == true) {
                 _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
