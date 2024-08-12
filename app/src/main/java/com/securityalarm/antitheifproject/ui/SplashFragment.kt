@@ -159,14 +159,15 @@ class SplashFragment :
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dbHelper = DbHelper(context ?: return)
-        val cmpClass = CmpClass(activity ?: return)
+        CoroutineScope(Dispatchers.Main).launch {
+        dbHelper = DbHelper(context ?: return@launch)
+        val cmpClass = CmpClass(activity ?: return@launch)
         cmpClass.initilaizeCMP()
 
         dbHelper?.getStringData(requireContext(), LANG_CODE, "en")?.let {
             setLocaleMain(it)
         }
-        if (!isInternetAvailable(context ?: return)) {
+        if (!isInternetAvailable(context ?: return@launch)) {
             showInternetDialog(
                 onPositiveButtonClick = {
                     isInternetDialog = true
@@ -183,11 +184,10 @@ class SplashFragment :
                     getIntentMove()
                 }
             )
-            return
+            return@launch
         } else {
             isSplashDialog = false
         }
-        CoroutineScope(Dispatchers.Main).launch {
             isSplash = false
             counter = 0
             inter_frequency_count = 0
