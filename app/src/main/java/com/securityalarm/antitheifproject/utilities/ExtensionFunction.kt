@@ -167,7 +167,7 @@ var id_native_Full_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/
 var id_banner_splash_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/6300978111" else ""
 
 var language_reload = 0
-var Onboarding_Full_Native = 0
+var Onboarding_Full_Native = 1
 var sessionOpenlanguage = 1
 var sessionOnboarding = 1
 var fisrt_ad_line_threshold = 2

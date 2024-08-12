@@ -52,7 +52,7 @@ class OnBordScreenNewScreen :
                     "onPageScrolled: $currentpage $position $positionOffset $positionOffsetPixels"
                 )
 
-                if (isInternetAvailable && Onboarding_Full_Native == 1) {
+                if (isInternetAvailable || Onboarding_Full_Native == 1) {
                     when (currentpage) {
                         0 -> {
                             if (positionOffset.toDouble() == 0.0)
@@ -81,7 +81,6 @@ class OnBordScreenNewScreen :
                         }
                     }
                 } else {
-                    if (isInternetAvailable)
                         when (currentpage) {
                             0 -> {
                                 if (positionOffset.toDouble() == 0.0)
@@ -130,7 +129,7 @@ class OnBordScreenNewScreen :
 
     fun onNextButtonClicked() {
         Log.d("check_click", "onViewCreated: 1")
-        if (isInternetAvailable && Onboarding_Full_Native == 0) {
+        if (isInternetAvailable || Onboarding_Full_Native == 0) {
             if (currentpage == 2) {
                 firebaseAnalytics(
                     "intro_fragment_move_to_next",
@@ -165,7 +164,7 @@ class OnBordScreenNewScreen :
             "intro_fragment_move_to_next",
             "intro_fragment_move_to_next -->  Click"
         )
-        if (isInternetAvailable && Onboarding_Full_Native == 0) {
+        if (isInternetAvailable || Onboarding_Full_Native == 0) {
             _binding?.viewPager?.setCurrentItem(getItem(+2), true)
         } else {
             _binding?.viewPager?.setCurrentItem(getItem(+3), true)

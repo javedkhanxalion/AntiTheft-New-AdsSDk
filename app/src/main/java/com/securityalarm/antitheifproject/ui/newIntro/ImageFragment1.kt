@@ -48,7 +48,7 @@ class ImageFragment1 : Fragment() {
             com.securityalarm.antitheifproject.utilities.introHeading[position]
         _binding1?.sliderDesc?.text = introDetailText[position]
         _binding1?.wormDotsIndicator?.attachTo(viewPager22 ?: return)
-        if (isInternetAvailable && Onboarding_Full_Native == 0) {
+        if (isInternetAvailable || Onboarding_Full_Native == 0) {
             if (position == 2) {
                 _binding1?.nextApp?.visibility = View.VISIBLE
                 _binding1?.skipApp?.visibility = View.INVISIBLE
