@@ -1,7 +1,6 @@
 package com.securityalarm.antitheifproject.ui
 
 import android.os.Bundle
-import android.os.Debug
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
@@ -9,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentSplashBinding
-import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.ump.FormError
 import com.google.firebase.FirebaseApp
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -113,15 +112,14 @@ import com.securityalarm.antitheifproject.utilities.whistle_native
 import com.securityalarm.antitheifproject.utilities.whistle_selectsound_bottom
 import com.securityalarm.antitheifproject.ads_manager.AdsManager
 import com.securityalarm.antitheifproject.ads_manager.AdsManager.isNetworkAvailable
+import com.securityalarm.antitheifproject.ads_manager.CmpClass
 import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
 import com.securityalarm.antitheifproject.ads_manager.loadOpenAdSplash
-import com.securityalarm.antitheifproject.ads_manager.loadTwoInterAdsSplash
 import com.securityalarm.antitheifproject.ads_manager.showNormalInterAdSingle
 import com.securityalarm.antitheifproject.ads_manager.showOpenAd
 import com.securityalarm.antitheifproject.utilities.counter
 import com.securityalarm.antitheifproject.utilities.fisrt_ad_line_threshold_main
 import com.securityalarm.antitheifproject.utilities.id_app_open_screen
-import com.securityalarm.antitheifproject.utilities.id_banner_language_screen
 import com.securityalarm.antitheifproject.utilities.id_banner_main_screen
 import com.securityalarm.antitheifproject.utilities.id_banner_splash_screen
 import com.securityalarm.antitheifproject.utilities.id_exit_screen_native
@@ -155,10 +153,16 @@ class SplashFragment :
     private var dbHelper: DbHelper? = null
     private var remoteConfig: FirebaseRemoteConfig? = null
     private var adsManager: AdsManager? = null
+    companion object {
+        var isUserConsent = false
+        var consentListener: ((consent: Boolean) -> Unit?)? = null
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dbHelper = DbHelper(context ?: return)
-        adsManager = AdsManager.appAdsInit(activity ?: return)
+        val cmpClass = CmpClass(activity ?: return)
+        cmpClass.initilaizeCMP()
+
         dbHelper?.getStringData(requireContext(), LANG_CODE, "en")?.let {
             setLocaleMain(it)
         }
@@ -187,21 +191,21 @@ class SplashFragment :
             isSplash = false
             counter = 0
             inter_frequency_count = 0
-            adsManager = AdsManager.appAdsInit(activity?:return@launch)
             dbHelper = DbHelper(activity?.applicationContext?:return@launch)
-            if (isNetworkAvailable(context)) {
-                loadTwoInterAdsSplash(
-                    adsManager ?: return@launch,
-                    activity?:return@launch,
-                    remoteConfigNormal = true,
-                    adIdNormal = getString(R.string.id_fullscreen_splash),
-                    "splash"
-                )
-                loadBanner()
-                delay(5000)
-                initRemoteIds()
-            } else {
-                getIntentMove()
+            consentListener = {
+                isUserConsent = it
+                Log.d("check_contest", "onViewCreated: $isUserConsent")
+                if (isUserConsent) {
+                    if (isNetworkAvailable(context)) {
+                        adsManager = AdsManager.appAdsInit(requireActivity())
+                        initRemoteIds()
+                    } else {
+                        getIntentMove()
+                    }
+                } else {
+                    getIntentMove()
+                }
+
             }
         }
         setupBackPressedCallback {

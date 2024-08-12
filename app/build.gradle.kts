@@ -111,25 +111,13 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx:22.0.2")
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-messaging:24.0.0")
-//    implementation("com.github.hypersoftdev:inappbilling:3.0.0-alpha-02")
     implementation("com.tbuonomo:dotsindicator:4.3")
     //shimmer
     implementation("com.facebook.shimmer:shimmer:0.5.0")
-//    implementation("com.ikame.android-sdk:ikm-sdk-debug:2.6.530")
-//    implementation ("com.ikame.android-sdk:pub-microzone-antithef-release:2.6.750-beta")
-//    implementation("com.google.ads.interactivemedia.v3:interactivemedia:3.33.0")
     implementation("androidx.multidex:multidex:2.0.1")
     implementation ("com.google.code.gson:gson:2.8.8")
-//    implementation ("com.applovin:applovin-sdk:12.1.0")
-//    implementation ("net.pubnative:hybid.sdk:3.0.0")
-//    implementation ("com.facebook.android:audience-network-sdk:6.+")
-//    implementation ("com.unity3d.ads:unity-ads:4.7.0")
-
-    // Facebook Audience Network SDK
-//    implementation ("com.google.ads.mediation:facebook:6.12.0.0")
-    // Unity Ads SDK
-//    implementation ("com.google.ads.mediation:unity:4.5.0.0")
-
+    implementation ("com.google.android.ump:user-messaging-platform:3.0.0")
+    implementation ("com.iabtcf:iabtcf-decoder:2.0.10")
 }
 
 
