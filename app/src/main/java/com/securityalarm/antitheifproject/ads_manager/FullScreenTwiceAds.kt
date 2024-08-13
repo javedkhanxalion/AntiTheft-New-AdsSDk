@@ -142,12 +142,13 @@ fun showTwoInterAd(
                 function.invoke(0)
             }
 
-        }, adIdNormal, object : AdsListener {
+        }, "", object : AdsListener {
 
         })
 
     }, 200)
 }
+
 fun showTwoInterAdExit(
     ads: AdsManager,
     activity: Activity,
@@ -194,13 +195,13 @@ fun showTwoInterAdExit(
                 layout.visibility = View.GONE
                 Log.d(TAG, "fullScreenAdDismissed: normal inter dismiss")
                 firebaseAnalytics("inter_normal_dismisss_$tagClass", "inter_Show")
-                loadTwoInterAds(
-                    ads = ads,
-                    activity = activity,
-                    remoteConfigNormal = remoteConfigNormal,
-                    adIdNormal = adIdNormal,
-                    tagClass = tagClass
-                )
+//                loadTwoInterAds(
+//                    ads = ads,
+//                    activity = activity,
+//                    remoteConfigNormal = remoteConfigNormal,
+//                    adIdNormal = adIdNormal,
+//                    tagClass = tagClass
+//                )
             }
 
             override fun fullScreenAdFailedToShow() {
@@ -218,7 +219,7 @@ fun showTwoInterAdExit(
                 function.invoke(0)
             }
 
-        }, adIdNormal, object : AdsListener {
+        }, "", object : AdsListener {
 
         })
 

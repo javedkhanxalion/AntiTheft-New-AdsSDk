@@ -112,11 +112,12 @@ import com.securityalarm.antitheifproject.utilities.whistle_native
 import com.securityalarm.antitheifproject.utilities.whistle_selectsound_bottom
 import com.securityalarm.antitheifproject.ads_manager.AdsManager
 import com.securityalarm.antitheifproject.ads_manager.AdsManager.isNetworkAvailable
+import com.securityalarm.antitheifproject.ads_manager.AdsManager.showOpenAd
 import com.securityalarm.antitheifproject.ads_manager.CmpClass
 import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
-import com.securityalarm.antitheifproject.ads_manager.loadOpenAdSplash
+import com.securityalarm.antitheifproject.ads_manager.loadTwoInterAds
+import com.securityalarm.antitheifproject.ads_manager.loadTwoInterAdsSplash
 import com.securityalarm.antitheifproject.ads_manager.showNormalInterAdSingle
-import com.securityalarm.antitheifproject.ads_manager.showOpenAd
 import com.securityalarm.antitheifproject.utilities.counter
 import com.securityalarm.antitheifproject.utilities.fisrt_ad_line_threshold_main
 import com.securityalarm.antitheifproject.utilities.id_app_open_screen
@@ -149,6 +150,8 @@ import kotlinx.coroutines.launch
 
 class SplashFragment :
     BaseFragment<FragmentSplashBinding>(FragmentSplashBinding::inflate) {
+
+
     private var isInternetDialog: Boolean = false
     private var dbHelper: DbHelper? = null
     private var remoteConfig: FirebaseRemoteConfig? = null
@@ -223,12 +226,21 @@ class SplashFragment :
             lifecycleScope.launchWhenStarted {
                 if (val_app_open_main) {
                     isSplash = true
-                    loadOpenAdSplash(context?:return@launchWhenStarted)
-                    delay(5000)
-                    showOpenAd(activity ?: return@launchWhenStarted)
-                    getIntentMove()
+                    adsManager?.let {
+                        loadTwoInterAds(
+                            ads = it,
+                            activity = activity ?: return@launchWhenStarted,
+                            remoteConfigNormal = true,
+                            adIdNormal = id_inter_main_medium,
+                            tagClass = "main_app_fragment_pre_load"
+                        )
+                    }
+                    delay(7000)
+                    showOpenAd(activity?:return@launchWhenStarted) {
+                        getIntentMove()
+                    }
                 } else {
-                    delay(5000)
+                    delay(7000)
                     isSplash = true
                     adsManager?.let {
                         showNormalInterAdSingle(
@@ -519,6 +531,24 @@ class SplashFragment :
 
                     }
                 )
+                adsManager?.nativeAds()?.loadNativeAd(
+                    activity ?: return@addOnCompleteListener,
+                    true,
+                    id_native_main_menu_screen,
+                    object : NativeListener {
+
+                    }
+                )
+                if (!val_app_open_main) {
+                    loadTwoInterAdsSplash(
+                        adsManager ?: return@addOnCompleteListener,
+                        activity?:return@addOnCompleteListener,
+                        remoteConfigNormal = true,
+                        adIdNormal = getString(R.string.id_fullscreen_splash),
+                        "splash"
+                    )
+                }
+                loadBanner()
                 observeSplashLiveData()
             }
 
@@ -648,8 +678,6 @@ class SplashFragment :
             }
         }
     }
-
-
     private fun parseJsonWithGsonLanguage(jsonString1: String) {
         if (jsonString1 != null && jsonString1.isNotEmpty()) {
             val gson = Gson()
@@ -662,7 +690,6 @@ class SplashFragment :
             }
         }
     }
-
     override fun onResume() {
         super.onResume()
         if (isInternetDialog) {
