@@ -117,13 +117,13 @@ fun showTwoInterAd(
                 layout.visibility = View.GONE
                 Log.d(TAG, "fullScreenAdDismissed: normal inter dismiss")
                 firebaseAnalytics("inter_normal_dismisss_$tagClass", "inter_Show")
-                loadTwoInterAds(
-                    ads = ads,
-                    activity = activity,
-                    remoteConfigNormal = remoteConfigNormal,
-                    adIdNormal = adIdNormal,
-                    tagClass = tagClass
-                )
+//                loadTwoInterAds(
+//                    ads = ads,
+//                    activity = activity,
+//                    remoteConfigNormal = remoteConfigNormal,
+//                    adIdNormal = adIdNormal,
+//                    tagClass = tagClass
+//                )
                 function.invoke(1)
             }
 
@@ -142,7 +142,7 @@ fun showTwoInterAd(
                 function.invoke(0)
             }
 
-        }, "", object : AdsListener {
+        }, adIdNormal, object : AdsListener {
 
         })
 
@@ -164,13 +164,13 @@ fun showTwoInterAdExit(
     Log.d(TAG, "showTwoInterAd->id_frequency_counter: $mInterstitialAd")
     Log.d(TAG, "showTwoInterAd->remoteConfigNormal: $remoteConfigNormal")
     if (mInterstitialAd == null || (!remoteConfigNormal)) {
-        loadTwoInterAds(
-            ads = ads,
-            activity = activity,
-            remoteConfigNormal = remoteConfigNormal,
-            adIdNormal = adIdNormal,
-            tagClass = tagClass
-        )
+//        loadTwoInterAds(
+//            ads = ads,
+//            activity = activity,
+//            remoteConfigNormal = remoteConfigNormal,
+//            adIdNormal = adIdNormal,
+//            tagClass = tagClass
+//        )
         function.invoke(0)
         return
     }
@@ -219,14 +219,78 @@ fun showTwoInterAdExit(
                 function.invoke(0)
             }
 
-        }, "", object : AdsListener {
+        }, adIdNormal, object : AdsListener {
 
         })
 
     }, 200)
 }
 
+fun showTwoInterAdFirst(
+    ads: AdsManager,
+    activity: Activity,
+    remoteConfigNormal: Boolean,
+    adIdNormal: String,
+    tagClass: String,
+    isBackPress: Boolean,
+    layout: ConstraintLayout,
+    function: () -> Unit,
+) {
+    Log.d(TAG, "showTwoInterAd->adIdNormal: $adIdNormal")
+    Log.d(TAG, "showTwoInterAd->id_inter_counter: $id_inter_counter")
+    Log.d(TAG, "showTwoInterAd->Adssssssss: $mInterstitialAd")
+    Log.d(TAG, "showTwoInterAd->id_frequency_counter: $mInterstitialAd")
+    if (mInterstitialAd == null || (!remoteConfigNormal)) {
+        Log.d(TAG, "showTwoInterAd->remoteConfigNormal: 1")
+        function.invoke()
+        return
+    }
+    if (!AdsManager.isNetworkAvailable(activity)) {
+        Log.d(TAG, "showTwoInterAd->remoteConfigNormal: 2")
+        function.invoke()
+        return
+    }
 
+    layout.visibility = View.VISIBLE
+    Handler().postDelayed({
+        ads.fullScreenAdsTwo().showAndLoadTwo(activity, remoteConfigNormal, object :
+            AdMobAdListener {
+            override fun fullScreenAdShow() {
+                inter_frequency_count++
+                layout.visibility = View.GONE
+                Log.d(TAG, "fullScreenAdShow: normal inter ad show")
+                firebaseAnalytics("inter_normal_show_$tagClass", "inter_Show")
+
+            }
+
+            override fun fullScreenAdDismissed() {
+                layout.visibility = View.GONE
+                Log.d(TAG, "fullScreenAdDismissed: normal inter dismiss")
+                firebaseAnalytics("inter_normal_dismisss_$tagClass", "inter_Show")
+                function.invoke()
+            }
+
+            override fun fullScreenAdFailedToShow() {
+                layout.visibility = View.GONE
+                Log.d(TAG, "fullScreenAdFailedToShow: normal inter failed to show")
+                firebaseAnalytics("inter_normal_failed_show_$tagClass", "inter_Show")
+                function.invoke()
+
+            }
+
+            override fun fullScreenAdNotAvailable() {
+                layout.visibility = View.GONE
+                Log.d(TAG, "fullScreenAdNotAvailable: normal inter not available")
+                firebaseAnalytics("inter_normal_not_Found_$tagClass", "inter_Show")
+                function.invoke()
+            }
+
+        }, adIdNormal, object : AdsListener {
+
+        })
+
+    }, 200)
+}
 
 private fun showNormalInterAd(
     ads: AdsManager,
@@ -254,13 +318,13 @@ private fun showNormalInterAd(
         override fun fullScreenAdDismissed() {
             Log.d(TAG, "fullScreenAdDismissed: normal inter dismiss")
             firebaseAnalytics("inter_normal_dismisss_$tagClass", "inter_Show")
-            loadTwoInterAds(
-                ads = ads,
-                activity = activity,
-                remoteConfigNormal = remoteConfigNormal,
-                adIdNormal = adIdNormal,
-                tagClass = tagClass
-            )
+//            loadTwoInterAds(
+//                ads = ads,
+//                activity = activity,
+//                remoteConfigNormal = remoteConfigNormal,
+//                adIdNormal = adIdNormal,
+//                tagClass = tagClass
+//            )
             function.invoke()
         }
 

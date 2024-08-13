@@ -23,8 +23,6 @@ import com.securityalarm.antitheifproject.helper_class.DbHelper
 import com.securityalarm.antitheifproject.model.AdSettings
 import com.securityalarm.antitheifproject.model.NativeDesignType
 import com.securityalarm.antitheifproject.utilities.BaseFragment
-import com.securityalarm.antitheifproject.utilities.IS_FIRST
-import com.securityalarm.antitheifproject.utilities.IS_INTRO
 import com.securityalarm.antitheifproject.utilities.LANG_CODE
 import com.securityalarm.antitheifproject.utilities.LANG_SCREEN
 import com.securityalarm.antitheifproject.utilities.Onboarding_Full_Native
@@ -139,6 +137,8 @@ import com.securityalarm.antitheifproject.utilities.val_banner_main_menu_screen
 import com.securityalarm.antitheifproject.utilities.val_banner_splash_screen
 import com.securityalarm.antitheifproject.utilities.val_exit_screen_native
 import com.securityalarm.antitheifproject.utilities.val_inter_exit_screen
+import com.securityalarm.antitheifproject.utilities.val_inter_language_screen
+import com.securityalarm.antitheifproject.utilities.val_inter_on_bord_screen
 import com.securityalarm.antitheifproject.utilities.val_native_Full_screen
 import com.securityalarm.antitheifproject.utilities.val_native_intro_screen
 import com.securityalarm.antitheifproject.utilities.val_native_intro_screen1
@@ -277,26 +277,11 @@ class SplashFragment :
                     }
 
                     1 -> {
-                        if (dbHelper?.getBooleanData(
-                                requireContext(),
-                                IS_INTRO,
-                                false
-                            ) == false
-                        ) {
                             firebaseAnalytics(
                                 "loading_fragment_load_next_btn_intro",
                                 "loading_fragment_load_next_btn_intro -->  Click"
                             )
                             return findNavController().navigate(R.id.OnBordScreenNewScreen)
-                        } else {
-                            firebaseAnalytics(
-                                "loading_fragment_load_next_btn_main",
-                                "loading_fragment_load_next_btn_main -->  Click"
-                            )
-                            return findNavController().navigate(
-                                R.id.myMainMenuFragment
-                            )
-                        }
                     }
 
                     2 -> {
@@ -309,12 +294,6 @@ class SplashFragment :
                 }
             }
             1 -> {
-                if ((dbHelper?.getBooleanData(
-                        requireContext(),
-                        IS_FIRST,
-                        false
-                    ) == false)
-                ) {
                     firebaseAnalytics(
                         "loading_fragment_load_next_btn_language",
                         "loading_fragment_load_next_btn_language -->  Click"
@@ -323,16 +302,6 @@ class SplashFragment :
                         R.id.LanguageFragment,
                         bundleOf(LANG_SCREEN to true)
                     )
-                } else {
-                    firebaseAnalytics(
-                        "loading_fragment_load_next_btn_main",
-                        "loading_fragment_load_next_btn_main -->  Click"
-                    )
-                    return findNavController().navigate(
-                        R.id.myMainMenuFragment
-                    )
-
-                }
             }
             2 -> {
                 firebaseAnalytics(
@@ -390,6 +359,7 @@ class SplashFragment :
             id_inter_counter = remoteConfig.getLong("id_inter_counter").toInt()
             id_frequency_counter = remoteConfig.getLong("id_frequency_counter").toInt()
             id_native_main_menu_screen = remoteConfig.getString("id_native_main_menu_screen")
+        id_inter_main_medium = remoteConfig.getString("id_inter_main_normal")
             id_inter_main_normal = remoteConfig.getString("id_inter_main_normal")
             id_native_loading_screen = remoteConfig.getString("id_native_loading_screen")
             id_native_intro_screen = remoteConfig.getString("id_native_intro_screen")
@@ -518,6 +488,8 @@ class SplashFragment :
                     val_native_intro_screen1 = remoteConfig!!["val_native_intro_screen1"].asBoolean()
                     val_native_intro_screen2 = remoteConfig!!["val_native_intro_screen2"].asBoolean()
                     val_app_open_main = remoteConfig!!["val_app_open_main"].asBoolean()
+                    val_inter_language_screen = remoteConfig!!["val_inter_language_screen"].asBoolean()
+                    val_inter_on_bord_screen = remoteConfig!!["val_inter_on_bord_screen"].asBoolean()
 
 
                 } else {
@@ -544,7 +516,7 @@ class SplashFragment :
                         adsManager ?: return@addOnCompleteListener,
                         activity?:return@addOnCompleteListener,
                         remoteConfigNormal = true,
-                        adIdNormal = getString(R.string.id_fullscreen_splash),
+                        adIdNormal = id_inter_main_medium,
                         "splash"
                     )
                 }

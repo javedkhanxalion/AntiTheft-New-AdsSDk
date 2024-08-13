@@ -166,6 +166,9 @@ var id_language_scroll_screen_native: String = if (isDebug()) "ca-app-pub-394025
 var id_native_Full_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
 var id_banner_splash_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/6300978111" else ""
 
+var val_inter_language_screen = false
+var val_inter_on_bord_screen = false
+
 var language_reload = 0
 var Onboarding_Full_Native = 1
 var sessionOpenlanguage = 1
@@ -211,8 +214,8 @@ const val NOTIFY_CHANNEL_ID = "AppNameBackgroundService"
 
 const val IS_NOTIFICATION = "IS_NOTIFICATION"
 const val IS_GRID = "IS_GRID"
-const val IS_FIRST = "is_First"
-const val IS_INTRO = "is_Intro"
+//const val IS_FIRST = "is_First"
+//const val IS_INTRO = "is_Intro"
 const val LANG_CODE = "language_code"
 const val LANG_SCREEN = "LANG_SCREEN"
 const val ANTI_TITLE = "ANTI_TITLE"
