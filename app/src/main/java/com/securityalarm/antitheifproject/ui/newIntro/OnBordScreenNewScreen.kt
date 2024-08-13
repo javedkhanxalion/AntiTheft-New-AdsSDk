@@ -15,6 +15,7 @@ import com.securityalarm.antitheifproject.utilities.Onboarding_Full_Native
 import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.id_inter_main_medium
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
+import com.securityalarm.antitheifproject.utilities.isNetworkAvailable
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
 import com.securityalarm.antitheifproject.utilities.val_inter_on_bord_screen
 
@@ -24,10 +25,11 @@ class OnBordScreenNewScreen :
     private var sharedPrefUtils: DbHelper? = null
     private var isInternetDialog: Boolean = false
     private var ads: AdsManager? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAnalytics("intro_fragment_open", "intro_fragment_open -->  Click")
-
+        isInternetAvailable = isNetworkAvailable(context?:return)
         ads = AdsManager.appAdsInit(activity?:return)
         val viewPagerAdapter = ViewPagerAdapter(
             context ?: return,

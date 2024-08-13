@@ -6,9 +6,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.securityalarm.antitheifproject.utilities.Onboarding_Full_Native
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
+import com.securityalarm.antitheifproject.utilities.isNetworkAvailable
 
 class ViewPagerAdapter(
-    val context: Context,
+    private val context: Context,
     val fragmentActivity: OnBordScreenNewScreen,
     functionNext: (()->Unit),
     function: (()->Unit),
@@ -27,12 +28,12 @@ class ViewPagerAdapter(
         ImageFragment3.newInstance(2, false, viewPager2, functionNext, function),
     )
 
-    override fun getItemCount(): Int = if(isInternetAvailable || Onboarding_Full_Native==1)
+    override fun getItemCount(): Int = if(isNetworkAvailable(context) && Onboarding_Full_Native==1)
         fragments.size
     else
         fragments1.size
 
-    override fun createFragment(position: Int): Fragment = if(isInternetAvailable || Onboarding_Full_Native==1)
+    override fun createFragment(position: Int): Fragment = if(isNetworkAvailable(context) && Onboarding_Full_Native==1)
         fragments[position]
     else
         fragments1[position]

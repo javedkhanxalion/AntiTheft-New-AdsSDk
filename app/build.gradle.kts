@@ -22,8 +22,8 @@ android {
         applicationId = "com.antitheftalarm.dont.touch.phone.finder.phonesecurity"
         minSdk = 24
         targetSdk = 34
-        versionCode = 26
-        versionName = "3.6"
+        versionCode = 28
+        versionName = "3.8"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "AntiThief_v$versionName($versionCode)")
@@ -86,7 +86,7 @@ android {
 
 dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.10.0")
 // The default implementations
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
