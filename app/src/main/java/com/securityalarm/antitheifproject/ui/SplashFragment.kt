@@ -261,7 +261,6 @@ class SplashFragment :
         }
     }
 
-
     private fun getIntentMove() {
         when (sessionOpenlanguage) {
             0 -> {
@@ -672,5 +671,6 @@ class SplashFragment :
             }
         }
     }
+    
 }
 
