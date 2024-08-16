@@ -53,9 +53,9 @@ android {
                 "proguard-rules.pro"
             )
 //            resValue( "string", "facebook_app_id", "")
-            resValue( "string", "id_application_id", "ca-app-pub-5267896740455550~6650338408")
-            resValue ("string", "id_fullscreen_splash", "ca-app-pub-5267896740455550/8501679963")
-            resValue ("string", "app_open_splash", "ca-app-pub-5267896740455550/2519521707")
+            resValue( "string", "id_application_id", "ca-app-pub-5267896740455550~6410044109")
+            resValue ("string", "id_fullscreen_splash", "ca-app-pub-5267896740455550/6963340773")
+            resValue ("string", "app_open_splash", "ca-app-pub-5267896740455550/7663416024")
             signingConfig = signingConfigs.getByName("release")
         }
         buildFeatures {
