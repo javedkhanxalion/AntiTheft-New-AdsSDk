@@ -12,6 +12,7 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.securityalarm.antitheifproject.ads_manager.AdsManager
 import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
+import com.securityalarm.antitheifproject.utilities.clickWithThrottle
 import com.securityalarm.antitheifproject.utilities.id_native_Full_screen
 import com.securityalarm.antitheifproject.utilities.id_native_intro_screen
 import com.securityalarm.antitheifproject.utilities.val_native_Full_screen
@@ -32,6 +33,9 @@ class AdFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadNative()
+        _binding?.skipApp?.clickWithThrottle {
+            ImageFragment3.fragmentN?.invoke()
+        }
     }
 
     override fun onDestroyView() {

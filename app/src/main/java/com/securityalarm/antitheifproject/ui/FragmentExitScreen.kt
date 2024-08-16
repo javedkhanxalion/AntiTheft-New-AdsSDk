@@ -50,7 +50,7 @@ class FragmentExitScreen :
                     _binding?.nativeExitAd!!,context?:return@launchWhenResumed),
                 null
             ) as NativeAdView
-            adsManager?.nativeAdsMain()?.loadNativeAd(
+            adsManager?.nativeAds()?.loadNativeAd(
                 activity ?: return@launchWhenResumed,
                 val_exit_screen_native,
                 id_exit_screen_native,
@@ -59,7 +59,7 @@ class FragmentExitScreen :
                         if (isAdded && isVisible && !isDetached) {
                             _binding?.nativeExitAd?.visibility = View.VISIBLE
                             _binding?.shimmerLayout?.visibility = View.GONE
-                            adsManager?.nativeAdsMain()
+                            adsManager?.nativeAds()
                                 ?.nativeViewMedia(currentNativeAd ?: return, adView)
                             _binding?.nativeExitAd?.removeAllViews()
                             _binding?.nativeExitAd?.addView(adView)

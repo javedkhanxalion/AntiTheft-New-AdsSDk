@@ -62,18 +62,8 @@ fun showNormalInterAdSingle(
     FullScreenAdsTwo.showAndLoadTwo(activity, remoteConfigNormal, object : AdMobAdListener {
         override fun fullScreenAdShow() {
             Log.d(TAGGED, "fullScreenAdShow: normal inter ad show")
-//            inter_frequency_count++
             firebaseAnalytics("inter_normal_show_$tagClass", "inter_Show")
             layout.visibility = View.GONE
-//            ads.let {
-//                loadTwoInterAds(
-//                    ads = it,
-//                    activity = activity,
-//                    remoteConfigNormal = true,
-//                    adIdNormal = id_inter_main_normal,
-//                    tagClass = "home_pre_cache"
-//                )
-//            }
         }
 
         override fun fullScreenAdDismissed() {
@@ -104,14 +94,14 @@ fun showNormalInterAdSingle(
     }, 500)
 }
 
-fun loadOpenAdSplash(context: Context) {
-    openAdForSplash = AppOpenForSplash()
-    openAdForSplash?.loadAd(context, context.getString(R.string.app_open_splash))
-    Log.d(TAG, "loadOpenAdSplash: Load $openAdForSplash")
-}
-
-
-fun showOpenAd(activity: Activity) {
-    Log.d(TAG, "loadOpenAdSplash: SHow $openAdForSplash")
-    openAdForSplash?.showAdIfAvailable(activity)
-}
+//fun loadOpenAdSplash(context: Context) {
+//    openAdForSplash = AppOpenForSplash()
+//    openAdForSplash?.loadAd(context, context.getString(R.string.app_open_splash))
+//    Log.d(TAG, "loadOpenAdSplash: Load $openAdForSplash")
+//}
+//
+//
+//fun showOpenAd(activity: Activity) {
+//    Log.d(TAG, "loadOpenAdSplash: SHow $openAdForSplash")
+//    openAdForSplash?.showAdIfAvailable(activity)
+//}

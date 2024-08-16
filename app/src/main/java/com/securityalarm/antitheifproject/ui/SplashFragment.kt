@@ -1,7 +1,6 @@
 package com.securityalarm.antitheifproject.ui
 
 import android.os.Bundle
-import android.os.Debug
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
@@ -9,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.FragmentSplashBinding
-import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.ump.FormError
 import com.google.firebase.FirebaseApp
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -24,8 +23,6 @@ import com.securityalarm.antitheifproject.helper_class.DbHelper
 import com.securityalarm.antitheifproject.model.AdSettings
 import com.securityalarm.antitheifproject.model.NativeDesignType
 import com.securityalarm.antitheifproject.utilities.BaseFragment
-import com.securityalarm.antitheifproject.utilities.IS_FIRST
-import com.securityalarm.antitheifproject.utilities.IS_INTRO
 import com.securityalarm.antitheifproject.utilities.LANG_CODE
 import com.securityalarm.antitheifproject.utilities.LANG_SCREEN
 import com.securityalarm.antitheifproject.utilities.Onboarding_Full_Native
@@ -113,15 +110,15 @@ import com.securityalarm.antitheifproject.utilities.whistle_native
 import com.securityalarm.antitheifproject.utilities.whistle_selectsound_bottom
 import com.securityalarm.antitheifproject.ads_manager.AdsManager
 import com.securityalarm.antitheifproject.ads_manager.AdsManager.isNetworkAvailable
+import com.securityalarm.antitheifproject.ads_manager.AdsManager.showOpenAd
+import com.securityalarm.antitheifproject.ads_manager.CmpClass
 import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
-import com.securityalarm.antitheifproject.ads_manager.loadOpenAdSplash
+import com.securityalarm.antitheifproject.ads_manager.loadTwoInterAds
 import com.securityalarm.antitheifproject.ads_manager.loadTwoInterAdsSplash
 import com.securityalarm.antitheifproject.ads_manager.showNormalInterAdSingle
-import com.securityalarm.antitheifproject.ads_manager.showOpenAd
 import com.securityalarm.antitheifproject.utilities.counter
 import com.securityalarm.antitheifproject.utilities.fisrt_ad_line_threshold_main
 import com.securityalarm.antitheifproject.utilities.id_app_open_screen
-import com.securityalarm.antitheifproject.utilities.id_banner_language_screen
 import com.securityalarm.antitheifproject.utilities.id_banner_main_screen
 import com.securityalarm.antitheifproject.utilities.id_banner_splash_screen
 import com.securityalarm.antitheifproject.utilities.id_exit_screen_native
@@ -140,6 +137,8 @@ import com.securityalarm.antitheifproject.utilities.val_banner_main_menu_screen
 import com.securityalarm.antitheifproject.utilities.val_banner_splash_screen
 import com.securityalarm.antitheifproject.utilities.val_exit_screen_native
 import com.securityalarm.antitheifproject.utilities.val_inter_exit_screen
+import com.securityalarm.antitheifproject.utilities.val_inter_language_screen
+import com.securityalarm.antitheifproject.utilities.val_inter_on_bord_screen
 import com.securityalarm.antitheifproject.utilities.val_native_Full_screen
 import com.securityalarm.antitheifproject.utilities.val_native_intro_screen
 import com.securityalarm.antitheifproject.utilities.val_native_intro_screen1
@@ -151,18 +150,27 @@ import kotlinx.coroutines.launch
 
 class SplashFragment :
     BaseFragment<FragmentSplashBinding>(FragmentSplashBinding::inflate) {
+
+
     private var isInternetDialog: Boolean = false
     private var dbHelper: DbHelper? = null
     private var remoteConfig: FirebaseRemoteConfig? = null
     private var adsManager: AdsManager? = null
+    companion object {
+        var isUserConsent = false
+        var consentListener: ((consent: Boolean) -> Unit?)? = null
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dbHelper = DbHelper(context ?: return)
-        adsManager = AdsManager.appAdsInit(activity ?: return)
+        CoroutineScope(Dispatchers.Main).launch {
+        dbHelper = DbHelper(context ?: return@launch)
+        val cmpClass = CmpClass(activity ?: return@launch)
+        cmpClass.initilaizeCMP()
+
         dbHelper?.getStringData(requireContext(), LANG_CODE, "en")?.let {
             setLocaleMain(it)
         }
-        if (!isInternetAvailable(context ?: return)) {
+        if (!isInternetAvailable(context ?: return@launch)) {
             showInternetDialog(
                 onPositiveButtonClick = {
                     isInternetDialog = true
@@ -179,29 +187,28 @@ class SplashFragment :
                     getIntentMove()
                 }
             )
-            return
+            return@launch
         } else {
             isSplashDialog = false
         }
-        CoroutineScope(Dispatchers.Main).launch {
             isSplash = false
             counter = 0
             inter_frequency_count = 0
-            adsManager = AdsManager.appAdsInit(activity?:return@launch)
             dbHelper = DbHelper(activity?.applicationContext?:return@launch)
-            if (isNetworkAvailable(context)) {
-                loadTwoInterAdsSplash(
-                    adsManager ?: return@launch,
-                    activity?:return@launch,
-                    remoteConfigNormal = true,
-                    adIdNormal = getString(R.string.id_fullscreen_splash),
-                    "splash"
-                )
-                loadBanner()
-                delay(5000)
-                initRemoteIds()
-            } else {
-                getIntentMove()
+            consentListener = {
+                isUserConsent = it
+                Log.d("check_contest", "onViewCreated: $isUserConsent")
+                if (isUserConsent) {
+                    if (isNetworkAvailable(context)) {
+                        adsManager = AdsManager.appAdsInit(requireActivity())
+                        initRemoteIds()
+                    } else {
+                        getIntentMove()
+                    }
+                } else {
+                    getIntentMove()
+                }
+
             }
         }
         setupBackPressedCallback {
@@ -219,12 +226,21 @@ class SplashFragment :
             lifecycleScope.launchWhenStarted {
                 if (val_app_open_main) {
                     isSplash = true
-                    loadOpenAdSplash(context?:return@launchWhenStarted)
-                    delay(5000)
-                    showOpenAd(activity ?: return@launchWhenStarted)
-                    getIntentMove()
+                    adsManager?.let {
+                        loadTwoInterAds(
+                            ads = it,
+                            activity = activity ?: return@launchWhenStarted,
+                            remoteConfigNormal = true,
+                            adIdNormal = id_inter_main_medium,
+                            tagClass = "main_app_fragment_pre_load"
+                        )
+                    }
+                    delay(7000)
+                    showOpenAd(activity?:return@launchWhenStarted) {
+                        getIntentMove()
+                    }
                 } else {
-                    delay(5000)
+                    delay(7000)
                     isSplash = true
                     adsManager?.let {
                         showNormalInterAdSingle(
@@ -261,26 +277,11 @@ class SplashFragment :
                     }
 
                     1 -> {
-                        if (dbHelper?.getBooleanData(
-                                requireContext(),
-                                IS_INTRO,
-                                false
-                            ) == false
-                        ) {
                             firebaseAnalytics(
                                 "loading_fragment_load_next_btn_intro",
                                 "loading_fragment_load_next_btn_intro -->  Click"
                             )
                             return findNavController().navigate(R.id.OnBordScreenNewScreen)
-                        } else {
-                            firebaseAnalytics(
-                                "loading_fragment_load_next_btn_main",
-                                "loading_fragment_load_next_btn_main -->  Click"
-                            )
-                            return findNavController().navigate(
-                                R.id.myMainMenuFragment
-                            )
-                        }
                     }
 
                     2 -> {
@@ -293,12 +294,6 @@ class SplashFragment :
                 }
             }
             1 -> {
-                if ((dbHelper?.getBooleanData(
-                        requireContext(),
-                        IS_FIRST,
-                        false
-                    ) == false)
-                ) {
                     firebaseAnalytics(
                         "loading_fragment_load_next_btn_language",
                         "loading_fragment_load_next_btn_language -->  Click"
@@ -307,16 +302,6 @@ class SplashFragment :
                         R.id.LanguageFragment,
                         bundleOf(LANG_SCREEN to true)
                     )
-                } else {
-                    firebaseAnalytics(
-                        "loading_fragment_load_next_btn_main",
-                        "loading_fragment_load_next_btn_main -->  Click"
-                    )
-                    return findNavController().navigate(
-                        R.id.myMainMenuFragment
-                    )
-
-                }
             }
             2 -> {
                 firebaseAnalytics(
@@ -374,6 +359,7 @@ class SplashFragment :
             id_inter_counter = remoteConfig.getLong("id_inter_counter").toInt()
             id_frequency_counter = remoteConfig.getLong("id_frequency_counter").toInt()
             id_native_main_menu_screen = remoteConfig.getString("id_native_main_menu_screen")
+        id_inter_main_medium = remoteConfig.getString("id_inter_main_normal")
             id_inter_main_normal = remoteConfig.getString("id_inter_main_normal")
             id_native_loading_screen = remoteConfig.getString("id_native_loading_screen")
             id_native_intro_screen = remoteConfig.getString("id_native_intro_screen")
@@ -502,6 +488,8 @@ class SplashFragment :
                     val_native_intro_screen1 = remoteConfig!!["val_native_intro_screen1"].asBoolean()
                     val_native_intro_screen2 = remoteConfig!!["val_native_intro_screen2"].asBoolean()
                     val_app_open_main = remoteConfig!!["val_app_open_main"].asBoolean()
+                    val_inter_language_screen = remoteConfig!!["val_inter_language_screen"].asBoolean()
+                    val_inter_on_bord_screen = remoteConfig!!["val_inter_on_bord_screen"].asBoolean()
 
 
                 } else {
@@ -515,6 +503,24 @@ class SplashFragment :
 
                     }
                 )
+                adsManager?.nativeAds()?.loadNativeAd(
+                    activity ?: return@addOnCompleteListener,
+                    true,
+                    id_native_main_menu_screen,
+                    object : NativeListener {
+
+                    }
+                )
+                if (!val_app_open_main) {
+                    loadTwoInterAdsSplash(
+                        adsManager ?: return@addOnCompleteListener,
+                        activity?:return@addOnCompleteListener,
+                        remoteConfigNormal = true,
+                        adIdNormal = id_inter_main_medium,
+                        "splash"
+                    )
+                }
+                loadBanner()
                 observeSplashLiveData()
             }
 
@@ -644,8 +650,6 @@ class SplashFragment :
             }
         }
     }
-
-
     private fun parseJsonWithGsonLanguage(jsonString1: String) {
         if (jsonString1 != null && jsonString1.isNotEmpty()) {
             val gson = Gson()
@@ -658,7 +662,6 @@ class SplashFragment :
             }
         }
     }
-
     override fun onResume() {
         super.onResume()
         if (isInternetDialog) {

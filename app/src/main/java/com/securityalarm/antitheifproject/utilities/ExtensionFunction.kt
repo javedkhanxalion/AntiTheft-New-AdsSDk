@@ -97,37 +97,37 @@ var isSplashDialog = true
 
 var val_app_open_main = false
 
-var val_banner_splash_screen = true
-var val_banner_main_menu_screen = true
-var val_banner_language_screen = true
-var val_exit_screen_native = true
+var val_banner_splash_screen = false
+var val_banner_main_menu_screen = false
+var val_banner_language_screen = false
+var val_exit_screen_native = false
 
-var val_native_Full_screen = true
-var val_native_intro_screen = true
-var val_native_intro_screen1 = true
-var val_native_intro_screen2 = true
-var val_inter_exit_screen = true
+var val_native_Full_screen = false
+var val_native_intro_screen = false
+var val_native_intro_screen1 = false
+var val_native_intro_screen2 = false
+var val_inter_exit_screen = false
 
 var val_banner_1 = false
-var val_inter_main_normal = true
-var val_ad_native_loading_screen = true
-var val_ad_native_intro_screen = true
-var val_ad_native_language_screen = true
-var val_ad_native_sound_screen = true
-var val_ad_native_intruder_list_screen = true
-var val_ad_native_show_image_screen = true
-var val_ad_native_intruder_detection_screen = true
-var val_ad_native_password_screen = true
-var val_ad_native_main_menu_screen = true
-var val_exit_dialog_native = true
-var val_ad_native_Motion_Detection_screen = true
-var val_ad_native_Whistle_Detection_screen = true
-var val_ad_native_hand_free_screen = true
-var val_ad_native_clap_detection_screen = true
-var val_ad_native_Remove_Charger_screen = true
-var val_ad_native_Battery_Detection_screen = true
-var val_ad_native_Pocket_Detection_screen = true
-var isInternetAvailable = true
+var val_inter_main_normal = false
+var val_ad_native_loading_screen = false
+var val_ad_native_intro_screen = false
+var val_ad_native_language_screen = false
+var val_ad_native_sound_screen = false
+var val_ad_native_intruder_list_screen = false
+var val_ad_native_show_image_screen = false
+var val_ad_native_intruder_detection_screen = false
+var val_ad_native_password_screen = false
+var val_ad_native_main_menu_screen = false
+var val_exit_dialog_native = false
+var val_ad_native_Motion_Detection_screen = false
+var val_ad_native_Whistle_Detection_screen = false
+var val_ad_native_hand_free_screen = false
+var val_ad_native_clap_detection_screen = false
+var val_ad_native_Remove_Charger_screen = false
+var val_ad_native_Battery_Detection_screen = false
+var val_ad_native_Pocket_Detection_screen = false
+var isInternetAvailable = false
 
 var counter = 0
 var inter_frequency_count = 0
@@ -166,8 +166,11 @@ var id_language_scroll_screen_native: String = if (isDebug()) "ca-app-pub-394025
 var id_native_Full_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
 var id_banner_splash_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/6300978111" else ""
 
+var val_inter_language_screen = false
+var val_inter_on_bord_screen = false
+
 var language_reload = 0
-var Onboarding_Full_Native = 0
+var Onboarding_Full_Native = 1
 var sessionOpenlanguage = 1
 var sessionOnboarding = 1
 var fisrt_ad_line_threshold = 2
@@ -211,8 +214,8 @@ const val NOTIFY_CHANNEL_ID = "AppNameBackgroundService"
 
 const val IS_NOTIFICATION = "IS_NOTIFICATION"
 const val IS_GRID = "IS_GRID"
-const val IS_FIRST = "is_First"
-const val IS_INTRO = "is_Intro"
+//const val IS_FIRST = "is_First"
+//const val IS_INTRO = "is_Intro"
 const val LANG_CODE = "language_code"
 const val LANG_SCREEN = "LANG_SCREEN"
 const val ANTI_TITLE = "ANTI_TITLE"
@@ -290,9 +293,9 @@ fun Fragment.getMenuListGrid(dbHelper: DbHelper): ArrayList<MainMenuModel> {
             Intruder_Selfie,
             Intruder_Alarm_Flash,
             Intruder_Alarm_Vibration,
-            true,
+            false,
             "home_intruder",
-            true,
+            false,
             getString(R.string.title_intruder),
             "intruder_native",
             "",
@@ -313,7 +316,7 @@ fun Fragment.getMenuListGrid(dbHelper: DbHelper): ArrayList<MainMenuModel> {
             Pocket_Detection_Vibration,
             val_ad_native_Pocket_Detection_screen,
             "home_pocket",
-            true,
+            false,
             getString(R.string.title_pocket),
             "pocket_native",
             "pocket_selectsound_bottom",
@@ -332,9 +335,9 @@ fun Fragment.getMenuListGrid(dbHelper: DbHelper): ArrayList<MainMenuModel> {
             Intruder_Alarm,
             Intruder_Alarm_Flash,
             Intruder_Alarm_Vibration,
-            true,
+            false,
             "home_password",
-            true,
+            false,
             getString(R.string.title_password),
             "password_native",
             "password_selectsound_bottom",
@@ -356,7 +359,7 @@ fun Fragment.getMenuListGrid(dbHelper: DbHelper): ArrayList<MainMenuModel> {
             Motion_Detection_Vibration,
             val_ad_native_Motion_Detection_screen,
             "home_motion",
-            true,
+            false,
             getString(R.string.title_motion),
             "motion_native",
             "motion_selectsound_bottom",
@@ -377,7 +380,7 @@ fun Fragment.getMenuListGrid(dbHelper: DbHelper): ArrayList<MainMenuModel> {
             Motion_Detection_Vibration,
             val_ad_native_Motion_Detection_screen,
             "home_motion",
-            true,
+            false,
             getString(R.string.title_motion),
             "motion_native",
             "motion_selectsound_bottom",
@@ -398,7 +401,7 @@ fun Fragment.getMenuListGrid(dbHelper: DbHelper): ArrayList<MainMenuModel> {
             Whistle_Detection_Vibration,
             val_ad_native_Whistle_Detection_screen,
             "home_whistle",
-            true,
+            false,
             getString(R.string.title_whistle),
             "whistle_native",
             "whistle_selectsound_bottom",
@@ -419,7 +422,7 @@ fun Fragment.getMenuListGrid(dbHelper: DbHelper): ArrayList<MainMenuModel> {
             HandFree_Detection_Vibration,
             val_ad_native_hand_free_screen,
             "home_handfree",
-            true,
+            false,
             getString(R.string.title_handfree),
             "handfree_native",
             "handfree_selectsound_bottom",
@@ -440,7 +443,7 @@ fun Fragment.getMenuListGrid(dbHelper: DbHelper): ArrayList<MainMenuModel> {
             Clap_Detection_Vibration,
             val_ad_native_clap_detection_screen,
             "home_clap",
-            true,
+            false,
             getString(R.string.title_clap),
             "clap_native",
             "clap_selectsound_bottom",
@@ -461,7 +464,7 @@ fun Fragment.getMenuListGrid(dbHelper: DbHelper): ArrayList<MainMenuModel> {
             Remove_Charger_Vibration,
             val_ad_native_Remove_Charger_screen,
             "home_remove",
-            true,
+            false,
             getString(R.string.title_remove_charger),
             "remove_native",
             "remove_selectsound_bottom",
@@ -482,26 +485,14 @@ fun Fragment.getMenuListGrid(dbHelper: DbHelper): ArrayList<MainMenuModel> {
             Battery_Detection_Vibration,
             val_ad_native_Battery_Detection_screen,
             "home_battery",
-            true, getString(R.string.title_battery),
+            false, getString(R.string.title_battery),
             "battery_native",
             "battery_selectsound_bottom",
             battery_native,
             battery_selectsound_bottom
         )
     )
-//    list.add(
-//        MainMenuModel(
-//    Wifi_Alarm
-//    R.drawable.wifi_icon,
-//    getString(R.string.wifi_alarm),
-//    getString(R.string.detection),
-//     dbHelper.chkBroadCast(Wifi_Alarm),
-//    R.drawable.wifi_icon_inter,
-//    Wifi_Alarm
 
-//        )
-//
-//    )
     return list
 }
 

@@ -16,11 +16,10 @@ import com.securityalarm.antitheifproject.adapter.LanguageGridAdapter.Companion.
 import com.securityalarm.antitheifproject.ads_manager.AdsBanners
 import com.securityalarm.antitheifproject.ads_manager.AdsManager
 import com.securityalarm.antitheifproject.ads_manager.interfaces.NativeListener
+import com.securityalarm.antitheifproject.ads_manager.showTwoInterAdFirst
 import com.securityalarm.antitheifproject.helper_class.DbHelper
 import com.securityalarm.antitheifproject.model.LanguageAppModel
 import com.securityalarm.antitheifproject.utilities.BaseFragment
-import com.securityalarm.antitheifproject.utilities.IS_FIRST
-import com.securityalarm.antitheifproject.utilities.IS_INTRO
 import com.securityalarm.antitheifproject.utilities.LANG_CODE
 import com.securityalarm.antitheifproject.utilities.LANG_SCREEN
 import com.securityalarm.antitheifproject.utilities.clickWithThrottle
@@ -28,6 +27,7 @@ import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
 import com.securityalarm.antitheifproject.utilities.fisrt_ad_line_threshold
 import com.securityalarm.antitheifproject.utilities.getNativeLayout
 import com.securityalarm.antitheifproject.utilities.id_banner_language_screen
+import com.securityalarm.antitheifproject.utilities.id_inter_main_medium
 import com.securityalarm.antitheifproject.utilities.id_native_language_screen
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.language_bottom
@@ -39,6 +39,7 @@ import com.securityalarm.antitheifproject.utilities.setLocaleMain
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
 import com.securityalarm.antitheifproject.utilities.val_ad_native_language_screen
 import com.securityalarm.antitheifproject.utilities.val_banner_language_screen
+import com.securityalarm.antitheifproject.utilities.val_inter_language_screen
 
 
 class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
@@ -71,7 +72,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                 loadBanner()
             }
             _binding?.forwardBtn?.clickWithThrottle {
-                sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
+//                sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
                 if (!isLangScreen) {
                     firebaseAnalytics(
                         "language_fragment_forward_btn_from",
@@ -87,57 +88,45 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                     )
                     sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
                     setLocaleMain(positionSelected)
-                    sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
+//                    sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
+                    adsManager?.let { it1 ->
+                        showTwoInterAdFirst(
+                            ads = it1,
+                            activity = activity?:return@let,
+                            remoteConfigNormal = val_inter_language_screen,
+                            adIdNormal = id_inter_main_medium,
+                            tagClass = "language",
+                            layout = _binding?.adsLayDialog!!,
+                            isBackPress = true,
+                            function = {
+                            }
+                        )
+                        when (sessionOnboarding) {
+                            0 -> {
+                                firebaseAnalytics(
+                                    "loading_fragment_load_next_btn_main",
+                                    "loading_fragment_load_next_btn_main -->  Click"
+                                )
+                                findNavController().navigate(
+                                    R.id.myMainMenuFragment
+                                )
+                            }
 
-                    when (sessionOnboarding) {
-                        0 -> {
-                            firebaseAnalytics(
-                                "loading_fragment_load_next_btn_main",
-                                "loading_fragment_load_next_btn_main -->  Click"
-                            )
-                            findNavController().navigate(
-                                R.id.myMainMenuFragment
-                            )
-                        }
+                            1 -> {
+                                    findNavController().navigate(R.id.OnBordScreenNewScreen)
 
-                        1 -> {
-                            if (sharedPrefUtils?.getBooleanData(
-                                    requireContext(),
-                                    IS_INTRO,
-                                    false
-                                ) == false
-                            ) {
+                            }
+
+                            2 -> {
                                 firebaseAnalytics(
                                     "loading_fragment_load_next_btn_intro",
                                     "loading_fragment_load_next_btn_intro -->  Click"
                                 )
                                 findNavController().navigate(R.id.OnBordScreenNewScreen)
-                            } else {
-                                firebaseAnalytics(
-                                    "loading_fragment_load_next_btn_main",
-                                    "loading_fragment_load_next_btn_main -->  Click"
-                                )
-//                                 if(IkmSdkUtils.isUserIAPAvailable()){
-                                findNavController().navigate(
-                                    R.id.myMainMenuFragment
-                                )
-//                                }else{
-//                                    findNavController().navigate(
-//                                        R.id.FragmentInAppScreen,
-//                                        bundleOf("Is_From_Splash" to true)
-//                                    )
-//                                }
                             }
                         }
-
-                        2 -> {
-                            firebaseAnalytics(
-                                "loading_fragment_load_next_btn_intro",
-                                "loading_fragment_load_next_btn_intro -->  Click"
-                            )
-                            findNavController().navigate(R.id.OnBordScreenNewScreen)
-                        }
                     }
+
 
                 }
             }
@@ -185,7 +174,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                     )
                     sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
                     setLocaleMain(positionSelected)
-                    sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
+//                    sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
                     findNavController().navigate(
                         R.id.OnBordScreenNewScreen
                     )

@@ -10,6 +10,8 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.FullScreenContentCallback
 import com.securityalarm.antitheifproject.ads_manager.AdOpenApp.Companion.openAdForSplash
 
 
@@ -114,6 +116,22 @@ object AdsManager {
         return false
     }
 
+    fun showOpenAd(splashFragment: Activity, function: () -> Unit){
+        Log.d(TAG, "loadOpenAdSplash: SHow $openAdForSplash")
+        openAdForSplash?.show(splashFragment)
+        splashFragment.let { AdOpenApp(it.application, splashFragment.getString(R.string.app_open_splash)) }
+        openAdForSplash?.fullScreenContentCallback =  object : FullScreenContentCallback() {
+            override fun onAdDismissedFullScreenContent() {
+                super.onAdDismissedFullScreenContent()
+                function.invoke()
+            }
+
+            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                super.onAdFailedToShowFullScreenContent(p0)
+                function.invoke()
+            }
+        }
+    }
 
 //    fun loadOpenAdSplash(context: Context) {
 //        openAdForSplash = AppOpenForSplash()

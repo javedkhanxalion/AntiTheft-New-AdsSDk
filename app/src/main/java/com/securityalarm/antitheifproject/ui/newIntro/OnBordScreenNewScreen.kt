@@ -7,23 +7,28 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.R
 import com.antitheftalarm.dont.touch.phone.finder.phonesecurity.databinding.IntroMainActivityBinding
+import com.securityalarm.antitheifproject.ads_manager.AdsManager
+import com.securityalarm.antitheifproject.ads_manager.showTwoInterAdFirst
 import com.securityalarm.antitheifproject.helper_class.DbHelper
 import com.securityalarm.antitheifproject.utilities.BaseFragment
-import com.securityalarm.antitheifproject.utilities.IS_INTRO
 import com.securityalarm.antitheifproject.utilities.Onboarding_Full_Native
 import com.securityalarm.antitheifproject.utilities.firebaseAnalytics
+import com.securityalarm.antitheifproject.utilities.id_inter_main_medium
 import com.securityalarm.antitheifproject.utilities.isInternetAvailable
 import com.securityalarm.antitheifproject.utilities.setupBackPressedCallback
+import com.securityalarm.antitheifproject.utilities.val_inter_on_bord_screen
 
 class OnBordScreenNewScreen :
     BaseFragment<IntroMainActivityBinding>(IntroMainActivityBinding::inflate) {
     var currentpage = 0
     private var sharedPrefUtils: DbHelper? = null
     private var isInternetDialog: Boolean = false
+    private var ads: AdsManager? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAnalytics("intro_fragment_open", "intro_fragment_open -->  Click")
 
+        ads = AdsManager.appAdsInit(activity?:return)
         val viewPagerAdapter = ViewPagerAdapter(
             context ?: return,
             this,
@@ -52,7 +57,7 @@ class OnBordScreenNewScreen :
                     "onPageScrolled: $currentpage $position $positionOffset $positionOffsetPixels"
                 )
 
-                if (isInternetAvailable && Onboarding_Full_Native == 1) {
+                if (isInternetAvailable || Onboarding_Full_Native == 1) {
                     when (currentpage) {
                         0 -> {
                             if (positionOffset.toDouble() == 0.0)
@@ -81,7 +86,6 @@ class OnBordScreenNewScreen :
                         }
                     }
                 } else {
-                    if (isInternetAvailable)
                         when (currentpage) {
                             0 -> {
                                 if (positionOffset.toDouble() == 0.0)
@@ -116,10 +120,21 @@ class OnBordScreenNewScreen :
                 "intro_fragment_move_to_next",
                 "intro_fragment_move_to_next -->  Click"
             )
-            sharedPrefUtils?.saveData(context ?: requireContext(), IS_INTRO, true)
-            findNavController().navigate(
-                R.id.myMainMenuFragment
-            )
+            ads?.let { it1 ->
+                showTwoInterAdFirst(ads = it1,
+                    activity = activity?:return@let,
+                    remoteConfigNormal = val_inter_on_bord_screen,
+                    adIdNormal = id_inter_main_medium,
+                    tagClass = "on_bording",
+                    layout = _binding?.adsLayDialog!!,
+                    isBackPress = true,
+                    function = {
+                        findNavController().navigate(
+                            R.id.myMainMenuFragment
+                        )
+                    }
+                )
+            }
         }
 
     }
@@ -130,16 +145,27 @@ class OnBordScreenNewScreen :
 
     fun onNextButtonClicked() {
         Log.d("check_click", "onViewCreated: 1")
-        if (isInternetAvailable && Onboarding_Full_Native == 0) {
+        if (!isInternetAvailable || Onboarding_Full_Native == 0) {
             if (currentpage == 2) {
                 firebaseAnalytics(
                     "intro_fragment_move_to_next",
                     "intro_fragment_move_to_next -->  Click"
                 )
-                sharedPrefUtils?.saveData(context ?: requireContext(), IS_INTRO, true)
-                findNavController().navigate(
-                    R.id.myMainMenuFragment
-                )
+                ads?.let { it1 ->
+                    showTwoInterAdFirst(ads = it1,
+                        activity = activity?:return@let,
+                        remoteConfigNormal = val_inter_on_bord_screen,
+                        adIdNormal = id_inter_main_medium,
+                        tagClass = "on_bording",
+                        layout = _binding?.adsLayDialog!!,
+                        isBackPress = true,
+                        function = {
+                            findNavController().navigate(
+                                R.id.myMainMenuFragment
+                            )
+                        }
+                    )
+                }
             } else {
                 _binding?.viewPager?.setCurrentItem(getItem(+1), true)
             }
@@ -149,10 +175,21 @@ class OnBordScreenNewScreen :
                     "intro_fragment_move_to_next",
                     "intro_fragment_move_to_next -->  Click"
                 )
-                sharedPrefUtils?.saveData(context ?: requireContext(), IS_INTRO, true)
-                findNavController().navigate(
-                    R.id.myMainMenuFragment
-                )
+                ads?.let { it1 ->
+                    showTwoInterAdFirst(ads = it1,
+                        activity = activity?:return@let,
+                        remoteConfigNormal = val_inter_on_bord_screen,
+                        adIdNormal = id_inter_main_medium,
+                        tagClass = "on_bording",
+                        layout = _binding?.adsLayDialog!!,
+                        isBackPress = true,
+                        function = {
+                            findNavController().navigate(
+                                R.id.myMainMenuFragment
+                            )
+                        }
+                    )
+                }
             } else {
                 _binding?.viewPager?.setCurrentItem(getItem(+1), true)
             }
@@ -165,15 +202,11 @@ class OnBordScreenNewScreen :
             "intro_fragment_move_to_next",
             "intro_fragment_move_to_next -->  Click"
         )
-        if (isInternetAvailable && Onboarding_Full_Native == 0) {
+        if (isInternetAvailable || Onboarding_Full_Native == 0) {
             _binding?.viewPager?.setCurrentItem(getItem(+2), true)
         } else {
             _binding?.viewPager?.setCurrentItem(getItem(+3), true)
         }
-//        sharedPrefUtils?.saveData(context ?: requireContext(), IS_INTRO, true)
-//        findNavController().navigate(
-//            R.id.myMainMenuFragment
-//        )
     }
 
     override fun onPause() {
