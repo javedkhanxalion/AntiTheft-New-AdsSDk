@@ -9,10 +9,10 @@ plugins {
 android {
     signingConfigs {
         create("release") {
-            storeFile = file("$rootDir\\antitheifkeyNew.jks")
-            storePassword = "antitheifkeyNew"
-            keyAlias = "antitheifkeyNew"
-            keyPassword = "antitheifkeyNew"
+            storeFile = file("$rootDir\\antitheifkey.jks")
+            storePassword = "antitheifkey"
+            keyAlias = "antitheifkey"
+            keyPassword = "antitheifkey"
         }
     }
     namespace = "com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone"
@@ -23,8 +23,8 @@ android {
             "com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone"
         minSdk = 24
         targetSdk = 34
-        versionCode = 28
-        versionName = "3.8"
+        versionCode = 1
+        versionName = "1.0"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "AntiThief_v$versionName($versionCode)")
