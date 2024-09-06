@@ -137,6 +137,12 @@
     <string name="turkey">Türkisch</string>
     <string name="thai">Thailändisch</string>
     <string name="this_action_can_content_advertising">Diese Aktion kann Werbung enthalten</string>
+    <string name="purchase">Kaufen</string>
+    <string name="ad_free_app">Werbung entfernen</string>
+    <string name="unlock_all_features">Alle Funktionen freischalten</string>
+    <string name="get_premium">PREMIUM ERHALTEN</string>
+    <string name="lifetime_use">Lebenslange Nutzung</string>
+    <string name="seamless_uninterrupted_experience">Nahtlose, unterbrechungsfreie Erfahrung</string>
 
 
 </resources>

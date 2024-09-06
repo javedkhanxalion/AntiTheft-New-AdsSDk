@@ -135,5 +135,11 @@
     <string name="turkey">Turks</string>
     <string name="thai">Thais</string>
     <string name="this_action_can_content_advertising">Deze actie kan reclame bevatten</string>
+    <string name="purchase">Aankoop</string>
+    <string name="ad_free_app">Verwijder advertenties</string>
+    <string name="unlock_all_features">Alle functies ontgrendelen</string>
+    <string name="get_premium">PREMIUM KRIJGEN</string>
+    <string name="lifetime_use">Levenslang gebruik</string>
+    <string name="seamless_uninterrupted_experience">Naadloze, ononderbroken ervaring</string>
 
 </resources>

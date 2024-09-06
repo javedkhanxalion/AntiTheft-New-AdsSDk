@@ -135,5 +135,11 @@
     <string name="turkey">التركية</string>
     <string name="thai">التايلاندية</string>
     <string name="this_action_can_content_advertising">قد يتضمن هذا الإجراء إعلانات</string>
+    <string name="purchase">شراء</string>
+    <string name="ad_free_app">إزالة الإعلانات</string>
+    <string name="unlock_all_features">فتح جميع الميزات</string>
+    <string name="get_premium">احصل على بريميوم</string>
+    <string name="lifetime_use">استخدام مدى الحياة</string>
+    <string name="seamless_uninterrupted_experience">تجربة سلسة وغير منقطعة</string>
 
 </resources>

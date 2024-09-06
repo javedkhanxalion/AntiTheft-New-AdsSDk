@@ -260,7 +260,7 @@ class SplashFragment :
                             it,
                             activity ?: return@let,
                             remoteConfigNormal = true,
-                            adIdNormal = id_inter_main_medium,
+                            adIdNormal = id_inter_main_splash,
                             layout = _binding?.adsLayDialog!!,
                             tagClass = "splash"
                         ) {
@@ -567,7 +567,7 @@ class SplashFragment :
                         adsManager ?: return@addOnCompleteListener,
                         activity ?: return@addOnCompleteListener,
                         remoteConfigNormal = true,
-                        adIdNormal = id_inter_main_medium,
+                        adIdNormal = id_inter_main_splash,
                         "splash"
                     )
                 }

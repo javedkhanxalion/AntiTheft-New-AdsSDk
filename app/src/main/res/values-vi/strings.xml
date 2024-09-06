@@ -125,5 +125,11 @@
     <string name="turkey">Tiếng Thổ Nhĩ Kỳ</string>
     <string name="thai">Tiếng Thái</string>
     <string name="this_action_can_content_advertising">Hành động này có thể chứa quảng cáo</string>
+    <string name="purchase">Mua</string>
+    <string name="ad_free_app">Xóa quảng cáo</string>
+    <string name="unlock_all_features">Mở khóa tất cả tính năng</string>
+    <string name="get_premium">NHẬN PREMIUM</string>
+    <string name="lifetime_use">Sử dụng trọn đời</string>
+    <string name="seamless_uninterrupted_experience">Trải nghiệm liền mạch, không gián đoạn</string>
 
 </resources>

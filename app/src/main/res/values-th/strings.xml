@@ -129,5 +129,11 @@
     <string name="turkey">ตุรกี</string>
     <string name="thai">ไทย</string>
     <string name="this_action_can_content_advertising">การดำเนินการนี้อาจมีโฆษณา</string>
+    <string name="purchase">ซื้อ</string>
+    <string name="ad_free_app">ลบโฆษณา</string>
+    <string name="unlock_all_features">ปลดล็อกคุณสมบัติทั้งหมด</string>
+    <string name="get_premium">รับพรีเมียม</string>
+    <string name="lifetime_use">การใช้งานตลอดชีวิต</string>
+    <string name="seamless_uninterrupted_experience">ประสบการณ์ราบรื่น ไม่ขาดตอน</string>
 
 </resources>

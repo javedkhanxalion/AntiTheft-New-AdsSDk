@@ -129,5 +129,11 @@
     <string name="turkey">Турецкий</string>
     <string name="thai">Тайский</string>
     <string name="this_action_can_content_advertising">Это действие может содержать рекламу</string>
+    <string name="purchase">Купить</string>
+    <string name="ad_free_app">Удалить рекламу</string>
+    <string name="unlock_all_features">Разблокировать все функции</string>
+    <string name="get_premium">ПОЛУЧИТЬ ПРЕМИУМ</string>
+    <string name="lifetime_use">Пожизненное использование</string>
+    <string name="seamless_uninterrupted_experience">Бесшовный, непрерывный опыт</string>
 
 </resources>

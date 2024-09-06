@@ -129,5 +129,11 @@
     <string name="turkey">Bahasa Turki</string>
     <string name="thai">Thailand</string>
     <string name="this_action_can_content_advertising">Tindakan ini dapat memuat iklan</string>
+    <string name="purchase">Beli</string>
+    <string name="ad_free_app">Hapus iklan</string>
+    <string name="unlock_all_features">Buka semua fitur</string>
+    <string name="get_premium">DAPATKAN PREMIUM</string>
+    <string name="lifetime_use">Penggunaan seumur hidup</string>
+    <string name="seamless_uninterrupted_experience">Pengalaman mulus dan tanpa gangguan</string>
 
 </resources>

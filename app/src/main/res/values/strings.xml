@@ -39,9 +39,9 @@
     <string name="privacy">Privacy</string>
     <string name="press_to_activate_button_and_put_phone_on_the_directly">Press to Activate button and put phone on the directly</string>
     <string name="select_sound">Select Sound</string>
-    <string name="inturder_selfie">Inturder Selfie</string>
+    <string name="inturder_selfie">Intruder Selfie</string>
     <string name="wrong_password_alarm">Wrong Password Alarm</string>
-    <string name="indurder_alert">Indurder Alert</string>
+    <string name="indurder_alert">Intruder Alert</string>
     <string name="pin_attempt_setting">Pin Attempt Setting</string>
     <string name="stop_alarm">Stop Alarm</string>
     <string name="show_indruder">Show Intruder</string>
@@ -147,8 +147,12 @@
     <string name="wi_fi">Wi-Fi</string>
     <string name="mobile_data">Mobile Data</string>
 
-
     <string name="this_action_can_content_advertising">This action can content advertising</string>
     <string name="purchase">Purchase</string>
+    <string name="ad_free_app">Remove Ads</string>
+    <string name="unlock_all_features">Unlock all features</string>
+    <string name="get_premium">GET PREMIUM</string>
+    <string name="lifetime_use">Lifetime Use</string>
+    <string name="seamless_uninterrupted_experience">Uninterrupted experience</string>
 
 </resources>

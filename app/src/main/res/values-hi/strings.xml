@@ -135,5 +135,11 @@
     <string name="turkey">तुर्की</string>
     <string name="thai">थाई</string>
     <string name="this_action_can_content_advertising">इस कार्रवाई में विज्ञापन हो सकता है</string>
+    <string name="purchase">खरीदें</string>
+    <string name="ad_free_app">विज्ञापन हटाएं</string>
+    <string name="unlock_all_features">सभी सुविधाओं को अनलॉक करें</string>
+    <string name="get_premium">प्रीमियम प्राप्त करें</string>
+    <string name="lifetime_use">आजीवन उपयोग</string>
+    <string name="seamless_uninterrupted_experience">सहज, निरंतर अनुभव</string>
 
 </resources>

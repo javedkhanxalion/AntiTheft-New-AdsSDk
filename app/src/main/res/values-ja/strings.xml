@@ -137,5 +137,11 @@
     <string name="turkey">トルコ語</string>
     <string name="thai">タイ語</string>
     <string name="this_action_can_content_advertising">この操作には広告が含まれる場合があります</string>
+    <string name="purchase">購入</string>
+    <string name="ad_free_app">広告を削除</string>
+    <string name="unlock_all_features">すべての機能を解除</string>
+    <string name="get_premium">プレミアムを取得</string>
+    <string name="lifetime_use">永久利用</string>
+    <string name="seamless_uninterrupted_experience">シームレスで中断のない体験</string>
 
 </resources>
