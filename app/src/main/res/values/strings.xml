@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Anti Thief</string>
+    <string name="app_name">Phone Anti Thief Alarm</string>
     <string name="set_alarm_to_secure_your_phone_from_theft_or_find_your_phone">Set Alarm to secure your phone from theft or find your phone</string>
     <string name="phone_anti_theft">Phone Anti Theft</string>
     <string name="continue_txt">Continue</string>
@@ -8,7 +8,7 @@
     <string name="password">Password</string>
     <string name="motion">Motion</string>
     <string name="wistle">Whistle</string>
-    <string name="handfree">Handfree</string>
+    <string name="handfree">Hand-free</string>
     <string name="clap">Clap</string>
     <string name="remove">Remove</string>
     <string name="battery">Battery</string>
@@ -149,5 +149,6 @@
 
 
     <string name="this_action_can_content_advertising">This action can content advertising</string>
+    <string name="purchase">Purchase</string>
 
 </resources>

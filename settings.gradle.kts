@@ -15,9 +15,7 @@ dependencyResolutionManagement {
         maven("https://artifacts.applovin.com/android")
         maven("https://jitpack.io")
         maven("https://jcenter.bintray.com")
-
     }
-
 }
 
 rootProject.name = "AntiTheif-Xalion"

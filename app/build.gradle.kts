@@ -15,11 +15,12 @@ android {
             keyPassword = "antitheifkeyNew"
         }
     }
-    namespace = "com.antitheftalarm.dont.touch.phone.finder.phonesecurity"
+    namespace = "com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.antitheftalarm.dont.touch.phone.finder.phonesecurity"
+        applicationId =
+            "com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone"
         minSdk = 24
         targetSdk = 34
         versionCode = 28
@@ -42,8 +43,6 @@ android {
             )
 //            resValue( "string", "facebook_app_id", "")
             resValue( "string", "id_application_id", "ca-app-pub-3940256099942544~3347511713")
-            resValue ("string", "id_fullscreen_splash", "")
-            resValue ("string", "app_open_splash", "")
         }
         release {
             isMinifyEnabled = false
@@ -52,10 +51,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-//            resValue( "string", "facebook_app_id", "")
-            resValue( "string", "id_application_id", "ca-app-pub-5267896740455550~6650338408")
-            resValue ("string", "id_fullscreen_splash", "ca-app-pub-5267896740455550/8501679963")
-            resValue ("string", "app_open_splash", "ca-app-pub-5267896740455550/2519521707")
+            resValue( "string", "id_application_id", "ca-app-pub-5267896740455550~4277157590")
             signingConfig = signingConfigs.getByName("release")
         }
         buildFeatures {
@@ -118,6 +114,7 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.8.8")
     implementation ("com.google.android.ump:user-messaging-platform:3.0.0")
     implementation ("com.iabtcf:iabtcf-decoder:2.0.10")
+    implementation ("com.github.hypersoftdev:inappbilling:3.0.0-alpha-02")
 }
 
 
