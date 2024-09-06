@@ -135,5 +135,10 @@
     <string name="get_premium">프리미엄 받기</string>
     <string name="lifetime_use">평생 사용</string>
     <string name="seamless_uninterrupted_experience">끊김 없는 원활한 경험</string>
+    <string name="clap_detection">박수 감지</string>
+    <string name="title_motion_detection">동작 감지</string>
+    <string name="intro_1">휴대폰 도둑을 쉽게 감지하세요</string>
+    <string name="intro_2"><![CDATA[AI 기술과 사운드 효과를 사용하여 박수로 휴대폰을 찾으세요]]></string>
+    <string name="intro_3">반소매치기: 휴대폰 도둑 잡기</string>
 
 </resources>

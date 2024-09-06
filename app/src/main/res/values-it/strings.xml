@@ -135,5 +135,10 @@
     <string name="get_premium">OTTENERE PREMIUM</string>
     <string name="lifetime_use">Uso a vita</string>
     <string name="seamless_uninterrupted_experience">Esperienza senza interruzioni</string>
+    <string name="clap_detection">Rilevamento di applausi</string>
+    <string name="title_motion_detection">Rilevamento di movimento</string>
+    <string name="intro_1">Rileva ladri di telefoni senza sforzo</string>
+    <string name="intro_2"><![CDATA[Trova il tuo telefono battendo le mani utilizzando la tecnologia AI e gli effetti sonori]]></string>
+    <string name="intro_3">Anti-borseggio: cattura un ladro di telefoni cellulari</string>
 
 </resources>

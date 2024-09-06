@@ -88,7 +88,7 @@ class MainMenuLinearAdapter(
                 binding.activeBtn.loadImage(context, R.drawable.active_icon)
             else
                 binding.activeBtn.loadImage(context, R.drawable.un_active_icon)
-            binding.title.text = menuItem.maniTextTitle
+            binding.title.text = menuItem.textTitle
             binding.bottomView.clickWithThrottle {
                 onClick?.invoke(menuItem, adapterPosition)
             }

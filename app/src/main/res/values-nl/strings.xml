@@ -141,5 +141,10 @@
     <string name="get_premium">PREMIUM KRIJGEN</string>
     <string name="lifetime_use">Levenslang gebruik</string>
     <string name="seamless_uninterrupted_experience">Naadloze, ononderbroken ervaring</string>
+    <string name="clap_detection">Klapdetectie</string>
+    <string name="title_motion_detection">Bewegingsdetectie</string>
+    <string name="intro_1">Telefoondieven moeiteloos detecteren</string>
+    <string name="intro_2"><![CDATA[Vind je telefoon door te klappen met AI-technologie en geluidseffecten]]></string>
+    <string name="intro_3">Anti-zakkenroller: Een mobieltjessdief vangen</string>
 
 </resources>

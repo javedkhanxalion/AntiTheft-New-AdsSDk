@@ -61,6 +61,9 @@ class FragmentSoundSelection :
             topLay.setLayoutBtn.clickWithThrottle {
                 loadLayoutDirection(!(isGridLayout ?: return@clickWithThrottle))
             }
+            topLay.settingBtn.clickWithThrottle {
+                findNavController().navigate(R.id.FragmentBuyScreen)
+            }
         }
         setupBackPressedCallback {
             findNavController().popBackStack()

@@ -143,5 +143,10 @@
     <string name="get_premium">プレミアムを取得</string>
     <string name="lifetime_use">永久利用</string>
     <string name="seamless_uninterrupted_experience">シームレスで中断のない体験</string>
+    <string name="clap_detection">拍手検出</string>
+    <string name="title_motion_detection">モーション検出</string>
+    <string name="intro_1">携帯泥棒を簡単に検出</string>
+    <string name="intro_2"><![CDATA[AI技術と音響効果を使用して、拍手で電話を見つける]]></string>
+    <string name="intro_3">スリ対策: 携帯電話の泥棒を捕まえる</string>
 
 </resources>

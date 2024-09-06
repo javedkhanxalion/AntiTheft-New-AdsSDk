@@ -135,5 +135,10 @@
     <string name="get_premium">รับพรีเมียม</string>
     <string name="lifetime_use">การใช้งานตลอดชีวิต</string>
     <string name="seamless_uninterrupted_experience">ประสบการณ์ราบรื่น ไม่ขาดตอน</string>
+    <string name="clap_detection">ตรวจจับการปรบมือ</string>
+    <string name="title_motion_detection">การตรวจจับการเคลื่อนไหว</string>
+    <string name="intro_1">ตรวจจับขโมยโทรศัพท์ได้อย่างง่ายดาย</string>
+    <string name="intro_2"><![CDATA[ค้นหาโทรศัพท์ของคุณด้วยการปรบมือโดยใช้เทคโนโลยี AI และเอฟเฟกต์เสียง]]></string>
+    <string name="intro_3">ป้องกันการล้วงกระเป๋า: จับโจรขโมยโทรศัพท์มือถือ</string>
 
 </resources>

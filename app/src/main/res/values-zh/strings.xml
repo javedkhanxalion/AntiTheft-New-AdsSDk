@@ -135,5 +135,10 @@
     <string name="get_premium">获取高级版</string>
     <string name="lifetime_use">终身使用</string>
     <string name="seamless_uninterrupted_experience">无缝、不中断的体验</string>
+    <string name="clap_detection">鼓掌检测</string>
+    <string name="title_motion_detection">运动检测</string>
+    <string name="intro_1">轻松检测手机小偷</string>
+    <string name="intro_2"><![CDATA[通过拍手使用AI技术和音效找到你的手机]]></string>
+    <string name="intro_3">防盗：抓住手机小偷</string>
 
 </resources>

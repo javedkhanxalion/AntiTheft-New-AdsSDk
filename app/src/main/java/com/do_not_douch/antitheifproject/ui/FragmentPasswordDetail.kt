@@ -60,7 +60,7 @@ class FragmentPasswordDetail :
             context?.getSystemService(AppCompatActivity.DEVICE_POLICY_SERVICE) as DevicePolicyManager
         mComponentName = ComponentName(context ?: return, Admin::class.java)
         dbHelper = DbHelper(context ?: return)
-        _binding?.topLay?.title?.text = model?.maniTextTitle
+        _binding?.topLay?.title?.text = model?.textTitle
         _binding?.topLay?.navMenu?.loadImage(context ?: return, R.drawable.back_btn)
         loadBanner()
         _binding?.run {
@@ -81,6 +81,9 @@ class FragmentPasswordDetail :
             }
             topLay.setLayoutBtn.clickWithThrottle {
                 loadLayoutDirection(!(isGridLayout ?: return@clickWithThrottle))
+            }
+            topLay.settingBtn.clickWithThrottle {
+                findNavController().navigate(R.id.FragmentBuyScreen)
             }
         }
         setupBackPressedCallback {

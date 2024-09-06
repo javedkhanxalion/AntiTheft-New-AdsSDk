@@ -207,21 +207,26 @@ class SplashFragment :
             } else {
                 getIntentMove()
             }
-//            consentListener = {
-//                isUserConsent = it
-//                Log.d("check_contest", "onViewCreated: $isUserConsent")
-//                if (isUserConsent) {
-//                    if (isNetworkAvailable(context)) {
-//                        adsManager = AdsManager.appAdsInit(requireActivity())
-//                        initRemoteIds()
+//            if (isNetworkAvailable(context)) {
+//                consentListener = {
+//                    isUserConsent = it
+//                    Log.d("check_contest", "onViewCreated: $isUserConsent")
+//                    if (isUserConsent) {
+//                        if (isNetworkAvailable(context)) {
+//                            adsManager = AdsManager.appAdsInit(requireActivity())
+//                            initRemoteIds()
+//                        } else {
+//                            getIntentMove()
+//                        }
 //                    } else {
 //                        getIntentMove()
 //                    }
-//                } else {
-//                    getIntentMove()
-//                }
 //
+//                }
+//            }else{
+//                getIntentMove()
 //            }
+
         }
         setupBackPressedCallback {
             //Do Nothing

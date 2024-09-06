@@ -234,17 +234,21 @@ var slideImages = arrayOf(
     R.drawable.intro_3
 )
 
-var introHeading = arrayOf(
-    "Pocket Detection",
-    "Clap Detection",
-    "Motion Detection"
-)
 
-var introDetailText = arrayOf(
-    "Detect Phone thieves Effortlessly",
-    "Find your phone by Clap using AI tech & sounds effects",
-    "Anti Pickpocket catch a mobile phone thief"
-)
+fun introHeading(context: Context) :ArrayList<String>{
+    val list = arrayListOf<String>()
+    list.add(context.getString(R.string.pocket_detection))
+    list.add(context.getString(R.string.clap_detection))
+    list.add(context.getString(R.string.title_motion_detection))
+    return  list
+}
+fun introDetailText(context : Context) :ArrayList<String>{
+    val list = arrayListOf<String>()
+    list.add(context.getString(R.string.intro_1))
+    list.add(context.getString(R.string.intro_2))
+    list.add(context.getString(R.string.intro_3))
+    return  list
+}
 
 fun Fragment.languageData(): ArrayList<LanguageAppModel> {
     val list = arrayListOf<LanguageAppModel>()

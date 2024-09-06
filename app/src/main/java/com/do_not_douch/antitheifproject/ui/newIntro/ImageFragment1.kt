@@ -42,8 +42,8 @@ class ImageFragment1 : Fragment() {
         ads = AdsManager.appAdsInit(activity ?: return)
         _binding1?.sliderImage?.setImageResource(slideImages[position])
         _binding1?.sliderHeading?.text =
-            com.do_not_douch.antitheifproject.utilities.introHeading[position]
-        _binding1?.sliderDesc?.text = introDetailText[position]
+            com.do_not_douch.antitheifproject.utilities.introHeading(context?:return)[position]
+        _binding1?.sliderDesc?.text = introDetailText(context?:return)[position]
         _binding1?.wormDotsIndicator?.attachTo(viewPager22 ?: return)
         if (!isInternetAvailable || Onboarding_Full_Native == 0) {
             if (position == 2) {

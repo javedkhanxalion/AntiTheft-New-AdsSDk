@@ -141,5 +141,10 @@
     <string name="get_premium">प्रीमियम प्राप्त करें</string>
     <string name="lifetime_use">आजीवन उपयोग</string>
     <string name="seamless_uninterrupted_experience">सहज, निरंतर अनुभव</string>
+    <string name="clap_detection">ताली पहचान</string>
+    <string name="title_motion_detection">मोशन डिटेक्शन</string>
+    <string name="intro_1">फोन चोरों का आसानी से पता लगाएं</string>
+    <string name="intro_2"><![CDATA[ताली बजाकर AI तकनीक और ध्वनि प्रभावों से अपना फोन खोजें]]></string>
+    <string name="intro_3">एंटी पॉकेटमारी: मोबाइल फोन चोर को पकड़ें</string>
 
 </resources>

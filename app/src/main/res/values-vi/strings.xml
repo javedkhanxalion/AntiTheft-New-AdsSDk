@@ -131,5 +131,10 @@
     <string name="get_premium">NHẬN PREMIUM</string>
     <string name="lifetime_use">Sử dụng trọn đời</string>
     <string name="seamless_uninterrupted_experience">Trải nghiệm liền mạch, không gián đoạn</string>
+    <string name="clap_detection">Phát hiện tiếng vỗ tay</string>
+    <string name="title_motion_detection">Phát hiện chuyển động</string>
+    <string name="intro_1">Dễ dàng phát hiện kẻ trộm điện thoại</string>
+    <string name="intro_2"><![CDATA[Tìm điện thoại của bạn bằng tiếng vỗ tay bằng công nghệ AI và hiệu ứng âm thanh]]></string>
+    <string name="intro_3">Chống trộm cắp: Bắt kẻ trộm điện thoại di động</string>
 
 </resources>

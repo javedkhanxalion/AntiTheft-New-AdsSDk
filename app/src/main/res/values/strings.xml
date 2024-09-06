@@ -155,4 +155,10 @@
     <string name="lifetime_use">Lifetime Use</string>
     <string name="seamless_uninterrupted_experience">Uninterrupted experience</string>
 
+    <string name="clap_detection">Clap Detection</string>
+    <string name="title_motion_detection">Motion Detection</string>
+    <string name="intro_1">Detect Phone thieves Effortlessly</string>
+    <string name="intro_2"><![CDATA[Find your phone by Clap using AI tech & sounds effects]]></string>
+    <string name="intro_3">Anti Pickpocket catch a mobile phone thief</string>
+
 </resources>

@@ -47,16 +47,14 @@ class FragmentDetectionSameFunction :
             model = it.getParcelable(ANTI_TITLE) ?: return@let
         }
         adsManager= AdsManager.appAdsInit(activity?:return)
-        _binding?.topLay?.title?.text = model?.maniTextTitle
+        _binding?.topLay?.title?.text = model?.textTitle
         _binding?.textView3?.text = model?.bottomText
         sharedPrefUtils = DbHelper(context ?: return)
         _binding?.topLay?.navMenu?.loadImage(context ?: return, R.drawable.back_btn)
         _binding?.run {
-
             topLay.navMenu.clickWithThrottle {
                 findNavController().navigateUp()
             }
-
 
             gridLayout.soundIcon.clickWithThrottle {
                 findNavController().navigate(
@@ -75,7 +73,9 @@ class FragmentDetectionSameFunction :
             topLay.setLayoutBtn.clickWithThrottle {
                 loadLayoutDirection(!(isGridLayout ?: return@clickWithThrottle))
             }
-
+            topLay.settingBtn.clickWithThrottle {
+                findNavController().navigate(R.id.FragmentBuyScreen)
+            }
         }
 
         setupBackPressedCallback {

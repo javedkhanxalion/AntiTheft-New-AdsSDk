@@ -69,6 +69,9 @@ class FragmentInturderDetectionDetail :
             topLay.setLayoutBtn.clickWithThrottle {
                 loadLayoutDirection(!(isGridLayout ?: return@clickWithThrottle))
             }
+            topLay.settingBtn.clickWithThrottle {
+                findNavController().navigate(R.id.FragmentBuyScreen)
+            }
         }
         loadBanner()
         dbHelper?.getBooleanData(context ?: return, IS_GRID, true)?.let {

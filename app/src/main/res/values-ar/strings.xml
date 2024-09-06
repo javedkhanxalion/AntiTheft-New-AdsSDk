@@ -141,5 +141,10 @@
     <string name="get_premium">احصل على بريميوم</string>
     <string name="lifetime_use">استخدام مدى الحياة</string>
     <string name="seamless_uninterrupted_experience">تجربة سلسة وغير منقطعة</string>
+    <string name="clap_detection">كشف التصفيق</string>
+    <string name="title_motion_detection">كشف الحركة</string>
+    <string name="intro_1">اكتشف سارقي الهواتف بسهولة</string>
+    <string name="intro_2"><![CDATA[ابحث عن هاتفك بالتصفيق باستخدام تقنية الذكاء الاصطناعي وتأثيرات الصوت]]></string>
+    <string name="intro_3">مكافحة النشل: القبض على لص الهاتف المحمول</string>
 
 </resources>
