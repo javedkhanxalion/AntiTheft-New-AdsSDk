@@ -462,11 +462,10 @@ class FragmentPasswordDetail :
             view = _binding?.bannerAds!!,
             viewS = _binding?.shimmerLayout!!,
             addConfig = val_banner_1,
-            bannerId = id_banner_1,
-            bannerListener = {
-                _binding?.shimmerLayout!!.visibility=View.GONE
-            }
-        )
+            bannerId = id_banner_1
+        ){
+            _binding?.shimmerLayout!!.visibility=View.GONE
+        }
     }
 
 

@@ -2,12 +2,20 @@ package com.do_not_douch.antitheifproject.ads_manager
 
 import android.app.Activity
 import android.app.Application
+import android.app.Dialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
+import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -26,20 +34,44 @@ import java.util.*
 
 class AdOpenApp(private val myApplication: Application, private var openAppAdId: String) :
     Application.ActivityLifecycleCallbacks, LifecycleObserver {
-
-    var appOpenAd: AppOpenAd? = null
+    private var customDialog: Dialog? = null
+    private var appOpenAd: AppOpenAd? = null
     private var currentActivity: Activity? = null
     private var loadTime: Long = 0
     private var loadCallback: AppOpenAd.AppOpenAdLoadCallback? = null
 
+    fun showCustomDialogAndAd() {
+        customDialog = Dialog(currentActivity ?: return)
+        val inflater = LayoutInflater.from(currentActivity)
+        customDialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val view: View = inflater.inflate(R.layout.custom_dialog, null)
+        customDialog?.setContentView(view)
+        customDialog?.setCancelable(false)
+        // Make the dialog full-screen
+        val window: Window? = customDialog?.window
+        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+        window?.setBackgroundDrawableResource(android.R.color.transparent) // Set the background transparent if needed
+
+        // Optionally, you can hide the status bar and navigation bar for true fullscreen
+        window?.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+        // Show the dialog
+        customDialog?.show()
+        // Use a Handler to delay the showing of the ad for 3 seconds
+        Handler(Looper.getMainLooper()).postDelayed({
+            showAdIfAvailable()
+        }, 3000) // 3 seconds delay
+    }
     fun fetchAd() {
         if (isAdAvailable) {
             return
         }
         loadCallback = object : AppOpenAd.AppOpenAdLoadCallback() {
             override fun onAdLoaded(appOpenAd: AppOpenAd) {
-                openAdForSplash = appOpenAd
                 this@AdOpenApp.appOpenAd = appOpenAd
+                openAdForSplash = appOpenAd
                 loadTime = Date().time
                 super.onAdLoaded(appOpenAd)
             }
@@ -81,10 +113,10 @@ class AdOpenApp(private val myApplication: Application, private var openAppAdId:
     override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle) {}
     override fun onActivityDestroyed(activity: Activity) {
         currentActivity = null
+        customDialog?.dismiss()
     }
 
-
-    fun showAdIfAvailable() {
+    private fun showAdIfAvailable() {
         // Only show ad if there is not already an app open ad currently showing
         // and an ad is available.
         if (!isShowingAd && isAdAvailable) {
@@ -94,11 +126,13 @@ class AdOpenApp(private val myApplication: Application, private var openAppAdId:
                         // Set the reference to null so isAdAvailable() returns false.
                         appOpenAd = null
                         isShowingAd = false
+                        customDialog?.dismiss()
                         fetchAd()
                     }
 
                     override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                         Log.d(LOG_TAG, "Will show ad. ${adError.message}")
+                        customDialog?.dismiss()
                     }
 
                     override fun onAdShowedFullScreenContent() {
@@ -110,19 +144,26 @@ class AdOpenApp(private val myApplication: Application, private var openAppAdId:
                 appOpenAd?.fullScreenContentCallback = fullScreenContentCallback
             }
         } else {
+            customDialog?.dismiss()
             Log.d(LOG_TAG, "Can not show ad.")
             fetchAd()
         }
+        Handler(Looper.getMainLooper()).postDelayed({
+            customDialog?.dismiss()
+        }, 4000) // 3 seconds delay
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStart() {
-        showAdIfAvailable()
+//        showAdIfAvailable()
+        if (isSplash) {
+            showCustomDialogAndAd()
+        }
     }
 
     companion object {
         private const val LOG_TAG = "AppOpenManager"
-        private var isShowingAd = false
+        var isShowingAd = false
         var openAdForSplash: AppOpenAd? = null
     }
 

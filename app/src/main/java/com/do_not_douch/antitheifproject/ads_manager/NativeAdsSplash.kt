@@ -1,11 +1,17 @@
 package com.do_not_douch.antitheifproject.ads_manager
 
 import android.app.Activity
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-
+import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.BuildConfig
+import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
+import com.do_not_douch.antitheifproject.ads_manager.FunctionClass.checkPurchased
+import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
+import com.do_not_douch.antitheifproject.utilities.getRandomColor
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
@@ -16,10 +22,6 @@ import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.nativead.NativeAdOptions.ADCHOICES_TOP_RIGHT
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.material.snackbar.Snackbar
-import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.BuildConfig
-import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
-import com.do_not_douch.antitheifproject.ads_manager.FunctionClass.checkPurchased
-import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
 
 object NativeAdsSplash {
 
@@ -51,7 +53,7 @@ object NativeAdsSplash {
         activity: Activity,
         addConfig: Boolean,
         nativeAdId: String,
-        nativeListener: NativeListener
+        nativeListener: NativeListener,
     ) {
         Log.d(
             NativeAdsSplashLog,
@@ -164,7 +166,7 @@ object NativeAdsSplash {
         activity: Activity,
         nativeListener: NativeListener,
         builder: AdLoader.Builder,
-        nativeAdId: String
+        nativeAdId: String,
     ) {
         nativeListener.nativeAdLoaded(currentNativeAd)
         Log.d(NativeAdsSplashLog, "   Having loaded Ad")
@@ -181,7 +183,7 @@ object NativeAdsSplash {
         val videoOptions = VideoOptions.Builder().setStartMuted(true).build()
 
         val adOptions = NativeAdOptions.Builder().setVideoOptions(videoOptions)
-            .setAdChoicesPlacement(NativeAdOptions.ADCHOICES_TOP_RIGHT).build()
+            .setAdChoicesPlacement(ADCHOICES_TOP_RIGHT).build()
         builder.withNativeAdOptions(adOptions)
 
         val adLoader = builder.withAdListener(object : AdListener() {
@@ -288,7 +290,14 @@ object NativeAdsSplash {
                   (adView.starRatingView as RatingBar).rating = nativeAd.starRating?.toFloat() ?: 0f
                   adView.starRatingView?.visibility = View.GONE
               }*/
-
+        try {
+            (adView.findViewById(R.id.custom_call_to_action) as TextView).backgroundTintList =
+                ColorStateList.valueOf(
+                    Color.parseColor(getRandomColor())
+                )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         if (nativeAd.body == null) {
             adView.bodyView?.visibility = View.INVISIBLE
         } else {

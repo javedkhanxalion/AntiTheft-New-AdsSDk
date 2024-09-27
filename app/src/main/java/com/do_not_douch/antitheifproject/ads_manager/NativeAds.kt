@@ -2,8 +2,11 @@ package com.do_not_douch.antitheifproject.ads_manager
 
 
 import android.app.Activity
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.gms.ads.AdListener
@@ -19,6 +22,7 @@ import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefe
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
 import com.do_not_douch.antitheifproject.ads_manager.FunctionClass.checkPurchased
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
+import com.do_not_douch.antitheifproject.utilities.getRandomColor
 
 /**
  * Created by
@@ -268,7 +272,12 @@ object NativeAds {
 //        adView.starRatingView = adView.findViewById(R.id.custom_stars)
 
         (adView.headlineView as TextView).text = nativeAd.headline
-
+        try {
+            (adView.findViewById(R.id.custom_call_to_action) as TextView).backgroundTintList = ColorStateList.valueOf(
+                Color.parseColor(getRandomColor()))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 //        if (nativeAd.starRating == null) {
 //            adView.starRatingView?.visibility = View.INVISIBLE
 //        } else {
@@ -371,7 +380,12 @@ object NativeAds {
 //        adView.starRatingView = adView.findViewById(R.id.custom_stars)
         adView.mediaView = adView.findViewById(R.id.custom_media)
 
-
+        try {
+            (adView.findViewById(R.id.custom_call_to_action) as TextView).backgroundTintList = ColorStateList.valueOf(
+                Color.parseColor(getRandomColor()))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         adView.mediaView?.mediaContent = (nativeAd.mediaContent ?: return)
 
         (adView.headlineView as TextView).text = nativeAd.headline

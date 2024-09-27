@@ -68,11 +68,11 @@ class ImageFragment1 : Fragment() {
         _binding1?.skipApp?.clickWithThrottle {
             fragmentA?.invoke()
         }
-        if (isInternetAvailable(context ?: requireContext())) {
-            loadNewNative1()
-        } else {
-            _binding1?.mainAdsNative?.visibility = View.GONE
-        }
+//        if (isInternetAvailable(context ?: requireContext())) {
+//            loadNewNative1()
+//        } else {
+//            _binding1?.mainAdsNative?.visibility = View.GONE
+//        }
 
     }
 
@@ -104,17 +104,17 @@ class ImageFragment1 : Fragment() {
 
         fun onAdVisibilityChanged(visible: Boolean) {
             Log.d("check_position", "onPageScrolled: Fragment--1111 $visible")
-            if(!val_native_intro_screen){
+         /*   if(!val_native_intro_screen){
                 return
             }
             _binding1!!.mainAdsNative!!.visibility = if (visible) View.VISIBLE
             else
-                View.INVISIBLE
+                View.INVISIBLE*/
         }
     }
 
     fun loadNewNative1() {
-        val adView = LayoutInflater.from(context).inflate(
+      /*  val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(onboarding1_bottom, _binding1?.mainAdsNative!!, context ?: return),
             null, false
         ) as NativeAdView
@@ -144,7 +144,7 @@ class ImageFragment1 : Fragment() {
                     _binding1?.shimmerLayout?.visibility = View.GONE
                     super.nativeAdValidate(string)
                 }
-            })
+            })*/
     }
 
 }

@@ -47,7 +47,6 @@
     <FrameLayout
         android:id="@+id/adsView"
         android:layout_width="match_parent"
-        app:ikwad_preview_layout="@layout/shimmer_loading_banner"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/next"
         app:layout_constraintEnd_toEndOf="parent"

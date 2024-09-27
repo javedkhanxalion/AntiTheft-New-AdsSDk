@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
@@ -43,6 +44,8 @@ import com.do_not_douch.antitheifproject.utilities.val_ad_native_language_screen
 import com.do_not_douch.antitheifproject.utilities.val_banner_language_screen
 import com.do_not_douch.antitheifproject.utilities.val_inter_language_screen
 import com.do_not_douch.antitheifproject.utilities.val_is_inapp_splash
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
@@ -66,16 +69,14 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                 isLangScreen = it.getBoolean(LANG_SCREEN)
             }
             if (isInternetAvailable(context ?: return) && !isLangScreen) {
-                insertAds()
+//                insertAds()
             }
-            if (isLangScreen) {
+//            if (isLangScreen) {
                 loadNative()
-                _binding?.backBtn?.visibility = View.GONE
-            } else {
-                loadBanner()
-            }
+//            } else {
+//                loadBanner()
+//            }
             _binding?.forwardBtn?.clickWithThrottle {
-//                sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
                 if (!isLangScreen) {
                     firebaseAnalytics(
                         "language_fragment_forward_btn_from",
@@ -91,7 +92,6 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                     )
                     sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
                     setLocaleMain(positionSelected)
-//                    sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
                     adsManager?.let { it1 ->
                         showTwoInterAdFirst(
                             ads = it1,
@@ -112,7 +112,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                                 )
 
                                 if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                                    findNavController().navigate(R.id.myMainMenuFragment)
+                                    findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
                                 } else {
                                     findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to true))
                                 }
@@ -143,8 +143,9 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                 clickItem = {
                     positionSelected = it.country_code
                     adapter?.selectLanguage(positionSelected)
+                    _binding?.forwardBtn?.visibility=View.VISIBLE
                     if (isLangScreen) {
-                        reCall()
+//                        reCall()
                     }
                 }
             )
@@ -164,6 +165,17 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                         "language_fragment_back_press -->  Click"
                     )
                     findNavController().popBackStack()
+                } else {
+                    firebaseAnalytics(
+                        "language_fragment_forward_btn_from",
+                        "language_fragment_forward_btn_from -->  Click"
+                    )
+                    sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
+                    setLocaleMain(positionSelected)
+//                    sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
+                    findNavController().navigate(
+                        R.id.OnBordScreenNewScreen
+                    )
                 }
             }
             setupBackPressedCallback {
@@ -225,43 +237,11 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                     super.nativeAdValidate(string)
                 }
             })
-
-    }
-
-    private fun reCall() {
-        when (language_reload) {
-            1 -> {
-                loadNative()
-            }
-
-            2 -> {
-                if (recallActive == 2) {
-                    loadNative()
-                    recallActive = 0
-                } else {
-                    recallActive += 1
-                }
-            }
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.clear()
-    }
-
-    fun loadBanner() {
-        _binding?.adsView?.visibility = View.VISIBLE
-        AdsBanners.loadBanner(
-            activity = activity?:return,
-            view = _binding?.adsView!!,
-            viewS = _binding?.shimmerLayout!!,
-            addConfig = val_banner_language_screen,
-            bannerId = id_banner_language_screen,
-            bannerListener = {
-                _binding?.shimmerLayout?.visibility = View.GONE
-            }
-        )
     }
 
     private fun initializeData() {
@@ -304,7 +284,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             )
         )
     }
-
+/*
     private fun insertAds() {
         val adPosition = getFirstAdPosition(fisrt_ad_line_threshold)
         val repeatAdPosition = getRepeatAdPosition(line_count)
@@ -363,7 +343,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             }
         }
         return 2
-    }
+    }*/
 
     override fun onPause() {
         super.onPause()

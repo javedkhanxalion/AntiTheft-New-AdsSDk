@@ -90,14 +90,3 @@ fun showNormalInterAdSingle(
     }, 500)
 }
 
-//fun loadOpenAdSplash(context: Context) {
-//    openAdForSplash = AppOpenForSplash()
-//    openAdForSplash?.loadAd(context, context.getString(R.string.app_open_splash))
-//    Log.d(TAG, "loadOpenAdSplash: Load $openAdForSplash")
-//}
-//
-//
-//fun showOpenAd(activity: Activity) {
-//    Log.d(TAG, "loadOpenAdSplash: SHow $openAdForSplash")
-//    openAdForSplash?.showAdIfAvailable(activity)
-//}

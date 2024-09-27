@@ -78,7 +78,6 @@
     <FrameLayout
         android:id="@+id/bannerAds"
         android:layout_width="match_parent"
-        app:ikwad_preview_layout="@layout/shimmer_loading_banner"
         android:layout_height="wrap_content"
         android:minHeight="50dp"
         app:layout_constraintBottom_toBottomOf="parent"

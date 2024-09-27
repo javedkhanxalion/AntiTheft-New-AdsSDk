@@ -14,6 +14,7 @@ import com.google.android.gms.ads.*
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager.isNetworkAvailable
 import com.do_not_douch.antitheifproject.ads_manager.FunctionClass.checkPurchased
 import com.do_not_douch.antitheifproject.ads_manager.FunctionClass.firebaseAnalytics
+import com.do_not_douch.antitheifproject.utilities.banner_type
 
 object AdsBanners {
     private var adView: AdView? = null
@@ -106,7 +107,11 @@ object AdsBanners {
             adView = AdView(activity)
             view.addView(adView)
             adView?.adUnitId = if (isDebug()) bannerTestId else bannerId ?: bannerTestId
-            adView?.setAdSize(AdSize.BANNER)
+            if(banner_type==0) {
+                adView?.setAdSize(AdSize.MEDIUM_RECTANGLE)
+            }else {
+                adView?.setAdSize(AdSize.BANNER)
+            }
             val adRequest =AdRequest.Builder().build()
             adView?.loadAd(adRequest)
 
@@ -152,6 +157,7 @@ object AdsBanners {
                 override fun onAdOpened() {
                     firebaseAnalytics("bannerAdsOpened", "bannerAdsOpened->click")
                     Log.d(bannerLogs, "BannerWithSize : onAdOpened")
+                    bannerListener.invoke()
                     super.onAdOpened()
                 }
             }
@@ -159,6 +165,7 @@ object AdsBanners {
             Log.d(bannerLogs, "some value is false")
             viewS.visibility = View.GONE
             view.visibility = View.GONE
+            bannerListener.invoke()
         }
     }
 
