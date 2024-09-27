@@ -129,5 +129,16 @@
     <string name="turkey">터키어</string>
     <string name="thai">태국어</string>
     <string name="this_action_can_content_advertising">이 작업에는 광고가 포함될 수 있습니다</string>
+    <string name="purchase">구매</string>
+    <string name="ad_free_app">광고 제거</string>
+    <string name="unlock_all_features">모든 기능 잠금 해제</string>
+    <string name="get_premium">프리미엄 받기</string>
+    <string name="lifetime_use">평생 사용</string>
+    <string name="seamless_uninterrupted_experience">끊김 없는 원활한 경험</string>
+    <string name="clap_detection">박수 감지</string>
+    <string name="title_motion_detection">동작 감지</string>
+    <string name="intro_1">휴대폰 도둑을 쉽게 감지하세요</string>
+    <string name="intro_2"><![CDATA[AI 기술과 사운드 효과를 사용하여 박수로 휴대폰을 찾으세요]]></string>
+    <string name="intro_3">반소매치기: 휴대폰 도둑 잡기</string>
 
 </resources>

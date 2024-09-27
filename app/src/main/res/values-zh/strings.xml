@@ -129,5 +129,16 @@
     <string name="turkey">土耳其语</string>
     <string name="thai">泰语</string>
     <string name="this_action_can_content_advertising">此操作可能包含广告</string>
+    <string name="purchase">购买</string>
+    <string name="ad_free_app">去除广告</string>
+    <string name="unlock_all_features">解锁所有功能</string>
+    <string name="get_premium">获取高级版</string>
+    <string name="lifetime_use">终身使用</string>
+    <string name="seamless_uninterrupted_experience">无缝、不中断的体验</string>
+    <string name="clap_detection">鼓掌检测</string>
+    <string name="title_motion_detection">运动检测</string>
+    <string name="intro_1">轻松检测手机小偷</string>
+    <string name="intro_2"><![CDATA[通过拍手使用AI技术和音效找到你的手机]]></string>
+    <string name="intro_3">防盗：抓住手机小偷</string>
 
 </resources>

@@ -129,5 +129,16 @@
     <string name="turkey">Турецкий</string>
     <string name="thai">Тайский</string>
     <string name="this_action_can_content_advertising">Это действие может содержать рекламу</string>
+    <string name="purchase">Купить</string>
+    <string name="ad_free_app">Удалить рекламу</string>
+    <string name="unlock_all_features">Разблокировать все функции</string>
+    <string name="get_premium">ПОЛУЧИТЬ ПРЕМИУМ</string>
+    <string name="lifetime_use">Пожизненное использование</string>
+    <string name="seamless_uninterrupted_experience">Бесшовный, непрерывный опыт</string>
+    <string name="clap_detection">Обнаружение хлопка</string>
+    <string name="title_motion_detection">Обнаружение движения</string>
+    <string name="intro_1">Легко обнаружить телефонных воров</string>
+    <string name="intro_2"><![CDATA[Найдите свой телефон хлопком с помощью технологий ИИ и звуковых эффектов]]></string>
+    <string name="intro_3">Анти-карманник: поймать вора мобильного телефона</string>
 
 </resources>

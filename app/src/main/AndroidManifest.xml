@@ -59,7 +59,7 @@
 <!--    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />-->
 
     <application
-        android:name="com.securityalarm.antitheifproject.MyApplication"
+        android:name="com.do_not_douch.antitheifproject.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:extractNativeLibs="false"
@@ -71,7 +71,7 @@
         android:theme="@style/Theme.AntiTheifProject">
 
         <activity
-            android:name="com.securityalarm.antitheifproject.MainActivity"
+            android:name="com.do_not_douch.antitheifproject.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -93,7 +93,7 @@
         </activity>-->
 
         <service
-            android:name="com.securityalarm.antitheifproject.service.SystemEventsService"
+            android:name="com.do_not_douch.antitheifproject.service.SystemEventsService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="camera|microphone|phoneCall|specialUse"
@@ -107,7 +107,7 @@
         </service>
 
         <receiver
-            android:name="com.securityalarm.antitheifproject.Admin"
+            android:name="com.do_not_douch.antitheifproject.Admin"
             android:exported="true"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
             <meta-data
@@ -122,7 +122,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.antitheftalarm.dont.touch.phone.finder.phonesecurity.fileprovider"
+            android:authorities="com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -144,7 +144,7 @@
 
 
         <receiver
-            android:name="com.securityalarm.antitheifproject.utilities.WifiStateReceiver"
+            android:name="com.do_not_douch.antitheifproject.utilities.WifiStateReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -186,7 +186,7 @@
             android:name="com.google.android.gms.ads.mediation.unity.UnityAdapterInitialization"
             android:value="enabled"/>-->
         <service
-            android:name="com.securityalarm.antitheifproject.ads_manager.MyFirebaseMessagingService"
+            android:name="com.do_not_douch.antitheifproject.ads_manager.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>

@@ -9,24 +9,26 @@ plugins {
 android {
     signingConfigs {
         create("release") {
-            storeFile = file("$rootDir\\antitheifkeyNew.jks")
-            storePassword = "antitheifkeyNew"
-            keyAlias = "antitheifkeyNew"
-            keyPassword = "antitheifkeyNew"
+            storeFile = file("$rootDir\\antitheifkey.jks")
+            storePassword = "antitheifkey"
+            keyAlias = "antitheifkey"
+            keyPassword = "antitheifkey"
         }
     }
-    namespace = "com.antitheftalarm.dont.touch.phone.finder.phonesecurity"
+    namespace = "com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.antitheftalarm.dont.touch.phone.finder.phonesecurity"
+        applicationId =
+            "com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone"
         minSdk = 24
         targetSdk = 34
-        versionCode = 29
-        versionName = "3.9"
+        versionCode = 1
+        versionName = "1.0"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "AntiThief_v$versionName($versionCode)")
+
 
     }
 
@@ -41,8 +43,6 @@ android {
             )
 //            resValue( "string", "facebook_app_id", "")
             resValue( "string", "id_application_id", "ca-app-pub-3940256099942544~3347511713")
-            resValue ("string", "id_fullscreen_splash", "")
-            resValue ("string", "app_open_splash", "")
         }
         release {
             isMinifyEnabled = false
@@ -51,11 +51,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
-//            resValue( "string", "facebook_app_id", "")
-            resValue( "string", "id_application_id", "ca-app-pub-5267896740455550~4325255484")
-            resValue ("string", "id_fullscreen_splash", "ca-app-pub-5267896740455550/8619723719")
-            resValue ("string", "app_open_splash", "ca-app-pub-5267896740455550/1367919656")
+            resValue( "string", "id_application_id", "ca-app-pub-5267896740455550~4277157590")
             signingConfig = signingConfigs.getByName("release")
         }
         buildFeatures {
@@ -86,7 +82,7 @@ android {
 
 dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.10.0")
 // The default implementations
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
@@ -118,6 +114,7 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.8.8")
     implementation ("com.google.android.ump:user-messaging-platform:3.0.0")
     implementation ("com.iabtcf:iabtcf-decoder:2.0.10")
+    implementation ("com.github.hypersoftdev:inappbilling:3.0.0-alpha-02")
 }
 
 

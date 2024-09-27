@@ -270,5 +270,13 @@
         <key>val_inter_on_bord_screen</key>
         <value>true</value>
     </entry>
+    <entry>
+        <key>val_is_inapp_splash</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>val_is_inapp</key>
+        <value>true</value>
+    </entry>
 
 </defaultsMap>

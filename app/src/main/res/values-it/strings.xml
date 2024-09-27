@@ -129,5 +129,16 @@
     <string name="turkey">Turco</string>
     <string name="thai">Thailandese</string>
     <string name="this_action_can_content_advertising">Questa azione può contenere pubblicità</string>
+    <string name="purchase">Acquista</string>
+    <string name="ad_free_app">Rimuovi annunci</string>
+    <string name="unlock_all_features">Sblocca tutte le funzionalità</string>
+    <string name="get_premium">OTTENERE PREMIUM</string>
+    <string name="lifetime_use">Uso a vita</string>
+    <string name="seamless_uninterrupted_experience">Esperienza senza interruzioni</string>
+    <string name="clap_detection">Rilevamento di applausi</string>
+    <string name="title_motion_detection">Rilevamento di movimento</string>
+    <string name="intro_1">Rileva ladri di telefoni senza sforzo</string>
+    <string name="intro_2"><![CDATA[Trova il tuo telefono battendo le mani utilizzando la tecnologia AI e gli effetti sonori]]></string>
+    <string name="intro_3">Anti-borseggio: cattura un ladro di telefoni cellulari</string>
 
 </resources>

@@ -129,5 +129,16 @@
     <string name="turkey">Türkçe</string>
     <string name="thai">Tayca</string>
     <string name="this_action_can_content_advertising">Bu işlem reklam içerebilir</string>
+    <string name="purchase">Satın Al</string>
+    <string name="ad_free_app">Reklamları Kaldır</string>
+    <string name="unlock_all_features">Tüm özelliklerin kilidini aç</string>
+    <string name="get_premium">PREMIUM AL</string>
+    <string name="lifetime_use">Ömür Boyu Kullanım</string>
+    <string name="seamless_uninterrupted_experience">Kesintisiz, Sorunsuz Deneyim</string>
+    <string name="clap_detection">Alkış Tespiti</string>
+    <string name="title_motion_detection">Hareket Algılama</string>
+    <string name="intro_1">Telefon hırsızlarını zahmetsizce tespit edin</string>
+    <string name="intro_2"><![CDATA[AI teknolojisi ve ses efektleri kullanarak alkışlayarak telefonunuzu bulun]]></string>
+    <string name="intro_3">Cep hırsızına karşı: Bir telefon hırsızını yakalayın</string>
 
 </resources>

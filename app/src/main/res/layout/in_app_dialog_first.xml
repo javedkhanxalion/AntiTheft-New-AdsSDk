@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/in_app_bg">
@@ -20,11 +21,11 @@
         android:id="@+id/crown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintVertical_bias="0.54"
+        app:layout_constraintVertical_bias="0.55"
         android:textSize="@dimen/_20sdp"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:text="@string/unlimited_access"
+        android:text="@string/get_premium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,6 +33,7 @@
         />
 
     <TextView
+        android:id="@+id/crownD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FF005C"
@@ -42,168 +44,166 @@
         app:layout_constraintEnd_toEndOf="@id/crown"
         android:layout_marginStart="@dimen/_10sdp"/>
 
+    <View
+        android:id="@+id/mainFrame"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_120sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:background="@drawable/rect_in_app"
+        app:layout_constraintBottom_toTopOf="@+id/premiumButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/crownD" />
 
+    <TextView
+        android:id="@+id/titleCenter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textStyle="bold"
+        android:text="@string/unlock_all_features"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/_18sdp"
+        app:layout_constraintBottom_toTopOf="@id/mainItem"
+        app:layout_constraintEnd_toEndOf="@id/mainFrame"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/mainFrame"
+        app:layout_constraintTop_toTopOf="@id/mainFrame" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/monthlyButton"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/yearlyButton"
-        android:layout_marginHorizontal="@dimen/_25sdp"
+    <View
+        android:id="@+id/mainItem"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintBottom_toTopOf="@id/smooth"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/proClock"
+        app:layout_constraintTop_toBottomOf="@id/titleCenter" />
+    <View
+        android:id="@+id/proClock"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintStart_toEndOf="@id/mainItem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/mainItem"
+        app:layout_constraintTop_toTopOf="@id/mainItem"
+        />
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/flag_icon"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:background="@drawable/ads_icon"
+        app:layout_constraintBottom_toBottomOf="@id/mainItem"
+        app:layout_constraintStart_toStartOf="@id/mainItem"
+        app:layout_constraintTop_toTopOf="@id/mainItem" />
+    <TextView
+        android:id="@+id/country_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center|start"
+        android:text="@string/ad_free_app"
+        android:singleLine="true"
+        android:paddingStart="@dimen/_3sdp"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintBottom_toBottomOf="@id/flag_icon"
+        app:layout_constraintEnd_toEndOf="@id/mainItem"
+        app:layout_constraintStart_toEndOf="@id/flag_icon"
+        app:layout_constraintTop_toTopOf="@id/flag_icon" />
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/proClockIcon"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:background="@drawable/selfi_icon"
+        app:layout_constraintBottom_toBottomOf="@id/proClock"
+        app:layout_constraintStart_toStartOf="@id/proClock"
+        app:layout_constraintTop_toTopOf="@id/proClock" />
+    <TextView
+        android:id="@+id/proClockName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center|start"
+        android:text="@string/inturder_selfie"
+        android:singleLine="true"
+        android:paddingStart="@dimen/_3sdp"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintBottom_toBottomOf="@id/proClockIcon"
+        app:layout_constraintEnd_toEndOf="@id/proClock"
+        app:layout_constraintStart_toEndOf="@id/proClockIcon"
+        app:layout_constraintTop_toTopOf="@id/proClockIcon"
+        tools:ignore="RtlSymmetry" />
+    <View
+        android:id="@+id/smooth"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:paddingVertical="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@drawable/premium_button_unselected"
-        >
-        <ImageView
-            android:id="@+id/monthlyCheck"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="@dimen/_15sdp"/>
-
-
-        <TextView
-            android:id="@+id/monthlyTextT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="@string/monthly_subscription"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_11sdp"
-            app:layout_constraintBottom_toTopOf="@id/monthlyTextTDetail"
-            app:layout_constraintStart_toEndOf="@id/monthlyCheck"
-            app:layout_constraintTop_toTopOf="@id/monthlyCheck" />
-
-        <TextView
-            android:id="@+id/monthlyTextTDetail"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_50sdp"
-            android:textColor="#585858"
-            android:textSize="@dimen/_9sdp"
-            app:layout_constraintBottom_toBottomOf="@id/monthlyCheck"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/monthlyTextT"
-            app:layout_constraintTop_toBottomOf="@id/monthlyTextT" />
-
-        <TextView
-            android:id="@+id/monthlyText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:textSize="@dimen/_11sdp"
-            app:layout_constraintLeft_toRightOf="@id/monthlyTextT"
-            app:layout_constraintTop_toTopOf="@id/monthlyTextT"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/monthlyTextT"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:textColor="#FF005C"/>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/yearlyButton"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/lifeTimeButton"
-        android:layout_marginHorizontal="@dimen/_25sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@drawable/premium_button_selected"
-        >
-
-        <ImageView
-            android:id="@+id/yearlyCheck"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="@dimen/_15sdp"/>
-
-        <TextView
-            android:id="@+id/yearlyTextT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/yearly_subscription"
-            android:textSize="@dimen/_11sdp"
-            android:textColor="@color/black"
-            android:layout_marginStart="@dimen/_10sdp"
-            app:layout_constraintBottom_toTopOf="@id/yearlyTextTDetail"
-            app:layout_constraintStart_toEndOf="@id/yearlyCheck"
-            app:layout_constraintTop_toTopOf="@id/yearlyCheck" />
-
-        <TextView
-            android:id="@+id/yearlyTextTDetail"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_9sdp"
-            android:textColor="#585858"
-            android:layout_marginEnd="@dimen/_50sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/yearlyCheck"
-            app:layout_constraintStart_toStartOf="@id/yearlyTextT"
-            app:layout_constraintTop_toBottomOf="@id/yearlyTextT" />
-
-
-        <TextView
-            android:id="@+id/yearlyText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/yearlyTextT"
-            app:layout_constraintTop_toTopOf="@+id/yearlyTextT"
-            android:layout_marginEnd="@dimen/_10sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/yearlyTextT"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:textColor="#FF005C"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/lifeTimeButton"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:visibility="gone"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/premiumButton"
-        android:layout_marginHorizontal="@dimen/_25sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@drawable/premium_button_unselected"
-        >
-
-
-        <ImageView
-            android:id="@+id/lifeTimeCheck"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="@dimen/_15sdp"/>
-
-
-        <TextView
-            android:id="@+id/lifeTimeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/lifeTimeCheck"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:text="$29.99 / Life Time"
-            android:textColor="#607D8B"/>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        app:layout_constraintBottom_toBottomOf="@+id/mainFrame"
+        app:layout_constraintEnd_toStartOf="@id/smartWatch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainItem" />
+    <View
+        android:id="@+id/smartWatch"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintStart_toEndOf="@id/smooth"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/smooth"
+        app:layout_constraintTop_toTopOf="@id/smooth" />
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/smoothIcon"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:background="@drawable/intruder_icon_buy"
+        app:layout_constraintBottom_toBottomOf="@id/smooth"
+        app:layout_constraintStart_toStartOf="@id/smooth"
+        app:layout_constraintTop_toTopOf="@id/smooth" />
+    <TextView
+        android:id="@+id/smoothName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center|start"
+        android:text="@string/seamless_uninterrupted_experience"
+        android:paddingStart="@dimen/_3sdp"
+        android:singleLine="true"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintBottom_toBottomOf="@id/smoothIcon"
+        app:layout_constraintEnd_toEndOf="@id/smooth"
+        app:layout_constraintStart_toEndOf="@id/smoothIcon"
+        app:layout_constraintTop_toTopOf="@id/smoothIcon" />
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/smartWatchIcon"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:background="@drawable/life_icon"
+        app:layout_constraintBottom_toBottomOf="@id/smartWatch"
+        app:layout_constraintStart_toStartOf="@id/smartWatch"
+        app:layout_constraintTop_toTopOf="@id/smartWatch" />
+    <TextView
+        android:id="@+id/smartWatchName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center|start"
+        android:singleLine="true"
+        android:text="@string/lifetime_use"
+        android:paddingStart="@dimen/_3sdp"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintBottom_toBottomOf="@id/smartWatchIcon"
+        app:layout_constraintEnd_toEndOf="@id/smartWatch"
+        app:layout_constraintStart_toEndOf="@id/smartWatchIcon"
+        app:layout_constraintTop_toTopOf="@id/smartWatchIcon" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/premiumButton"
@@ -212,7 +212,7 @@
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginBottom="@dimen/_50sdp"
         android:background="@drawable/rect_btn_loading"
-        android:text="Continue"
+        android:text="@string/purchase"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/_14sdp"

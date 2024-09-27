@@ -135,5 +135,16 @@
     <string name="turkey">Turco</string>
     <string name="thai">Tailandés</string>
     <string name="this_action_can_content_advertising">Esta acción puede contener publicidad</string>
+    <string name="purchase">Compra</string>
+    <string name="ad_free_app">Eliminar anuncios</string>
+    <string name="unlock_all_features">Desbloquear todas las funciones</string>
+    <string name="get_premium">OBTENER PREMIUM</string>
+    <string name="lifetime_use">Uso de por vida</string>
+    <string name="seamless_uninterrupted_experience">Experiencia continua e ininterrumpida</string>
+    <string name="clap_detection">Detección de aplausos</string>
+    <string name="title_motion_detection">Detección de movimiento</string>
+    <string name="intro_1">Detecta ladrones de teléfonos sin esfuerzo</string>
+    <string name="intro_2"><![CDATA[Encuentra tu teléfono aplaudiendo usando tecnología de IA y efectos de sonido]]></string>
+    <string name="intro_3">Antirrobo de bolsillos: atrapa al ladrón de teléfonos móviles</string>
 
 </resources>
