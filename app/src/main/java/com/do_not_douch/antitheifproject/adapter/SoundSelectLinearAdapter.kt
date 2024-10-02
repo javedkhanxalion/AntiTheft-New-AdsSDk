@@ -15,6 +15,7 @@ class SoundSelectLinearAdapter(
     class ViewHolder(val binding: ItemDetectionSoundLinearBinding) : RecyclerView.ViewHolder(binding.root)
 
     var context: Context? = null
+    private var playingPosition: Int = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
@@ -31,16 +32,38 @@ class SoundSelectLinearAdapter(
         return soundData.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         holder.binding.countryName.text = soundData[position].soundName
         holder.binding.radioButton.isChecked = soundData[position].isCheck
 
-//        holder.binding.root.setOnClickListener {
-//            checkSingleBox(position)
-//            clickItem.invoke(soundData[position])
-//        }
 
+        holder.binding.mainItem.setOnClickListener {
+            if (playingPosition == position) {
+                // If the current item is playing, stop it
+                playingPosition = -1
+                notifyItemChanged(position) // Update UI
+            } else {
+                // Play the new item
+                val oldPosition = playingPosition
+                playingPosition = position
+                notifyItemChanged(oldPosition) // Update the previous playing item
+                notifyItemChanged(playingPosition) // Update the new playing item
+            }
+            checkSingleBox(position)
+            clickItem.invoke(position)
+        }
         holder.binding.radioButton.setOnClickListener {
+            if (playingPosition == position) {
+                // If the current item is playing, stop it
+                playingPosition = -1
+                notifyItemChanged(position) // Update UI
+            } else {
+                // Play the new item
+                val oldPosition = playingPosition
+                playingPosition = position
+                notifyItemChanged(oldPosition) // Update the previous playing item
+                notifyItemChanged(playingPosition) // Update the new playing item
+            }
             checkSingleBox(position)
             clickItem.invoke(position)
         }
@@ -63,5 +86,10 @@ class SoundSelectLinearAdapter(
         notifyDataSetChanged()
     }
 
+    fun onSoundComplete() {
+        val oldPosition = playingPosition
+        playingPosition = -1
+        notifyItemChanged(oldPosition) // Reset the icon of the item that was playing
+    }
 
 }

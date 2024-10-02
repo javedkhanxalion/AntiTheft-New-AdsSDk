@@ -2,8 +2,12 @@ package com.do_not_douch.antitheifproject.ads_manager
 
 
 import android.app.Activity
+import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.gms.ads.AdListener
@@ -17,13 +21,11 @@ import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.material.snackbar.Snackbar
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.BuildConfig
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
+import com.do_not_douch.antitheifproject.BillingUtil
 import com.do_not_douch.antitheifproject.ads_manager.FunctionClass.checkPurchased
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
+import com.do_not_douch.antitheifproject.utilities.getRandomColor
 
-/**
- * Created by
- * @Author: Javed Khan ,
- */
 
 object NativeAds {
 
@@ -57,12 +59,10 @@ object NativeAds {
     ) {
         Log.d(
             NativeAdsLogs,
-            "validate ${!checkPurchased(activity)}    $addConfig"
+            "validate ${!BillingUtil(activity ?: return).checkPurchased(activity) }    $addConfig"
         )
 
-        if (AdsManager.isNetworkAvailable(activity) && !checkPurchased(
-                activity
-            ) && addConfig
+        if (AdsManager.isNetworkAvailable(activity) && !BillingUtil(activity ?: return).checkPurchased(activity)  && addConfig
         ) {
             nativeId = nativeAdId
             val builder = AdLoader.Builder(
@@ -258,31 +258,25 @@ object NativeAds {
         return BuildConfig.BUILD_TYPE == "debug"
     }
 
-    fun nativeViewPolicy(nativeAd: NativeAd, adView: NativeAdView) {
+    fun nativeViewPolicy(context: Context, nativeAd: NativeAd, adView: NativeAdView) {
 
         adView.callToActionView = adView.findViewById(R.id.custom_call_to_action)
         adView.iconView = adView.findViewById(R.id.custom_app_icon)
         adView.headlineView = adView.findViewById(R.id.custom_headline)
         adView.bodyView = adView.findViewById(R.id.custom_body)
-//        adView.advertiserView = adView.findViewById(R.id.custom_advertiser)
-//        adView.starRatingView = adView.findViewById(R.id.custom_stars)
-
+        try {
+            (adView.findViewById(R.id.custom_call_to_action) as TextView).backgroundTintList = ColorStateList.valueOf(
+                Color.parseColor(getRandomColor()))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         (adView.headlineView as TextView).text = nativeAd.headline
-
-//        if (nativeAd.starRating == null) {
-//            adView.starRatingView?.visibility = View.INVISIBLE
-//        } else {
-//            (adView.starRatingView as RatingBar).rating = nativeAd.starRating?.toFloat() ?: 0f
-//            adView.starRatingView?.visibility = View.VISIBLE
-//        }
-
         if (nativeAd.callToAction == null) {
             adView.callToActionView?.visibility = View.INVISIBLE
         } else {
             adView.callToActionView?.visibility = View.VISIBLE
             (adView.callToActionView as TextView).text = nativeAd.callToAction
         }
-
         if (nativeAd.icon == null) {
             adView.iconView?.visibility = View.INVISIBLE
         } else {
@@ -291,78 +285,17 @@ object NativeAds {
             )
             adView.iconView?.visibility = View.VISIBLE
         }
-
         if (nativeAd.body == null) {
             adView.bodyView?.visibility = View.INVISIBLE
         } else {
             adView.bodyView?.visibility = View.VISIBLE
             (adView.bodyView as TextView).text = nativeAd.body
         }
-
-//        if (nativeAd.advertiser == null) {
-//            adView.advertiserView?.visibility = View.INVISIBLE
-//        } else {
-//            (adView.advertiserView as TextView).text = nativeAd.advertiser
-//            adView.advertiserView?.visibility = View.VISIBLE
-//        }
-
         adView.setNativeAd(nativeAd)
-
     }
 
 
-    fun nativeViewPolicyNew(nativeAd: NativeAd, adView: NativeAdView) {
-
-        adView.callToActionView = adView.findViewById(R.id.custom_call_to_action)
-        adView.iconView = adView.findViewById(R.id.custom_app_icon)
-        adView.headlineView = adView.findViewById(R.id.custom_headline)
-        adView.bodyView = adView.findViewById(R.id.custom_body)
-//        adView.advertiserView = adView.findViewById(R.id.custom_advertiser)
-//        adView.starRatingView = adView.findViewById(R.id.custom_stars)
-
-        (adView.headlineView as TextView).text = nativeAd.headline
-//        if (nativeAd.starRating == null) {
-//            adView.starRatingView?.visibility = View.INVISIBLE
-//        } else {
-//            (adView.starRatingView as RatingBar).rating = nativeAd.starRating?.toFloat() ?: 0f
-//            adView.starRatingView?.visibility = View.VISIBLE
-//        }
-
-        if (nativeAd.callToAction == null) {
-            adView.callToActionView?.visibility = View.INVISIBLE
-        } else {
-            adView.callToActionView?.visibility = View.VISIBLE
-            (adView.callToActionView as TextView).text = nativeAd.callToAction
-        }
-
-        if (nativeAd.icon == null) {
-            adView.iconView?.visibility = View.INVISIBLE
-        } else {
-            (adView.iconView as ImageView).setImageDrawable(
-                nativeAd.icon?.drawable
-            )
-            adView.iconView?.visibility = View.VISIBLE
-        }
-
-        if (nativeAd.body == null) {
-            adView.bodyView?.visibility = View.INVISIBLE
-        } else {
-            adView.bodyView?.visibility = View.VISIBLE
-            (adView.bodyView as TextView).text = nativeAd.body
-        }
-
-//        if (nativeAd.advertiser == null) {
-//            adView.advertiserView?.visibility = View.INVISIBLE
-//        } else {
-//            (adView.advertiserView as TextView).text = nativeAd.advertiser
-//            adView.advertiserView?.visibility = View.VISIBLE
-//        }
-
-        adView.setNativeAd(nativeAd)
-
-    }
-
-    fun nativeViewMedia(nativeAd: NativeAd, adView: NativeAdView) {
+    fun nativeViewMedia(context: Context, nativeAd: NativeAd, adView: NativeAdView) {
         adView.callToActionView = adView.findViewById(R.id.custom_call_to_action)
         adView.iconView = adView.findViewById(R.id.custom_app_icon) as ImageView
         adView.headlineView = adView.findViewById(R.id.custom_headline)
@@ -375,7 +308,14 @@ object NativeAds {
         adView.mediaView?.mediaContent = (nativeAd.mediaContent ?: return)
 
         (adView.headlineView as TextView).text = nativeAd.headline
-
+        try {
+            (adView.findViewById(R.id.custom_call_to_action) as TextView).backgroundTintList = ColorStateList.valueOf(
+                Color.parseColor(
+                getRandomColor()
+            ))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         /*      if (nativeAd.starRating == null) {
                   adView.starRatingView?.visibility = View.GONE
               } else {

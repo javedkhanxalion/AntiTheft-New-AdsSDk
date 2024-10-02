@@ -88,8 +88,12 @@ import com.do_not_douch.antitheifproject.model.SoundModel
 import com.do_not_douch.antitheifproject.service.SystemEventsService
 import com.do_not_douch.antitheifproject.ui.FragmentDetectionSameFunction
 import com.do_not_douch.antitheifproject.ui.MainMenuFragment
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.tasks.Task
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManagerFactory
 import java.util.Locale
-
+import com.google.android.gms.common.ConnectionResult
 
 var isSplash = true
 var isIntroLanguageShow = true
@@ -183,6 +187,10 @@ var main_native_scroll = 1
 var fisrt_ad_line_threshold_main = 2
 var line_count_main = 2
 
+//New IDs
+var splash_bottom = 1
+var banner_type = 0
+var appUpdateType = 0
 
 var language_bottom = 1
 var languageinapp_scroll = 1
@@ -276,12 +284,12 @@ fun Fragment.languageData(): ArrayList<LanguageAppModel> {
 
 fun Fragment.soundData(): ArrayList<SoundModel> {
     val list = arrayListOf<SoundModel>()
-    list.add(SoundModel(getString(R.string.tone_1), R.drawable.battery_icon, false))
-    list.add(SoundModel(getString(R.string.tone_2), R.drawable.battery_icon, false))
-    list.add(SoundModel(getString(R.string.tone_3), R.drawable.battery_icon, false))
-    list.add(SoundModel(getString(R.string.tone_4), R.drawable.battery_icon, false))
-    list.add(SoundModel(getString(R.string.tone_5), R.drawable.battery_icon, false))
-    list.add(SoundModel(getString(R.string.tone_6), R.drawable.battery_icon, false))
+    list.add(SoundModel(getString(R.string.tone_1), R.raw.tone1, false))
+    list.add(SoundModel(getString(R.string.tone_2), R.raw.tone2, false))
+    list.add(SoundModel(getString(R.string.tone_3), R.raw.tone3, false))
+    list.add(SoundModel(getString(R.string.tone_4), R.raw.tone4, false))
+    list.add(SoundModel(getString(R.string.tone_5), R.raw.tone5, false))
+    list.add(SoundModel(getString(R.string.tone_6), R.raw.tone6, false))
     return list
 }
 
@@ -871,21 +879,21 @@ fun Fragment.requestCameraPermission(view: Switch) {
             arrayOf(CAMERA_PERMISSION),
             2
         )
-      /*  android.app.AlertDialog.Builder(context).setTitle(getString(R.string.permission_needed))
-            .setMessage(getString(R.string.camera_permission)).setPositiveButton(
-                getString(R.string.ok)
-            ) { _, _ ->
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(CAMERA_PERMISSION),
-                    2
-                )
-            }.setNegativeButton(
-                getString(R.string.cancel)
-            ) { dialogInterface, _ ->
-                view.isChecked = false
-                dialogInterface.dismiss()
-            }.create().show()*/
+        /*  android.app.AlertDialog.Builder(context).setTitle(getString(R.string.permission_needed))
+              .setMessage(getString(R.string.camera_permission)).setPositiveButton(
+                  getString(R.string.ok)
+              ) { _, _ ->
+                  ActivityCompat.requestPermissions(
+                      requireActivity(),
+                      arrayOf(CAMERA_PERMISSION),
+                      2
+                  )
+              }.setNegativeButton(
+                  getString(R.string.cancel)
+              ) { dialogInterface, _ ->
+                  view.isChecked = false
+                  dialogInterface.dismiss()
+              }.create().show()*/
     } else {
         ActivityCompat.requestPermissions(
             requireActivity(),
@@ -934,9 +942,17 @@ fun Fragment.requestCameraPermissionNotification() {
             NOTIFICATION_PERMISSION
         )
     ) {
-        showNotificationPermissionDialog()
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(NOTIFICATION_PERMISSION),
+            2
+        )
     } else {
-        showNotificationPermissionDialog()
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(NOTIFICATION_PERMISSION),
+            2
+        )
     }
 }
 
@@ -1318,4 +1334,66 @@ fun Application.registerAppLifecycleCallbacks() {
 
         override fun onActivityDestroyed(activity: Activity) {}
     })
+
+    fun Context.getAppVersion(): String {
+        return try {
+            val packageInfo = packageManager.getPackageInfo(packageName, 0)
+            packageInfo.versionCode.toString()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            "Unknown"
+        }
+    }
+
+}
+
+fun askRatings(context: Activity) {
+    var isGMSAvailable = false
+    val result = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context)
+    isGMSAvailable = ConnectionResult.SUCCESS == result
+    if (isGMSAvailable) {
+        val manager = ReviewManagerFactory.create(context)
+        val request = manager.requestReviewFlow()
+        request.addOnCompleteListener { task: Task<ReviewInfo?> ->
+            try {
+                if (task.isSuccessful) {
+                    // getting ReviewInfo object
+                    val reviewInfo = task.result
+                    val flow =
+                        manager.launchReviewFlow(
+                            context,
+                            reviewInfo!!
+                        )
+                    flow.addOnCompleteListener { task2: Task<Void?>? -> }
+                } else {
+                    // There was some problem, continue regardless of the result
+                    // call old method for rating and user will land in Play Store App page
+                    context.rateUs()
+                }
+            } catch (ex: java.lang.Exception) {
+                Log.e("review Ex", "review & rate: $ex")
+            }
+        }
+    } else {
+        // if user has not installed Google play services in his/her device you land them to
+        // specific store e.g. Huawei AppGallery or Samsung Galaxy Store
+        context.rateUs()
+    }
+}
+
+
+fun getRandomColor(): String {
+    // List of color codes as strings (you can add more)
+    val colors = listOf(
+        "#F48A1D",
+        "#EACF2A",
+        "#0AA350",
+        "#44A0E3",
+        "#6E340E",
+        "#D80B8E",
+        "#6B3499"
+    )
+
+    // Randomly select and return a color
+    return colors.random()
 }

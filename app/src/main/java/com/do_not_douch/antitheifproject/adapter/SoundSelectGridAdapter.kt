@@ -14,6 +14,7 @@ class SoundSelectGridAdapter (
     class ViewHolder(val binding: ItemDetectionSoundGridBinding) : RecyclerView.ViewHolder(binding.root)
 
     var context: Context? = null
+    private var playingPosition: Int = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
@@ -34,7 +35,33 @@ class SoundSelectGridAdapter (
         holder.binding.countryName.text = soundData[position].soundName
         holder.binding.radioButton.isChecked = soundData[position].isCheck
 
+        holder.binding.mainItem.setOnClickListener {
+            if (playingPosition == position) {
+                // If the current item is playing, stop it
+                playingPosition = -1
+                notifyItemChanged(position) // Update UI
+            } else {
+                // Play the new item
+                val oldPosition = playingPosition
+                playingPosition = position
+                notifyItemChanged(oldPosition) // Update the previous playing item
+                notifyItemChanged(playingPosition) // Update the new playing item
+            }
+            checkSingleBox(position)
+            clickItem.invoke(position)
+        }
         holder.binding.radioButton.setOnClickListener {
+            if (playingPosition == position) {
+                // If the current item is playing, stop it
+                playingPosition = -1
+                notifyItemChanged(position) // Update UI
+            } else {
+                // Play the new item
+                val oldPosition = playingPosition
+                playingPosition = position
+                notifyItemChanged(oldPosition) // Update the previous playing item
+                notifyItemChanged(playingPosition) // Update the new playing item
+            }
             checkSingleBox(position)
             clickItem.invoke(position)
         }
@@ -56,6 +83,10 @@ class SoundSelectGridAdapter (
         }
         notifyDataSetChanged()
     }
-
+    fun onSoundComplete() {
+        val oldPosition = playingPosition
+        playingPosition = -1
+        notifyItemChanged(oldPosition) // Reset the icon of the item that was playing
+    }
 
 }

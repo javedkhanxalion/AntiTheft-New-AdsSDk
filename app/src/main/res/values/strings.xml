@@ -14,15 +14,6 @@
     <string name="battery">Battery</string>
     <string name="wifi_alarm">Wifi Alarm</string>
 
-    <string name="confirm_exit">Do you really want to exit?</string>
-    <string name="facebook_application_id" translatable="false"/>
-    <string name="txt_ad">AD</string>
-    <string name="txt_ad_loading">Loading ads…</string>
-    <string name="txt_new_version_dialog_title">New version Available</string>
-    <string name="txt_update_app_dialog">A new version of the App is available, we recommend updating to the latest version.</string>
-    <string name="txt_update_app_dialog_title">Update app?</string>
-    <string name="txt_update_now_dialog">Update now</string>
-
     <string name="detection">Detection</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

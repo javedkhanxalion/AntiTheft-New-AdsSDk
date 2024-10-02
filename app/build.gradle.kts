@@ -41,7 +41,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-//          resValue( "string", "facebook_app_id", "")
+//            resValue( "string", "facebook_app_id", "")
             resValue( "string", "id_application_id", "ca-app-pub-3940256099942544~3347511713")
         }
         release {
@@ -114,7 +114,11 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.8.8")
     implementation ("com.google.android.ump:user-messaging-platform:3.0.0")
     implementation ("com.iabtcf:iabtcf-decoder:2.0.10")
-    implementation ("com.github.hypersoftdev:inappbilling:3.0.0-alpha-02")
+    implementation ("com.github.hypersoftdev:inappbilling:3.0.0")
+    // This dependency is downloaded from the Google’s Maven repository.
+    implementation("com.google.android.play:app-update:2.1.0")
+    implementation("com.google.android.play:app-update-ktx:2.1.0")
+    implementation("com.google.android.play:review-ktx:2.0.1")
 }
 
 
