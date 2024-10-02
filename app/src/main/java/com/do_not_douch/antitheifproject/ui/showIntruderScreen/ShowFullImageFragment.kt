@@ -131,7 +131,7 @@ class ShowFullImageFragment :
                     _binding?.nativeExitAd?.visibility = View.VISIBLE
                     _binding?.adView?.visibility = View.GONE
 
-                    adsManager?.nativeAds()?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                    adsManager?.nativeAds()?.nativeViewPolicy(context?:return,currentNativeAd ?: return, adView)
                     if (isAdded && isVisible && !isDetached) {
                         _binding?.nativeExitAd?.removeAllViews()
                         _binding?.nativeExitAd?.addView(adView)

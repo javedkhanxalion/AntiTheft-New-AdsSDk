@@ -56,7 +56,7 @@ class FragmentExitScreen :
                             _binding?.nativeExitAd?.visibility = View.VISIBLE
                             _binding?.shimmerLayout?.visibility = View.GONE
                             adsManager?.nativeAds()
-                                ?.nativeViewMedia(currentNativeAd ?: return, adView)
+                                ?.nativeViewMediaSplashSplash(context?:return,currentNativeAd ?: return, adView)
                             _binding?.nativeExitAd?.removeAllViews()
                             _binding?.nativeExitAd?.addView(adView)
                         }

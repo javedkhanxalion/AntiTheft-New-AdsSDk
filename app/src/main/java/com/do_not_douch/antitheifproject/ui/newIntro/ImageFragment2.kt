@@ -69,11 +69,11 @@ class ImageFragment2 : Fragment()  {
         _binding?.skipApp?.clickWithThrottle {
             fragmentA?.invoke()
         }
-        if (isInternetAvailable(context?:requireContext())) {
-                    loadNewNative2()
-        } else {
-            _binding?.mainAdsNative?.visibility = View.GONE
-        }
+//        if (isInternetAvailable(context?:requireContext())) {
+//                    loadNewNative2()
+//        } else {
+//            _binding?.mainAdsNative?.visibility = View.GONE
+//        }
 
     /*    IkmSdkController.setAppOpenAdsCallback(callback =
         object : SdkAppOpenAdsCallback {
@@ -135,18 +135,18 @@ class ImageFragment2 : Fragment()  {
         fun onAdVisibilityChanged(visible: Boolean) {
             Log.d("check_position", "onPageScrolled: Fragment--2222")
 
-            if(!val_native_intro_screen1){
-                return
-            }
-            _binding!!.mainAdsNative!!.visibility = if (visible) View.VISIBLE
-            else
-                View.INVISIBLE
+//            if(!val_native_intro_screen1){
+//                return
+//            }
+//            _binding!!.mainAdsNative!!.visibility = if (visible) View.VISIBLE
+//            else
+//                View.INVISIBLE
 
         }
     }
 
     fun loadNewNative2() {
-        val adView = LayoutInflater.from(context).inflate(
+     /*   val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(onboarding2_bottom,_binding?.mainAdsNative!!,context?:return),
             null, false
         ) as NativeAdView
@@ -158,7 +158,7 @@ class ImageFragment2 : Fragment()  {
                 override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                     _binding?.mainAdsNative?.visibility = View.VISIBLE
                     _binding?.shimmerLayout?.visibility = View.GONE
-                    ads?.nativeAdsMain()?.nativeViewMedia(currentNativeAd ?: return, adView)
+                    ads?.nativeAdsMain()?.nativeViewMediaSplashSplash(currentNativeAd ?: return, adView)
                     _binding?.mainAdsNative?.removeAllViews()
                     _binding?.mainAdsNative?.addView(adView)
                     super.nativeAdLoaded(currentNativeAd)
@@ -175,7 +175,7 @@ class ImageFragment2 : Fragment()  {
                     _binding?.shimmerLayout?.visibility = View.GONE
                     super.nativeAdValidate(string)
                 }
-            })
+            })*/
     }
 
 

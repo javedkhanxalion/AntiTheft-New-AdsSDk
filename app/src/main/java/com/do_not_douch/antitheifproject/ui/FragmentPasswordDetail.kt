@@ -387,7 +387,7 @@ class FragmentPasswordDetail :
                             _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
                             if (isAdded && isVisible && !isDetached) {
                                 adsManager?.nativeAds()
-                                    ?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                                    ?.nativeViewPolicy(context?:return,currentNativeAd ?: return, adView)
                                 _binding?.gridLayout?.nativeExitAd?.removeAllViews()
                                 _binding?.gridLayout?.nativeExitAd?.addView(adView)
                             }
@@ -429,7 +429,7 @@ class FragmentPasswordDetail :
                             _binding?.linearlayout?.nativeExitAd?.visibility = View.VISIBLE
                             _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
 
-                            adsManager?.nativeAds()?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                            adsManager?.nativeAds()?.nativeViewPolicy(context?:return,currentNativeAd ?: return, adView)
                             _binding?.linearlayout?.nativeExitAd?.removeAllViews()
                             _binding?.linearlayout?.nativeExitAd?.addView(adView)
                         }
@@ -462,11 +462,10 @@ class FragmentPasswordDetail :
             view = _binding?.bannerAds!!,
             viewS = _binding?.shimmerLayout!!,
             addConfig = val_banner_1,
-            bannerId = id_banner_1,
-            bannerListener = {
-                _binding?.shimmerLayout!!.visibility=View.GONE
-            }
-        )
+            bannerId = id_banner_1
+        ){
+            _binding?.shimmerLayout!!.visibility=View.GONE
+        }
     }
 
 

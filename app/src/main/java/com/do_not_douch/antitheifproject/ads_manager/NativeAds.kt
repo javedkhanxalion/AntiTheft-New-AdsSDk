@@ -295,7 +295,7 @@ object NativeAds {
     }
 
 
-    fun nativeViewMedia(context: Context, nativeAd: NativeAd, adView: NativeAdView) {
+    fun nativeViewMediaSplashSplash(context: Context, nativeAd: NativeAd, adView: NativeAdView) {
         adView.callToActionView = adView.findViewById(R.id.custom_call_to_action)
         adView.iconView = adView.findViewById(R.id.custom_app_icon) as ImageView
         adView.headlineView = adView.findViewById(R.id.custom_headline)

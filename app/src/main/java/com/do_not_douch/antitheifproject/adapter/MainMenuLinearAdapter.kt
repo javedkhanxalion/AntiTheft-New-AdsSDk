@@ -110,7 +110,7 @@ class MainMenuLinearAdapter(
                     override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                         binding.nativeExitAd.visibility = View.VISIBLE
                         binding.shimmerLayout.visibility = View.GONE
-                        ads.nativeAdsMain().nativeViewMedia(currentNativeAd ?: return, adView)
+                        ads.nativeAdsMain().nativeViewMediaSplashSplash(context?:return,currentNativeAd ?: return, adView)
                         binding.nativeExitAd.removeAllViews()
                         binding.nativeExitAd.addView(adView)
                         super.nativeAdLoaded(currentNativeAd)

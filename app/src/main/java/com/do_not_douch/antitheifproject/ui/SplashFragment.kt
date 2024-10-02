@@ -2,6 +2,7 @@ package com.do_not_douch.antitheifproject.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
@@ -26,6 +27,8 @@ import com.do_not_douch.antitheifproject.utilities.BaseFragment
 import com.do_not_douch.antitheifproject.utilities.LANG_CODE
 import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
 import com.do_not_douch.antitheifproject.utilities.Onboarding_Full_Native
+import com.do_not_douch.antitheifproject.utilities.appUpdateType
+import com.do_not_douch.antitheifproject.utilities.banner_type
 import com.do_not_douch.antitheifproject.utilities.battery_native
 import com.do_not_douch.antitheifproject.utilities.battery_selectsound_bottom
 import com.do_not_douch.antitheifproject.utilities.clap_native
@@ -35,6 +38,7 @@ import com.do_not_douch.antitheifproject.utilities.exitdialog_bottom
 import com.do_not_douch.antitheifproject.utilities.firebaseAnalytics
 import com.do_not_douch.antitheifproject.utilities.fisrt_ad_line_threshold
 import com.do_not_douch.antitheifproject.utilities.fisrt_ad_line_threshold_main
+import com.do_not_douch.antitheifproject.utilities.getNativeLayout
 import com.do_not_douch.antitheifproject.utilities.handfree_native
 import com.do_not_douch.antitheifproject.utilities.handfree_selectsound_bottom
 import com.do_not_douch.antitheifproject.utilities.home_native
@@ -100,6 +104,7 @@ import com.do_not_douch.antitheifproject.utilities.sessionOpenlanguage
 import com.do_not_douch.antitheifproject.utilities.setLocaleMain
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.showInternetDialog
+import com.do_not_douch.antitheifproject.utilities.splash_bottom
 import com.do_not_douch.antitheifproject.utilities.test_ui_native
 import com.do_not_douch.antitheifproject.utilities.thankyou_bottom
 import com.do_not_douch.antitheifproject.utilities.val_ad_native_Battery_Detection_screen
@@ -137,6 +142,9 @@ import com.do_not_douch.antitheifproject.utilities.val_native_intro_screen1
 import com.do_not_douch.antitheifproject.utilities.val_native_intro_screen2
 import com.do_not_douch.antitheifproject.utilities.whistle_native
 import com.do_not_douch.antitheifproject.utilities.whistle_selectsound_bottom
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -290,7 +298,7 @@ class SplashFragment :
                             "loading_fragment_load_next_btn_main -->  Click"
                         )
                         return if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                            findNavController().navigate(R.id.myMainMenuFragment)
+                            findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
                         } else {
                             findNavController().navigate(
                                 R.id.FragmentBuyScreen,
@@ -343,16 +351,54 @@ class SplashFragment :
 
     fun loadBanner() {
         _binding?.adsView?.visibility = View.VISIBLE
-        AdsBanners.loadBanner(
-            activity = activity ?: return,
-            view = _binding?.adsView!!,
-            viewS = _binding?.shimmerLayout!!,
-            addConfig = val_banner_splash_screen,
-            bannerId = id_banner_splash_screen,
-            bannerListener = {
-                _binding?.shimmerLayout!!.visibility = View.GONE
-            }
-        )
+        /*        AdsBanners.loadBanner(
+                    activity = activity ?: return,
+                    view = _binding?.adsView!!,
+                    viewS = _binding?.shimmerLayout!!,
+                    addConfig = val_banner_splash_screen,
+                    bannerId = id_banner_splash_screen,
+                    bannerListener = {
+                        _binding?.shimmerLayout!!.visibility = View.GONE
+                    }
+                )*/
+        val adView = LayoutInflater.from(context).inflate(
+            getNativeLayout(splash_bottom, _binding?.adsView!!, context ?: return),
+            null, false
+        ) as NativeAdView
+        adsManager?.nativeAds()?.loadNativeAd(
+            activity ?: return,
+            val_banner_splash_screen,
+            id_native_intro_screen1,
+            object : NativeListener {
+                override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
+                    if (!isAdded && !isVisible && isDetached) {
+                        return
+                    }
+                    _binding?.adsView?.visibility = View.VISIBLE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    if (isAdded && isVisible && !isDetached) {
+                        adsManager?.nativeAds()?.nativeViewPolicy(context?:return,currentNativeAd ?: return, adView)
+                        _binding?.adsView?.removeAllViews()
+                        _binding?.adsView?.addView(adView)
+                    }
+
+                    super.nativeAdLoaded(currentNativeAd)
+                }
+
+                override fun nativeAdFailed(loadAdError: LoadAdError) {
+                    _binding?.adsView?.visibility = View.GONE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    super.nativeAdFailed(loadAdError)
+                }
+
+                override fun nativeAdValidate(string: String) {
+                    _binding?.adsView?.visibility = View.GONE
+                    _binding?.shimmerLayout?.visibility = View.GONE
+                    super.nativeAdValidate(string)
+                }
+
+
+            })
     }
 
     private fun initRemoteIds() {
@@ -381,6 +427,8 @@ class SplashFragment :
             id_banner_main_screen = remoteConfig.getString("id_banner_main_screen")
             id_banner_splash_screen = remoteConfig.getString("id_banner_splash_screen")
         }
+        banner_type = remoteConfig.getLong("banner_type").toInt()
+        appUpdateType = remoteConfig.getLong("appUpdateType").toInt()
         id_inter_counter = remoteConfig.getLong("id_inter_counter").toInt()
         id_frequency_counter = remoteConfig.getLong("id_frequency_counter").toInt()
         id_native_main_menu_screen = remoteConfig.getString("id_native_main_menu_screen")
@@ -418,13 +466,13 @@ class SplashFragment :
         id_native_Full_screen = remoteConfig.getString("id_native_Full_screen")
 
         test_ui_native = remoteConfig.getString("test_ui_native")
-        language_first_r_scroll = remoteConfig.getString("language_first_r_scroll")
-        language_reload = remoteConfig.getString("language_reload").toInt()
+//        language_first_r_scroll = remoteConfig.getString("language_first_r_scroll")
+//        language_reload = remoteConfig.getString("language_reload").toInt()
         Onboarding_Full_Native = remoteConfig.getString("Onboarding_Full_Native").toInt()
         sessionOpenlanguage = remoteConfig.getString("sessionOpenlanguage").toInt()
         sessionOnboarding = remoteConfig.getString("sessionOnboarding").toInt()
         parseJsonWithGson(test_ui_native)
-        parseJsonWithGsonLanguage(language_first_r_scroll)
+//        parseJsonWithGsonLanguage(language_first_r_scroll)
         parseJsonWithGsonMain(remoteConfig.getString("main_first_scroll"))
 
         Log.d("check_language", "onSuccess: $language_reload")
@@ -558,14 +606,14 @@ class SplashFragment :
 
                     }
                 )
-                adsManager?.nativeAds()?.loadNativeAd(
-                    activity ?: return@addOnCompleteListener,
-                    true,
-                    id_native_main_menu_screen,
-                    object : NativeListener {
-
-                    }
-                )
+//                adsManager?.nativeAds()?.loadNativeAd(
+//                    activity ?: return@addOnCompleteListener,
+//                    true,
+//                    id_native_main_menu_screen,
+//                    object : NativeListener {
+//
+//                    }
+//                )
                 AdOpenApp(activity?.application ?: return@addOnCompleteListener, id_app_open_screen)
                 if (!val_app_open_main) {
                     loadTwoInterAdsSplash(

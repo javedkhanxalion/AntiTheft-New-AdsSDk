@@ -19,11 +19,12 @@ import com.do_not_douch.antitheifproject.adapter.MainMenuLinearAdapter
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager
 import com.do_not_douch.antitheifproject.ads_manager.PurchasePrefs
 import com.do_not_douch.antitheifproject.ads_manager.showTwoInterAd
-import com.do_not_douch.antitheifproject.ads_manager.showTwoInterAdExit
+import com.do_not_douch.antitheifproject.ads_manager.showTwoInterAd
 import com.do_not_douch.antitheifproject.helper_class.Constants.isServiceRunning
 import com.do_not_douch.antitheifproject.helper_class.DbHelper
 import com.do_not_douch.antitheifproject.model.MainMenuModel
 import com.do_not_douch.antitheifproject.utilities.ANTI_TITLE
+import com.do_not_douch.antitheifproject.utilities.askRatings
 import com.do_not_douch.antitheifproject.utilities.AUDIO_PERMISSION
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
 import com.do_not_douch.antitheifproject.utilities.BottomSheetFragment
@@ -32,6 +33,7 @@ import com.do_not_douch.antitheifproject.utilities.IS_NOTIFICATION
 import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
 import com.do_not_douch.antitheifproject.utilities.NOTIFICATION_PERMISSION
 import com.do_not_douch.antitheifproject.utilities.PHONE_PERMISSION
+import com.do_not_douch.antitheifproject.utilities.appUpdateType
 import com.do_not_douch.antitheifproject.utilities.autoServiceFunction
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.firebaseAnalytics
@@ -53,10 +55,16 @@ import com.do_not_douch.antitheifproject.utilities.val_banner_main_menu_screen
 import com.do_not_douch.antitheifproject.utilities.val_inter_exit_screen
 import com.do_not_douch.antitheifproject.utilities.val_inter_main_normal
 import com.do_not_douch.antitheifproject.utilities.val_is_inapp
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 
 class MainMenuFragment :
     BaseFragment<FragmentMainMenuActivityBinding>(FragmentMainMenuActivityBinding::inflate) {
 
+    private var isSplashScreen: Boolean = false
     private var adapterGrid: MainMenuGridAdapter? = null
     private var adapterLinear: MainMenuLinearAdapter? = null
     var sharedPrefUtils: DbHelper? = null
@@ -64,6 +72,8 @@ class MainMenuFragment :
     private var isInternetDialog: Boolean = false
     private var isInternetPermission: Boolean = true
     private var adsManager: AdsManager? = null
+    private lateinit var appUpdateManager: AppUpdateManager
+    private val RC_APP_UPDATE = 200
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,7 +86,7 @@ class MainMenuFragment :
                 _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
             } else {
                 adsManager?.let {
-                    showTwoInterAdExit(
+                    showTwoInterAd(
                         ads = it,
                         activity = activity ?: return@let,
                         remoteConfigNormal = val_inter_exit_screen,
@@ -85,16 +95,7 @@ class MainMenuFragment :
                         layout = binding?.mainLayout?.adsLay!!,
                         isBackPress = true
                     ) {
-                        if (it == 1) {
                             findNavController().navigate(R.id.FragmentExitScreen)
-                        } else {
-                            val bottomSheetFragment =
-                                BottomSheetFragment(activity ?: return@showTwoInterAdExit)
-                            bottomSheetFragment.show(
-                                fragmentManager ?: return@showTwoInterAdExit,
-                                bottomSheetFragment.tag
-                            )
-                        }
                     }
 
                 }
@@ -108,6 +109,7 @@ class MainMenuFragment :
                 loadLayoutDirection(!(isGridLayout ?: return@clickWithThrottle))
             }
             mainLayout.topLay.settingBtn.clickWithThrottle {
+                findNavController().navigate(R.id.FragmentBuyScreen)
             }
             navViewLayout.rateUsView.clickWithThrottle {
                 showRatingDialog(onPositiveButtonClick = { it, _dialog ->
@@ -212,6 +214,7 @@ class MainMenuFragment :
             })
         }
         loadBanner()
+
 
     }
 
@@ -341,30 +344,34 @@ class MainMenuFragment :
 
     override fun onResume() {
         super.onResume()
+        arguments?.let {
+            isSplashScreen = it.getBoolean("is_splash")
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(requireContext(), NOTIFICATION_PERMISSION) != 0) {
-//                _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
+            if (context?.let {
+                    ContextCompat.checkSelfPermission(
+                        it,
+                        NOTIFICATION_PERMISSION
+                    )
+                } != 0) {
                 requestCameraPermissionNotification()
             } else {
-//                _binding?.mainLayout?.hideAd?.visibility = View.GONE
+                if (isSplashScreen) askRatings(activity ?: return)
             }
         } else {
-//            _binding?.mainLayout?.hideAd?.visibility = View.GONE
+            if (isSplashScreen) askRatings(activity ?: return)
         }
         sharedPrefUtils?.getBooleanData(context ?: return, IS_NOTIFICATION, false)?.let {
             _binding?.navViewLayout?.customSwitch?.isChecked = it
         }
+        // Initialize AppUpdateManager
+        appUpdateManager = AppUpdateManagerFactory.create(context?:return)
+        // Fetch Remote Config and Check for App Update
+        checkForUpdate()
     }
 
     override fun onPause() {
         super.onPause()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(requireContext(), NOTIFICATION_PERMISSION) != 0) {
-//                _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
-            }
-        } else {
-//            _binding?.mainLayout?.hideAd?.visibility = View.VISIBLE
-        }
         if (isInternetPermission) {
             isInternetDialog = true
         }
@@ -377,7 +384,37 @@ class MainMenuFragment :
             viewS = _binding?.mainLayout?.shimmerLayout!!,
             addConfig = val_banner_main_menu_screen,
             bannerId = id_banner_main_screen
-        ) {
+        ){
+            _binding?.mainLayout?.shimmerLayout!!.visibility=View.GONE
+        }
+    }
+
+    private fun checkForUpdate() {
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo: AppUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+            ) {
+                when (appUpdateType){
+                    0->{
+                        // Request the update
+                        appUpdateManager.startUpdateFlowForResult(
+                            appUpdateInfo,
+                            AppUpdateType.IMMEDIATE,
+                            activity?:return@addOnSuccessListener,
+                            RC_APP_UPDATE
+                        )
+                    }
+                    1->{
+                        // Request the update
+                        appUpdateManager.startUpdateFlowForResult(
+                            appUpdateInfo,
+                            AppUpdateType.FLEXIBLE,
+                            activity?:return@addOnSuccessListener,
+                            RC_APP_UPDATE
+                        )
+                    }
+                }
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package com.do_not_douch.antitheifproject.ui
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +41,7 @@ class FragmentSoundSelection :
     private var position: MainMenuModel? = null
     private var isInternetDialog: Boolean = false
     private var adsManager: AdsManager? = null
+    private var mediaPlayer: MediaPlayer? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,12 +80,14 @@ class FragmentSoundSelection :
             sharedPrefUtils?.saveData(context ?: return, IS_GRID, true)
             _binding?.topLay?.setLayoutBtn?.setImage(R.drawable.icon_grid)
             adapterGrid = SoundSelectGridAdapter(clickItem = {
+                playSound(it)
                 sharedPrefUtils?.setTone(position?.maniTextTitle, it)
             }, soundData = soundData())
             val managerLayout = GridLayoutManager(context, 3)
             _binding?.recycler?.layoutManager = managerLayout
             sharedPrefUtils?.getTone(context ?: return, position?.maniTextTitle)
-                ?.let { adapterGrid?.selectSound(it) }
+                ?.let {
+                    adapterGrid?.selectSound(it) }
             _binding?.recycler?.adapter = adapterGrid
 
         } else {
@@ -91,6 +95,7 @@ class FragmentSoundSelection :
             sharedPrefUtils?.saveData(context ?: return, IS_GRID, false)
             _binding?.topLay?.setLayoutBtn?.setImage( R.drawable.icon_list)
             adapterLinear = SoundSelectLinearAdapter(clickItem = {
+                playSound(it)
                 sharedPrefUtils?.setTone(position?.maniTextTitle, it)
             }, soundData = soundData())
 
@@ -126,7 +131,7 @@ class FragmentSoundSelection :
                     _binding?.nativeExitAd?.visibility = View.VISIBLE
                     _binding?.shimmerLayout?.visibility = View.GONE
                     if(isAdded && isVisible && !isDetached) {
-                        adsManager?.nativeAds()?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                        adsManager?.nativeAds()?.nativeViewPolicy(context?:return,currentNativeAd ?: return, adView)
                         _binding?.nativeExitAd?.removeAllViews()
                         _binding?.nativeExitAd?.addView(adView)
                     }
@@ -151,9 +156,31 @@ class FragmentSoundSelection :
     override fun onPause() {
         super.onPause()
         isInternetDialog=true
+        mediaPlayer?.stop()
     }
     override fun onResume() {
         super.onResume()
     }
 
+    private fun playSound(id: Int) {
+        try {
+            mediaPlayer?.stop()
+            mediaPlayer = MediaPlayer.create(context?:requireContext(), soundData()[id].soundFlag)
+            // Set an event listener to release the MediaPlayer when playback is complete
+            mediaPlayer?.setOnCompletionListener {
+                mediaPlayer?.release()
+                mediaPlayer = null
+                adapterLinear?.onSoundComplete()
+            }
+            // Start playing the sound
+            mediaPlayer?.start()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer?.stop()
+    }
 }

@@ -75,7 +75,7 @@ class ImageFragment3 : Fragment()  {
                     _binding?.nextApp?.text = getString(R.string.start)
                     loadNewNative3()
         } else {
-            _binding?.mainAdsNative?.visibility = View.GONE
+//            _binding?.mainAdsNative?.visibility = View.GONE
             _binding?.skipApp?.visibility = View.INVISIBLE
             _binding?.nextApp?.text = getString(R.string.start)
         }
@@ -138,18 +138,18 @@ class ImageFragment3 : Fragment()  {
         }
         fun onAdVisibilityChanged(visible: Boolean) {
             Log.d("check_position", "onPageScrolled: Fragment--33333")
-            if(!val_native_intro_screen2){
-                return
-            }
-            _binding!!.mainAdsNative!!.visibility = if (visible) View.VISIBLE
-            else
-                View.INVISIBLE
+//            if(!val_native_intro_screen2){
+//                return
+//            }
+//            _binding!!.mainAdsNative!!.visibility = if (visible) View.VISIBLE
+//            else
+//                View.INVISIBLE
 
         }
     }
 
     fun loadNewNative3() {
-        val adView = LayoutInflater.from(context).inflate(
+       /* val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(onboarding3_bottom,_binding?.mainAdsNative!!,context?:return),
             null, false
         ) as NativeAdView
@@ -161,7 +161,7 @@ class ImageFragment3 : Fragment()  {
                 override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                     _binding?.mainAdsNative?.visibility = View.VISIBLE
                     _binding?.shimmerLayout?.visibility = View.GONE
-                    ads?.nativeAdsMain()?.nativeViewMedia(currentNativeAd ?: return, adView)
+                    ads?.nativeAdsMain()?.nativeViewMediaSplashSplash(currentNativeAd ?: return, adView)
                     _binding?.mainAdsNative?.removeAllViews()
                     _binding?.mainAdsNative?.addView(adView)
                     super.nativeAdLoaded(currentNativeAd)
@@ -178,7 +178,7 @@ class ImageFragment3 : Fragment()  {
                     _binding?.shimmerLayout?.visibility = View.GONE
                     super.nativeAdValidate(string)
                 }
-            })
+            })*/
     }
 
 }
