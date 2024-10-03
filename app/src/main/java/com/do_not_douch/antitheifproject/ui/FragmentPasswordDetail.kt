@@ -28,8 +28,8 @@ import com.do_not_douch.antitheifproject.utilities.IS_GRID
 import com.do_not_douch.antitheifproject.utilities.autoServiceFunctionIntruder
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
-import com.do_not_douch.antitheifproject.utilities.id_banner_1
-import com.do_not_douch.antitheifproject.utilities.id_native_password_screen
+import com.do_not_douch.antitheifproject.utilities.id_adaptive_banner
+import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.loadImage
 import com.do_not_douch.antitheifproject.utilities.setImage
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
@@ -379,7 +379,7 @@ class FragmentPasswordDetail :
             adsManager?.nativeAds()?.loadNativeAd(
                 activity ?: return,
                 val_ad_native_password_screen,
-                id_native_password_screen,
+                id_native_screen,
                 object : NativeListener {
                     override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                         if (isAdded && isVisible && !isDetached) {
@@ -422,7 +422,7 @@ class FragmentPasswordDetail :
             adsManager?.nativeAds()?.loadNativeAd(
                 activity ?: return,
                 val_ad_native_password_screen,
-                id_native_password_screen,
+                id_native_screen,
                 object : NativeListener {
                     override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                         if (isAdded && isVisible && !isDetached) {
@@ -462,7 +462,7 @@ class FragmentPasswordDetail :
             view = _binding?.bannerAds!!,
             viewS = _binding?.shimmerLayout!!,
             addConfig = val_banner_1,
-            bannerId = id_banner_1
+            bannerId = id_adaptive_banner
         ){
             _binding?.shimmerLayout!!.visibility=View.GONE
         }

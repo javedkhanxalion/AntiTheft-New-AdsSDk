@@ -19,7 +19,7 @@
             android:id="@+id/viewTopOne"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="#0090FF"
+            android:background="#EA335F"
             app:layout_constraintBottom_toTopOf="@id/viewTop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +33,7 @@
             android:gravity="start"
             android:singleLine="true"
             android:layout_marginStart="@dimen/_12sdp"
-            android:text="@string/app_name"
+            android:text="@string/setting"
             android:textColor="@color/white"
             android:textSize="@dimen/_18sdp"
             android:visibility="visible"
@@ -58,9 +58,11 @@
         <!--    Premium Button -->
         <View
             android:id="@+id/viewTop"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
-            android:background="@color/navByBtn"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_25sdp"
+            android:background="@drawable/rect_nav_rect_buy"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/viewTopOne"
@@ -86,7 +88,7 @@
             android:layout_margin="@dimen/_5sdp"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:gravity="start"
+            android:gravity="center"
             android:text="@string/premium"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp"
@@ -94,7 +96,7 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/buy_us"
             app:layout_constraintEnd_toEndOf="@id/viewTop"
-            app:layout_constraintStart_toEndOf="@+id/buy_us"
+            app:layout_constraintStart_toStartOf="@id/viewTop"
             app:layout_constraintTop_toTopOf="@+id/buy_us" />
 
         <!--    Notification Button -->
@@ -102,8 +104,8 @@
             android:id="@+id/notification_view"
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:background="@drawable/rect_nav_rect"
+            android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="@+id/viewTop"
             app:layout_constraintStart_toStartOf="@id/viewTop"
             app:layout_constraintTop_toBottomOf="@id/viewTop" />
@@ -126,17 +128,18 @@
             android:id="@+id/notification_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
-            android:gravity="start"
+            android:gravity="center"
             android:singleLine="true"
             android:text="@string/notification"
+            android:paddingStart="@dimen/_40sdp"
             android:textColor="@color/nveTextColor"
             android:textSize="@dimen/_12sdp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/notification_image"
             app:layout_constraintEnd_toStartOf="@id/customSwitch"
             app:layout_constraintStart_toEndOf="@+id/notification_image"
-            app:layout_constraintTop_toTopOf="@+id/notification_image" />
+            app:layout_constraintTop_toTopOf="@+id/notification_image"
+            tools:ignore="RtlSymmetry" />
 
         <Switch
             android:id="@+id/customSwitch"
@@ -160,6 +163,7 @@
             android:id="@+id/share_app_view"
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/rect_nav_rect"
             android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="@+id/notification_view"
             app:layout_constraintStart_toStartOf="@id/notification_view"
@@ -184,7 +188,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_5sdp"
             android:singleLine="true"
-            android:gravity="start"
+            android:gravity="center"
             android:text="@string/share_app"
             android:textColor="@color/nveTextColor"
             android:textSize="@dimen/_12sdp"
@@ -200,6 +204,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/rect_nav_rect"
             app:layout_constraintEnd_toEndOf="@+id/share_app_view"
             app:layout_constraintStart_toStartOf="@id/share_app_view"
             app:layout_constraintTop_toBottomOf="@id/share_app_view" />
@@ -223,7 +228,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_5sdp"
             android:singleLine="true"
-            android:gravity="start"
+            android:gravity="center"
             android:text="@string/rate_us"
             android:textColor="@color/nveTextColor"
             android:textSize="@dimen/_12sdp"
@@ -239,6 +244,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/rect_nav_rect"
             app:layout_constraintEnd_toEndOf="@+id/share_app_view"
             app:layout_constraintStart_toStartOf="@id/share_app_view"
             app:layout_constraintTop_toBottomOf="@id/rate_us_view" />
@@ -262,7 +268,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_5sdp"
             android:singleLine="true"
-            android:gravity="start"
+            android:gravity="center"
             android:text="@string/language"
             android:textColor="@color/nveTextColor"
             android:textSize="@dimen/_12sdp"
@@ -278,6 +284,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/rect_nav_rect"
             app:layout_constraintEnd_toEndOf="@+id/share_app_view"
             app:layout_constraintStart_toStartOf="@id/share_app_view"
             app:layout_constraintTop_toBottomOf="@id/language_view" />
@@ -301,7 +308,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_5sdp"
             android:singleLine="true"
-            android:gravity="start"
+            android:gravity="center"
             android:text="@string/more_app"
             android:textColor="@color/nveTextColor"
             android:textSize="@dimen/_12sdp"
@@ -317,10 +324,10 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/rect_nav_rect"
             app:layout_constraintEnd_toEndOf="@+id/share_app_view"
             app:layout_constraintStart_toStartOf="@id/share_app_view"
             app:layout_constraintTop_toBottomOf="@id/more_app_view" />
-
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:id="@+id/privacy_image"
             android:layout_width="@dimen/_20sdp"
@@ -333,14 +340,13 @@
             app:layout_constraintStart_toStartOf="@id/privacy_view"
             app:layout_constraintTop_toTopOf="@id/privacy_view"
             app:srcCompat="@drawable/icon_privac" />
-
         <TextView
             android:id="@+id/privacy_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_5sdp"
             android:singleLine="true"
-            android:gravity="start"
+            android:gravity="center"
             android:text="@string/privacy"
             android:textColor="@color/nveTextColor"
             android:textSize="@dimen/_12sdp"
@@ -350,7 +356,188 @@
             app:layout_constraintStart_toEndOf="@+id/privacy_image"
             app:layout_constraintTop_toTopOf="@+id/privacy_image" />
 
+        <!--    Feed Back Button -->
+        <View
+            android:id="@+id/feed_back_view"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/rect_nav_rect"
+            app:layout_constraintEnd_toEndOf="@+id/privacy_view"
+            app:layout_constraintStart_toStartOf="@id/privacy_view"
+            app:layout_constraintTop_toBottomOf="@id/privacy_view" />
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/feed_back_image"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/feed_back_view"
+            app:layout_constraintEnd_toStartOf="@+id/feed_back_text"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/feed_back_view"
+            app:layout_constraintTop_toTopOf="@id/feed_back_view"
+            app:srcCompat="@drawable/feed_back_icon" />
+        <TextView
+            android:id="@+id/feed_back_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:singleLine="true"
+            android:gravity="center"
+            android:text="@string/feedback"
+            android:textColor="@color/nveTextColor"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/feed_back_image"
+            app:layout_constraintEnd_toEndOf="@id/feed_back_view"
+            app:layout_constraintStart_toEndOf="@+id/feed_back_image"
+            app:layout_constraintTop_toTopOf="@+id/feed_back_image" />
+
+        <!--    Customer Support Button -->
+        <View
+            android:id="@+id/customer_support_view"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/rect_nav_rect"
+            app:layout_constraintEnd_toEndOf="@id/feed_back_view"
+            app:layout_constraintStart_toStartOf="@id/feed_back_view"
+            app:layout_constraintTop_toBottomOf="@id/feed_back_view" />
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/customer_support_image"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/customer_support_view"
+            app:layout_constraintEnd_toStartOf="@+id/customer_support_text"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/customer_support_view"
+            app:layout_constraintTop_toTopOf="@id/customer_support_view"
+            app:srcCompat="@drawable/custom_support_icon" />
+        <TextView
+            android:id="@+id/customer_support_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:singleLine="true"
+            android:gravity="center"
+            android:text="@string/customer_support"
+            android:textColor="@color/nveTextColor"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/customer_support_image"
+            app:layout_constraintEnd_toEndOf="@id/customer_support_view"
+            app:layout_constraintStart_toEndOf="@+id/customer_support_image"
+            app:layout_constraintTop_toTopOf="@+id/customer_support_image" />
+
+        <!--    exitAppView Button -->
+        <View
+            android:id="@+id/exitAppView_view"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/rect_nav_rect"
+            app:layout_constraintEnd_toEndOf="@id/customer_support_view"
+            app:layout_constraintStart_toStartOf="@id/customer_support_view"
+            app:layout_constraintTop_toBottomOf="@id/customer_support_view" />
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/exitAppView_image"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/exitAppView_view"
+            app:layout_constraintEnd_toStartOf="@+id/exitAppView_text"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/exitAppView_view"
+            app:layout_constraintTop_toTopOf="@id/exitAppView_view"
+            app:srcCompat="@drawable/custom_support_icon" />
+        <TextView
+            android:id="@+id/exitAppView_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:singleLine="true"
+            android:gravity="center"
+            android:text="@string/exit"
+            android:textColor="@color/nveTextColor"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/exitAppView_image"
+            app:layout_constraintEnd_toEndOf="@id/exitAppView_view"
+            app:layout_constraintStart_toEndOf="@+id/exitAppView_image"
+            app:layout_constraintTop_toTopOf="@+id/exitAppView_image" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <FrameLayout
+        android:id="@+id/adsView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:minHeight="@dimen/_40sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/round_btn_ads"
+        android:visibility="visible"
+        app:layout_constraintWidth_percent="0.80"
+        app:layout_constraintBottom_toBottomOf="@id/adsView"
+        app:layout_constraintLeft_toLeftOf="@id/adsView"
+        app:layout_constraintRight_toRightOf="@id/adsView"
+        app:layout_constraintTop_toTopOf="@id/adsView"
+        app:shimmer_auto_start="true">
 
+        <include
+            android:id="@+id/shimmer_main"
+            layout="@layout/shimmer_native_layout" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ads_lay"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:background="@drawable/rect_menu_language"
+        android:backgroundTint="@color/white"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="@dimen/_10sdp"
+        >
+
+        <ProgressBar
+            android:id="@+id/animation"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            app:layout_constraintEnd_toEndOf="@id/ads_lay"
+            app:layout_constraintStart_toStartOf="@id/ads_lay"
+            app:layout_constraintTop_toTopOf="@id/ads_lay"
+            app:layout_constraintBottom_toTopOf="@id/warning"
+            />
+
+        <TextView
+            android:id="@+id/warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:text="@string/loading_ad"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="@id/ads_lay"
+            app:layout_constraintLeft_toLeftOf="@id/ads_lay"
+            app:layout_constraintRight_toRightOf="@id/ads_lay"
+            app:layout_constraintTop_toBottomOf="@id/animation"
+
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

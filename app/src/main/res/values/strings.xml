@@ -13,15 +13,7 @@
     <string name="remove">Remove</string>
     <string name="battery">Battery</string>
     <string name="wifi_alarm">Wifi Alarm</string>
-
-    <string name="confirm_exit">Do you really want to exit?</string>
     <string name="facebook_application_id" translatable="false"/>
-    <string name="txt_ad">AD</string>
-    <string name="txt_ad_loading">Loading ads…</string>
-    <string name="txt_new_version_dialog_title">New version Available</string>
-    <string name="txt_update_app_dialog">A new version of the App is available, we recommend updating to the latest version.</string>
-    <string name="txt_update_app_dialog_title">Update app?</string>
-    <string name="txt_update_now_dialog">Update now</string>
 
     <string name="detection">Detection</string>
     <string name="yes">Yes</string>
@@ -160,5 +152,32 @@
     <string name="intro_1">Detect Phone thieves Effortlessly</string>
     <string name="intro_2"><![CDATA[Find your phone by Clap using AI tech & sounds effects]]></string>
     <string name="intro_3">Anti Pickpocket catch a mobile phone thief</string>
+
+    <string name="would_you_like_to_continue_unlock_heart">Would you like to continue unlock heart</string>
+    <string name="exit_app">Exit App</string>
+    <string name="tap_to_exit"><u>Tap to Exit</u></string>
+    <string name="txt_ad_loading">Loading ads…</string>
+    <string name="txt_new_version_dialog_title">New version Available</string>
+    <string name="txt_update_app_dialog">A new version of the App is available, we recommend updating to the latest version.</string>
+    <string name="txt_update_app_dialog_title">Update app?</string>
+    <string name="txt_update_now_dialog">Update now</string>
+    <string name="setting">Setting</string>
+    <string name="feedback">Feedback</string>
+    <string name="customer_support">Customer Support</string>
+
+    <string name="customer_support">Customer Support</string>
+    <string name="feedback">Feedback</string>
+    <string name="how_was_your_overall_experience">How was your overall experience?</string>
+    <string name="tell_us_the_problems_you_meet">Tell us the problems you meet.</string>
+    <string name="can_t_lock_screen">Can’t lock screen</string>
+    <string name="others">Others</string>
+    <string name="slow_speed">Slow speed</string>
+    <string name="difficult_to_use">Difficult to use</string>
+    <string name="do_not_display_on_my_phone">Do not display on my phone</string>
+    <string name="do_not_show_the_wallpaper">Do not show the wallpaper</string>
+    <string name="feature_not_working">Feature not working</string>
+    <string name="upload_picture">Upload Picture</string>
+    <string name="send">Send</string>
+    <string name="type_answer_her">Type answer her...</string>
 
 </resources>

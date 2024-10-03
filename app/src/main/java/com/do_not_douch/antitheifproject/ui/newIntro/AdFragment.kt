@@ -13,7 +13,7 @@ import com.google.android.gms.ads.nativead.NativeAdView
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
-import com.do_not_douch.antitheifproject.utilities.id_native_Full_screen
+import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.val_native_Full_screen
 
 class AdFragment : Fragment() {
@@ -51,7 +51,7 @@ class AdFragment : Fragment() {
         ads?.nativeAdsMain()?.loadNativeAd(
             activity ?: return,
             val_native_Full_screen,
-            id_native_Full_screen,
+            id_native_screen,
             object : NativeListener {
                 override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                     _binding?.mainAdsNative?.visibility = View.VISIBLE

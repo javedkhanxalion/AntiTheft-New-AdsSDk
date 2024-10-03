@@ -10,7 +10,6 @@ import com.do_not_douch.antitheifproject.ads_manager.interfaces.AdMobAdListener
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.AdsListener
 import com.do_not_douch.antitheifproject.utilities.id_inter_main_medium
 
-var openAdForSplash: AppOpenForSplash? = null
 var iS_SPLASH_AD_DISMISS = false
 private const val TAGGED = "TwoInterAdsSplash"
 var IS_OPEN_SHOW = false
@@ -59,7 +58,7 @@ fun showNormalInterAdSingle(
         override fun fullScreenAdShow() {
             Log.d(TAGGED, "fullScreenAdShow: normal inter ad show")
             firebaseAnalytics("inter_normal_show_$tagClass", "inter_Show")
-            layout.visibility = View.GONE
+            function.invoke()
         }
 
         override fun fullScreenAdDismissed() {
@@ -67,7 +66,6 @@ fun showNormalInterAdSingle(
             firebaseAnalytics("inter_normal_dismisss_$tagClass", "inter_Show")
             layout.visibility = View.GONE
             iS_SPLASH_AD_DISMISS = true
-            function.invoke()
         }
 
         override fun fullScreenAdFailedToShow() {
@@ -87,17 +85,5 @@ fun showNormalInterAdSingle(
 
     }, id_inter_main_medium, object : AdsListener {
     })
-    }, 500)
+    }, 1000)
 }
-
-//fun loadOpenAdSplash(context: Context) {
-//    openAdForSplash = AppOpenForSplash()
-//    openAdForSplash?.loadAd(context, context.getString(R.string.app_open_splash))
-//    Log.d(TAG, "loadOpenAdSplash: Load $openAdForSplash")
-//}
-//
-//
-//fun showOpenAd(activity: Activity) {
-//    Log.d(TAG, "loadOpenAdSplash: SHow $openAdForSplash")
-//    openAdForSplash?.showAdIfAvailable(activity)
-//}

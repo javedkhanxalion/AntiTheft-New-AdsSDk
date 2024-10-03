@@ -20,7 +20,7 @@ import com.do_not_douch.antitheifproject.utilities.BaseFragment
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.firebaseAnalytics
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
-import com.do_not_douch.antitheifproject.utilities.id_native_intruder_list_screen
+import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.intruderimage_bottom
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.val_ad_native_intruder_list_screen
@@ -126,7 +126,7 @@ class FragmentShowIntruder :
         adsManager?.nativeAds()?.loadNativeAd(
             activity ?: return,
             val_ad_native_intruder_list_screen,
-            id_native_intruder_list_screen,
+            id_native_screen,
             object : NativeListener {
                 override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                     _binding?.nativeExitAd?.visibility = View.VISIBLE

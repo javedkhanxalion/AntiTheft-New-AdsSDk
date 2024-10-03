@@ -3,6 +3,7 @@ package com.do_not_douch.antitheifproject.ui
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.FragmentExitScreenBinding
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
@@ -11,7 +12,7 @@ import com.do_not_douch.antitheifproject.ads_manager.AdsManager
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
-import com.do_not_douch.antitheifproject.utilities.id_exit_screen_native
+import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.thankyou_bottom
 import com.do_not_douch.antitheifproject.utilities.val_exit_dialog_native
@@ -28,6 +29,12 @@ class FragmentExitScreen :
         super.onViewCreated(view, savedInstanceState)
         adsManager = AdsManager.appAdsInit(activity ?: return)
         loadNative()
+        _binding?.yesBtn?.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        _binding?.noBtn?.setOnClickListener {
+            activity?.finish()
+        }
         setupBackPressedCallback {
         }
 
@@ -49,7 +56,7 @@ class FragmentExitScreen :
             adsManager?.nativeAds()?.loadNativeAd(
                 activity ?: return@launchWhenResumed,
                 val_exit_screen_native,
-                id_exit_screen_native,
+                id_native_screen,
                 object : NativeListener {
                     override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                         if (isAdded && isVisible && !isDetached) {

@@ -95,6 +95,9 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import java.util.Locale
 import com.google.android.gms.common.ConnectionResult
 
+var isRating = true
+var PurchaseScreen = 0
+
 var isSplash = true
 var isIntroLanguageShow = true
 var isSplashDialog = true
@@ -111,6 +114,7 @@ var val_native_intro_screen = false
 var val_native_intro_screen1 = false
 var val_native_intro_screen2 = false
 var val_inter_exit_screen = false
+var val_banner_setting_screen = false
 
 var val_banner_1 = false
 var val_inter_main_normal = false
@@ -137,61 +141,31 @@ var val_is_inapp = false
 var isInternetAvailable = false
 
 var counter = 0
+var banner_height = 160
+var banner_type = 0
+var appUpdateType = 0
 var inter_frequency_count = 0
-var id_frequency_counter = 3
+var id_frequency_counter = 10
+var val_inapp_frequency = 10
 var id_inter_counter = 3
-var id_inter_main_splash = ""
-var id_inter_main_medium = ""
-var id_native_loading_screen = ""
-var id_native_intro_screen = ""
-var id_native_language_screen = ""
-var id_native_sound_screen = ""
-var id_native_intruder_list_screen = ""
-var id_native_show_image_screen = ""
-var id_native_intruder_detection_screen = ""
-var id_native_password_screen = ""
-var id_native_Pocket_Detection_screen = ""
-var id_native_Motion_Detection_screen = ""
-var id_native_Whistle_Detection_screen = ""
-var id_native_hand_free_screen = ""
-var id_native_clap_detection_screen = ""
-var id_native_Remove_Charger_screen = ""
-var id_native_Battery_Detection_screen = ""
-var id_native_main_menu_screen = ""
-var id_native_app_open_screen = ""
-var id_exit_dialog_native = ""
-var id_exit_screen_native: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
-var id_banner_language_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/9214589741" else ""
-var id_banner_1: String = if (isDebug()) "ca-app-pub-3940256099942544/9214589741" else ""
-var id_banner_main_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/6300978111" else ""
+var id_inter_main_medium = if (isDebug()) "ca-app-pub-3940256099942544/1033173712" else ""
+var id_native_screen = ""
+var id_app_open_screen = "ca-app-pub-9263479717968951/5800800635"
+var id_adaptive_banner = ""
+var id_inter_splash_Screen = ""
+var id_collapsable_banner = ""
+var id_splash_native = ""
 
-var id_native_intro_screen1: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
-var id_native_intro_screen2: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
-var id_app_open_screen: String = ""
-var id_native_intro_screen_full: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
-var id_language_scroll_screen_native: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
-var id_native_Full_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
-var id_banner_splash_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/6300978111" else ""
 
 var val_inter_language_screen = false
 var val_inter_on_bord_screen = false
 
-var language_reload = 0
 var Onboarding_Full_Native = 1
 var sessionOpenlanguage = 1
 var sessionOnboarding = 1
-var fisrt_ad_line_threshold = 2
-var line_count = 2
-var language_native_scroll = 1
-var main_native_scroll = 1
-var fisrt_ad_line_threshold_main = 2
-var line_count_main = 2
 
 //New IDs
 var splash_bottom = 1
-var banner_type = 0
-var appUpdateType = 0
-
 var language_bottom = 1
 var languageinapp_scroll = 1
 var onboarding1_bottom = 1
@@ -219,7 +193,6 @@ var remove_selectsound_bottom = 1
 var battery_native = 1
 var battery_selectsound_bottom = 1
 var test_ui_native = ""
-var language_first_r_scroll = ""
 
 const val NOTIFY_CHANNEL_ID = "AppNameBackgroundService"
 

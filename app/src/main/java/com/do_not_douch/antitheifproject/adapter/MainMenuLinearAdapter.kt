@@ -18,9 +18,9 @@ import com.do_not_douch.antitheifproject.model.MainMenuModel
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
 import com.do_not_douch.antitheifproject.utilities.home_native
-import com.do_not_douch.antitheifproject.utilities.id_language_scroll_screen_native
-import com.do_not_douch.antitheifproject.utilities.language_native_scroll
+import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.loadImage
+import com.do_not_douch.antitheifproject.utilities.val_ad_native_main_menu_screen
 
 class MainMenuLinearAdapter(
     private val context: Activity,
@@ -104,8 +104,8 @@ class MainMenuLinearAdapter(
             ) as NativeAdView
             ads.nativeAdsMain().loadNativeAd(
                 context,
-                language_native_scroll == 1,
-                id_language_scroll_screen_native,
+                val_ad_native_main_menu_screen,
+                id_native_screen,
                 object : NativeListener {
                     override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                         binding.nativeExitAd.visibility = View.VISIBLE

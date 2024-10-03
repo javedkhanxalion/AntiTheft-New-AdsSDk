@@ -1,5 +1,6 @@
 package com.do_not_douch.antitheifproject.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -30,6 +31,7 @@ class FragmentInAppScreen :
 
     var isSplashFrom: Boolean? = true
     var billingManager: BillingManager? = null
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

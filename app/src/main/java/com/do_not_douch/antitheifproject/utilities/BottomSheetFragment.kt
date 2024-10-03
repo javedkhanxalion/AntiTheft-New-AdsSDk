@@ -51,7 +51,7 @@ class BottomSheetFragment(val activity: Activity) : BottomSheetDialogFragment() 
         adsManager?.nativeAdsMain()?.loadNativeAd(
             activity,
             val_exit_dialog_native,
-            id_exit_dialog_native,
+            id_native_screen,
             object : NativeListener {
                 override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                     if (isAdded && isVisible && !isDetached) {

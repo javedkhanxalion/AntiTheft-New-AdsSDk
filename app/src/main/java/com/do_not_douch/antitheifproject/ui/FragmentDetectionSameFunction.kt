@@ -8,7 +8,6 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.FragmentDetailModuleBinding
-import com.do_not_douch.antitheifproject.ads_manager.AdsBanners
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
 import com.do_not_douch.antitheifproject.helper_class.Constants.isServiceRunning
@@ -20,7 +19,7 @@ import com.do_not_douch.antitheifproject.utilities.IS_GRID
 import com.do_not_douch.antitheifproject.utilities.autoServiceFunctionInternalModule
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
-import com.do_not_douch.antitheifproject.utilities.id_banner_1
+import com.do_not_douch.antitheifproject.utilities.id_adaptive_banner
 import com.do_not_douch.antitheifproject.utilities.loadImage
 import com.do_not_douch.antitheifproject.utilities.setImage
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
@@ -351,7 +350,8 @@ class FragmentDetectionSameFunction :
                     _binding?.gridLayout?.nativeExitAd?.visibility = View.VISIBLE
                     _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
                     if (isAdded && isVisible && !isDetached) {
-                        adsManager?.nativeAds()?.nativeViewPolicy(context?:return,currentNativeAd ?: return, adView)
+                        adsManager?.nativeAds()
+                            ?.nativeViewPolicy(context ?: return, currentNativeAd ?: return, adView)
                         _binding?.gridLayout?.nativeExitAd?.removeAllViews()
                         _binding?.gridLayout?.nativeExitAd?.addView(adView)
                     }
@@ -396,7 +396,8 @@ class FragmentDetectionSameFunction :
                     _binding?.linearlayout?.nativeExitAd?.visibility = View.VISIBLE
                     _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
                     if (isAdded && isVisible && !isDetached) {
-                        adsManager?.nativeAds()?.nativeViewPolicy(context?:return,currentNativeAd ?: return, adView)
+                        adsManager?.nativeAds()
+                            ?.nativeViewPolicy(context ?: return, currentNativeAd ?: return, adView)
                         _binding?.linearlayout?.nativeExitAd?.removeAllViews()
                         _binding?.linearlayout?.nativeExitAd?.addView(adView)
                     }
@@ -425,9 +426,9 @@ class FragmentDetectionSameFunction :
             view = _binding?.bannerAds!!,
             viewS = _binding?.shimmerLayout!!,
             addConfig = val_banner_1,
-            bannerId = id_banner_1
-        ){
-            _binding?.shimmerLayout!!.visibility=View.GONE
+            bannerId = id_adaptive_banner
+        ) {
+            _binding?.shimmerLayout!!.visibility = View.GONE
         }
     }
 

@@ -21,7 +21,7 @@ import com.do_not_douch.antitheifproject.model.IntruderModels
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
 import com.do_not_douch.antitheifproject.utilities.firebaseAnalytics
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
-import com.do_not_douch.antitheifproject.utilities.id_native_show_image_screen
+import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.intruderimage_bottom
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.showToast
@@ -120,7 +120,7 @@ class ShowFullImageFragment :
         adsManager?.nativeAds()?.loadNativeAd(
             activity ?: return,
             val_ad_native_show_image_screen,
-            id_native_show_image_screen,
+            id_native_screen,
             object : NativeListener {
                 override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                     if (!isAdded && !isVisible && isDetached) {

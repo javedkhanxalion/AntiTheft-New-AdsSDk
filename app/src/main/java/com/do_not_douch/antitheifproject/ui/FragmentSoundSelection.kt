@@ -8,12 +8,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
+import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.FragmentSoundSelectionBinding
 import com.do_not_douch.antitheifproject.adapter.SoundSelectGridAdapter
 import com.do_not_douch.antitheifproject.adapter.SoundSelectLinearAdapter
-import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.FragmentSoundSelectionBinding
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.ads.nativead.NativeAdView
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
 import com.do_not_douch.antitheifproject.helper_class.DbHelper
@@ -23,12 +20,15 @@ import com.do_not_douch.antitheifproject.utilities.BaseFragment
 import com.do_not_douch.antitheifproject.utilities.IS_GRID
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
-import com.do_not_douch.antitheifproject.utilities.id_native_sound_screen
+import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.loadImage
 import com.do_not_douch.antitheifproject.utilities.setImage
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.soundData
 import com.do_not_douch.antitheifproject.utilities.val_ad_native_sound_screen
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdView
 
 
 class FragmentSoundSelection :
@@ -87,13 +87,14 @@ class FragmentSoundSelection :
             _binding?.recycler?.layoutManager = managerLayout
             sharedPrefUtils?.getTone(context ?: return, position?.maniTextTitle)
                 ?.let {
-                    adapterGrid?.selectSound(it) }
+                    adapterGrid?.selectSound(it)
+                }
             _binding?.recycler?.adapter = adapterGrid
 
         } else {
             isGridLayout = false
             sharedPrefUtils?.saveData(context ?: return, IS_GRID, false)
-            _binding?.topLay?.setLayoutBtn?.setImage( R.drawable.icon_list)
+            _binding?.topLay?.setLayoutBtn?.setImage(R.drawable.icon_list)
             adapterLinear = SoundSelectLinearAdapter(clickItem = {
                 playSound(it)
                 sharedPrefUtils?.setTone(position?.maniTextTitle, it)
@@ -116,22 +117,27 @@ class FragmentSoundSelection :
     private fun loadNative() {
 
         val adView = LayoutInflater.from(context).inflate(
-            getNativeLayout(position?.nativeSoundLayout?:return,_binding?.nativeExitAd!!,context?:return),
+            getNativeLayout(
+                position?.nativeSoundLayout ?: return,
+                _binding?.nativeExitAd!!,
+                context ?: return
+            ),
             null, false
         ) as NativeAdView
         adsManager?.nativeAds()?.loadNativeAd(
             activity ?: return,
             val_ad_native_sound_screen,
-            id_native_sound_screen,
+            id_native_screen,
             object : NativeListener {
                 override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
-                    if(!isAdded && !isVisible && isDetached){
+                    if (!isAdded && !isVisible && isDetached) {
                         return
                     }
                     _binding?.nativeExitAd?.visibility = View.VISIBLE
                     _binding?.shimmerLayout?.visibility = View.GONE
-                    if(isAdded && isVisible && !isDetached) {
-                        adsManager?.nativeAds()?.nativeViewPolicy(context?:return,currentNativeAd ?: return, adView)
+                    if (isAdded && isVisible && !isDetached) {
+                        adsManager?.nativeAds()
+                            ?.nativeViewPolicy(context ?: return, currentNativeAd ?: return, adView)
                         _binding?.nativeExitAd?.removeAllViews()
                         _binding?.nativeExitAd?.addView(adView)
                     }
@@ -155,17 +161,14 @@ class FragmentSoundSelection :
 
     override fun onPause() {
         super.onPause()
-        isInternetDialog=true
+        isInternetDialog = true
         mediaPlayer?.stop()
-    }
-    override fun onResume() {
-        super.onResume()
     }
 
     private fun playSound(id: Int) {
         try {
             mediaPlayer?.stop()
-            mediaPlayer = MediaPlayer.create(context?:requireContext(), soundData()[id].soundFlag)
+            mediaPlayer = MediaPlayer.create(context ?: requireContext(), soundData()[id].soundFlag)
             // Set an event listener to release the MediaPlayer when playback is complete
             mediaPlayer?.setOnCompletionListener {
                 mediaPlayer?.release()

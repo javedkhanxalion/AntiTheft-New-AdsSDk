@@ -69,5 +69,15 @@
         android:name="com.do_not_douch.antitheifproject.ui.FragmentInAppScreen"
         android:label="FragmentInAppScreen"
         tools:layout="@layout/in_app_dialog_first" />
+    <fragment
+        android:id="@+id/FragmentNavigationScreen"
+        android:name="com.do_not_douch.antitheifproject.ui.FragmentNavigationScreen"
+        android:label="FragmentNavigationScreen"
+        tools:layout="@layout/navigation_layout" />
+    <fragment
+        android:id="@+id/FragmentFeedBack"
+        android:name="com.do_not_douch.antitheifproject.ui.FragmentFeedBack"
+        android:label="FragmentFeedBack"
+        tools:layout="@layout/fragment_feed_back" />
 
 </navigation>

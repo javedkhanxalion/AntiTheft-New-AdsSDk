@@ -17,6 +17,23 @@
             </InsightsFilterSettings>
           </value>
         </entry>
+        <entry key="Firebase Crashlytics">
+          <value>
+            <InsightsFilterSettings>
+              <option name="connection">
+                <ConnectionSetting>
+                  <option name="appId" value="com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone" />
+                  <option name="mobileSdkAppId" value="1:941753995368:android:b9f21f53fe27f2f2596bdd" />
+                  <option name="projectId" value="phone-anti-theft-alarm-e4bfa" />
+                  <option name="projectNumber" value="941753995368" />
+                </ConnectionSetting>
+              </option>
+              <option name="signal" value="SIGNAL_UNSPECIFIED" />
+              <option name="timeIntervalDays" value="THIRTY_DAYS" />
+              <option name="visibilityType" value="ALL" />
+            </InsightsFilterSettings>
+          </value>
+        </entry>
       </map>
     </option>
   </component>

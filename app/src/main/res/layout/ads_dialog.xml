@@ -31,7 +31,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/txt_ad_loading"
             android:textColor="@color/black"
-            android:textSize="18dp"
+            android:textSize="@dimen/_18sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

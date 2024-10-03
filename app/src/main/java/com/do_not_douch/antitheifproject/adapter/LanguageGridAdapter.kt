@@ -17,9 +17,9 @@ import com.do_not_douch.antitheifproject.ads_manager.AdsManager
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
 import com.do_not_douch.antitheifproject.model.LanguageAppModel
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
-import com.do_not_douch.antitheifproject.utilities.id_language_scroll_screen_native
-import com.do_not_douch.antitheifproject.utilities.language_native_scroll
+import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.languageinapp_scroll
+import com.do_not_douch.antitheifproject.utilities.val_ad_native_language_screen
 
 class LanguageGridAdapter(private val items: List<LanguageAppModel>,
                           private  val ads : AdsManager,
@@ -83,8 +83,8 @@ class LanguageGridAdapter(private val items: List<LanguageAppModel>,
             ) as NativeAdView
             ads.nativeAdsMain().loadNativeAd(
                 activity1?:return,
-                language_native_scroll == 1,
-                id_language_scroll_screen_native,
+                val_ad_native_language_screen,
+                id_native_screen,
                 object : NativeListener {
                     override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                         adHolder.bindingAds.nativeExitAd.visibility = View.VISIBLE

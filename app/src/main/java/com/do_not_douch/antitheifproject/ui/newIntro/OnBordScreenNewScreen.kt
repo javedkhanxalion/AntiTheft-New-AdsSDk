@@ -19,7 +19,7 @@ import com.do_not_douch.antitheifproject.utilities.Onboarding_Full_Native
 import com.do_not_douch.antitheifproject.utilities.firebaseAnalytics
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
 import com.do_not_douch.antitheifproject.utilities.id_inter_main_medium
-import com.do_not_douch.antitheifproject.utilities.id_native_intro_screen
+import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.isInternetAvailable
 import com.do_not_douch.antitheifproject.utilities.isNetworkAvailable
 import com.do_not_douch.antitheifproject.utilities.onboarding1_bottom
@@ -194,7 +194,7 @@ class OnBordScreenNewScreen :
         ads?.nativeAdsMain()?.loadNativeAd(
             activity ?: return,
             val_native_intro_screen,
-            id_native_intro_screen,
+            id_native_screen,
             object : NativeListener {
                 override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                     _binding?.mainAdsNative?.visibility = View.VISIBLE

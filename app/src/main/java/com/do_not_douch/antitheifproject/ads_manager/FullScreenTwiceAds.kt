@@ -86,12 +86,10 @@ fun showTwoInterAd(
         function.invoke(0)
         return
     }
-
     if (inter_frequency_count >= id_frequency_counter) {
         function.invoke(0)
         return
     }
-
     if (id_inter_counter != counter) {
         counter++
         Log.d(TAG, "showTwoInterAd->adIdNormalSkip: $counter")
@@ -152,6 +150,7 @@ fun showTwoInterAd(
 
     }, 1000)
 }
+
 
 
 

@@ -41,9 +41,9 @@
         android:background="@drawable/bg_text_ads_normal"
         android:gravity="center"
         android:minWidth="15dp"
-        android:text="@string/txt_ad"
+        android:text="@string/ad"
         android:textColor="@color/color_white_ads"
-        android:textSize="10dp"
+        android:textSize="10sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

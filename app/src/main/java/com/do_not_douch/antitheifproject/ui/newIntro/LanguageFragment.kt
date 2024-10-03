@@ -5,17 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import androidx.core.os.bundleOf
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.FragmentLanguageBinding
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.ads.nativead.NativeAdView
 import com.do_not_douch.antitheifproject.adapter.LanguageGridAdapter
 import com.do_not_douch.antitheifproject.adapter.LanguageGridAdapter.Companion.AD_TYPE
-import com.do_not_douch.antitheifproject.ads_manager.AdsBanners
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager
 import com.do_not_douch.antitheifproject.ads_manager.PurchasePrefs
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
@@ -27,25 +22,21 @@ import com.do_not_douch.antitheifproject.utilities.LANG_CODE
 import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.firebaseAnalytics
-import com.do_not_douch.antitheifproject.utilities.fisrt_ad_line_threshold
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
-import com.do_not_douch.antitheifproject.utilities.id_banner_language_screen
 import com.do_not_douch.antitheifproject.utilities.id_inter_main_medium
-import com.do_not_douch.antitheifproject.utilities.id_native_language_screen
+import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.isInternetAvailable
 import com.do_not_douch.antitheifproject.utilities.language_bottom
-import com.do_not_douch.antitheifproject.utilities.language_reload
-import com.do_not_douch.antitheifproject.utilities.line_count
 import com.do_not_douch.antitheifproject.utilities.restartApp
 import com.do_not_douch.antitheifproject.utilities.sessionOnboarding
 import com.do_not_douch.antitheifproject.utilities.setLocaleMain
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.val_ad_native_language_screen
-import com.do_not_douch.antitheifproject.utilities.val_banner_language_screen
 import com.do_not_douch.antitheifproject.utilities.val_inter_language_screen
 import com.do_not_douch.antitheifproject.utilities.val_is_inapp_splash
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdView
 
 
 class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageBinding::inflate) {
@@ -68,14 +59,9 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             arguments?.let {
                 isLangScreen = it.getBoolean(LANG_SCREEN)
             }
-            if (isInternetAvailable(context ?: return) && !isLangScreen) {
-//                insertAds()
-            }
-//            if (isLangScreen) {
-                loadNative()
-//            } else {
-//                loadBanner()
-//            }
+
+
+            loadNative()
             _binding?.forwardBtn?.clickWithThrottle {
                 if (!isLangScreen) {
                     firebaseAnalytics(
@@ -95,7 +81,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                     adsManager?.let { it1 ->
                         showTwoInterAd(
                             ads = it1,
-                            activity = activity?:return@let,
+                            activity = activity ?: return@let,
                             remoteConfigNormal = val_inter_language_screen,
                             adIdNormal = id_inter_main_medium,
                             tagClass = "language",
@@ -112,14 +98,20 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                                 )
 
                                 if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                                    findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
+                                    findNavController().navigate(
+                                        R.id.myMainMenuFragment,
+                                        bundleOf("is_splash" to true)
+                                    )
                                 } else {
-                                    findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to true))
+                                    findNavController().navigate(
+                                        R.id.FragmentBuyScreen,
+                                        bundleOf("isSplash" to true)
+                                    )
                                 }
                             }
 
                             1 -> {
-                                    findNavController().navigate(R.id.OnBordScreenNewScreen)
+                                findNavController().navigate(R.id.OnBordScreenNewScreen)
 
                             }
 
@@ -139,17 +131,14 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             sharedPrefUtils = DbHelper(context ?: return)
             positionSelected =
                 sharedPrefUtils?.getStringData(requireContext(), LANG_CODE, "en") ?: "en"
-            adapter = LanguageGridAdapter(list,adsManager?:return,activity?:return,
+            adapter = LanguageGridAdapter(list, adsManager ?: return, activity ?: return,
                 clickItem = {
                     positionSelected = it.country_code
                     adapter?.selectLanguage(positionSelected)
-                    _binding?.forwardBtn?.visibility=View.VISIBLE
-                    if (isLangScreen) {
-//                        reCall()
-                    }
+                    _binding?.forwardBtn?.visibility = View.VISIBLE
                 }
             )
-            adapter?.selectLanguage(positionSelected)
+//            adapter?.selectLanguage(positionSelected)
             _binding?.conversationDetail?.layoutManager = GridLayoutManager(context, 2).apply {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
@@ -214,12 +203,16 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
         adsManager?.nativeAdsMain()?.loadNativeAd(
             activity ?: return,
             val_ad_native_language_screen,
-            id_native_language_screen,
+            id_native_screen,
             object : NativeListener {
                 override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                     _binding?.mainAdsNative?.visibility = View.VISIBLE
                     _binding?.shimmerLayout?.visibility = View.GONE
-                    adsManager?.nativeAdsMain()?.nativeViewMediaSplashSplash(context?:return,currentNativeAd ?: return, adView)
+                    adsManager?.nativeAdsMain()?.nativeViewMediaSplashSplash(
+                        context ?: return,
+                        currentNativeAd ?: return,
+                        adView
+                    )
                     _binding?.mainAdsNative?.removeAllViews()
                     _binding?.mainAdsNative?.addView(adView)
                     super.nativeAdLoaded(currentNativeAd)
@@ -284,72 +277,65 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             )
         )
     }
-/*
-    private fun insertAds() {
-        val adPosition = getFirstAdPosition(fisrt_ad_line_threshold)
-        val repeatAdPosition = getRepeatAdPosition(line_count)
-        var currentPos = adPosition
-        while (currentPos < list.size) {
-            list.add(currentPos, LanguageAppModel("Ad", "", 0, false))
-            currentPos += repeatAdPosition
-        }
-    }
-
-    private fun getFirstAdPosition(position: Int): Int {
-        when (position) {
-            1 -> {
-                return 2
-            }
-
-            2 -> {
-                return 4
-            }
-
-            3 -> {
-                return 6
-            }
-
-            4 -> {
-                return 8
-            }
-
-            5 -> {
-                return 10
+    /*
+        private fun insertAds() {
+            val adPosition = getFirstAdPosition(fisrt_ad_line_threshold)
+            val repeatAdPosition = getRepeatAdPosition(line_count)
+            var currentPos = adPosition
+            while (currentPos < list.size) {
+                list.add(currentPos, LanguageAppModel("Ad", "", 0, false))
+                currentPos += repeatAdPosition
             }
         }
-        return 2
-    }
 
-    private fun getRepeatAdPosition(position: Int): Int {
-        when (position) {
-            1 -> {
-                return 3
-            }
+        private fun getFirstAdPosition(position: Int): Int {
+            when (position) {
+                1 -> {
+                    return 2
+                }
 
-            2 -> {
-                return 5
-            }
+                2 -> {
+                    return 4
+                }
 
-            3 -> {
-                return 7
-            }
+                3 -> {
+                    return 6
+                }
 
-            4 -> {
-                return 9
-            }
+                4 -> {
+                    return 8
+                }
 
-            5 -> {
-                return 11
+                5 -> {
+                    return 10
+                }
             }
+            return 2
         }
-        return 2
-    }*/
 
-    override fun onPause() {
-        super.onPause()
-    }
+        private fun getRepeatAdPosition(position: Int): Int {
+            when (position) {
+                1 -> {
+                    return 3
+                }
 
-    override fun onResume() {
-        super.onResume()
-    }
+                2 -> {
+                    return 5
+                }
+
+                3 -> {
+                    return 7
+                }
+
+                4 -> {
+                    return 9
+                }
+
+                5 -> {
+                    return 11
+                }
+            }
+            return 2
+        }*/
+
 }

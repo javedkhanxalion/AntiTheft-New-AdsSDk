@@ -8,22 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.FragmentMainIntroBinding
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.ads.nativead.NativeAdView
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager
-import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
 import com.do_not_douch.antitheifproject.utilities.Onboarding_Full_Native
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
-import com.do_not_douch.antitheifproject.utilities.getNativeLayout
-import com.do_not_douch.antitheifproject.utilities.id_native_intro_screen1
 import com.do_not_douch.antitheifproject.utilities.introDetailText
 import com.do_not_douch.antitheifproject.utilities.isInternetAvailable
-import com.do_not_douch.antitheifproject.utilities.onboarding2_bottom
 import com.do_not_douch.antitheifproject.utilities.slideImages
-import com.do_not_douch.antitheifproject.utilities.val_native_intro_screen1
 
-class ImageFragment2 : Fragment()  {
+class ImageFragment2 : Fragment() {
 
 
     private var ads: AdsManager? = null
@@ -43,8 +35,8 @@ class ImageFragment2 : Fragment()  {
         ads = AdsManager.appAdsInit(activity ?: return)
         _binding?.sliderImage?.setImageResource(slideImages[position])
         _binding?.sliderHeading?.text =
-            com.do_not_douch.antitheifproject.utilities.introHeading(context?:return)[position]
-        _binding?.sliderDesc?.text = introDetailText(context?:return)[position]
+            com.do_not_douch.antitheifproject.utilities.introHeading(context ?: return)[position]
+        _binding?.sliderDesc?.text = introDetailText(context ?: return)[position]
         _binding?.wormDotsIndicator?.attachTo(viewPager22 ?: return)
         if (!isInternetAvailable || Onboarding_Full_Native == 0) {
             if (position == 2) {
@@ -54,7 +46,7 @@ class ImageFragment2 : Fragment()  {
                 _binding?.nextApp?.visibility = View.VISIBLE
                 _binding?.skipApp?.visibility = View.VISIBLE
             }
-        }else{
+        } else {
             if (position == 3) {
                 _binding?.nextApp?.visibility = View.VISIBLE
                 _binding?.skipApp?.visibility = View.INVISIBLE
@@ -75,34 +67,34 @@ class ImageFragment2 : Fragment()  {
 //            _binding?.mainAdsNative?.visibility = View.GONE
 //        }
 
-    /*    IkmSdkController.setAppOpenAdsCallback(callback =
-        object : SdkAppOpenAdsCallback {
-            override fun onAdDismiss() {
-                _binding?.mainAdsNative?.visibility = View.VISIBLE
-                Log.d("app_open_call_back", " onAdDismiss")
-            }
+        /*    IkmSdkController.setAppOpenAdsCallback(callback =
+            object : SdkAppOpenAdsCallback {
+                override fun onAdDismiss() {
+                    _binding?.mainAdsNative?.visibility = View.VISIBLE
+                    Log.d("app_open_call_back", " onAdDismiss")
+                }
 
-            override fun onAdLoading() {
-                _binding?.mainAdsNative?.visibility = View.INVISIBLE
-                Log.d("app_open_call_back", " onAdLoading")
-            }
+                override fun onAdLoading() {
+                    _binding?.mainAdsNative?.visibility = View.INVISIBLE
+                    Log.d("app_open_call_back", " onAdLoading")
+                }
 
-            override fun onAdsShowTimeout() {
-                _binding?.mainAdsNative?.visibility = View.INVISIBLE
-                Log.d("app_open_call_back", " onAdsShowTimeout")
-            }
+                override fun onAdsShowTimeout() {
+                    _binding?.mainAdsNative?.visibility = View.INVISIBLE
+                    Log.d("app_open_call_back", " onAdsShowTimeout")
+                }
 
-            override fun onShowAdComplete() {
-                _binding?.mainAdsNative?.visibility = View.INVISIBLE
-                Log.d("app_open_call_back", " onShowAdComplete")
-            }
+                override fun onShowAdComplete() {
+                    _binding?.mainAdsNative?.visibility = View.INVISIBLE
+                    Log.d("app_open_call_back", " onShowAdComplete")
+                }
 
-            override fun onShowAdFail() {
-                _binding?.mainAdsNative?.visibility = View.VISIBLE
-                Log.d("app_open_call_back", " onShowAdFail")
-            }
+                override fun onShowAdFail() {
+                    _binding?.mainAdsNative?.visibility = View.VISIBLE
+                    Log.d("app_open_call_back", " onShowAdFail")
+                }
 
-        })*/
+            })*/
 
 
     }
@@ -132,6 +124,7 @@ class ImageFragment2 : Fragment()  {
                 putBoolean("ads", ads)
             }
         }
+
         fun onAdVisibilityChanged(visible: Boolean) {
             Log.d("check_position", "onPageScrolled: Fragment--2222")
 
@@ -146,36 +139,36 @@ class ImageFragment2 : Fragment()  {
     }
 
     fun loadNewNative2() {
-     /*   val adView = LayoutInflater.from(context).inflate(
-            getNativeLayout(onboarding2_bottom,_binding?.mainAdsNative!!,context?:return),
-            null, false
-        ) as NativeAdView
-        ads?.nativeAdsMain()?.loadNativeAd(
-            activity ?: return,
-            val_native_intro_screen1,
-            id_native_intro_screen1,
-            object : NativeListener {
-                override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
-                    _binding?.mainAdsNative?.visibility = View.VISIBLE
-                    _binding?.shimmerLayout?.visibility = View.GONE
-                    ads?.nativeAdsMain()?.nativeViewMediaSplashSplash(currentNativeAd ?: return, adView)
-                    _binding?.mainAdsNative?.removeAllViews()
-                    _binding?.mainAdsNative?.addView(adView)
-                    super.nativeAdLoaded(currentNativeAd)
-                }
+        /*   val adView = LayoutInflater.from(context).inflate(
+               getNativeLayout(onboarding2_bottom,_binding?.mainAdsNative!!,context?:return),
+               null, false
+           ) as NativeAdView
+           ads?.nativeAdsMain()?.loadNativeAd(
+               activity ?: return,
+               val_native_intro_screen1,
+               id_native_intro_screen1,
+               object : NativeListener {
+                   override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
+                       _binding?.mainAdsNative?.visibility = View.VISIBLE
+                       _binding?.shimmerLayout?.visibility = View.GONE
+                       ads?.nativeAdsMain()?.nativeViewMediaSplashSplash(currentNativeAd ?: return, adView)
+                       _binding?.mainAdsNative?.removeAllViews()
+                       _binding?.mainAdsNative?.addView(adView)
+                       super.nativeAdLoaded(currentNativeAd)
+                   }
 
-                override fun nativeAdFailed(loadAdError: LoadAdError) {
-                    _binding?.mainAdsNative?.visibility = View.GONE
-                    _binding?.shimmerLayout?.visibility = View.GONE
-                    super.nativeAdFailed(loadAdError)
-                }
+                   override fun nativeAdFailed(loadAdError: LoadAdError) {
+                       _binding?.mainAdsNative?.visibility = View.GONE
+                       _binding?.shimmerLayout?.visibility = View.GONE
+                       super.nativeAdFailed(loadAdError)
+                   }
 
-                override fun nativeAdValidate(string: String) {
-                    _binding?.mainAdsNative?.visibility = View.GONE
-                    _binding?.shimmerLayout?.visibility = View.GONE
-                    super.nativeAdValidate(string)
-                }
-            })*/
+                   override fun nativeAdValidate(string: String) {
+                       _binding?.mainAdsNative?.visibility = View.GONE
+                       _binding?.shimmerLayout?.visibility = View.GONE
+                       super.nativeAdValidate(string)
+                   }
+               })*/
     }
 
 
