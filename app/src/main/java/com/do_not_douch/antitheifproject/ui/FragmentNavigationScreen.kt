@@ -61,12 +61,7 @@ class FragmentNavigationScreen :
         }
         sharedPrefUtils = DbHelper(context ?: return)
         adsManager = AdsManager.appAdsInit(activity ?: return)
-    /*    _binding?.versionText?.text = getString(R.string.version) + "${
-            context?.packageManager?.getPackageInfo(
-                context?.packageName!!,
-                0
-            )?.versionName
-        }"*/
+
         _binding?.backBtn?.clickWithThrottle {
            findNavController().navigateUp()
         }

@@ -151,6 +151,7 @@ class SplashFragment :
         super.onViewCreated(view, savedInstanceState)
         CoroutineScope(Dispatchers.Main).launch {
             dbHelper = DbHelper(context ?: return@launch)
+            isSplash = false
             val cmpClass = CmpClass(activity ?: return@launch)
             cmpClass.initilaizeCMP()
 
@@ -189,25 +190,6 @@ class SplashFragment :
             } else {
                 getIntentMove()
             }
-//            if (isNetworkAvailable(context)) {
-//                consentListener = {
-//                    isUserConsent = it
-//                    Log.d("check_contest", "onViewCreated: $isUserConsent")
-//                    if (isUserConsent) {
-//                        if (isNetworkAvailable(context)) {
-//                            adsManager = AdsManager.appAdsInit(requireActivity())
-//                            initRemoteIds()
-//                        } else {
-//                            getIntentMove()
-//                        }
-//                    } else {
-//                        getIntentMove()
-//                    }
-//
-//                }
-//            }else{
-//                getIntentMove()
-//            }
 
         }
         setupBackPressedCallback {
@@ -261,70 +243,70 @@ class SplashFragment :
     }
 
     private fun getIntentMove() {
-    /*    when (sessionOpenlanguage) {
-            0 -> {
-                when (sessionOnboarding) {
-                    0 -> {
-                        firebaseAnalytics(
-                            "loading_fragment_load_next_btn_main",
-                            "loading_fragment_load_next_btn_main -->  Click"
-                        )
-                        return if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                            findNavController().navigate(
-                                R.id.myMainMenuFragment,
-                                bundleOf("is_splash" to true)
+        /*    when (sessionOpenlanguage) {
+                0 -> {
+                    when (sessionOnboarding) {
+                        0 -> {
+                            firebaseAnalytics(
+                                "loading_fragment_load_next_btn_main",
+                                "loading_fragment_load_next_btn_main -->  Click"
                             )
-                        } else {
-                            findNavController().navigate(
-                                R.id.FragmentBuyScreen,
-                                bundleOf("isSplash" to true)
+                            return if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
+                                findNavController().navigate(
+                                    R.id.myMainMenuFragment,
+                                    bundleOf("is_splash" to true)
+                                )
+                            } else {
+                                findNavController().navigate(
+                                    R.id.FragmentBuyScreen,
+                                    bundleOf("isSplash" to true)
+                                )
+                            }
+                        }
+
+                        1 -> {
+                            firebaseAnalytics(
+                                "loading_fragment_load_next_btn_intro",
+                                "loading_fragment_load_next_btn_intro -->  Click"
                             )
+                            return findNavController().navigate(R.id.OnBordScreenNewScreen)
+                        }
+
+                        2 -> {
+                            firebaseAnalytics(
+                                "loading_fragment_load_next_btn_intro",
+                                "loading_fragment_load_next_btn_intro -->  Click"
+                            )
+                            return findNavController().navigate(R.id.OnBordScreenNewScreen)
                         }
                     }
-
-                    1 -> {
-                        firebaseAnalytics(
-                            "loading_fragment_load_next_btn_intro",
-                            "loading_fragment_load_next_btn_intro -->  Click"
-                        )
-                        return findNavController().navigate(R.id.OnBordScreenNewScreen)
-                    }
-
-                    2 -> {
-                        firebaseAnalytics(
-                            "loading_fragment_load_next_btn_intro",
-                            "loading_fragment_load_next_btn_intro -->  Click"
-                        )
-                        return findNavController().navigate(R.id.OnBordScreenNewScreen)
-                    }
                 }
-            }
 
-            1 -> {
-                firebaseAnalytics(
-                    "loading_fragment_load_next_btn_language",
-                    "loading_fragment_load_next_btn_language -->  Click"
-                )
-                return findNavController().navigate(
-                    R.id.LanguageFragment,
-                    bundleOf(LANG_SCREEN to true)
-                )
-            }
+                1 -> {
+                    firebaseAnalytics(
+                        "loading_fragment_load_next_btn_language",
+                        "loading_fragment_load_next_btn_language -->  Click"
+                    )
+                    return findNavController().navigate(
+                        R.id.LanguageFragment,
+                        bundleOf(LANG_SCREEN to true)
+                    )
+                }
 
-            2 -> {
-                firebaseAnalytics(
-                    "loading_fragment_load_next_btn_language",
-                    "loading_fragment_load_next_btn_language -->  Click"
-                )
-                return findNavController().navigate(
-                    R.id.LanguageFragment,
-                    bundleOf(LANG_SCREEN to true)
-                )
-            }
-        }*/
-       if (dbHelper?.getBooleanData(
+                2 -> {
+                    firebaseAnalytics(
+                        "loading_fragment_load_next_btn_language",
+                        "loading_fragment_load_next_btn_language -->  Click"
+                    )
+                    return findNavController().navigate(
+                        R.id.LanguageFragment,
+                        bundleOf(LANG_SCREEN to true)
+                    )
+                }
+            }*/
+        if (dbHelper?.getBooleanData(
                 context ?: return, IS_FIRST, false
-            ) == false && sessionOpenlanguage==0
+            ) == false && sessionOpenlanguage == 0
         ) {
             firebaseAnalytics(
                 "loading_fragment_load_next_btn_language",
@@ -334,31 +316,33 @@ class SplashFragment :
                 R.id.LanguageFragment, bundleOf(LANG_SCREEN to true)
             )
         } else
-           if (dbHelper?.getBooleanData(
-                   context ?: return, IS_INTRO, false
-               ) == false && sessionOnboarding==0
-           ) {
-               firebaseAnalytics(
-                   "loading_fragment_load_next_btn_intro",
-                   "loading_fragment_load_next_btn_intro -->  Click"
-               )
-               findNavController().navigate(R.id.OnBordScreenNewScreen)
-           }
-           else {
-            firebaseAnalytics(
-                "loading_fragment_load_next_btn_main",
-                "loading_fragment_load_next_btn_main -->  Click"
-            )
-               if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                   findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
-               } else {
-                   findNavController().navigate(
-                       R.id.FragmentBuyScreen,
-                       bundleOf("isSplash" to true)
-                   )
-               }
+            if (dbHelper?.getBooleanData(
+                    context ?: return, IS_INTRO, false
+                ) == false && sessionOnboarding == 0
+            ) {
+                firebaseAnalytics(
+                    "loading_fragment_load_next_btn_intro",
+                    "loading_fragment_load_next_btn_intro -->  Click"
+                )
+                findNavController().navigate(R.id.OnBordScreenNewScreen)
+            } else {
+                firebaseAnalytics(
+                    "loading_fragment_load_next_btn_main",
+                    "loading_fragment_load_next_btn_main -->  Click"
+                )
+                if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
+                    findNavController().navigate(
+                        R.id.myMainMenuFragment,
+                        bundleOf("is_splash" to true)
+                    )
+                } else {
+                    findNavController().navigate(
+                        R.id.FragmentBuyScreen,
+                        bundleOf("isSplash" to true)
+                    )
+                }
 
-        }
+            }
     }
 
     private fun loadBanner() {
@@ -380,7 +364,11 @@ class SplashFragment :
                     _binding?.shimmerLayout?.visibility = View.GONE
                     if (isAdded && isVisible && !isDetached) {
                         adsManager?.nativeAds()
-                            ?.nativeViewMediaSplashSplash(context ?: return, currentNativeAd ?: return, adView)
+                            ?.nativeViewMediaSplashSplash(
+                                context ?: return,
+                                currentNativeAd ?: return,
+                                adView
+                            )
                         _binding?.adsView?.removeAllViews()
                         _binding?.adsView?.addView(adView)
                     }
