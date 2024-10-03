@@ -97,7 +97,7 @@ class MainMenuFragment :
             }
 
             topLay.setLayoutBtn.clickWithThrottle {
-                loadLayoutDirection(isGridLayout?:return@clickWithThrottle)
+                loadLayoutDirection(!(isGridLayout ?: return@clickWithThrottle))
             }
             if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp) {
                 topLay.settingBtn.visibility = View.GONE

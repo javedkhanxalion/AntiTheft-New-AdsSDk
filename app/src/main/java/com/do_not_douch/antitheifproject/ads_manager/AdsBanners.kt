@@ -1,6 +1,7 @@
 package com.do_not_douch.antitheifproject.ads_manager
 
 import android.app.Activity
+import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
@@ -14,6 +15,8 @@ import com.google.android.gms.ads.*
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager.isNetworkAvailable
 import com.do_not_douch.antitheifproject.ads_manager.FunctionClass.checkPurchased
 import com.do_not_douch.antitheifproject.ads_manager.FunctionClass.firebaseAnalytics
+import com.do_not_douch.antitheifproject.utilities.banner_height
+import com.do_not_douch.antitheifproject.utilities.banner_type
 
 object AdsBanners {
     private var adView: AdView? = null
@@ -116,7 +119,26 @@ object AdsBanners {
             adView = AdView(activity)
             view.addView(adView)
             adView?.adUnitId = if (isDebug()) bannerTestId else bannerId ?: bannerTestId
-            adView?.setAdSize(AdSize.BANNER)
+            if(banner_type==0){
+                val display =activity.resources.displayMetrics
+                val adSize1 = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+                    val windowMatrix =activity.windowManager.currentWindowMetrics
+                    val widthDisplay =windowMatrix.bounds.width()
+                    val density =display.density
+                    val widthAds =(widthDisplay/density)
+                    AdSize.MEDIUM_RECTANGLE
+                    AdSize.getInlineAdaptiveBannerAdSize(widthAds.toInt(), banner_height)
+                }else{
+                    val widthDisplay =display.widthPixels
+                    val density =display.density
+                    val widthAds =(widthDisplay/density)
+                    AdSize.MEDIUM_RECTANGLE
+                    AdSize.getInlineAdaptiveBannerAdSize(widthAds.toInt(), banner_height)
+                }
+                adView?.setAdSize(adSize1)
+            }else{
+                adView?.setAdSize(adSize(activity, view))
+            }
             val adRequest =AdRequest.Builder().build()
             adView?.loadAd(adRequest)
 

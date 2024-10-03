@@ -48,7 +48,7 @@ class OnBordScreenNewScreen :
             currentpage = i
 
             _binding?.wormDotsIndicator?.attachTo(_binding?.viewPager?:return)
-            if (currentpage == 3) {
+            if (currentpage == 4) {
                 _binding?.skipApp?.visibility = View.INVISIBLE
                 _binding?.nextApp?.text = getString(R.string.finish)
             } else {
@@ -79,18 +79,19 @@ class OnBordScreenNewScreen :
                     "intro_fragment_move_to_next -->  Click"
                 )
                 sharedPrefUtils?.saveData(requireContext(), IS_INTRO, true)
-                findNavController().navigate(R.id.LanguageFragment, bundleOf(LANG_SCREEN to true))
+                findNavController().navigate(
+                    R.id.myMainMenuFragment
+                )
             }
             nextApp.clickWithThrottle {
-                if (currentpage == 3) {
+                if (currentpage == 4) {
                     firebaseAnalytics(
                         "intro_fragment_move_to_next",
                         "intro_fragment_move_to_next -->  Click"
                     )
                     sharedPrefUtils?.saveData(requireContext(), IS_INTRO, true)
                     findNavController().navigate(
-                        R.id.LanguageFragment,
-                        bundleOf(LANG_SCREEN to true)
+                        R.id.myMainMenuFragment
                     )
                 } else {
                     viewPager.setCurrentItem(getItem(+1), true)

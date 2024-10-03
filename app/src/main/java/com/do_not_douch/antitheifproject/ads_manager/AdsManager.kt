@@ -55,6 +55,7 @@ object AdsManager {
                             "2481431170D129B2BDCA7E933B99371B",
                             "9C6BF7A67630224C2115219E0B427854",
                             "54747ED837B721A1A1FDA0A58623AD30",
+                            "4482FD1C9B039A733B15F74B5244B5E4",
                         )
                     )
                     .build()

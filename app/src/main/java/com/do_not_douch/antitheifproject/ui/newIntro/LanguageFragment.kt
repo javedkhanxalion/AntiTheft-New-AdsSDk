@@ -73,7 +73,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                     setLocaleMain(positionSelected)
                     restartApp()
                 } else {
-                    firebaseAnalytics(
+      /*              firebaseAnalytics(
                         "language_fragment_forward_btn_from",
                         "language_fragment_forward_btn_from -->  Click"
                     )
@@ -124,9 +124,17 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                                 findNavController().navigate(R.id.OnBordScreenNewScreen)
                             }
                         }
-                    }
-
-
+                    }*/
+                        firebaseAnalytics(
+                            "language_fragment_forward_btn_from",
+                            "language_fragment_forward_btn_from -->  Click"
+                        )
+                        sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
+                        setLocaleMain(positionSelected)
+                        sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
+                        findNavController().navigate(
+                            R.id.OnBordScreenNewScreen
+                        )
                 }
             }
             sharedPrefUtils = DbHelper(context ?: return)

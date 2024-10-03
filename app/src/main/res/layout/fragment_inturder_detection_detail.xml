@@ -75,21 +75,11 @@
 
     </ScrollView>
 
-    <FrameLayout
-        android:id="@+id/bannerAds"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintWidth_percent="0.80"
-        android:background="@drawable/round_btn_ads"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/bannerAds"
         app:layout_constraintLeft_toLeftOf="@id/bannerAds"
@@ -102,4 +92,14 @@
             layout="@layout/shimmer_native_layout" />
 
     </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <FrameLayout
+        android:id="@+id/bannerAds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

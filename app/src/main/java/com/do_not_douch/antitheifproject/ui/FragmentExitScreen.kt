@@ -36,6 +36,7 @@ class FragmentExitScreen :
             activity?.finish()
         }
         setupBackPressedCallback {
+            findNavController().navigateUp()
         }
 
     }

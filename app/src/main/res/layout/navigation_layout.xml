@@ -59,7 +59,7 @@
         <View
             android:id="@+id/viewTop"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginHorizontal="@dimen/_25sdp"
             android:background="@drawable/rect_nav_rect_buy"
@@ -103,7 +103,7 @@
         <View
             android:id="@+id/notification_view"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_40sdp"
             android:background="@drawable/rect_nav_rect"
             android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="@+id/viewTop"
@@ -162,7 +162,7 @@
         <View
             android:id="@+id/share_app_view"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_40sdp"
             android:background="@drawable/rect_nav_rect"
             android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="@+id/notification_view"
@@ -202,7 +202,7 @@
         <View
             android:id="@+id/rate_us_view"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/rect_nav_rect"
             app:layout_constraintEnd_toEndOf="@+id/share_app_view"
@@ -242,7 +242,7 @@
         <View
             android:id="@+id/language_view"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/rect_nav_rect"
             app:layout_constraintEnd_toEndOf="@+id/share_app_view"
@@ -282,7 +282,7 @@
         <View
             android:id="@+id/more_app_view"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/rect_nav_rect"
             app:layout_constraintEnd_toEndOf="@+id/share_app_view"
@@ -322,7 +322,7 @@
         <View
             android:id="@+id/privacy_view"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/rect_nav_rect"
             app:layout_constraintEnd_toEndOf="@+id/share_app_view"
@@ -360,7 +360,7 @@
         <View
             android:id="@+id/feed_back_view"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/rect_nav_rect"
             app:layout_constraintEnd_toEndOf="@+id/privacy_view"
@@ -398,7 +398,7 @@
         <View
             android:id="@+id/customer_support_view"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/rect_nav_rect"
             app:layout_constraintEnd_toEndOf="@id/feed_back_view"
@@ -436,7 +436,7 @@
         <View
             android:id="@+id/exitAppView_view"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/rect_nav_rect"
             app:layout_constraintEnd_toEndOf="@id/customer_support_view"
