@@ -198,8 +198,8 @@ const val NOTIFY_CHANNEL_ID = "AppNameBackgroundService"
 
 const val IS_NOTIFICATION = "IS_NOTIFICATION"
 const val IS_GRID = "IS_GRID"
-//const val IS_FIRST = "is_First"
-//const val IS_INTRO = "is_Intro"
+const val IS_FIRST = "is_First"
+const val IS_INTRO = "is_Intro"
 const val LANG_CODE = "language_code"
 const val LANG_SCREEN = "LANG_SCREEN"
 const val ANTI_TITLE = "ANTI_TITLE"
@@ -212,7 +212,9 @@ const val NOTIFICATION_PERMISSION = "android.permission.POST_NOTIFICATIONS"
 var slideImages = arrayOf(
     R.drawable.intro_1,
     R.drawable.intro_2,
-    R.drawable.intro_3
+    R.drawable.intro_3,
+    R.drawable.intro_4,
+    R.drawable.intro_5
 )
 
 
@@ -221,6 +223,8 @@ fun introHeading(context: Context) :ArrayList<String>{
     list.add(context.getString(R.string.pocket_detection))
     list.add(context.getString(R.string.clap_detection))
     list.add(context.getString(R.string.title_motion_detection))
+    list.add(context.getString(R.string.inturder_selfie))
+    list.add(context.getString(R.string.battery))
     return  list
 }
 fun introDetailText(context : Context) :ArrayList<String>{
@@ -228,6 +232,8 @@ fun introDetailText(context : Context) :ArrayList<String>{
     list.add(context.getString(R.string.intro_1))
     list.add(context.getString(R.string.intro_2))
     list.add(context.getString(R.string.intro_3))
+    list.add(context.getString(R.string.intro_4))
+    list.add(context.getString(R.string.intro_5))
     return  list
 }
 

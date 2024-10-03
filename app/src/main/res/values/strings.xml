@@ -163,10 +163,8 @@
     <string name="txt_update_now_dialog">Update now</string>
     <string name="setting">Setting</string>
     <string name="feedback">Feedback</string>
-    <string name="customer_support">Customer Support</string>
 
     <string name="customer_support">Customer Support</string>
-    <string name="feedback">Feedback</string>
     <string name="how_was_your_overall_experience">How was your overall experience?</string>
     <string name="tell_us_the_problems_you_meet">Tell us the problems you meet.</string>
     <string name="can_t_lock_screen">Can’t lock screen</string>
@@ -179,5 +177,8 @@
     <string name="upload_picture">Upload Picture</string>
     <string name="send">Send</string>
     <string name="type_answer_her">Type answer her...</string>
+    <string name="intro_4">Would you like to continue unlock heart</string>
+    <string name="intro_5">Would you like to continue unlock heart</string>
+    <string name="finish">Finish</string>
 
 </resources>

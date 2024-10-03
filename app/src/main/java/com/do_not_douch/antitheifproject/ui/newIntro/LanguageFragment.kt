@@ -18,6 +18,7 @@ import com.do_not_douch.antitheifproject.ads_manager.showTwoInterAd
 import com.do_not_douch.antitheifproject.helper_class.DbHelper
 import com.do_not_douch.antitheifproject.model.LanguageAppModel
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
+import com.do_not_douch.antitheifproject.utilities.IS_FIRST
 import com.do_not_douch.antitheifproject.utilities.LANG_CODE
 import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
@@ -161,7 +162,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                     )
                     sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
                     setLocaleMain(positionSelected)
-//                    sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
+                    sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
                     findNavController().navigate(
                         R.id.OnBordScreenNewScreen
                     )
@@ -181,7 +182,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                     )
                     sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
                     setLocaleMain(positionSelected)
-//                    sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
+                    sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
                     findNavController().navigate(
                         R.id.OnBordScreenNewScreen
                     )

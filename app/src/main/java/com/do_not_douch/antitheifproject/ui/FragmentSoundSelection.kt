@@ -137,7 +137,7 @@ class FragmentSoundSelection :
                     _binding?.shimmerLayout?.visibility = View.GONE
                     if (isAdded && isVisible && !isDetached) {
                         adsManager?.nativeAds()
-                            ?.nativeViewPolicy(context ?: return, currentNativeAd ?: return, adView)
+                            ?.nativeViewMediaSplashSplash(context ?: return, currentNativeAd ?: return, adView)
                         _binding?.nativeExitAd?.removeAllViews()
                         _binding?.nativeExitAd?.addView(adView)
                     }

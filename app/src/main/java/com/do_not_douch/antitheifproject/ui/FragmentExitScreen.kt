@@ -87,11 +87,5 @@ class FragmentExitScreen :
 
     override fun onResume() {
         super.onResume()
-        CoroutineScope(Dispatchers.Main).launch {
-            lifecycleScope.launch {
-                delay(6000)
-                activity?.finishAffinity()
-            }
-        }
     }
 }

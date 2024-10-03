@@ -182,7 +182,7 @@ class FragmentNavigationScreen :
     }
 
     private fun loadNative() {
-        adsManager?.adsBanners()?.loadBanner(
+        adsManager?.adsBanners()?.loadCollapsibleBanner(
             activity = activity ?: return,
             view = binding!!.adsView,
             viewS = binding!!.shimmerLayout,

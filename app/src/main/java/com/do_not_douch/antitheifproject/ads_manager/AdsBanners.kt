@@ -36,8 +36,10 @@ object AdsBanners {
     fun loadCollapsibleBanner(
         activity: Activity,
         view: FrameLayout,
+        viewS: ShimmerFrameLayout,
         addConfig: Boolean,
-        bannerId: String?
+        bannerId: String?,
+        bannerListener: () -> Unit
     ) {
 
         if (isNetworkAvailable(activity) && addConfig && !checkPurchased(activity)) {
@@ -68,16 +70,22 @@ object AdsBanners {
 
                 override fun onAdFailedToLoad(p0: LoadAdError) {
                     Log.d(bannerLogs, "BannerWithSize : onAdFailedToLoad ${p0.message}")
+                    view.visibility=View.GONE
+                    viewS.visibility=View.GONE
+                    bannerListener.invoke()
                     super.onAdFailedToLoad(p0)
                 }
 
                 override fun onAdImpression() {
                     Log.d(bannerLogs, "BannerWithSize : onAdImpression")
+                    viewS.visibility=View.GONE
                     super.onAdImpression()
                 }
 
                 override fun onAdLoaded() {
                     Log.d(bannerLogs, "BannerWithSize : onAdLoaded")
+                    viewS.visibility=View.GONE
+                    bannerListener.invoke()
                     super.onAdLoaded()
                 }
 
@@ -87,6 +95,8 @@ object AdsBanners {
                 }
             }
         } else {
+            Log.d(bannerLogs, "some value is false")
+            viewS.visibility = View.GONE
             view.visibility = View.GONE
         }
     }

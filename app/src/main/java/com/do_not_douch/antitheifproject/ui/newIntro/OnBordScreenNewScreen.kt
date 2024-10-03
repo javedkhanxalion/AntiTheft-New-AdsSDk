@@ -6,16 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import androidx.viewpager2.widget.ViewPager2
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.IntroMainActivityBinding
+import com.do_not_douch.antitheifproject.adapter.OnBordScreenAdapter
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager
 import com.do_not_douch.antitheifproject.ads_manager.PurchasePrefs
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
 import com.do_not_douch.antitheifproject.ads_manager.showTwoInterAd
 import com.do_not_douch.antitheifproject.helper_class.DbHelper
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
+import com.do_not_douch.antitheifproject.utilities.IS_INTRO
+import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
 import com.do_not_douch.antitheifproject.utilities.Onboarding_Full_Native
+import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.firebaseAnalytics
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
 import com.do_not_douch.antitheifproject.utilities.id_inter_main_medium
@@ -35,69 +40,65 @@ class OnBordScreenNewScreen :
     BaseFragment<IntroMainActivityBinding>(IntroMainActivityBinding::inflate) {
     var currentpage = 0
     private var sharedPrefUtils: DbHelper? = null
-    private var isInternetDialog: Boolean = false
+    private var onBordScreenAdapter: OnBordScreenAdapter? = null
     private var ads: AdsManager? = null
+
+    private var viewListener: OnPageChangeListener = object : OnPageChangeListener {
+        override fun onPageScrolled(i: Int, v: Float, i1: Int) {
+            currentpage = i
+
+            _binding?.wormDotsIndicator?.attachTo(_binding?.viewPager?:return)
+            if (currentpage == 3) {
+                _binding?.skipApp?.visibility = View.INVISIBLE
+                _binding?.nextApp?.text = getString(R.string.finish)
+            } else {
+                _binding?.skipApp?.visibility = View.VISIBLE
+                _binding?.nextApp?.text = getString(R.string.next)
+            }
+        }
+
+        override fun onPageSelected(i: Int) {
+            currentpage = i
+        }
+
+        override fun onPageScrollStateChanged(i: Int) {}
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAnalytics("intro_fragment_open", "intro_fragment_open -->  Click")
-        isInternetAvailable = isNetworkAvailable(context?:return)
-        ads = AdsManager.appAdsInit(activity?:return)
-        val viewPagerAdapter = ViewPagerAdapter(
-            context ?: return,
-            this,
-            { onNextButtonClicked() },
-            { onNextSkipClicked() },
-            binding?.viewPager ?: return
-        )
-        _binding?.viewPager?.adapter = viewPagerAdapter
-        _binding?.viewPager?.offscreenPageLimit = viewPagerAdapter.itemCount
-        _binding?.viewPager?.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                currentpage = position
-            }
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                currentpage = position
-                Log.d(
-                    "scroll_check_position",
-                    "onPageScrolled: $currentpage $position $positionOffset $positionOffsetPixels"
-                )
-
-            }
-
-        })
+        onBordScreenAdapter = OnBordScreenAdapter(requireContext())
         sharedPrefUtils = DbHelper(context ?: return)
-        loadNewNative1()
-        setupBackPressedCallback {
-            firebaseAnalytics(
-                "intro_fragment_move_to_next",
-                "intro_fragment_move_to_next -->  Click"
-            )
-            ads?.let { it1 ->
-                showTwoInterAd(ads = it1,
-                    activity = activity?:return@let,
-                    remoteConfigNormal = val_inter_on_bord_screen,
-                    adIdNormal = id_inter_main_medium,
-                    tagClass = "on_bording",
-                    layout = _binding?.adsLayDialog!!,
-                    isBackPress = true,
-                    function = {
-                        if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                            findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
-                        } else {
-                            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to true))
-                        }
-                    }
+        ads = AdsManager.appAdsInit(activity ?: return)
+        _binding?.run {
+            viewPager.adapter = onBordScreenAdapter
+            viewPager.addOnPageChangeListener(viewListener)
+            skipApp.clickWithThrottle {
+                firebaseAnalytics(
+                    "intro_fragment_move_to_next",
+                    "intro_fragment_move_to_next -->  Click"
                 )
+                sharedPrefUtils?.saveData(requireContext(), IS_INTRO, true)
+                findNavController().navigate(R.id.LanguageFragment, bundleOf(LANG_SCREEN to true))
             }
+            nextApp.clickWithThrottle {
+                if (currentpage == 3) {
+                    firebaseAnalytics(
+                        "intro_fragment_move_to_next",
+                        "intro_fragment_move_to_next -->  Click"
+                    )
+                    sharedPrefUtils?.saveData(requireContext(), IS_INTRO, true)
+                    findNavController().navigate(
+                        R.id.LanguageFragment,
+                        bundleOf(LANG_SCREEN to true)
+                    )
+                } else {
+                    viewPager.setCurrentItem(getItem(+1), true)
+                }
+            }
+        }
+        loadNative()
+        setupBackPressedCallback {
         }
 
     }
@@ -106,86 +107,12 @@ class OnBordScreenNewScreen :
         return _binding?.viewPager?.currentItem!! + i
     }
 
-    fun onNextButtonClicked() {
-        Log.d("check_click", "onViewCreated: 1")
-        if (!isInternetAvailable || Onboarding_Full_Native == 0) {
-            if (currentpage == 2) {
-                firebaseAnalytics(
-                    "intro_fragment_move_to_next",
-                    "intro_fragment_move_to_next -->  Click"
-                )
-                ads?.let { it1 ->
-                    showTwoInterAd(ads = it1,
-                        activity = activity?:return@let,
-                        remoteConfigNormal = val_inter_on_bord_screen,
-                        adIdNormal = id_inter_main_medium,
-                        tagClass = "on_bording",
-                        layout = _binding?.adsLayDialog!!,
-                        isBackPress = true,
-                        function = {
-                            if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                                findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
-                            } else {
-                                findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to true))
-                            }
-                        }
-                    )
-                }
-            } else {
-                _binding?.viewPager?.setCurrentItem(getItem(+1), true)
-            }
-        } else {
-            if (currentpage == 3) {
-                firebaseAnalytics(
-                    "intro_fragment_move_to_next",
-                    "intro_fragment_move_to_next -->  Click"
-                )
-                ads?.let { it1 ->
-                    showTwoInterAd(ads = it1,
-                        activity = activity?:return@let,
-                        remoteConfigNormal = val_inter_on_bord_screen,
-                        adIdNormal = id_inter_main_medium,
-                        tagClass = "on_bording",
-                        layout = _binding?.adsLayDialog!!,
-                        isBackPress = true,
-                        function = {
-                            if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                                findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
-                            } else {
-                                findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to true))
-                            }
-                        }
-                    )
-                }
-            } else {
-                _binding?.viewPager?.setCurrentItem(getItem(+1), true)
-            }
-        }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.clear()
     }
 
-    private fun onNextSkipClicked() {
-        Log.d("check_click", "onViewCreated: 2")
-        firebaseAnalytics(
-            "intro_fragment_move_to_next",
-            "intro_fragment_move_to_next -->  Click"
-        )
-        if (isInternetAvailable || Onboarding_Full_Native == 0) {
-            _binding?.viewPager?.setCurrentItem(getItem(+2), true)
-        } else {
-            _binding?.viewPager?.setCurrentItem(getItem(+3), true)
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        isInternetDialog = true
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    fun loadNewNative1() {
+    fun loadNative() {
         val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(onboarding1_bottom, _binding?.mainAdsNative!!, context ?: return),
             null, false

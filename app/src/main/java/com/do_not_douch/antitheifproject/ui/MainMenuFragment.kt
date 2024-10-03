@@ -88,38 +88,6 @@ class MainMenuFragment :
             topLay.settingBtn.clickWithThrottle {
                 findNavController().navigate(R.id.FragmentBuyScreen)
             }
-            /*    navViewLayout.rateUsView.clickWithThrottle {
-                    showRatingDialog(onPositiveButtonClick = { it, _dialog ->
-                        if (it >= 1F && it < 3F) {
-                            _dialog.dismiss()
-                            showToast("Thanks For Your Time")
-                        } else if (it in 3F..5F) {
-                            _dialog.dismiss()
-                            requireContext().rateUs()
-                        }
-                    })
-                    _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
-                }
-                navViewLayout.shareAppView.clickWithThrottle {
-                    requireContext().shareApp()
-                    _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
-                }
-                navViewLayout.privacyView.clickWithThrottle {
-                    requireContext().privacyPolicy()
-                    _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
-                }
-                navViewLayout.moreAppView.clickWithThrottle {
-                    requireContext().moreApp()
-                    _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
-                }
-                navViewLayout.languageView.clickWithThrottle {
-                    firebaseAnalytics(
-                        "main_menu_fragment_language_open",
-                        "main_menu_fragment_language_open -->  Click"
-                    )
-                    findNavController().navigate(R.id.LanguageFragment, bundleOf(LANG_SCREEN to false))
-                    _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
-                }*/
             topLay.navMenu.clickWithThrottle {
                 findNavController().navigate(R.id.FragmentNavigationScreen)
             }
@@ -128,6 +96,9 @@ class MainMenuFragment :
                 isGridLayout = it
             }
 
+            topLay.setLayoutBtn.clickWithThrottle {
+                loadLayoutDirection(isGridLayout?:return@clickWithThrottle)
+            }
             if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp) {
                 topLay.settingBtn.visibility = View.GONE
             } else {
@@ -302,7 +273,7 @@ class MainMenuFragment :
     }
 
     private fun loadBanner() {
-        adsManager?.adsBanners()?.loadBanner(
+        adsManager?.adsBanners()?.loadCollapsibleBanner(
             activity = activity ?: return,
             view = _binding?.bannerAds!!,
             viewS = _binding?.shimmerLayout!!,

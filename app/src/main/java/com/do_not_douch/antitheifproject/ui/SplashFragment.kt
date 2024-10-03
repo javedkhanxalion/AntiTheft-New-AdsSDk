@@ -22,6 +22,8 @@ import com.do_not_douch.antitheifproject.ads_manager.showNormalInterAdSingle
 import com.do_not_douch.antitheifproject.helper_class.DbHelper
 import com.do_not_douch.antitheifproject.model.NativeDesignType
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
+import com.do_not_douch.antitheifproject.utilities.IS_FIRST
+import com.do_not_douch.antitheifproject.utilities.IS_INTRO
 import com.do_not_douch.antitheifproject.utilities.LANG_CODE
 import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
 import com.do_not_douch.antitheifproject.utilities.Onboarding_Full_Native
@@ -259,7 +261,7 @@ class SplashFragment :
     }
 
     private fun getIntentMove() {
-        when (sessionOpenlanguage) {
+    /*    when (sessionOpenlanguage) {
             0 -> {
                 when (sessionOnboarding) {
                     0 -> {
@@ -319,6 +321,43 @@ class SplashFragment :
                     bundleOf(LANG_SCREEN to true)
                 )
             }
+        }*/
+       if (dbHelper?.getBooleanData(
+                context ?: return, IS_FIRST, false
+            ) == false && sessionOpenlanguage==0
+        ) {
+            firebaseAnalytics(
+                "loading_fragment_load_next_btn_language",
+                "loading_fragment_load_next_btn_language -->  Click"
+            )
+            findNavController().navigate(
+                R.id.LanguageFragment, bundleOf(LANG_SCREEN to true)
+            )
+        } else
+           if (dbHelper?.getBooleanData(
+                   context ?: return, IS_INTRO, false
+               ) == false && sessionOnboarding==0
+           ) {
+               firebaseAnalytics(
+                   "loading_fragment_load_next_btn_intro",
+                   "loading_fragment_load_next_btn_intro -->  Click"
+               )
+               findNavController().navigate(R.id.OnBordScreenNewScreen)
+           }
+           else {
+            firebaseAnalytics(
+                "loading_fragment_load_next_btn_main",
+                "loading_fragment_load_next_btn_main -->  Click"
+            )
+               if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
+                   findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
+               } else {
+                   findNavController().navigate(
+                       R.id.FragmentBuyScreen,
+                       bundleOf("isSplash" to true)
+                   )
+               }
+
         }
     }
 

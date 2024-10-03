@@ -132,7 +132,7 @@ class FragmentShowIntruder :
                     _binding?.nativeExitAd?.visibility = View.VISIBLE
                     _binding?.shimmerLayout?.visibility = View.GONE
                     if (isAdded && isVisible && !isDetached) {
-                        adsManager?.nativeAds()?.nativeViewPolicy(context?:return,currentNativeAd ?: return, adLayout)
+                        adsManager?.nativeAds()?.nativeViewMediaSplashSplash(context?:return,currentNativeAd ?: return, adLayout)
                         _binding?.nativeExitAd?.removeAllViews()
                         _binding?.nativeExitAd?.addView(adLayout)
                     }
