@@ -17,6 +17,7 @@
     <color name="menuBgColor">@color/black</color>
     <color name="itemMenuColor">#191A1B</color>
     <color name="textColor">@color/white</color>
+    <color name="textColorR">@color/black</color>
     <color name="nveTextColor">@color/white</color>
     <color name="settingBtnColor">#FFA800</color>
     <color name="imageBtnColor">#323232</color>

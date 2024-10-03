@@ -4,57 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/in_app_bg">
+    android:background="@color/textColor">
 
+
+
+    <View
+        android:id="@+id/topImage"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.35"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/paywallbg"
+        />
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:id="@+id/closeTop"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_margin="@dimen/_30sdp"
+        android:padding="@dimen/_5sdp"
         app:srcCompat="@drawable/close_btn"
-        app:tint="@color/white"
-        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
-
     <TextView
         android:id="@+id/crown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintVertical_bias="0.55"
         android:textSize="@dimen/_20sdp"
-        android:textColor="@color/black"
+        android:textColor="@color/textColorR"
         android:textStyle="bold"
         android:text="@string/get_premium"
+        android:layout_marginVertical="@dimen/_20sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topImage"
         />
 
-    <TextView
-        android:id="@+id/crownD"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FF005C"
-        android:text=""
-        android:textSize="@dimen/_11sdp"
-        app:layout_constraintTop_toBottomOf="@id/crown"
-        app:layout_constraintStart_toStartOf="@id/crown"
-        app:layout_constraintEnd_toEndOf="@id/crown"
-        android:layout_marginStart="@dimen/_10sdp"/>
 
     <View
         android:id="@+id/mainFrame"
         android:layout_width="0dp"
         android:layout_height="@dimen/_120sdp"
         android:layout_marginHorizontal="@dimen/_10sdp"
-        android:background="@drawable/rect_in_app"
         app:layout_constraintBottom_toTopOf="@+id/premiumButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/crownD" />
+        app:layout_constraintTop_toBottomOf="@+id/crown" />
 
     <TextView
         android:id="@+id/titleCenter"
@@ -64,7 +61,7 @@
         android:singleLine="true"
         android:textStyle="bold"
         android:text="@string/unlock_all_features"
-        android:textColor="@color/textColor"
+        android:textColor="@color/textColorR"
         android:textSize="@dimen/_18sdp"
         app:layout_constraintBottom_toTopOf="@id/mainItem"
         app:layout_constraintEnd_toEndOf="@id/mainFrame"
@@ -108,7 +105,7 @@
         android:text="@string/ad_free_app"
         android:singleLine="true"
         android:paddingStart="@dimen/_3sdp"
-        android:textColor="@color/textColor"
+        android:textColor="@color/textColorR"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintBottom_toBottomOf="@id/flag_icon"
         app:layout_constraintEnd_toEndOf="@id/mainItem"
@@ -131,7 +128,7 @@
         android:text="@string/inturder_selfie"
         android:singleLine="true"
         android:paddingStart="@dimen/_3sdp"
-        android:textColor="@color/textColor"
+        android:textColor="@color/textColorR"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintBottom_toBottomOf="@id/proClockIcon"
         app:layout_constraintEnd_toEndOf="@id/proClock"
@@ -176,7 +173,7 @@
         android:text="@string/seamless_uninterrupted_experience"
         android:paddingStart="@dimen/_3sdp"
         android:singleLine="true"
-        android:textColor="@color/textColor"
+        android:textColor="@color/textColorR"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintBottom_toBottomOf="@id/smoothIcon"
         app:layout_constraintEnd_toEndOf="@id/smooth"
@@ -199,7 +196,7 @@
         android:singleLine="true"
         android:text="@string/lifetime_use"
         android:paddingStart="@dimen/_3sdp"
-        android:textColor="@color/textColor"
+        android:textColor="@color/textColorR"
         android:textSize="@dimen/_11sdp"
         app:layout_constraintBottom_toBottomOf="@id/smartWatchIcon"
         app:layout_constraintEnd_toEndOf="@id/smartWatch"
@@ -224,21 +221,7 @@
 
 
 
-    <TextView
-        android:id="@+id/closeIcon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:textColor="#585858"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/premiumButton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/no_commitment_cancel_anytime"/>
-
-
-      <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ads_lay"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -265,7 +248,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:background="#00FFFFFF"
             android:text="@string/loading_ad"
-            android:textColor="@color/black"
+            android:textColor="@color/textColorR"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="@id/animation"
             app:layout_constraintStart_toStartOf="@id/animation"
@@ -273,4 +256,18 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/closeIcon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/no_commitment_cancel_anytime"
+        android:textColor="@color/textColorR"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/premiumButton"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
