@@ -132,6 +132,7 @@ class FragmentPasswordDetail :
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun loadLayoutDirection(isGrid: Boolean) {
         _binding?.run {
             if (isGrid) {
@@ -256,9 +257,9 @@ class FragmentPasswordDetail :
                 linearlayout.soundImage.loadImage(context ?: return, R.drawable.icon_sound)
                 linearlayout.topLinear.visibility = View.VISIBLE
                 gridLayout.topGrid.visibility = View.GONE
-                linearlayout.titleText.text = model?.maniTextTitle ?: return
+                linearlayout.titleText.text =  (model?.textTitle ?: return) +" "+(model?.textTitle ?: return)
                 activeAnimationView.clickWithThrottle {
-                    if ((dbHelper?.getBooleanData(context?:return@clickWithThrottle,Intruder_Alarm,true)==true)!!) {
+                    if ((dbHelper?.getBooleanData(context?:return@clickWithThrottle,Intruder_Alarm,true)==true)) {
                             startLottieAnimation(
                                 activeAnimationView,
                                 activeAnimationViewText,
@@ -408,6 +409,11 @@ class FragmentPasswordDetail :
     }
 
         private fun loadNativeGrid() {
+            if(val_ad_native_password_screen){
+                _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
+                _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
+                return
+            }
             val adView = LayoutInflater.from(context).inflate(
                 getNativeLayout(model?.nativeLayout?:return,_binding?.gridLayout?.nativeExitAd!!,context?:return),
                 null, false
@@ -451,6 +457,11 @@ class FragmentPasswordDetail :
         }
 
         private fun loadNativeList() {
+            if(val_ad_native_password_screen){
+                _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
+                _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
+                return
+            }
             val adView = LayoutInflater.from(context).inflate(
                 getNativeLayout(model?.nativeLayout?:return,_binding?.linearlayout?.nativeExitAd!!,context?:return),
                 null, false

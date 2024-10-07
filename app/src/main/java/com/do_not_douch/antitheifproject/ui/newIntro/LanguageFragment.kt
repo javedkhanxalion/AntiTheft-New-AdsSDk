@@ -1,5 +1,6 @@
 package com.do_not_douch.antitheifproject.ui.newIntro
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,7 @@ import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.firebaseAnalytics
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
+import com.do_not_douch.antitheifproject.utilities.getRandomColor
 import com.do_not_douch.antitheifproject.utilities.id_inter_main_medium
 import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.isInternetAvailable
@@ -61,80 +63,6 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
 
 
             loadNative()
-            _binding?.forwardBtn?.clickWithThrottle {
-                if (!isLangScreen) {
-                    firebaseAnalytics(
-                        "language_fragment_forward_btn_from",
-                        "language_fragment_forward_btn_from -->  Click"
-                    )
-                    sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
-                    setLocaleMain(positionSelected)
-                    restartApp()
-                } else {
-                    /*              firebaseAnalytics(
-                                      "language_fragment_forward_btn_from",
-                                      "language_fragment_forward_btn_from -->  Click"
-                                  )
-                                  sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
-                                  setLocaleMain(positionSelected)
-                                  adsManager?.let { it1 ->
-                                      showTwoInterAd(
-                                          ads = it1,
-                                          activity = activity ?: return@let,
-                                          remoteConfigNormal = val_inter_language_screen,
-                                          adIdNormal = id_inter_main_medium,
-                                          tagClass = "language",
-                                          layout = _binding?.adsLayDialog!!,
-                                          isBackPress = true,
-                                          function = {
-                                          }
-                                      )
-                                      when (sessionOnboarding) {
-                                          0 -> {
-                                              firebaseAnalytics(
-                                                  "loading_fragment_load_next_btn_main",
-                                                  "loading_fragment_load_next_btn_main -->  Click"
-                                              )
-
-                                              if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                                                  findNavController().navigate(
-                                                      R.id.myMainMenuFragment,
-                                                      bundleOf("is_splash" to true)
-                                                  )
-                                              } else {
-                                                  findNavController().navigate(
-                                                      R.id.FragmentBuyScreen,
-                                                      bundleOf("isSplash" to true)
-                                                  )
-                                              }
-                                          }
-
-                                          1 -> {
-                                              findNavController().navigate(R.id.OnBordScreenNewScreen)
-
-                                          }
-
-                                          2 -> {
-                                              firebaseAnalytics(
-                                                  "loading_fragment_load_next_btn_intro",
-                                                  "loading_fragment_load_next_btn_intro -->  Click"
-                                              )
-                                              findNavController().navigate(R.id.OnBordScreenNewScreen)
-                                          }
-                                      }
-                                  }*/
-                    firebaseAnalytics(
-                        "language_fragment_forward_btn_from",
-                        "language_fragment_forward_btn_from -->  Click"
-                    )
-                    sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
-                    setLocaleMain(positionSelected)
-                    sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
-                    findNavController().navigate(
-                        R.id.OnBordScreenNewScreen
-                    )
-                }
-            }
             sharedPrefUtils = DbHelper(context ?: return)
             positionSelected =
                 sharedPrefUtils?.getStringData(requireContext(), LANG_CODE, "en") ?: "en"
@@ -142,17 +70,91 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                 clickItem = {
                     positionSelected = it.country_code
                     adapter?.selectLanguage(positionSelected)
-                    _binding?.forwardBtn?.visibility = View.VISIBLE
+                    _binding?.forwardBtn?.setBackgroundColor(Color.parseColor(getRandomColor()))
+                    _binding?.forwardBtn?.clickWithThrottle {
+                        if (!isLangScreen) {
+                            firebaseAnalytics(
+                                "language_fragment_forward_btn_from",
+                                "language_fragment_forward_btn_from -->  Click"
+                            )
+                            sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
+                            setLocaleMain(positionSelected)
+                            restartApp()
+                        } else {
+                            /*              firebaseAnalytics(
+                                              "language_fragment_forward_btn_from",
+                                              "language_fragment_forward_btn_from -->  Click"
+                                          )
+                                          sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
+                                          setLocaleMain(positionSelected)
+                                          adsManager?.let { it1 ->
+                                              showTwoInterAd(
+                                                  ads = it1,
+                                                  activity = activity ?: return@let,
+                                                  remoteConfigNormal = val_inter_language_screen,
+                                                  adIdNormal = id_inter_main_medium,
+                                                  tagClass = "language",
+                                                  layout = _binding?.adsLayDialog!!,
+                                                  isBackPress = true,
+                                                  function = {
+                                                  }
+                                              )
+                                              when (sessionOnboarding) {
+                                                  0 -> {
+                                                      firebaseAnalytics(
+                                                          "loading_fragment_load_next_btn_main",
+                                                          "loading_fragment_load_next_btn_main -->  Click"
+                                                      )
+
+                                                      if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
+                                                          findNavController().navigate(
+                                                              R.id.myMainMenuFragment,
+                                                              bundleOf("is_splash" to true)
+                                                          )
+                                                      } else {
+                                                          findNavController().navigate(
+                                                              R.id.FragmentBuyScreen,
+                                                              bundleOf("isSplash" to true)
+                                                          )
+                                                      }
+                                                  }
+
+                                                  1 -> {
+                                                      findNavController().navigate(R.id.OnBordScreenNewScreen)
+
+                                                  }
+
+                                                  2 -> {
+                                                      firebaseAnalytics(
+                                                          "loading_fragment_load_next_btn_intro",
+                                                          "loading_fragment_load_next_btn_intro -->  Click"
+                                                      )
+                                                      findNavController().navigate(R.id.OnBordScreenNewScreen)
+                                                  }
+                                              }
+                                          }*/
+                            firebaseAnalytics(
+                                "language_fragment_forward_btn_from",
+                                "language_fragment_forward_btn_from -->  Click"
+                            )
+                            sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
+                            setLocaleMain(positionSelected)
+                            sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
+                            findNavController().navigate(
+                                R.id.OnBordScreenNewScreen
+                            )
+                        }
+                    }
                 }
             )
 //            adapter?.selectLanguage(positionSelected)
-            _binding?.conversationDetail?.layoutManager = GridLayoutManager(context, 2).apply {
-                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int {
-                        return if (adapter?.getItemViewType(position) == AD_TYPE) 2 else 1
-                    }
-                }
-            }
+//            _binding?.conversationDetail?.layoutManager = GridLayoutManager(context, 2).apply {
+//                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+//                    override fun getSpanSize(position: Int): Int {
+//                        return if (adapter?.getItemViewType(position) == AD_TYPE) 2 else 1
+//                    }
+//                }
+//            }
             _binding?.conversationDetail?.adapter = adapter
             _binding?.backBtn?.clickWithThrottle {
                 if (!isLangScreen) {

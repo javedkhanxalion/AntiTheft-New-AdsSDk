@@ -35,31 +35,17 @@
             android:paddingStart="@dimen/_20sdp"
             android:singleLine="true"
             android:text="@string/language"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="@dimen/_22sdp"
             app:layout_constraintBottom_toBottomOf="@+id/topConstraint"
-            app:layout_constraintEnd_toStartOf="@+id/forward_btn"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/back_btn"
             app:layout_constraintTop_toTopOf="@id/topConstraint"
             tools:ignore="RtlSymmetry" />
 
-        <TextView
-            android:id="@+id/forward_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:background="@drawable/rect_btn_intro_new_new"
-            android:text="@string/next"
-            android:visibility="invisible"
-            android:textSize="@dimen/_14sdp"
-            android:paddingHorizontal="@dimen/_12sdp"
-            android:paddingVertical="@dimen/_2sdp"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@id/title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/title"
-            />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -67,14 +53,31 @@
         android:id="@+id/conversation_detail"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/bottomConstraint"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/forward_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:spanCount="2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topConstraint"
         tools:listitem="@layout/language_app_item"
         />
+
+    <TextView
+        android:id="@+id/forward_btn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_30sdp"
+        app:layout_constraintWidth_percent="0.90"
+        app:layout_constraintTop_toBottomOf="@id/conversation_detail"
+        android:background="@drawable/language_disable"
+        android:text="@string/continue_txt"
+        android:gravity="center"
+        android:textSize="@dimen/_16sdp"
+        android:layout_marginVertical="@dimen/_5sdp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/bottomConstraint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottomConstraint"
@@ -111,7 +114,6 @@
                 layout="@layout/shimmer_native_layout" />
 
         </com.facebook.shimmer.ShimmerFrameLayout>
-
 
         <FrameLayout
         android:id="@+id/adsView"

@@ -26,6 +26,7 @@ import com.do_not_douch.antitheifproject.utilities.loadImage
 import com.do_not_douch.antitheifproject.utilities.setImage
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.startLottieAnimation
+import com.do_not_douch.antitheifproject.utilities.val_ad_native_intruder_detection_screen
 import com.do_not_douch.antitheifproject.utilities.val_banner_1
 import com.do_not_douch.antitheifproject.utilities.val_inter_language_screen
 import com.do_not_douch.antitheifproject.utilities.val_inter_sound_screen
@@ -114,6 +115,7 @@ class FragmentDetectionSameFunction :
         loadBanner()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun loadLayoutDirection(isGrid: Boolean) {
         _binding?.run {
             if (isGrid) {
@@ -224,7 +226,7 @@ class FragmentDetectionSameFunction :
                 topLay.setLayoutBtn.setImage(R.drawable.icon_list)
                 linearlayout.topLinear.visibility = View.VISIBLE
                 gridLayout.topGrid.visibility = View.GONE
-                linearlayout.titleText.text = model?.maniTextTitle ?: return
+                linearlayout.titleText.text = (model?.textTitle ?: return) +" "+(model?.textTitle ?: return)
                 model?.subMenuIcon?.let { linearlayout.topImage.loadImage(context, it) }
                 linearlayout.soundImage.loadImage(context, R.drawable.icon_sound)
                 activeAnimationView.clickWithThrottle {
@@ -356,6 +358,11 @@ class FragmentDetectionSameFunction :
     }
 
     private fun loadNativeGrid() {
+
+        if (model?.remoteValue ?: return) {
+            _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
+            _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
+        }
         val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(
                 model?.nativeLayout ?: return,
@@ -402,6 +409,10 @@ class FragmentDetectionSameFunction :
     }
 
     private fun loadNativeList() {
+        if (model?.remoteValue ?: return) {
+            _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
+            _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
+        }
         val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(
                 model?.nativeLayout ?: return,

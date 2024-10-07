@@ -235,8 +235,8 @@ fun introDetailText(context : Context) :ArrayList<String>{
     list.add(context.getString(R.string.intro_1))
     list.add(context.getString(R.string.intro_2))
     list.add(context.getString(R.string.intro_3))
-    list.add(context.getString(R.string.intro_4))
     list.add(context.getString(R.string.intro_5))
+    list.add(context.getString(R.string.intro_4))
     return  list
 }
 

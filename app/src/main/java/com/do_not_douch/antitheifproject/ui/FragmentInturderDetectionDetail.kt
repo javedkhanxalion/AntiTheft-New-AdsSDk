@@ -44,7 +44,6 @@ import com.do_not_douch.antitheifproject.utilities.val_ad_native_intruder_detect
 import com.do_not_douch.antitheifproject.utilities.val_banner_1
 import com.do_not_douch.antitheifproject.utilities.val_inapp_frequency
 import com.do_not_douch.antitheifproject.utilities.val_inter_image_list_screen
-import com.do_not_douch.antitheifproject.utilities.val_inter_language_screen
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
@@ -60,13 +59,14 @@ class FragmentInturderDetectionDetail :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(++PurchaseScreen == val_inapp_frequency){
-            PurchaseScreen =0
+        if (++PurchaseScreen == val_inapp_frequency) {
+            PurchaseScreen = 0
             findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to false))
             return
         }
         dbHelper = DbHelper(context ?: return)
         adsManager = AdsManager.appAdsInit(activity ?: return)
+        _binding?.topLay?.title?.text = getString(R.string.inturder_selfie)
         _binding?.textView3?.text = getString(R.string.title_intruder)
         mDevicePolicyManager =
             context?.getSystemService(AppCompatActivity.DEVICE_POLICY_SERVICE) as DevicePolicyManager
@@ -496,6 +496,10 @@ class FragmentInturderDetectionDetail :
     }
 
     private fun loadNativeGrid() {
+        if (val_ad_native_intruder_detection_screen) {
+            _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
+            _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
+        }
         val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(
                 intruderimage_bottom,
@@ -544,6 +548,10 @@ class FragmentInturderDetectionDetail :
     }
 
     private fun loadNativeList() {
+        if (val_ad_native_intruder_detection_screen) {
+            _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
+            _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
+        }
         val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(
                 intruderimage_bottom,

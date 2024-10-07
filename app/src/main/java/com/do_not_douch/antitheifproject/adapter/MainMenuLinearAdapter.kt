@@ -1,5 +1,6 @@
 package com.do_not_douch.antitheifproject.adapter
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
@@ -78,6 +79,7 @@ class MainMenuLinearAdapter(
     // First ViewHolder for the first layout
     inner class MenuItemOneViewHolder(private val binding: MenuItemLinearLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(
             menuItem: MainMenuModel,
             onClick: ((MainMenuModel, Int) -> Unit)?,
@@ -88,7 +90,7 @@ class MainMenuLinearAdapter(
                 binding.activeBtn.loadImage(context, R.drawable.active_icon)
             else
                 binding.activeBtn.loadImage(context, R.drawable.un_active_icon)
-            binding.title.text = menuItem.textTitle
+            binding.title.text = menuItem.textTitle +" "+ menuItem.text
             binding.bottomView.clickWithThrottle {
                 onClick?.invoke(menuItem, adapterPosition)
             }
