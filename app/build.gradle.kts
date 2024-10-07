@@ -41,7 +41,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-//            resValue( "string", "facebook_app_id", "")
             resValue( "string", "id_application_id", "ca-app-pub-3940256099942544~3347511713")
         }
         release {

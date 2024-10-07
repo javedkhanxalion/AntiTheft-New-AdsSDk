@@ -24,7 +24,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/phone_anti_theft"
+        android:text="@string/app_name"
         android:textColor="@color/textColor"
         android:textSize="@dimen/_16sdp"
         android:singleLine="true"
@@ -94,7 +94,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/this_action_can_content_advertising"
         android:textColor="@color/textColor"
         android:textSize="@dimen/_11sdp"
         android:layout_marginBottom="@dimen/_10sdp"
@@ -103,11 +102,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintWidth_percent="0.80" />
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ads_lay_dialog"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
+        android:id="@+id/ads_lay"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:background="@drawable/rect_menu_language"
+        android:backgroundTint="@color/white"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -120,10 +121,10 @@
             android:id="@+id/animation"
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            app:layout_constraintEnd_toEndOf="@id/ads_lay_dialog"
-            app:layout_constraintStart_toStartOf="@id/ads_lay_dialog"
-            app:layout_constraintTop_toTopOf="@id/ads_lay_dialog"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/ads_lay"
+            app:layout_constraintStart_toStartOf="@id/ads_lay"
+            app:layout_constraintTop_toTopOf="@id/ads_lay"
+            app:layout_constraintBottom_toTopOf="@id/warning"
             />
 
         <TextView
@@ -133,10 +134,11 @@
             android:background="#00FFFFFF"
             android:text="@string/loading_ad"
             android:layout_marginTop="@dimen/_5sdp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/_12sdp"
-            app:layout_constraintLeft_toLeftOf="@id/ads_lay_dialog"
-            app:layout_constraintRight_toRightOf="@id/ads_lay_dialog"
+            app:layout_constraintBottom_toBottomOf="@id/ads_lay"
+            app:layout_constraintLeft_toLeftOf="@id/ads_lay"
+            app:layout_constraintRight_toRightOf="@id/ads_lay"
             app:layout_constraintTop_toBottomOf="@id/animation"
 
             />

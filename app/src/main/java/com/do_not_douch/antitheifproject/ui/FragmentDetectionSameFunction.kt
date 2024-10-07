@@ -10,6 +10,7 @@ import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefe
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.FragmentDetailModuleBinding
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
+import com.do_not_douch.antitheifproject.ads_manager.showTwoInterAd
 import com.do_not_douch.antitheifproject.helper_class.Constants.isServiceRunning
 import com.do_not_douch.antitheifproject.helper_class.DbHelper
 import com.do_not_douch.antitheifproject.model.MainMenuModel
@@ -20,11 +21,14 @@ import com.do_not_douch.antitheifproject.utilities.autoServiceFunctionInternalMo
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
 import com.do_not_douch.antitheifproject.utilities.id_adaptive_banner
+import com.do_not_douch.antitheifproject.utilities.id_inter_main_medium
 import com.do_not_douch.antitheifproject.utilities.loadImage
 import com.do_not_douch.antitheifproject.utilities.setImage
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.startLottieAnimation
 import com.do_not_douch.antitheifproject.utilities.val_banner_1
+import com.do_not_douch.antitheifproject.utilities.val_inter_language_screen
+import com.do_not_douch.antitheifproject.utilities.val_inter_sound_screen
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
@@ -54,21 +58,43 @@ class FragmentDetectionSameFunction :
             topLay.navMenu.clickWithThrottle {
                 findNavController().navigateUp()
             }
-
             gridLayout.soundIcon.clickWithThrottle {
-                findNavController().navigate(
-                    R.id.FragmentSoundSelection,
-                    bundleOf(ANTI_TITLE to model)
-                )
+                adsManager?.let {
+                    showTwoInterAd(
+                        ads = it,
+                        activity = activity ?: return@let,
+                        remoteConfigNormal = val_inter_sound_screen,
+                        adIdNormal = id_inter_main_medium,
+                        tagClass = "main_menu",
+                        isBackPress = false,
+                        layout = _binding?.adsLay ?: return@let,
+                    ) {
+                        findNavController().navigate(
+                            R.id.FragmentSoundSelection,
+                            bundleOf(ANTI_TITLE to model)
+                        )
+                    }
+                }
             }
-
             linearlayout.soundIcon.clickWithThrottle {
+                adsManager?.let {
+                    showTwoInterAd(
+                        ads = it,
+                        activity = activity ?: return@let,
+                        remoteConfigNormal = val_inter_sound_screen,
+                        adIdNormal = id_inter_main_medium,
+                        tagClass = "main_menu",
+                        isBackPress = false,
+                        layout = _binding?.adsLay ?: return@let,
+                    ) {
+
+                    }
+                }
                 findNavController().navigate(
                     R.id.FragmentSoundSelection,
                     bundleOf(ANTI_TITLE to model)
                 )
             }
-
             topLay.setLayoutBtn.clickWithThrottle {
                 loadLayoutDirection(!(isGridLayout ?: return@clickWithThrottle))
             }

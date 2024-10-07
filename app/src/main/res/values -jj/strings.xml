@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Anti Thief</string>
+    <string name="app_name">Anti Theft</string>
     <string name="set_alarm_to_secure_your_phone_from_theft_or_find_your_phone">Set Alarm to secure your phone from theft or find your phone</string>
     <string name="phone_anti_theft">Phone Anti Theft</string>
     <string name="continue_txt">Continue</string>

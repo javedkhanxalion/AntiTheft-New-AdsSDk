@@ -159,6 +159,9 @@ var id_splash_native = ""
 
 var val_inter_language_screen = false
 var val_inter_on_bord_screen = false
+var val_inter_sound_screen = false
+var val_inter_image_list_screen = false
+
 
 var Onboarding_Full_Native = 1
 var sessionOpenlanguage = 1

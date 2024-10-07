@@ -11,17 +11,15 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.exifinterface.media.ExifInterface
 import androidx.navigation.fragment.findNavController
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.FragmentInturderDetectionDetailBinding
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.ads.nativead.NativeAdView
 import com.do_not_douch.antitheifproject.Admin
-import com.do_not_douch.antitheifproject.ads_manager.AdsBanners
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
+import com.do_not_douch.antitheifproject.ads_manager.showTwoInterAd
 import com.do_not_douch.antitheifproject.helper_class.Constants.Intruder_Alarm
 import com.do_not_douch.antitheifproject.helper_class.Constants.Intruder_Selfie
 import com.do_not_douch.antitheifproject.helper_class.Constants.isServiceRunning
@@ -29,10 +27,12 @@ import com.do_not_douch.antitheifproject.helper_class.DbHelper
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
 import com.do_not_douch.antitheifproject.utilities.CAMERA_PERMISSION
 import com.do_not_douch.antitheifproject.utilities.IS_GRID
+import com.do_not_douch.antitheifproject.utilities.PurchaseScreen
 import com.do_not_douch.antitheifproject.utilities.autoServiceFunctionIntruder
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
 import com.do_not_douch.antitheifproject.utilities.id_adaptive_banner
+import com.do_not_douch.antitheifproject.utilities.id_inter_main_medium
 import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.intruderimage_bottom
 import com.do_not_douch.antitheifproject.utilities.loadImage
@@ -42,6 +42,12 @@ import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.startLottieAnimation
 import com.do_not_douch.antitheifproject.utilities.val_ad_native_intruder_detection_screen
 import com.do_not_douch.antitheifproject.utilities.val_banner_1
+import com.do_not_douch.antitheifproject.utilities.val_inapp_frequency
+import com.do_not_douch.antitheifproject.utilities.val_inter_image_list_screen
+import com.do_not_douch.antitheifproject.utilities.val_inter_language_screen
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdView
 
 class FragmentInturderDetectionDetail :
     BaseFragment<FragmentInturderDetectionDetailBinding>(FragmentInturderDetectionDetailBinding::inflate) {
@@ -54,9 +60,13 @@ class FragmentInturderDetectionDetail :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        if(++PurchaseScreen == val_inapp_frequency){
+            PurchaseScreen =0
+            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to false))
+            return
+        }
         dbHelper = DbHelper(context ?: return)
-        adsManager= AdsManager.appAdsInit(activity?:return)
+        adsManager = AdsManager.appAdsInit(activity ?: return)
         _binding?.textView3?.text = getString(R.string.title_intruder)
         mDevicePolicyManager =
             context?.getSystemService(AppCompatActivity.DEVICE_POLICY_SERVICE) as DevicePolicyManager
@@ -190,8 +200,19 @@ class FragmentInturderDetectionDetail :
                     }
                 }
                 gridLayout.intruderImagesView.clickWithThrottle {
-                    findNavController().navigate(R.id.FragmentShowIntruder)
-
+                    adsManager?.let {
+                        showTwoInterAd(
+                            ads = it,
+                            activity = activity ?: return@let,
+                            remoteConfigNormal = val_inter_image_list_screen,
+                            adIdNormal = id_inter_main_medium,
+                            tagClass = "main_menu",
+                            isBackPress = false,
+                            layout = _binding?.adsLay ?: return@let,
+                        ) {
+                            findNavController().navigate(R.id.FragmentShowIntruder)
+                        }
+                    }
                 }
                 gridLayout.run {
                     at1.clickWithThrottle {
@@ -347,7 +368,19 @@ class FragmentInturderDetectionDetail :
                     }
                 }
                 linearlayout.intruderImagesView.clickWithThrottle {
-                    findNavController().navigate(R.id.FragmentShowIntruder)
+                    adsManager?.let {
+                        showTwoInterAd(
+                            ads = it,
+                            activity = activity ?: return@let,
+                            remoteConfigNormal = val_inter_image_list_screen,
+                            adIdNormal = id_inter_main_medium,
+                            tagClass = "main_menu",
+                            isBackPress = false,
+                            layout = _binding?.adsLay ?: return@let,
+                        ) {
+                            findNavController().navigate(R.id.FragmentShowIntruder)
+                        }
+                    }
                 }
                 linearlayout.run {
                     at1.clickWithThrottle {
@@ -481,7 +514,11 @@ class FragmentInturderDetectionDetail :
                     _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
                     if (isAdded && isVisible && !isDetached) {
                         adsManager?.nativeAds()
-                            ?.nativeViewMediaSplashSplash(context?:return,currentNativeAd ?: return, adView)
+                            ?.nativeViewMediaSplashSplash(
+                                context ?: return,
+                                currentNativeAd ?: return,
+                                adView
+                            )
                         _binding?.gridLayout?.nativeExitAd?.removeAllViews()
                         _binding?.gridLayout?.nativeExitAd?.addView(adView)
                     } else {
@@ -524,7 +561,11 @@ class FragmentInturderDetectionDetail :
                     _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
                     if (isAdded && isVisible && !isDetached) {
                         adsManager?.nativeAds()
-                            ?.nativeViewMediaSplashSplash(context?:return,currentNativeAd ?: return, adView)
+                            ?.nativeViewMediaSplashSplash(
+                                context ?: return,
+                                currentNativeAd ?: return,
+                                adView
+                            )
                         _binding?.linearlayout?.nativeExitAd?.removeAllViews()
                         _binding?.linearlayout?.nativeExitAd?.addView(adView)
                     } else {
@@ -552,7 +593,7 @@ class FragmentInturderDetectionDetail :
 
     private fun loadBanner() {
         adsManager?.adsBanners()?.loadCollapsibleBanner(
-            activity = activity?:return,
+            activity = activity ?: return,
             view = _binding?.bannerAds!!,
             viewS = _binding?.shimmerLayout!!,
             addConfig = val_banner_1,

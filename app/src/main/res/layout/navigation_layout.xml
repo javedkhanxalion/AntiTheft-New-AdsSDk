@@ -19,7 +19,7 @@
             android:id="@+id/viewTopOne"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="#EA335F"
+            android:background="@color/color_blue_ads"
             app:layout_constraintBottom_toTopOf="@id/viewTop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -448,12 +448,13 @@
             android:layout_height="@dimen/_20sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:visibility="visible"
+            android:tint="@color/ads_purple_2_press"
             app:layout_constraintBottom_toBottomOf="@id/exitAppView_view"
             app:layout_constraintEnd_toStartOf="@+id/exitAppView_text"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@id/exitAppView_view"
             app:layout_constraintTop_toTopOf="@id/exitAppView_view"
-            app:srcCompat="@drawable/custom_support_icon" />
+            app:srcCompat="@drawable/exit_icon_nav" />
         <TextView
             android:id="@+id/exitAppView_text"
             android:layout_width="0dp"

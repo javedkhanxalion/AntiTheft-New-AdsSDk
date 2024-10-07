@@ -106,11 +106,9 @@ fun showTwoInterAd(
             override fun fullScreenAdShow() {
                 isSplash = false
                 inter_frequency_count++
-                layout.visibility = View.GONE
                 Log.d(TAG, "fullScreenAdShow: normal inter ad show")
                 firebaseAnalytics("inter_normal_show_$tagClass", "inter_Show")
                 function.invoke(1)
-
             }
 
             override fun fullScreenAdDismissed() {

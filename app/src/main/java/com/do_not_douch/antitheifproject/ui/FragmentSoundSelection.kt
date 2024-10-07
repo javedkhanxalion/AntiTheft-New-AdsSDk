@@ -4,6 +4,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ import com.do_not_douch.antitheifproject.model.MainMenuModel
 import com.do_not_douch.antitheifproject.utilities.ANTI_TITLE
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
 import com.do_not_douch.antitheifproject.utilities.IS_GRID
+import com.do_not_douch.antitheifproject.utilities.PurchaseScreen
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
 import com.do_not_douch.antitheifproject.utilities.id_native_screen
@@ -26,6 +28,7 @@ import com.do_not_douch.antitheifproject.utilities.setImage
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.soundData
 import com.do_not_douch.antitheifproject.utilities.val_ad_native_sound_screen
+import com.do_not_douch.antitheifproject.utilities.val_inapp_frequency
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
@@ -45,6 +48,11 @@ class FragmentSoundSelection :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if(++PurchaseScreen == val_inapp_frequency){
+            PurchaseScreen =0
+            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to false))
+            return
+        }
         arguments?.let {
             position = it.getParcelable(ANTI_TITLE) ?: return@let
         }

@@ -17,6 +17,7 @@ import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
 import com.do_not_douch.antitheifproject.helper_class.Constants.getAntiTheftDirectory
 import com.do_not_douch.antitheifproject.model.IntruderModels
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
+import com.do_not_douch.antitheifproject.utilities.PurchaseScreen
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.firebaseAnalytics
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
@@ -24,6 +25,7 @@ import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.intruderimage_bottom
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.val_ad_native_intruder_list_screen
+import com.do_not_douch.antitheifproject.utilities.val_inapp_frequency
 import java.io.File
 
 class FragmentShowIntruder :
@@ -40,7 +42,11 @@ class FragmentShowIntruder :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        if(++PurchaseScreen == val_inapp_frequency){
+            PurchaseScreen =0
+            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to false))
+            return
+        }
         adsManager = AdsManager.appAdsInit(activity ?: return)
         loadNative()
         setupViews()

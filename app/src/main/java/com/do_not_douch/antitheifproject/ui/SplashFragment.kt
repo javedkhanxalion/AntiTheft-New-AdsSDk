@@ -105,9 +105,11 @@ import com.do_not_douch.antitheifproject.utilities.val_exit_dialog_native
 import com.do_not_douch.antitheifproject.utilities.val_exit_screen_native
 import com.do_not_douch.antitheifproject.utilities.val_inapp_frequency
 import com.do_not_douch.antitheifproject.utilities.val_inter_exit_screen
+import com.do_not_douch.antitheifproject.utilities.val_inter_image_list_screen
 import com.do_not_douch.antitheifproject.utilities.val_inter_language_screen
 import com.do_not_douch.antitheifproject.utilities.val_inter_main_normal
 import com.do_not_douch.antitheifproject.utilities.val_inter_on_bord_screen
+import com.do_not_douch.antitheifproject.utilities.val_inter_sound_screen
 import com.do_not_douch.antitheifproject.utilities.val_is_inapp
 import com.do_not_douch.antitheifproject.utilities.val_is_inapp_splash
 import com.do_not_douch.antitheifproject.utilities.val_native_Full_screen
@@ -149,12 +151,12 @@ class SplashFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        isSplash = false
         CoroutineScope(Dispatchers.Main).launch {
             dbHelper = DbHelper(context ?: return@launch)
-            isSplash = false
+
             val cmpClass = CmpClass(activity ?: return@launch)
             cmpClass.initilaizeCMP()
-
             dbHelper?.getStringData(requireContext(), LANG_CODE, "en")?.let {
                 setLocaleMain(it)
             }
@@ -229,7 +231,7 @@ class SplashFragment :
                             activity ?: return@let,
                             remoteConfigNormal = true,
                             adIdNormal = id_inter_main_medium,
-                            layout = _binding?.adsLayDialog!!,
+                            layout = _binding?.adsLay!!,
                             tagClass = "splash"
                         ) {
                             getIntentMove()
@@ -518,6 +520,8 @@ class SplashFragment :
                         remoteConfig!!["val_inter_on_bord_screen"].asBoolean()
                     val_is_inapp_splash = remoteConfig!!["val_is_inapp_splash"].asBoolean()
                     val_is_inapp = remoteConfig!!["val_is_inapp"].asBoolean()
+                    val_inter_sound_screen = remoteConfig!!["val_inter_sound_screen"].asBoolean()
+                    val_inter_image_list_screen = remoteConfig!!["val_inter_image_list_screen"].asBoolean()
 
 
                 } else {

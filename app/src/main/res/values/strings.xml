@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Phone Anti Thief Alarm</string>
+    <string name="app_name">Phone Anti Theft Alarm</string>
     <string name="set_alarm_to_secure_your_phone_from_theft_or_find_your_phone">Set Alarm to secure your phone from theft or find your phone</string>
     <string name="phone_anti_theft">Phone Anti Theft</string>
     <string name="continue_txt">Continue</string>
@@ -151,7 +151,7 @@
     <string name="title_motion_detection">Motion Detection</string>
     <string name="intro_1">Detect Phone thieves Effortlessly</string>
     <string name="intro_2"><![CDATA[Find your phone by Clap using AI tech & sounds effects]]></string>
-    <string name="intro_3">Anti Pickpocket catch a mobile phone thief</string>
+    <string name="intro_3">Anti Pickpocket catch a mobile phone Theft</string>
 
     <string name="would_you_like_to_continue_unlock_heart">Would you like to continue unlock heart</string>
     <string name="exit_app">Exit App</string>
@@ -163,22 +163,22 @@
     <string name="txt_update_now_dialog">Update now</string>
     <string name="setting">Setting</string>
     <string name="feedback">Feedback</string>
-
     <string name="customer_support">Customer Support</string>
     <string name="how_was_your_overall_experience">How was your overall experience?</string>
     <string name="tell_us_the_problems_you_meet">Tell us the problems you meet.</string>
-    <string name="can_t_lock_screen">Can’t lock screen</string>
+    <string name="can_t_lock_screen">Was the app easy to set up?</string>
     <string name="others">Others</string>
-    <string name="slow_speed">Slow speed</string>
-    <string name="difficult_to_use">Difficult to use</string>
-    <string name="do_not_display_on_my_phone">Do not display on my phone</string>
-    <string name="do_not_show_the_wallpaper">Do not show the wallpaper</string>
-    <string name="feature_not_working">Feature not working</string>
+    <string name="slow_speed">What improvements would you like to see?</string>
+    <string name="difficult_to_use">Any performance issues with the app?</string>
+    <string name="do_not_display_on_my_phone">Do the alarms and selfies notify you properly?</string>
+    <string name="do_not_show_the_wallpaper">Has the app detected any unauthorized access?</string>
+    <string name="feature_not_working">Which feature is most helpful?</string>
     <string name="upload_picture">Upload Picture</string>
     <string name="send">Send</string>
     <string name="type_answer_her">Type answer her...</string>
-    <string name="intro_4">Would you like to continue unlock heart</string>
-    <string name="intro_5">Would you like to continue unlock heart</string>
+    <string name="intro_4">Alerts you when your battery is full or unplugged during charging.</string>
+    <string name="intro_5">Captures intruder selfie and alerts you of any unauthorized unlock attempts.</string>
     <string name="finish">Finish</string>
+    <string name="continue_with_ads">Continue With Ads</string>
 
 </resources>

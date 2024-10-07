@@ -11,13 +11,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.FragmentFeedBackBinding
 import com.bumptech.glide.Glide
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
+import com.do_not_douch.antitheifproject.utilities.PurchaseScreen
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.showToast
+import com.do_not_douch.antitheifproject.utilities.val_inapp_frequency
 
 class FragmentFeedBack : BaseFragment<FragmentFeedBackBinding>(FragmentFeedBackBinding::inflate) {
 
@@ -56,7 +60,11 @@ class FragmentFeedBack : BaseFragment<FragmentFeedBackBinding>(FragmentFeedBackB
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        if(++PurchaseScreen == val_inapp_frequency){
+            PurchaseScreen =0
+            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to false))
+            return
+        }
         _binding?.sendFeedBack?.setOnClickListener {
             if (imageUri != null && _binding?.editTextText?.text?.toString()?.isEmpty() == false) {
                 shareContent(

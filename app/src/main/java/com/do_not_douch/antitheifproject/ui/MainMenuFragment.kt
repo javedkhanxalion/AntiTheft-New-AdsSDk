@@ -23,6 +23,7 @@ import com.do_not_douch.antitheifproject.utilities.BaseFragment
 import com.do_not_douch.antitheifproject.utilities.IS_GRID
 import com.do_not_douch.antitheifproject.utilities.NOTIFICATION_PERMISSION
 import com.do_not_douch.antitheifproject.utilities.PHONE_PERMISSION
+import com.do_not_douch.antitheifproject.utilities.PurchaseScreen
 import com.do_not_douch.antitheifproject.utilities.appUpdateType
 import com.do_not_douch.antitheifproject.utilities.askRatings
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
@@ -35,6 +36,7 @@ import com.do_not_douch.antitheifproject.utilities.requestCameraPermissionNotifi
 import com.do_not_douch.antitheifproject.utilities.setImage
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.val_banner_main_menu_screen
+import com.do_not_douch.antitheifproject.utilities.val_inapp_frequency
 import com.do_not_douch.antitheifproject.utilities.val_inter_exit_screen
 import com.do_not_douch.antitheifproject.utilities.val_inter_main_normal
 import com.do_not_douch.antitheifproject.utilities.val_is_inapp
@@ -60,14 +62,15 @@ class MainMenuFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if(++PurchaseScreen == val_inapp_frequency){
+            PurchaseScreen =0
+            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to false))
+            return
+        }
         firebaseAnalytics("main_menu_fragment_open", "main_menu_fragment_open -->  Click")
         sharedPrefUtils = DbHelper(context ?: return)
         adsManager = AdsManager.appAdsInit(activity ?: return)
-
         setupBackPressedCallback {
-//            if (_binding?.navViewLayout?.navigationMain?.isVisible == true) {
-//                _binding?.navViewLayout?.navigationMain?.visibility = View.GONE
-//            } else {
             adsManager?.let {
                 showTwoInterAd(
                     ads = it,
@@ -82,7 +85,6 @@ class MainMenuFragment :
                 }
 
             }
-//            }
         }
         _binding?.run {
             topLay.settingBtn.clickWithThrottle {
@@ -109,10 +111,7 @@ class MainMenuFragment :
                 findNavController().navigate(R.id.FragmentBuyScreen)
             }
         }
-
         loadBanner()
-
-
     }
 
     private fun loadLayoutDirection(isGrid: Boolean) {
@@ -183,9 +182,9 @@ class MainMenuFragment :
                         isBackPress = false,
                         layout = binding?.adsLay!!
                     ) {
+                        findNavController().navigate(R.id.FragmentInturderDetectionDetail)
                     }
                 }
-                findNavController().navigate(R.id.FragmentInturderDetectionDetail)
             }
 
             2 -> {
@@ -199,12 +198,12 @@ class MainMenuFragment :
                         isBackPress = false,
                         layout = binding?.adsLay!!
                     ) {
+                        findNavController().navigate(
+                            R.id.FragmentPasswordDetail,
+                            bundleOf(ANTI_TITLE to model)
+                        )
                     }
                 }
-                findNavController().navigate(
-                    R.id.FragmentPasswordDetail,
-                    bundleOf(ANTI_TITLE to model)
-                )
             }
 
             else -> {
@@ -221,12 +220,12 @@ class MainMenuFragment :
                             isBackPress = false,
                             layout = binding?.adsLay!!
                         ) {
+                            findNavController().navigate(
+                                R.id.FragmentDetectionSameFunction,
+                                bundleOf(ANTI_TITLE to model)
+                            )
                         }
                     }
-                    findNavController().navigate(
-                        R.id.FragmentDetectionSameFunction,
-                        bundleOf(ANTI_TITLE to model)
-                    )
                 } else {
                     requestCameraPermissionAudio()
                 }
