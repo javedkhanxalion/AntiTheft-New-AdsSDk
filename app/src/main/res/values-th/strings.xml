@@ -140,5 +140,32 @@
     <string name="intro_1">ตรวจจับขโมยโทรศัพท์ได้อย่างง่ายดาย</string>
     <string name="intro_2"><![CDATA[ค้นหาโทรศัพท์ของคุณด้วยการปรบมือโดยใช้เทคโนโลยี AI และเอฟเฟกต์เสียง]]></string>
     <string name="intro_3">ป้องกันการล้วงกระเป๋า: จับโจรขโมยโทรศัพท์มือถือ</string>
+    <string name="would_you_like_to_continue_unlock_heart">คุณต้องการปลดล็อคหัวใจต่อหรือไม่?</string>
+    <string name="exit_app">ออกจากแอป</string>
+    <string name="tap_to_exit"><u>แตะเพื่อออก</u></string>
+    <string name="txt_ad_loading">กำลังโหลดโฆษณา…</string>
+    <string name="txt_new_version_dialog_title">มีเวอร์ชันใหม่</string>
+    <string name="txt_update_app_dialog">มีเวอร์ชันใหม่ของแอปนี้ ขอแนะนำให้คุณอัปเดตเป็นเวอร์ชันล่าสุด</string>
+    <string name="txt_update_app_dialog_title">อัปเดตแอปหรือไม่?</string>
+    <string name="txt_update_now_dialog">อัปเดตตอนนี้</string>
+    <string name="setting">การตั้งค่า</string>
+    <string name="feedback">ข้อเสนอแนะ</string>
+    <string name="customer_support">ฝ่ายบริการลูกค้า</string>
+    <string name="how_was_your_overall_experience">ประสบการณ์โดยรวมของคุณเป็นอย่างไร?</string>
+    <string name="tell_us_the_problems_you_meet">บอกปัญหาที่คุณพบให้เราทราบ</string>
+    <string name="can_t_lock_screen">แอปใช้งานง่ายหรือไม่?</string>
+    <string name="others">อื่นๆ</string>
+    <string name="slow_speed">คุณต้องการเห็นการปรับปรุงใด?</string>
+    <string name="difficult_to_use">คุณมีปัญหากับประสิทธิภาพของแอปหรือไม่?</string>
+    <string name="do_not_display_on_my_phone">นาฬิกาปลุกและเซลฟี่แจ้งเตือนคุณอย่างถูกต้องหรือไม่?</string>
+    <string name="do_not_show_the_wallpaper">แอปตรวจพบการเข้าถึงโดยไม่ได้รับอนุญาตหรือไม่?</string>
+    <string name="feature_not_working">ฟีเจอร์ใดที่มีประโยชน์ที่สุด?</string>
+    <string name="upload_picture">อัปโหลดรูปภาพ</string>
+    <string name="send">ส่ง</string>
+    <string name="type_answer_her">พิมพ์คำตอบที่นี่…</string>
+    <string name="intro_4">เตือนคุณเมื่อแบตเตอรี่เต็มหรือถอดปลั๊กในระหว่างการชาร์จ</string>
+    <string name="intro_5">ถ่ายเซลฟี่ผู้บุกรุกและเตือนคุณถึงการพยายามปลดล็อกโดยไม่ได้รับอนุญาต</string>
+    <string name="finish">เสร็จสิ้น</string>
+    <string name="continue_with_ads">ดำเนินการต่อด้วยโฆษณา</string>
 
 </resources>

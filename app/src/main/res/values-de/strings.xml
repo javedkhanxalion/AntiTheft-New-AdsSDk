@@ -149,5 +149,32 @@
     <string name="intro_2"><![CDATA[Finden Sie Ihr Telefon durch Klatschen mit KI-Technologie und Soundeffekten]]></string>
     <string name="intro_3">Anti-Taschendieb: Einen Handy-Dieb fangen</string>
 
+    <string name="would_you_like_to_continue_unlock_heart">Möchten Sie weiterhin das Herz entsperren?</string>
+    <string name="exit_app">App beenden</string>
+    <string name="tap_to_exit"><u>Tippen zum Beenden</u></string>
+    <string name="txt_ad_loading">Lade Anzeigen…</string>
+    <string name="txt_new_version_dialog_title">Neue Version verfügbar</string>
+    <string name="txt_update_app_dialog">Eine neue Version der App ist verfügbar, wir empfehlen, auf die neueste Version zu aktualisieren.</string>
+    <string name="txt_update_app_dialog_title">App aktualisieren?</string>
+    <string name="txt_update_now_dialog">Jetzt aktualisieren</string>
+    <string name="setting">Einstellungen</string>
+    <string name="feedback">Feedback</string>
+    <string name="customer_support">Kundensupport</string>
+    <string name="how_was_your_overall_experience">Wie war Ihre allgemeine Erfahrung?</string>
+    <string name="tell_us_the_problems_you_meet">Teilen Sie uns die aufgetretenen Probleme mit.</string>
+    <string name="can_t_lock_screen">War die App einfach einzurichten?</string>
+    <string name="others">Andere</string>
+    <string name="slow_speed">Welche Verbesserungen möchten Sie sehen?</string>
+    <string name="difficult_to_use">Gab es Leistungsprobleme mit der App?</string>
+    <string name="do_not_display_on_my_phone">Benachrichtigen Sie die Alarme und Selfies ordnungsgemäß?</string>
+    <string name="do_not_show_the_wallpaper">Hat die App unbefugten Zugriff erkannt?</string>
+    <string name="feature_not_working">Welche Funktion ist am hilfreichsten?</string>
+    <string name="upload_picture">Bild hochladen</string>
+    <string name="send">Senden</string>
+    <string name="type_answer_her">Antwort hier eingeben…</string>
+    <string name="intro_4">Benachrichtigt Sie, wenn der Akku voll ist oder während des Ladevorgangs abgesteckt wird.</string>
+    <string name="intro_5">Erfasst ein Selfie des Eindringlings und benachrichtigt Sie über nicht autorisierte Entsperrversuche.</string>
+    <string name="finish">Fertig</string>
+    <string name="continue_with_ads">Mit Anzeigen fortfahren</string>
 
 </resources>

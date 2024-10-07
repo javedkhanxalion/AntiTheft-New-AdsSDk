@@ -140,5 +140,32 @@
     <string name="intro_1">Telefon hırsızlarını zahmetsizce tespit edin</string>
     <string name="intro_2"><![CDATA[AI teknolojisi ve ses efektleri kullanarak alkışlayarak telefonunuzu bulun]]></string>
     <string name="intro_3">Cep hırsızına karşı: Bir telefon hırsızını yakalayın</string>
+    <string name="would_you_like_to_continue_unlock_heart">Kalbi açmaya devam etmek ister misiniz?</string>
+    <string name="exit_app">Uygulamadan Çık</string>
+    <string name="tap_to_exit"><u>Çıkmak için dokun</u></string>
+    <string name="txt_ad_loading">Reklamlar yükleniyor…</string>
+    <string name="txt_new_version_dialog_title">Yeni Sürüm Mevcut</string>
+    <string name="txt_update_app_dialog">Uygulamanın yeni bir sürümü mevcut, en son sürüme güncellenmesini öneririz.</string>
+    <string name="txt_update_app_dialog_title">Uygulama güncellensin mi?</string>
+    <string name="txt_update_now_dialog">Şimdi Güncelle</string>
+    <string name="setting">Ayarlar</string>
+    <string name="feedback">Geri Bildirim</string>
+    <string name="customer_support">Müşteri Desteği</string>
+    <string name="how_was_your_overall_experience">Genel deneyiminiz nasıldı?</string>
+    <string name="tell_us_the_problems_you_meet">Karşılaştığınız sorunları bize bildirin.</string>
+    <string name="can_t_lock_screen">Uygulamayı kurmak kolay mıydı?</string>
+    <string name="others">Diğerleri</string>
+    <string name="slow_speed">Ne tür iyileştirmeler görmek istersiniz?</string>
+    <string name="difficult_to_use">Uygulamanın performansıyla ilgili herhangi bir sorun yaşadınız mı?</string>
+    <string name="do_not_display_on_my_phone">Alarm ve selfiler sizi doğru şekilde bilgilendiriyor mu?</string>
+    <string name="do_not_show_the_wallpaper">Uygulama yetkisiz bir erişim tespit etti mi?</string>
+    <string name="feature_not_working">Hangi özellik en faydalı?</string>
+    <string name="upload_picture">Fotoğraf Yükle</string>
+    <string name="send">Gönder</string>
+    <string name="type_answer_her">Buraya cevap yazın…</string>
+    <string name="intro_4">Pil tamamen dolduğunda veya şarj sırasında çıkarıldığında sizi uyarır.</string>
+    <string name="intro_5">İzinsiz bir açma girişimi olduğunda selfie çeker ve sizi uyarır.</string>
+    <string name="finish">Bitir</string>
+    <string name="continue_with_ads">Reklamlarla Devam Et</string>
 
 </resources>

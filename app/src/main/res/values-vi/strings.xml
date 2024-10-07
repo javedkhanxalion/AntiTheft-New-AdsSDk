@@ -136,5 +136,32 @@
     <string name="intro_1">Dễ dàng phát hiện kẻ trộm điện thoại</string>
     <string name="intro_2"><![CDATA[Tìm điện thoại của bạn bằng tiếng vỗ tay bằng công nghệ AI và hiệu ứng âm thanh]]></string>
     <string name="intro_3">Chống trộm cắp: Bắt kẻ trộm điện thoại di động</string>
+    <string name="would_you_like_to_continue_unlock_heart">Bạn có muốn tiếp tục mở khóa trái tim?</string>
+    <string name="exit_app">Thoát ứng dụng</string>
+    <string name="tap_to_exit"><u>Chạm để thoát</u></string>
+    <string name="txt_ad_loading">Đang tải quảng cáo…</string>
+    <string name="txt_new_version_dialog_title">Có phiên bản mới</string>
+    <string name="txt_update_app_dialog">Một phiên bản mới của ứng dụng có sẵn, chúng tôi khuyên bạn nên cập nhật lên phiên bản mới nhất.</string>
+    <string name="txt_update_app_dialog_title">Cập nhật ứng dụng?</string>
+    <string name="txt_update_now_dialog">Cập nhật ngay</string>
+    <string name="setting">Cài đặt</string>
+    <string name="feedback">Phản hồi</string>
+    <string name="customer_support">Hỗ trợ khách hàng</string>
+    <string name="how_was_your_overall_experience">Trải nghiệm tổng thể của bạn như thế nào?</string>
+    <string name="tell_us_the_problems_you_meet">Hãy cho chúng tôi biết những vấn đề bạn gặp phải.</string>
+    <string name="can_t_lock_screen">Cài đặt ứng dụng có dễ dàng không?</string>
+    <string name="others">Khác</string>
+    <string name="slow_speed">Những cải tiến nào bạn muốn thấy?</string>
+    <string name="difficult_to_use">Bạn có gặp vấn đề nào với hiệu suất của ứng dụng không?</string>
+    <string name="do_not_display_on_my_phone">Báo thức và selfie có thông báo cho bạn đúng cách không?</string>
+    <string name="do_not_show_the_wallpaper">Ứng dụng có phát hiện truy cập trái phép nào không?</string>
+    <string name="feature_not_working">Tính năng nào hữu ích nhất?</string>
+    <string name="upload_picture">Tải ảnh lên</string>
+    <string name="send">Gửi</string>
+    <string name="type_answer_her">Nhập câu trả lời vào đây…</string>
+    <string name="intro_4">Thông báo cho bạn khi pin đầy hoặc rút sạc trong khi sạc.</string>
+    <string name="intro_5">Chụp ảnh kẻ xâm nhập và cảnh báo bạn về bất kỳ nỗ lực mở khóa trái phép nào.</string>
+    <string name="finish">Hoàn thành</string>
+    <string name="continue_with_ads">Tiếp tục với quảng cáo</string>
 
 </resources>

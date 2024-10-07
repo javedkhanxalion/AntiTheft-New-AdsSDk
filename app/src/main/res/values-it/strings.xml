@@ -101,7 +101,7 @@
     <string name="title_clap">Accendi interruttore per attivare la funzione di rilevamento applauso sul tuo telefono.</string>
     <string name="title_remove_charger">Accendi interruttore per attivare la funzione di rilevamento rimozione caricatore sul tuo telefono.</string>
     <string name="title_battery">Accendi interruttore per attivare la funzione di rilevamento batteria al 100% sul tuo telefono.</string>
-    <string name="loading_ad">Caricamento Annuncio...</string>
+    <string name="loading_ad">Caricamento Annuncio…</string>
     <string name="unlimited_access">Accesso Illimitato</string>
     <string name="monthly_subscription">Abbonamento Mensile</string>
     <string name="yearly_subscription">Abbonamento Annuale</string>
@@ -140,5 +140,32 @@
     <string name="intro_1">Rileva ladri di telefoni senza sforzo</string>
     <string name="intro_2"><![CDATA[Trova il tuo telefono battendo le mani utilizzando la tecnologia AI e gli effetti sonori]]></string>
     <string name="intro_3">Anti-borseggio: cattura un ladro di telefoni cellulari</string>
+    <string name="would_you_like_to_continue_unlock_heart">Vuoi continuare a sbloccare il cuore?</string>
+    <string name="exit_app">Esci dall\'app</string>
+    <string name="tap_to_exit"><u>Tocca per uscire</u></string>
+    <string name="txt_ad_loading">Caricamento annunci…</string>
+    <string name="txt_new_version_dialog_title">Nuova versione disponibile</string>
+    <string name="txt_update_app_dialog">È disponibile una nuova versione dell app, ti consigliamo di aggiornare all ultima versione.</string>
+    <string name="txt_update_app_dialog_title">Aggiornare l app?</string>
+    <string name="txt_update_now_dialog">Aggiorna ora</string>
+    <string name="setting">Impostazioni</string>
+    <string name="feedback">Feedback</string>
+    <string name="customer_support">Assistenza clienti</string>
+    <string name="how_was_your_overall_experience">Com\'è stata la tua esperienza complessiva?</string>
+    <string name="tell_us_the_problems_you_meet">Dicci quali problemi hai incontrato.</string>
+    <string name="can_t_lock_screen">È stato facile configurare l\'app?</string>
+    <string name="others">Altri</string>
+    <string name="slow_speed">Quali miglioramenti vorresti vedere?</string>
+    <string name="difficult_to_use">Hai riscontrato problemi di prestazioni con l\'app?</string>
+    <string name="do_not_display_on_my_phone">Gli allarmi e i selfie ti notificano correttamente?</string>
+    <string name="do_not_show_the_wallpaper">L\'app ha rilevato accessi non autorizzati?</string>
+    <string name="feature_not_working">Quale funzione ti è più utile?</string>
+    <string name="upload_picture">Carica foto</string>
+    <string name="send">Invia</string>
+    <string name="type_answer_her">Digita qui la risposta…</string>
+    <string name="intro_4">Ti avvisa quando la batteria è completamente carica o scollegata durante la ricarica.</string>
+    <string name="intro_5">Scatta un selfie agli intrusi e ti avvisa di eventuali tentativi di sblocco non autorizzati.</string>
+    <string name="finish">Fine</string>
+    <string name="continue_with_ads">Continua con gli annunci</string>
 
 </resources>

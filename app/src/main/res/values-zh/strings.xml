@@ -101,7 +101,7 @@
     <string name="title_clap">打开开关以激活您的手机上的拍手检测功能。</string>
     <string name="title_remove_charger">打开开关以激活您的手机上的移除充电器检测功能。</string>
     <string name="title_battery">打开开关以激活您的手机上的电池100%检测功能。</string>
-    <string name="loading_ad">广告加载中...</string>
+    <string name="loading_ad">广告加载中…</string>
     <string name="unlimited_access">无限访问</string>
     <string name="monthly_subscription">月订阅</string>
     <string name="yearly_subscription">年订阅</string>
@@ -140,5 +140,32 @@
     <string name="intro_1">轻松检测手机小偷</string>
     <string name="intro_2"><![CDATA[通过拍手使用AI技术和音效找到你的手机]]></string>
     <string name="intro_3">防盗：抓住手机小偷</string>
+    <string name="would_you_like_to_continue_unlock_heart">您是否要继续解锁心形？</string>
+    <string name="exit_app">退出应用</string>
+    <string name="tap_to_exit"><u>点击退出</u></string>
+    <string name="txt_ad_loading">广告加载中…</string>
+    <string name="txt_new_version_dialog_title">新版本可用</string>
+    <string name="txt_update_app_dialog">应用程序的新版本已可用，建议更新到最新版本。</string>
+    <string name="txt_update_app_dialog_title">更新应用程序？</string>
+    <string name="txt_update_now_dialog">立即更新</string>
+    <string name="setting">设置</string>
+    <string name="feedback">反馈</string>
+    <string name="customer_support">客户支持</string>
+    <string name="how_was_your_overall_experience">您的总体体验如何？</string>
+    <string name="tell_us_the_problems_you_meet">告诉我们您遇到的问题。</string>
+    <string name="can_t_lock_screen">设置应用是否容易？</string>
+    <string name="others">其他</string>
+    <string name="slow_speed">您希望看到哪些改进？</string>
+    <string name="difficult_to_use">应用程序的性能有问题吗？</string>
+    <string name="do_not_display_on_my_phone">闹钟和自拍通知是否正常？</string>
+    <string name="do_not_show_the_wallpaper">应用程序检测到任何未经授权的访问了吗？</string>
+    <string name="feature_not_working">哪个功能最有帮助？</string>
+    <string name="upload_picture">上传图片</string>
+    <string name="send">发送</string>
+    <string name="type_answer_her">在此输入答案…</string>
+    <string name="intro_4">当电池充满或在充电时断开连接时会提醒您。</string>
+    <string name="intro_5">拍摄入侵者自拍并提醒您任何未经授权的解锁尝试。</string>
+    <string name="finish">完成</string>
+    <string name="continue_with_ads">继续播放广告</string>
 
 </resources>

@@ -146,5 +146,32 @@
     <string name="intro_1">फोन चोरों का आसानी से पता लगाएं</string>
     <string name="intro_2"><![CDATA[ताली बजाकर AI तकनीक और ध्वनि प्रभावों से अपना फोन खोजें]]></string>
     <string name="intro_3">एंटी पॉकेटमारी: मोबाइल फोन चोर को पकड़ें</string>
+    <string name="would_you_like_to_continue_unlock_heart">क्या आप दिल को अनलॉक करना जारी रखना चाहेंगे?</string>
+    <string name="exit_app">ऐप से बाहर निकलें</string>
+    <string name="tap_to_exit"><u>बाहर निकलने के लिए टैप करें</u></string>
+    <string name="txt_ad_loading">विज्ञापन लोड हो रहे हैं...</string>
+    <string name="txt_new_version_dialog_title">नया संस्करण उपलब्ध है</string>
+    <string name="txt_update_app_dialog">ऐप का एक नया संस्करण उपलब्ध है, हम आपको नवीनतम संस्करण में अपडेट करने की सलाह देते हैं।</string>
+    <string name="txt_update_app_dialog_title">ऐप को अपडेट करें?</string>
+    <string name="txt_update_now_dialog">अभी अपडेट करें</string>
+    <string name="setting">सेटिंग</string>
+    <string name="feedback">प्रतिक्रिया</string>
+    <string name="customer_support">ग्राहक सहायता</string>
+    <string name="how_was_your_overall_experience">आपका समग्र अनुभव कैसा था?</string>
+    <string name="tell_us_the_problems_you_meet">हमें उन समस्याओं के बारे में बताएं जिनका आप सामना कर रहे हैं।</string>
+    <string name="can_t_lock_screen">क्या ऐप सेट अप करना आसान था?</string>
+    <string name="others">अन्य</string>
+    <string name="slow_speed">आप क्या सुधार देखना चाहेंगे?</string>
+    <string name="difficult_to_use">क्या ऐप में प्रदर्शन के संबंध में कोई समस्या थी?</string>
+    <string name="do_not_display_on_my_phone">क्या अलार्म और सेल्फी आपको सही से सूचित करते हैं?</string>
+    <string name="do_not_show_the_wallpaper">क्या ऐप ने किसी अनधिकृत पहुंच का पता लगाया है?</string>
+    <string name="feature_not_working">कौन सी विशेषता सबसे उपयोगी है?</string>
+    <string name="upload_picture">चित्र अपलोड करें</string>
+    <string name="send">भेजें</string>
+    <string name="type_answer_her">यहां उत्तर टाइप करें...</string>
+    <string name="intro_4">आपको तब सचेत करता है जब आपकी बैटरी फुल हो जाती है या चार्जिंग के दौरान अनप्लग कर दी जाती है।</string>
+    <string name="intro_5">अवांछित अनलॉक प्रयासों की जानकारी देता है और घुसपैठिए की सेल्फी लेता है।</string>
+    <string name="finish">समाप्त करें</string>
+    <string name="continue_with_ads">विज्ञापनों के साथ जारी रखें</string>
 
 </resources>

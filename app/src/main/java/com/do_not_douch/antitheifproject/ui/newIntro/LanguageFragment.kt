@@ -44,11 +44,9 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
     private var positionSelected: String = "en"
     private var isLangScreen: Boolean = false
     private var isValue: Int = 0
-    private var recallActive: Int = 1
     private var sharedPrefUtils: DbHelper? = null
     private var adapter: LanguageGridAdapter? = null
     var list: ArrayList<LanguageAppModel> = ArrayList()
-    private var isInternetDialog: Boolean = false
     private var adsManager: AdsManager? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -73,68 +71,68 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                     setLocaleMain(positionSelected)
                     restartApp()
                 } else {
-      /*              firebaseAnalytics(
+                    /*              firebaseAnalytics(
+                                      "language_fragment_forward_btn_from",
+                                      "language_fragment_forward_btn_from -->  Click"
+                                  )
+                                  sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
+                                  setLocaleMain(positionSelected)
+                                  adsManager?.let { it1 ->
+                                      showTwoInterAd(
+                                          ads = it1,
+                                          activity = activity ?: return@let,
+                                          remoteConfigNormal = val_inter_language_screen,
+                                          adIdNormal = id_inter_main_medium,
+                                          tagClass = "language",
+                                          layout = _binding?.adsLayDialog!!,
+                                          isBackPress = true,
+                                          function = {
+                                          }
+                                      )
+                                      when (sessionOnboarding) {
+                                          0 -> {
+                                              firebaseAnalytics(
+                                                  "loading_fragment_load_next_btn_main",
+                                                  "loading_fragment_load_next_btn_main -->  Click"
+                                              )
+
+                                              if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
+                                                  findNavController().navigate(
+                                                      R.id.myMainMenuFragment,
+                                                      bundleOf("is_splash" to true)
+                                                  )
+                                              } else {
+                                                  findNavController().navigate(
+                                                      R.id.FragmentBuyScreen,
+                                                      bundleOf("isSplash" to true)
+                                                  )
+                                              }
+                                          }
+
+                                          1 -> {
+                                              findNavController().navigate(R.id.OnBordScreenNewScreen)
+
+                                          }
+
+                                          2 -> {
+                                              firebaseAnalytics(
+                                                  "loading_fragment_load_next_btn_intro",
+                                                  "loading_fragment_load_next_btn_intro -->  Click"
+                                              )
+                                              findNavController().navigate(R.id.OnBordScreenNewScreen)
+                                          }
+                                      }
+                                  }*/
+                    firebaseAnalytics(
                         "language_fragment_forward_btn_from",
                         "language_fragment_forward_btn_from -->  Click"
                     )
                     sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
                     setLocaleMain(positionSelected)
-                    adsManager?.let { it1 ->
-                        showTwoInterAd(
-                            ads = it1,
-                            activity = activity ?: return@let,
-                            remoteConfigNormal = val_inter_language_screen,
-                            adIdNormal = id_inter_main_medium,
-                            tagClass = "language",
-                            layout = _binding?.adsLayDialog!!,
-                            isBackPress = true,
-                            function = {
-                            }
-                        )
-                        when (sessionOnboarding) {
-                            0 -> {
-                                firebaseAnalytics(
-                                    "loading_fragment_load_next_btn_main",
-                                    "loading_fragment_load_next_btn_main -->  Click"
-                                )
-
-                                if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                                    findNavController().navigate(
-                                        R.id.myMainMenuFragment,
-                                        bundleOf("is_splash" to true)
-                                    )
-                                } else {
-                                    findNavController().navigate(
-                                        R.id.FragmentBuyScreen,
-                                        bundleOf("isSplash" to true)
-                                    )
-                                }
-                            }
-
-                            1 -> {
-                                findNavController().navigate(R.id.OnBordScreenNewScreen)
-
-                            }
-
-                            2 -> {
-                                firebaseAnalytics(
-                                    "loading_fragment_load_next_btn_intro",
-                                    "loading_fragment_load_next_btn_intro -->  Click"
-                                )
-                                findNavController().navigate(R.id.OnBordScreenNewScreen)
-                            }
-                        }
-                    }*/
-                        firebaseAnalytics(
-                            "language_fragment_forward_btn_from",
-                            "language_fragment_forward_btn_from -->  Click"
-                        )
-                        sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
-                        setLocaleMain(positionSelected)
-                        sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
-                        findNavController().navigate(
-                            R.id.OnBordScreenNewScreen
-                        )
+                    sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
+                    findNavController().navigate(
+                        R.id.OnBordScreenNewScreen
+                    )
                 }
             }
             sharedPrefUtils = DbHelper(context ?: return)
@@ -286,65 +284,5 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
             )
         )
     }
-    /*
-        private fun insertAds() {
-            val adPosition = getFirstAdPosition(fisrt_ad_line_threshold)
-            val repeatAdPosition = getRepeatAdPosition(line_count)
-            var currentPos = adPosition
-            while (currentPos < list.size) {
-                list.add(currentPos, LanguageAppModel("Ad", "", 0, false))
-                currentPos += repeatAdPosition
-            }
-        }
-
-        private fun getFirstAdPosition(position: Int): Int {
-            when (position) {
-                1 -> {
-                    return 2
-                }
-
-                2 -> {
-                    return 4
-                }
-
-                3 -> {
-                    return 6
-                }
-
-                4 -> {
-                    return 8
-                }
-
-                5 -> {
-                    return 10
-                }
-            }
-            return 2
-        }
-
-        private fun getRepeatAdPosition(position: Int): Int {
-            when (position) {
-                1 -> {
-                    return 3
-                }
-
-                2 -> {
-                    return 5
-                }
-
-                3 -> {
-                    return 7
-                }
-
-                4 -> {
-                    return 9
-                }
-
-                5 -> {
-                    return 11
-                }
-            }
-            return 2
-        }*/
 
 }

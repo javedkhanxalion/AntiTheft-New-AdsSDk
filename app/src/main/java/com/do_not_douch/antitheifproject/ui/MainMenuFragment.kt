@@ -62,6 +62,9 @@ class MainMenuFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments?.let {
+            isSplashScreen = it.getBoolean("is_splash")
+        }
         if(++PurchaseScreen == val_inapp_frequency){
             PurchaseScreen =0
             findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to false))
@@ -97,7 +100,6 @@ class MainMenuFragment :
                 loadLayoutDirection(it)
                 isGridLayout = it
             }
-
             topLay.setLayoutBtn.clickWithThrottle {
                 loadLayoutDirection(!(isGridLayout ?: return@clickWithThrottle))
             }
@@ -106,12 +108,30 @@ class MainMenuFragment :
             } else {
                 topLay.settingBtn.visibility = View.VISIBLE
             }
-
             topLay.settingBtn.clickWithThrottle {
                 findNavController().navigate(R.id.FragmentBuyScreen)
             }
         }
         loadBanner()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (context?.let {
+                    ContextCompat.checkSelfPermission(
+                        it,
+                        NOTIFICATION_PERMISSION
+                    )
+                } != 0) {
+                requestCameraPermissionNotification()
+            } else {
+                if (isSplashScreen) askRatings(activity ?: return)
+            }
+        } else {
+            if (isSplashScreen) askRatings(activity ?: return)
+        }
+
+        // Initialize AppUpdateManager
+        appUpdateManager = AppUpdateManagerFactory.create(context ?: return)
+        // Fetch Remote Config and Check for App Update
+        checkForUpdate()
     }
 
     private fun loadLayoutDirection(isGrid: Boolean) {
@@ -240,28 +260,6 @@ class MainMenuFragment :
 
     override fun onResume() {
         super.onResume()
-        arguments?.let {
-            isSplashScreen = it.getBoolean("is_splash")
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (context?.let {
-                    ContextCompat.checkSelfPermission(
-                        it,
-                        NOTIFICATION_PERMISSION
-                    )
-                } != 0) {
-                requestCameraPermissionNotification()
-            } else {
-                if (isSplashScreen) askRatings(activity ?: return)
-            }
-        } else {
-            if (isSplashScreen) askRatings(activity ?: return)
-        }
-
-        // Initialize AppUpdateManager
-        appUpdateManager = AppUpdateManagerFactory.create(context ?: return)
-        // Fetch Remote Config and Check for App Update
-        checkForUpdate()
     }
 
     override fun onPause() {

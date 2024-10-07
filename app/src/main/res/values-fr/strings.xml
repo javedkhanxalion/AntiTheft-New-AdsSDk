@@ -147,4 +147,33 @@
     <string name="intro_2"><![CDATA[Trouvez votre téléphone en applaudissant grâce à la technologie AI et aux effets sonores]]></string>
     <string name="intro_3">Anti-pickpocket : attrapez un voleur de téléphone portable</string>
 
+    <string name="would_you_like_to_continue_unlock_heart">Souhaitez-vous continuer à déverrouiller le cœur ?</string>
+    <string name="exit_app">Quitter l\'application</string>
+    <string name="tap_to_exit"><u>Appuyez pour quitter</u></string>
+    <string name="txt_ad_loading">Chargement des annonces…</string>
+    <string name="txt_new_version_dialog_title">Nouvelle version disponible</string>
+    <string name="txt_update_app_dialog">Une nouvelle version de l\'application est disponible, nous vous recommandons de la mettre à jour.</string>
+    <string name="txt_update_app_dialog_title">Mettre à jour l\'application ?</string>
+    <string name="txt_update_now_dialog">Mettre à jour maintenant</string>
+    <string name="setting">Paramètres</string>
+    <string name="feedback">Retour</string>
+    <string name="customer_support">Support client</string>
+    <string name="how_was_your_overall_experience">Comment s\'est déroulée votre expérience globale ?</string>
+    <string name="tell_us_the_problems_you_meet">Dites-nous les problèmes que vous rencontrez.</string>
+    <string name="can_t_lock_screen">L\'application était-elle facile à configurer ?</string>
+    <string name="others">Autres</string>
+    <string name="slow_speed">Quelles améliorations aimeriez-vous voir ?</string>
+    <string name="difficult_to_use">Rencontrez-vous des problèmes de performance avec l\'application ?</string>
+    <string name="do_not_display_on_my_phone">Les alarmes et selfies vous notifient-ils correctement ?</string>
+    <string name="do_not_show_the_wallpaper">L\'application a-t-elle détecté des accès non autorisés ?</string>
+    <string name="feature_not_working">Quelle fonctionnalité est la plus utile ?</string>
+    <string name="upload_picture">Télécharger une photo</string>
+    <string name="send">Envoyer</string>
+    <string name="type_answer_her">Tapez votre réponse ici…</string>
+    <string name="intro_4">Vous alerte lorsque votre batterie est pleine ou débranchée pendant la charge.</string>
+    <string name="intro_5">Capture un selfie de l\'intrus et vous avertit de toute tentative de déverrouillage non autorisée.</string>
+    <string name="finish">Terminer</string>
+    <string name="continue_with_ads">Continuer avec des annonces</string>
+
+
 </resources>

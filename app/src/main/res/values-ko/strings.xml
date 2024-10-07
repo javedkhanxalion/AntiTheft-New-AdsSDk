@@ -140,5 +140,32 @@
     <string name="intro_1">휴대폰 도둑을 쉽게 감지하세요</string>
     <string name="intro_2"><![CDATA[AI 기술과 사운드 효과를 사용하여 박수로 휴대폰을 찾으세요]]></string>
     <string name="intro_3">반소매치기: 휴대폰 도둑 잡기</string>
+    <string name="would_you_like_to_continue_unlock_heart">하트를 계속 잠금 해제하시겠습니까?</string>
+    <string name="exit_app">앱 종료</string>
+    <string name="tap_to_exit"><u>종료하려면 누르세요</u></string>
+    <string name="txt_ad_loading">광고 로딩 중…</string>
+    <string name="txt_new_version_dialog_title">새 버전 이용 가능</string>
+    <string name="txt_update_app_dialog">앱의 새 버전이 있습니다. 최신 버전으로 업데이트하는 것을 권장합니다.</string>
+    <string name="txt_update_app_dialog_title">앱을 업데이트하시겠습니까?</string>
+    <string name="txt_update_now_dialog">지금 업데이트</string>
+    <string name="setting">설정</string>
+    <string name="feedback">피드백</string>
+    <string name="customer_support">고객 지원</string>
+    <string name="how_was_your_overall_experience">전체적인 경험은 어떠셨나요?</string>
+    <string name="tell_us_the_problems_you_meet">직면한 문제를 알려주세요.</string>
+    <string name="can_t_lock_screen">앱을 설정하는 것이 쉬웠나요?</string>
+    <string name="others">기타</string>
+    <string name="slow_speed">어떤 개선을 원하시나요?</string>
+    <string name="difficult_to_use">앱의 성능 문제를 겪으셨나요?</string>
+    <string name="do_not_display_on_my_phone">알람과 셀피가 정상적으로 작동하나요?</string>
+    <string name="do_not_show_the_wallpaper">앱이 무단 접근을 감지했나요?</string>
+    <string name="feature_not_working">가장 유용한 기능은 무엇인가요?</string>
+    <string name="upload_picture">사진 업로드</string>
+    <string name="send">보내기</string>
+    <string name="type_answer_her">여기에 답변을 입력하세요…</string>
+    <string name="intro_4">배터리가 가득 차거나 충전 중에 분리될 때 경고합니다.</string>
+    <string name="intro_5">침입자의 셀피를 찍고 무단 잠금 해제 시도를 경고합니다.</string>
+    <string name="finish">완료</string>
+    <string name="continue_with_ads">광고와 함께 계속</string>
 
 </resources>

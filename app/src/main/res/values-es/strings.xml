@@ -147,4 +147,33 @@
     <string name="intro_2"><![CDATA[Encuentra tu teléfono aplaudiendo usando tecnología de IA y efectos de sonido]]></string>
     <string name="intro_3">Antirrobo de bolsillos: atrapa al ladrón de teléfonos móviles</string>
 
+    <string name="would_you_like_to_continue_unlock_heart">¿Te gustaría continuar desbloqueando el corazón?</string>
+    <string name="exit_app">Salir de la aplicación</string>
+    <string name="tap_to_exit"><u>Toque para salir</u></string>
+    <string name="txt_ad_loading">Cargando anuncios...</string>
+    <string name="txt_new_version_dialog_title">Nueva versión disponible</string>
+    <string name="txt_update_app_dialog">Hay una nueva versión de la aplicación disponible, te recomendamos actualizar a la versión más reciente.</string>
+    <string name="txt_update_app_dialog_title">¿Actualizar aplicación?</string>
+    <string name="txt_update_now_dialog">Actualizar ahora</string>
+    <string name="setting">Configuración</string>
+    <string name="feedback">Retroalimentación</string>
+    <string name="customer_support">Atención al cliente</string>
+    <string name="how_was_your_overall_experience">¿Cómo fue tu experiencia general?</string>
+    <string name="tell_us_the_problems_you_meet">Cuéntanos los problemas que encontraste.</string>
+    <string name="can_t_lock_screen">¿Fue fácil configurar la aplicación?</string>
+    <string name="others">Otros</string>
+    <string name="slow_speed">¿Qué mejoras te gustaría ver?</string>
+    <string name="difficult_to_use">¿Algún problema de rendimiento con la aplicación?</string>
+    <string name="do_not_display_on_my_phone">¿Las alarmas y selfies te notifican correctamente?</string>
+    <string name="do_not_show_the_wallpaper">¿La aplicación ha detectado algún acceso no autorizado?</string>
+    <string name="feature_not_working">¿Qué característica es más útil?</string>
+    <string name="upload_picture">Subir imagen</string>
+    <string name="send">Enviar</string>
+    <string name="type_answer_her">Escribe tu respuesta aquí...</string>
+    <string name="intro_4">Te alerta cuando la batería está llena o desenchufada durante la carga.</string>
+    <string name="intro_5">Captura selfies de intrusos y te alerta sobre intentos de desbloqueo no autorizados.</string>
+    <string name="finish">Finalizar</string>
+    <string name="continue_with_ads">Continuar con anuncios</string>
+
+
 </resources>
