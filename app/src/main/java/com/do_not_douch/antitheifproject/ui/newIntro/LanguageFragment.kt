@@ -5,17 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.FragmentLanguageBinding
 import com.do_not_douch.antitheifproject.adapter.LanguageGridAdapter
-import com.do_not_douch.antitheifproject.adapter.LanguageGridAdapter.Companion.AD_TYPE
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager
-import com.do_not_douch.antitheifproject.ads_manager.PurchasePrefs
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
-import com.do_not_douch.antitheifproject.ads_manager.showTwoInterAd
 import com.do_not_douch.antitheifproject.helper_class.DbHelper
 import com.do_not_douch.antitheifproject.model.LanguageAppModel
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
@@ -25,18 +20,12 @@ import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.firebaseAnalytics
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
-import com.do_not_douch.antitheifproject.utilities.getRandomColor
-import com.do_not_douch.antitheifproject.utilities.id_inter_main_medium
 import com.do_not_douch.antitheifproject.utilities.id_native_screen
-import com.do_not_douch.antitheifproject.utilities.isInternetAvailable
 import com.do_not_douch.antitheifproject.utilities.language_bottom
 import com.do_not_douch.antitheifproject.utilities.restartApp
-import com.do_not_douch.antitheifproject.utilities.sessionOnboarding
 import com.do_not_douch.antitheifproject.utilities.setLocaleMain
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.val_ad_native_language_screen
-import com.do_not_douch.antitheifproject.utilities.val_inter_language_screen
-import com.do_not_douch.antitheifproject.utilities.val_is_inapp_splash
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
@@ -70,14 +59,15 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                 clickItem = {
                     positionSelected = it.country_code
                     adapter?.selectLanguage(positionSelected)
-                    _binding?.forwardBtn?.setBackgroundColor(Color.parseColor(getRandomColor()))
+                    _binding?.forwardBtn?.setBackgroundColor(Color.parseColor("#44A0E3"))
                     _binding?.forwardBtn?.clickWithThrottle {
                         if (!isLangScreen) {
                             firebaseAnalytics(
                                 "language_fragment_forward_btn_from",
                                 "language_fragment_forward_btn_from -->  Click"
                             )
-                            sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
+                            sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected)
+                                ?: "en"
                             setLocaleMain(positionSelected)
                             restartApp()
                         } else {
@@ -137,7 +127,8 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                                 "language_fragment_forward_btn_from",
                                 "language_fragment_forward_btn_from -->  Click"
                             )
-                            sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
+                            sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected)
+                                ?: "en"
                             setLocaleMain(positionSelected)
                             sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
                             findNavController().navigate(
@@ -249,6 +240,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
     private fun initializeData() {
         list.add(LanguageAppModel(getString(R.string.english), "en", R.drawable.usa, false))
         list.add(LanguageAppModel(getString(R.string.spanish), "es", R.drawable.spain, false))
+        list.add(LanguageAppModel(getString(R.string.urdu), "ur", R.drawable.spain, false))
         list.add(LanguageAppModel(getString(R.string.hindi), "hi", R.drawable.india, false))
         list.add(LanguageAppModel(getString(R.string.arabic), "ar", R.drawable.sudi, false))
         list.add(LanguageAppModel(getString(R.string.french), "fr", R.drawable.france, false))

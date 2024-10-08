@@ -137,9 +137,6 @@
     <string name="seamless_uninterrupted_experience">끊김 없는 원활한 경험</string>
     <string name="clap_detection">박수 감지</string>
     <string name="title_motion_detection">동작 감지</string>
-    <string name="intro_1">휴대폰 도둑을 쉽게 감지하세요</string>
-    <string name="intro_2"><![CDATA[AI 기술과 사운드 효과를 사용하여 박수로 휴대폰을 찾으세요]]></string>
-    <string name="intro_3">반소매치기: 휴대폰 도둑 잡기</string>
     <string name="would_you_like_to_continue_unlock_heart">하트를 계속 잠금 해제하시겠습니까?</string>
     <string name="exit_app">앱 종료</string>
     <string name="tap_to_exit"><u>종료하려면 누르세요</u></string>
@@ -167,5 +164,9 @@
     <string name="intro_5">침입자의 셀피를 찍고 무단 잠금 해제 시도를 경고합니다.</string>
     <string name="finish">완료</string>
     <string name="continue_with_ads">광고와 함께 계속</string>
+    <string name="urdu">우르두어</string>
+    <string name="intro_1">주머니 감지: 휴대전화가 주머니에서 제거되면 경보가 울립니다.</string>
+    <string name="intro_2">박수 감지: 박수를 쳐서 휴대전화를 찾으세요; 앱이 알람을 트리거합니다.</string>
+    <string name="intro_3">모션 감지: 휴대전화가 허락 없이 움직이면 경보가 울립니다.</string>
 
 </resources>

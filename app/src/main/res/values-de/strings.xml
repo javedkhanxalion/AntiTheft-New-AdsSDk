@@ -145,9 +145,6 @@
     <string name="seamless_uninterrupted_experience">Nahtlose, unterbrechungsfreie Erfahrung</string>
     <string name="clap_detection">Klatscherkennung</string>
     <string name="title_motion_detection">Bewegungserkennung</string>
-    <string name="intro_1">Handydiebe mühelos erkennen</string>
-    <string name="intro_2"><![CDATA[Finden Sie Ihr Telefon durch Klatschen mit KI-Technologie und Soundeffekten]]></string>
-    <string name="intro_3">Anti-Taschendieb: Einen Handy-Dieb fangen</string>
 
     <string name="would_you_like_to_continue_unlock_heart">Möchten Sie weiterhin das Herz entsperren?</string>
     <string name="exit_app">App beenden</string>
@@ -176,5 +173,9 @@
     <string name="intro_5">Erfasst ein Selfie des Eindringlings und benachrichtigt Sie über nicht autorisierte Entsperrversuche.</string>
     <string name="finish">Fertig</string>
     <string name="continue_with_ads">Mit Anzeigen fortfahren</string>
+    <string name="urdu">Urdu</string>
+    <string name="intro_1">Taschen-Erkennung: Löst einen Alarm aus, wenn Ihr Telefon aus der Tasche entfernt wird.</string>
+    <string name="intro_2">Klatsch-Erkennung: Finden Sie Ihr Telefon durch Klatschen; die App löst einen Alarm aus.</string>
+    <string name="intro_3">Bewegungserkennung: Löst einen Alarm aus, wenn Ihr Telefon ohne Erlaubnis bewegt wird.</string>
 
 </resources>

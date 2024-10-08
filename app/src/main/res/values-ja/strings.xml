@@ -145,9 +145,6 @@
     <string name="seamless_uninterrupted_experience">シームレスで中断のない体験</string>
     <string name="clap_detection">拍手検出</string>
     <string name="title_motion_detection">モーション検出</string>
-    <string name="intro_1">携帯泥棒を簡単に検出</string>
-    <string name="intro_2"><![CDATA[AI技術と音響効果を使用して、拍手で電話を見つける]]></string>
-    <string name="intro_3">スリ対策: 携帯電話の泥棒を捕まえる</string>
     <string name="would_you_like_to_continue_unlock_heart">ハートのロック解除を続けますか？</string>
     <string name="exit_app">アプリを終了</string>
     <string name="tap_to_exit"><u>終了するにはタップしてください</u></string>
@@ -175,5 +172,9 @@
     <string name="intro_5">侵入者の自撮りをキャプチャし、不正なロック解除の試行について警告します。</string>
     <string name="finish">終了</string>
     <string name="continue_with_ads">広告を続ける</string>
+    <string name="urdu">ウルドゥー語</string>
+    <string name="intro_1">ポケット検出: 電話がポケットから取り出されるとアラームが鳴ります。</string>
+    <string name="intro_2">拍手検出: 拍手して電話を見つける; アプリがアラームをトリガーします。</string>
+    <string name="intro_3">モーション検出: 許可なく電話が動かされるとアラームが鳴ります。</string>
 
 </resources>

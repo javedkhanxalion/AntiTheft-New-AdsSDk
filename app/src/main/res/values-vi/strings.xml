@@ -133,9 +133,6 @@
     <string name="seamless_uninterrupted_experience">Trải nghiệm liền mạch, không gián đoạn</string>
     <string name="clap_detection">Phát hiện tiếng vỗ tay</string>
     <string name="title_motion_detection">Phát hiện chuyển động</string>
-    <string name="intro_1">Dễ dàng phát hiện kẻ trộm điện thoại</string>
-    <string name="intro_2"><![CDATA[Tìm điện thoại của bạn bằng tiếng vỗ tay bằng công nghệ AI và hiệu ứng âm thanh]]></string>
-    <string name="intro_3">Chống trộm cắp: Bắt kẻ trộm điện thoại di động</string>
     <string name="would_you_like_to_continue_unlock_heart">Bạn có muốn tiếp tục mở khóa trái tim?</string>
     <string name="exit_app">Thoát ứng dụng</string>
     <string name="tap_to_exit"><u>Chạm để thoát</u></string>
@@ -163,5 +160,9 @@
     <string name="intro_5">Chụp ảnh kẻ xâm nhập và cảnh báo bạn về bất kỳ nỗ lực mở khóa trái phép nào.</string>
     <string name="finish">Hoàn thành</string>
     <string name="continue_with_ads">Tiếp tục với quảng cáo</string>
+    <string name="urdu">Urdu</string>
+    <string name="intro_1">Phát hiện túi: Phát âm báo nếu điện thoại của bạn bị lấy ra khỏi túi.</string>
+    <string name="intro_2">Phát hiện vỗ tay: Tìm điện thoại của bạn bằng cách vỗ tay; ứng dụng kích hoạt âm báo.</string>
+    <string name="intro_3">Phát hiện chuyển động: Kích hoạt âm báo nếu điện thoại của bạn bị di chuyển mà không có sự cho phép.</string>
 
 </resources>

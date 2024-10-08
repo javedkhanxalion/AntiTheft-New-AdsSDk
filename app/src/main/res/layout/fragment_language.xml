@@ -11,8 +11,9 @@
         android:id="@+id/topConstraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1766FF"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="#44A0E3"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:id="@+id/back_btn"
@@ -30,21 +31,20 @@
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="start|center"
             android:layout_marginVertical="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:gravity="start|center"
             android:paddingStart="@dimen/_20sdp"
             android:singleLine="true"
             android:text="@string/language"
-            android:layout_marginEnd="@dimen/_10sdp"
             android:textColor="@color/white"
-            android:textStyle="bold"
             android:textSize="@dimen/_22sdp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/topConstraint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/back_btn"
             app:layout_constraintTop_toTopOf="@id/topConstraint"
             tools:ignore="RtlSymmetry" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

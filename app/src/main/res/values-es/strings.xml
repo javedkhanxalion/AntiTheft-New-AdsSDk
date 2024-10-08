@@ -143,9 +143,6 @@
     <string name="seamless_uninterrupted_experience">Experiencia continua e ininterrumpida</string>
     <string name="clap_detection">Detección de aplausos</string>
     <string name="title_motion_detection">Detección de movimiento</string>
-    <string name="intro_1">Detecta ladrones de teléfonos sin esfuerzo</string>
-    <string name="intro_2"><![CDATA[Encuentra tu teléfono aplaudiendo usando tecnología de IA y efectos de sonido]]></string>
-    <string name="intro_3">Antirrobo de bolsillos: atrapa al ladrón de teléfonos móviles</string>
 
     <string name="would_you_like_to_continue_unlock_heart">¿Te gustaría continuar desbloqueando el corazón?</string>
     <string name="exit_app">Salir de la aplicación</string>
@@ -169,11 +166,15 @@
     <string name="feature_not_working">¿Qué característica es más útil?</string>
     <string name="upload_picture">Subir imagen</string>
     <string name="send">Enviar</string>
-    <string name="type_answer_her">Escribe tu respuesta aquí...</string>
+    <string name="type_answer_her">Escribe tu respuesta aquí…</string>
     <string name="intro_4">Te alerta cuando la batería está llena o desenchufada durante la carga.</string>
     <string name="intro_5">Captura selfies de intrusos y te alerta sobre intentos de desbloqueo no autorizados.</string>
     <string name="finish">Finalizar</string>
     <string name="continue_with_ads">Continuar con anuncios</string>
 
+    <string name="urdu">Urdu</string>
+    <string name="intro_1">Detección de bolsillo: Emite una alarma si su teléfono se saca del bolsillo.</string>
+    <string name="intro_2">Detección de aplausos: Encuentra tu teléfono aplaudiendo; la aplicación activa una alarma.</string>
+    <string name="intro_3">Detección de movimiento: Activa una alarma si su teléfono se mueve sin permiso.</string>
 
 </resources>

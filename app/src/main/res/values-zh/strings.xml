@@ -137,9 +137,6 @@
     <string name="seamless_uninterrupted_experience">无缝、不中断的体验</string>
     <string name="clap_detection">鼓掌检测</string>
     <string name="title_motion_detection">运动检测</string>
-    <string name="intro_1">轻松检测手机小偷</string>
-    <string name="intro_2"><![CDATA[通过拍手使用AI技术和音效找到你的手机]]></string>
-    <string name="intro_3">防盗：抓住手机小偷</string>
     <string name="would_you_like_to_continue_unlock_heart">您是否要继续解锁心形？</string>
     <string name="exit_app">退出应用</string>
     <string name="tap_to_exit"><u>点击退出</u></string>
@@ -167,5 +164,9 @@
     <string name="intro_5">拍摄入侵者自拍并提醒您任何未经授权的解锁尝试。</string>
     <string name="finish">完成</string>
     <string name="continue_with_ads">继续播放广告</string>
+    <string name="urdu">乌尔都语</string>
+    <string name="intro_1">口袋检测：如果您的手机从口袋中取出，将发出警报。</string>
+    <string name="intro_2">拍手检测：通过拍手找到您的手机；应用程序会触发警报。</string>
+    <string name="intro_3">动作检测：如果手机在未经允许的情况下被移动，将触发警报。</string>
 
 </resources>

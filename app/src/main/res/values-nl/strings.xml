@@ -143,9 +143,6 @@
     <string name="seamless_uninterrupted_experience">Naadloze, ononderbroken ervaring</string>
     <string name="clap_detection">Klapdetectie</string>
     <string name="title_motion_detection">Bewegingsdetectie</string>
-    <string name="intro_1">Telefoondieven moeiteloos detecteren</string>
-    <string name="intro_2"><![CDATA[Vind je telefoon door te klappen met AI-technologie en geluidseffecten]]></string>
-    <string name="intro_3">Anti-zakkenroller: Een mobieltjessdief vangen</string>
     <string name="would_you_like_to_continue_unlock_heart">Wilt u het hart blijven ontgrendelen?</string>
     <string name="exit_app">App afsluiten</string>
     <string name="tap_to_exit"><u>Tik om af te sluiten</u></string>
@@ -173,5 +170,9 @@
     <string name="intro_5">Maakt een selfie van de indringer en waarschuwt u voor ongeoorloofde ontgrendelpogingen.</string>
     <string name="finish">Voltooien</string>
     <string name="continue_with_ads">Doorgaan met advertenties</string>
+    <string name="urdu">Urdu</string>
+    <string name="intro_1">Zakdetectie: Klinkt een alarm als uw telefoon uit uw zak wordt gehaald.</string>
+    <string name="intro_2">Klappendetectie: Vind je telefoon door te klappen; de app activeert een alarm.</string>
+    <string name="intro_3">Bewegingsdetectie: Activeert een alarm als je telefoon zonder toestemming wordt verplaatst.</string>
 
 </resources>

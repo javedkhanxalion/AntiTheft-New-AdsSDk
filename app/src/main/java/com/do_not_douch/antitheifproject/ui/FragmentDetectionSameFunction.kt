@@ -359,9 +359,10 @@ class FragmentDetectionSameFunction :
 
     private fun loadNativeGrid() {
 
-        if (model?.remoteValue ?: return) {
+        if (!model?.remoteValue!! ?: return) {
             _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
             _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
+            return
         }
         val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(
@@ -409,9 +410,10 @@ class FragmentDetectionSameFunction :
     }
 
     private fun loadNativeList() {
-        if (model?.remoteValue ?: return) {
+        if (!model?.remoteValue!! ?: return) {
             _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
             _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
+            return
         }
         val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(
@@ -458,7 +460,7 @@ class FragmentDetectionSameFunction :
     }
 
     private fun loadBanner() {
-        adsManager?.adsBanners()?.loadCollapsibleBanner(
+        adsManager?.adsBanners()?.loadBanner(
             activity = activity ?: return,
             view = _binding?.bannerAds!!,
             viewS = _binding?.shimmerLayout!!,
@@ -468,6 +470,5 @@ class FragmentDetectionSameFunction :
             _binding?.shimmerLayout!!.visibility = View.GONE
         }
     }
-
 
 }

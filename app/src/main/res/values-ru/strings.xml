@@ -137,9 +137,6 @@
     <string name="seamless_uninterrupted_experience">Бесшовный, непрерывный опыт</string>
     <string name="clap_detection">Обнаружение хлопка</string>
     <string name="title_motion_detection">Обнаружение движения</string>
-    <string name="intro_1">Легко обнаружить телефонных воров</string>
-    <string name="intro_2"><![CDATA[Найдите свой телефон хлопком с помощью технологий ИИ и звуковых эффектов]]></string>
-    <string name="intro_3">Анти-карманник: поймать вора мобильного телефона</string>
     <string name="would_you_like_to_continue_unlock_heart">Вы хотите продолжить разблокировку сердца?</string>
     <string name="exit_app">Выйти из приложения</string>
     <string name="tap_to_exit"><u>Нажмите, чтобы выйти</u></string>
@@ -167,5 +164,9 @@
     <string name="intro_5">Фотографирует нарушителя и предупреждает о попытках несанкционированной разблокировки.</string>
     <string name="finish">Завершить</string>
     <string name="continue_with_ads">Продолжить с рекламой</string>
+    <string name="urdu">Урду</string>
+    <string name="intro_1">Обнаружение в кармане: Издает сигнал тревоги, если ваш телефон вынут из кармана.</string>
+    <string name="intro_2">Обнаружение хлопков: Найдите свой телефон, хлопнув в ладоши; приложение срабатывает тревога.</string>
+    <string name="intro_3">Обнаружение движения: Срабатывает сигнал тревоги, если телефон перемещается без разрешения.</string>
 
 </resources>

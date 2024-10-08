@@ -149,7 +149,6 @@ class FragmentInturderDetectionDetail :
                         isHideAds(true)
                         requestCameraPermission(gridLayout.inturderAlertSwitch)
                     }
-
                 }
                 gridLayout.inturderAlertSwitch.setOnCheckedChangeListener { compoundButton, bool ->
                     if (compoundButton.isPressed) {
@@ -496,9 +495,10 @@ class FragmentInturderDetectionDetail :
     }
 
     private fun loadNativeGrid() {
-        if (val_ad_native_intruder_detection_screen) {
+        if (!val_ad_native_intruder_detection_screen) {
             _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
             _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
+            return
         }
         val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(
@@ -548,9 +548,10 @@ class FragmentInturderDetectionDetail :
     }
 
     private fun loadNativeList() {
-        if (val_ad_native_intruder_detection_screen) {
+        if (!val_ad_native_intruder_detection_screen) {
             _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
             _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
+            return
         }
         val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(
@@ -600,7 +601,7 @@ class FragmentInturderDetectionDetail :
     }
 
     private fun loadBanner() {
-        adsManager?.adsBanners()?.loadCollapsibleBanner(
+        adsManager?.adsBanners()?.loadBanner(
             activity = activity ?: return,
             view = _binding?.bannerAds!!,
             viewS = _binding?.shimmerLayout!!,
@@ -621,10 +622,12 @@ class FragmentInturderDetectionDetail :
             }
         } else {
             _binding?.bannerAds?.visibility = View.VISIBLE
-            if (isGridLayout == true) {
-                _binding?.gridLayout?.nativeExitAd?.visibility = View.VISIBLE
-            } else {
-                _binding?.linearlayout?.nativeExitAd?.visibility = View.VISIBLE
+            if (!val_ad_native_intruder_detection_screen) {
+                if (isGridLayout == true) {
+                    _binding?.gridLayout?.nativeExitAd?.visibility = View.VISIBLE
+                } else {
+                    _binding?.linearlayout?.nativeExitAd?.visibility = View.VISIBLE
+                }
             }
         }
     }

@@ -92,7 +92,8 @@
     <string name="tone_2">Personal high pitched</string>
     <string name="tone_3">Emergency alarm</string>
     <string name="tone_4">Warning danger</string>
-    <string name="tone_5">Small emergency</string>    <string name="tone_6" >complex beeping tone</string>
+    <string name="tone_5">Small emergency</string>
+    <string name="tone_6" >complex beeping tone</string>
     <string name="tone_7">simple high pitched tone</string>
 
     <string name="no_internet">No Internet</string>
@@ -149,9 +150,7 @@
 
     <string name="clap_detection">Clap Detection</string>
     <string name="title_motion_detection">Motion Detection</string>
-    <string name="intro_1">Detect Phone thieves Effortlessly</string>
-    <string name="intro_2"><![CDATA[Find your phone by Clap using AI tech & sounds effects]]></string>
-    <string name="intro_3">Anti Pickpocket catch a mobile phone Theft</string>
+
 
     <string name="would_you_like_to_continue_unlock_heart">Would you like to continue unlock heart</string>
     <string name="exit_app">Exit App</string>
@@ -181,4 +180,8 @@
     <string name="finish">Finish</string>
     <string name="continue_with_ads">Continue With Ads</string>
 
+    <string name="urdu">Urdu</string>
+    <string name="intro_1">Pocket Detection: Sounds an alarm if your phone is removed from your pocket.</string>
+    <string name="intro_2">Clap Detection: Find your phone by clapping; the app triggers an alarm.</string>
+    <string name="intro_3">Motion Detection: Triggers an alarm if your phone is moved without permission.</string>
 </resources>

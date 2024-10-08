@@ -137,9 +137,6 @@
     <string name="seamless_uninterrupted_experience">Kesintisiz, Sorunsuz Deneyim</string>
     <string name="clap_detection">Alkış Tespiti</string>
     <string name="title_motion_detection">Hareket Algılama</string>
-    <string name="intro_1">Telefon hırsızlarını zahmetsizce tespit edin</string>
-    <string name="intro_2"><![CDATA[AI teknolojisi ve ses efektleri kullanarak alkışlayarak telefonunuzu bulun]]></string>
-    <string name="intro_3">Cep hırsızına karşı: Bir telefon hırsızını yakalayın</string>
     <string name="would_you_like_to_continue_unlock_heart">Kalbi açmaya devam etmek ister misiniz?</string>
     <string name="exit_app">Uygulamadan Çık</string>
     <string name="tap_to_exit"><u>Çıkmak için dokun</u></string>
@@ -167,5 +164,9 @@
     <string name="intro_5">İzinsiz bir açma girişimi olduğunda selfie çeker ve sizi uyarır.</string>
     <string name="finish">Bitir</string>
     <string name="continue_with_ads">Reklamlarla Devam Et</string>
+    <string name="urdu">Urdu</string>
+    <string name="intro_1">Cep Algılama: Telefonunuz cebinizden çıkarıldığında bir alarm çalar.</string>
+    <string name="intro_2">Alkış Algılama: Alkışlayarak telefonunuzu bulun; uygulama bir alarm tetikler.</string>
+    <string name="intro_3">Hareket Algılama: Telefonunuz izinsiz hareket ettirilirse bir alarm tetiklenir.</string>
 
 </resources>

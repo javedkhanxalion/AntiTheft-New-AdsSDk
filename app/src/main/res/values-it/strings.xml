@@ -137,9 +137,6 @@
     <string name="seamless_uninterrupted_experience">Esperienza senza interruzioni</string>
     <string name="clap_detection">Rilevamento di applausi</string>
     <string name="title_motion_detection">Rilevamento di movimento</string>
-    <string name="intro_1">Rileva ladri di telefoni senza sforzo</string>
-    <string name="intro_2"><![CDATA[Trova il tuo telefono battendo le mani utilizzando la tecnologia AI e gli effetti sonori]]></string>
-    <string name="intro_3">Anti-borseggio: cattura un ladro di telefoni cellulari</string>
     <string name="would_you_like_to_continue_unlock_heart">Vuoi continuare a sbloccare il cuore?</string>
     <string name="exit_app">Esci dall\'app</string>
     <string name="tap_to_exit"><u>Tocca per uscire</u></string>
@@ -167,5 +164,9 @@
     <string name="intro_5">Scatta un selfie agli intrusi e ti avvisa di eventuali tentativi di sblocco non autorizzati.</string>
     <string name="finish">Fine</string>
     <string name="continue_with_ads">Continua con gli annunci</string>
+    <string name="urdu">Urdu</string>
+    <string name="intro_1">Rilevamento tasca: Suona un allarme se il telefono viene rimosso dalla tasca.</string>
+    <string name="intro_2">Rilevamento applauso: Trova il telefono applaudendo; l app attiva un allarme.</string>
+    <string name="intro_3">Rilevamento del movimento: Attiva un allarme se il telefono viene spostato senza autorizzazione.</string>
 
 </resources>

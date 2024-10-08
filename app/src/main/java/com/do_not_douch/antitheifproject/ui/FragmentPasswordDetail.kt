@@ -409,7 +409,7 @@ class FragmentPasswordDetail :
     }
 
         private fun loadNativeGrid() {
-            if(val_ad_native_password_screen){
+            if(!val_ad_native_password_screen){
                 _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
                 _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
                 return
@@ -457,7 +457,7 @@ class FragmentPasswordDetail :
         }
 
         private fun loadNativeList() {
-            if(val_ad_native_password_screen){
+            if(!val_ad_native_password_screen){
                 _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
                 _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
                 return
@@ -504,7 +504,7 @@ class FragmentPasswordDetail :
         }
 
     private fun loadBanner() {
-        adsManager?.adsBanners()?.loadCollapsibleBanner(
+        adsManager?.adsBanners()?.loadBanner(
             activity = activity?:return,
             view = _binding?.bannerAds!!,
             viewS = _binding?.shimmerLayout!!,

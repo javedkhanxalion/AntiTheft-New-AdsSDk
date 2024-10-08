@@ -137,9 +137,6 @@
     <string name="seamless_uninterrupted_experience">ประสบการณ์ราบรื่น ไม่ขาดตอน</string>
     <string name="clap_detection">ตรวจจับการปรบมือ</string>
     <string name="title_motion_detection">การตรวจจับการเคลื่อนไหว</string>
-    <string name="intro_1">ตรวจจับขโมยโทรศัพท์ได้อย่างง่ายดาย</string>
-    <string name="intro_2"><![CDATA[ค้นหาโทรศัพท์ของคุณด้วยการปรบมือโดยใช้เทคโนโลยี AI และเอฟเฟกต์เสียง]]></string>
-    <string name="intro_3">ป้องกันการล้วงกระเป๋า: จับโจรขโมยโทรศัพท์มือถือ</string>
     <string name="would_you_like_to_continue_unlock_heart">คุณต้องการปลดล็อคหัวใจต่อหรือไม่?</string>
     <string name="exit_app">ออกจากแอป</string>
     <string name="tap_to_exit"><u>แตะเพื่อออก</u></string>
@@ -167,5 +164,9 @@
     <string name="intro_5">ถ่ายเซลฟี่ผู้บุกรุกและเตือนคุณถึงการพยายามปลดล็อกโดยไม่ได้รับอนุญาต</string>
     <string name="finish">เสร็จสิ้น</string>
     <string name="continue_with_ads">ดำเนินการต่อด้วยโฆษณา</string>
+    <string name="urdu">อูรดู</string>
+    <string name="intro_1">การตรวจจับกระเป๋า: แจ้งเตือนเมื่อโทรศัพท์ของคุณถูกนำออกจากกระเป๋าของคุณ</string>
+    <string name="intro_2">การตรวจจับเสียงปรบมือ: ค้นหาโทรศัพท์ของคุณด้วยการปรบมือ; แอปจะส่งเสียงเตือน</string>
+    <string name="intro_3">การตรวจจับการเคลื่อนไหว: ส่งเสียงเตือนหากโทรศัพท์ของคุณถูกเคลื่อนย้ายโดยไม่ได้รับอนุญาต</string>
 
 </resources>

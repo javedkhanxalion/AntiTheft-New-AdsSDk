@@ -143,9 +143,6 @@
     <string name="seamless_uninterrupted_experience">Expérience fluide et ininterrompue</string>
     <string name="clap_detection">Détection des applaudissements</string>
     <string name="title_motion_detection">Détection de mouvement</string>
-    <string name="intro_1">Détectez les voleurs de téléphone sans effort</string>
-    <string name="intro_2"><![CDATA[Trouvez votre téléphone en applaudissant grâce à la technologie AI et aux effets sonores]]></string>
-    <string name="intro_3">Anti-pickpocket : attrapez un voleur de téléphone portable</string>
 
     <string name="would_you_like_to_continue_unlock_heart">Souhaitez-vous continuer à déverrouiller le cœur ?</string>
     <string name="exit_app">Quitter l\'application</string>
@@ -175,5 +172,9 @@
     <string name="finish">Terminer</string>
     <string name="continue_with_ads">Continuer avec des annonces</string>
 
+    <string name="urdu">Ourdou</string>
+    <string name="intro_1">Détection de poche : Émet une alarme si votre téléphone est retiré de votre poche.</string>
+    <string name="intro_2">Détection des applaudissements : Trouvez votre téléphone en applaudissant l application déclenche une alarme.</string>
+    <string name="intro_3">Détection de mouvement : Déclenche une alarme si votre téléphone est déplacé sans permission.</string>
 
 </resources>

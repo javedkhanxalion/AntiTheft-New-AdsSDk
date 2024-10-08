@@ -138,9 +138,6 @@
     <string name="seamless_uninterrupted_experience">Experiência contínua e sem interrupções</string>
     <string name="clap_detection">Detecção de aplauso</string>
     <string name="title_motion_detection">Detecção de movimento</string>
-    <string name="intro_1">Detecte ladrões de telefone sem esforço</string>
-    <string name="intro_2"><![CDATA[Encontre seu telefone ao bater palmas usando tecnologia AI e efeitos sonoros]]></string>
-    <string name="intro_3">Anti-pickpocket: pegue um ladrão de telefone celular</string>
 
     <string name="would_you_like_to_continue_unlock_heart">Você gostaria de continuar desbloqueando o coração?</string>
     <string name="exit_app">Sair do aplicativo</string>
@@ -169,5 +166,9 @@
     <string name="intro_5">Tira uma selfie do intruso e avisa sobre qualquer tentativa de desbloqueio não autorizada.</string>
     <string name="finish">Concluir</string>
     <string name="continue_with_ads">Continuar com anúncios</string>
+    <string name="urdu">Urdu</string>
+    <string name="intro_1">Detecção de bolso: Emite um alarme se o seu telefone for removido do seu bolso.</string>
+    <string name="intro_2">Detecção de palmas: Encontre o seu telefone aplaudindo; o aplicativo dispara um alarme.</string>
+    <string name="intro_3">Detecção de movimento: Dispara um alarme se o seu telefone for movido sem permissão.</string>
 
 </resources>

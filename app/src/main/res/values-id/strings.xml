@@ -137,9 +137,6 @@
     <string name="seamless_uninterrupted_experience">Pengalaman mulus dan tanpa gangguan</string>
     <string name="clap_detection">Deteksi Tepuk Tangan</string>
     <string name="title_motion_detection">Deteksi Gerakan</string>
-    <string name="intro_1">Deteksi pencuri ponsel dengan mudah</string>
-    <string name="intro_2"><![CDATA[Temukan ponsel Anda dengan tepukan tangan menggunakan teknologi AI & efek suara]]></string>
-    <string name="intro_3">Anti pencopet: tangkap pencuri ponsel</string>
     <string name="would_you_like_to_continue_unlock_heart">Apakah Anda ingin melanjutkan membuka kunci hati?</string>
     <string name="exit_app">Keluar Aplikasi</string>
     <string name="tap_to_exit"><u>Ketuk untuk Keluar</u></string>
@@ -167,5 +164,9 @@
     <string name="intro_5">Mengambil selfie penyusup dan memberi tahu Anda tentang upaya buka kunci yang tidak sah.</string>
     <string name="finish">Selesai</string>
     <string name="continue_with_ads">Lanjutkan dengan iklan</string>
+    <string name="urdu">Urdu</string>
+    <string name="intro_1">Deteksi Saku: Mengeluarkan alarm jika ponsel Anda dikeluarkan dari saku Anda.</string>
+    <string name="intro_2">Deteksi Tepuk Tangan: Temukan ponsel Anda dengan menepuk tangan; aplikasi memicu alarm.</string>
+    <string name="intro_3">Deteksi Gerakan: Memicu alarm jika ponsel Anda dipindahkan tanpa izin.</string>
 
 </resources>

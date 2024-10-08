@@ -143,9 +143,6 @@
     <string name="seamless_uninterrupted_experience">تجربة سلسة وغير منقطعة</string>
     <string name="clap_detection">كشف التصفيق</string>
     <string name="title_motion_detection">كشف الحركة</string>
-    <string name="intro_1">اكتشف سارقي الهواتف بسهولة</string>
-    <string name="intro_2"><![CDATA[ابحث عن هاتفك بالتصفيق باستخدام تقنية الذكاء الاصطناعي وتأثيرات الصوت]]></string>
-    <string name="intro_3">مكافحة النشل: القبض على لص الهاتف المحمول</string>
     <string name="would_you_like_to_continue_unlock_heart">هل ترغب في متابعة فتح القلب؟</string>
     <string name="exit_app">الخروج من التطبيق</string>
     <string name="tap_to_exit"><u>اضغط للخروج</u></string>
@@ -168,10 +165,16 @@
     <string name="feature_not_working">ما هي الميزة الأكثر فائدة بالنسبة لك؟</string>
     <string name="upload_picture">تحميل الصورة</string>
     <string name="send">إرسال</string>
-    <string name="type_answer_her">اكتب الإجابة هنا...</string>
+    <string name="type_answer_her">اكتب الإجابة هنا…</string>
     <string name="intro_4">ينبهك عند امتلاء البطارية أو عند فصلها أثناء الشحن.</string>
     <string name="intro_5">يأخذ صورة شخصية للمتطفل ويعلمك بأي محاولات غير مصرح بها لفتح الجهاز.</string>
     <string name="finish">إنهاء</string>
     <string name="continue_with_ads">استمر مع الإعلانات</string>
+
+    <string name="urdu">الأردية</string>
+    <string name="intro_1">اكتشاف الجيب: يصدر صوت إنذار إذا تمت إزالة هاتفك من جيبك.</string>
+    <string name="intro_2">اكتشاف التصفيق: اعثر على هاتفك بالتصفيق؛ يقوم التطبيق بتشغيل إنذار.</string>
+    <string name="intro_3">كشف الحركة: يصدر إنذارًا إذا تم تحريك هاتفك بدون إذن.</string>
+
 
 </resources>

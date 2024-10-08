@@ -143,9 +143,6 @@
     <string name="seamless_uninterrupted_experience">सहज, निरंतर अनुभव</string>
     <string name="clap_detection">ताली पहचान</string>
     <string name="title_motion_detection">मोशन डिटेक्शन</string>
-    <string name="intro_1">फोन चोरों का आसानी से पता लगाएं</string>
-    <string name="intro_2"><![CDATA[ताली बजाकर AI तकनीक और ध्वनि प्रभावों से अपना फोन खोजें]]></string>
-    <string name="intro_3">एंटी पॉकेटमारी: मोबाइल फोन चोर को पकड़ें</string>
     <string name="would_you_like_to_continue_unlock_heart">क्या आप दिल को अनलॉक करना जारी रखना चाहेंगे?</string>
     <string name="exit_app">ऐप से बाहर निकलें</string>
     <string name="tap_to_exit"><u>बाहर निकलने के लिए टैप करें</u></string>
@@ -173,5 +170,11 @@
     <string name="intro_5">अवांछित अनलॉक प्रयासों की जानकारी देता है और घुसपैठिए की सेल्फी लेता है।</string>
     <string name="finish">समाप्त करें</string>
     <string name="continue_with_ads">विज्ञापनों के साथ जारी रखें</string>
+
+    <string name="urdu">उर्दू</string>
+    <string name="intro_1">पॉकेट डिटेक्शन: यदि आपका फ़ोन आपकी जेब से हटा दिया जाता है, तो अलार्म बजता है।</string>
+    <string name="intro_2">क्लैप डिटेक्शन: ताली बजाकर अपना फोन ढूंढें; ऐप अलार्म बजाएगा।</string>
+    <string name="intro_3">मोशन डिटेक्शन: यदि आपका फ़ोन बिना अनुमति के हिलाया जाता है तो अलार्म बजता है।</string>
+
 
 </resources>
