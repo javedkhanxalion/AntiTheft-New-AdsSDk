@@ -168,5 +168,6 @@
     <string name="intro_1">주머니 감지: 휴대전화가 주머니에서 제거되면 경보가 울립니다.</string>
     <string name="intro_2">박수 감지: 박수를 쳐서 휴대전화를 찾으세요; 앱이 알람을 트리거합니다.</string>
     <string name="intro_3">모션 감지: 휴대전화가 허락 없이 움직이면 경보가 울립니다.</string>
+    <string name="would_you_like_to_continue_unlock_heart1">전화기를 도난으로부터 보호하거나 전화기를 찾고 싶으신가요?</string>
 
 </resources>

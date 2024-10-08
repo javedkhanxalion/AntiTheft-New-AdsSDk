@@ -176,5 +176,6 @@
     <string name="intro_1">Detección de bolsillo: Emite una alarma si su teléfono se saca del bolsillo.</string>
     <string name="intro_2">Detección de aplausos: Encuentra tu teléfono aplaudiendo; la aplicación activa una alarma.</string>
     <string name="intro_3">Detección de movimiento: Activa una alarma si su teléfono se mueve sin permiso.</string>
+    <string name="would_you_like_to_continue_unlock_heart1">¿Te gustaría proteger tu teléfono del robo o encontrar tu teléfono?</string>
 
 </resources>

@@ -174,5 +174,6 @@
     <string name="intro_1">Zakdetectie: Klinkt een alarm als uw telefoon uit uw zak wordt gehaald.</string>
     <string name="intro_2">Klappendetectie: Vind je telefoon door te klappen; de app activeert een alarm.</string>
     <string name="intro_3">Bewegingsdetectie: Activeert een alarm als je telefoon zonder toestemming wordt verplaatst.</string>
+    <string name="would_you_like_to_continue_unlock_heart1">Wilt u uw telefoon tegen diefstal beveiligen of uw telefoon vinden?</string>
 
 </resources>

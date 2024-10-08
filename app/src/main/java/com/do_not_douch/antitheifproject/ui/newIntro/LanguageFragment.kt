@@ -240,7 +240,7 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
     private fun initializeData() {
         list.add(LanguageAppModel(getString(R.string.english), "en", R.drawable.usa, false))
         list.add(LanguageAppModel(getString(R.string.spanish), "es", R.drawable.spain, false))
-        list.add(LanguageAppModel(getString(R.string.urdu), "ur", R.drawable.spain, false))
+        list.add(LanguageAppModel(getString(R.string.urdu), "ur", R.drawable.urdu, false))
         list.add(LanguageAppModel(getString(R.string.hindi), "hi", R.drawable.india, false))
         list.add(LanguageAppModel(getString(R.string.arabic), "ar", R.drawable.sudi, false))
         list.add(LanguageAppModel(getString(R.string.french), "fr", R.drawable.france, false))

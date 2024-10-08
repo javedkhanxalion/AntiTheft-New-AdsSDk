@@ -164,5 +164,6 @@
     <string name="intro_1">Phát hiện túi: Phát âm báo nếu điện thoại của bạn bị lấy ra khỏi túi.</string>
     <string name="intro_2">Phát hiện vỗ tay: Tìm điện thoại của bạn bằng cách vỗ tay; ứng dụng kích hoạt âm báo.</string>
     <string name="intro_3">Phát hiện chuyển động: Kích hoạt âm báo nếu điện thoại của bạn bị di chuyển mà không có sự cho phép.</string>
+    <string name="would_you_like_to_continue_unlock_heart1">Bạn có muốn bảo vệ điện thoại của mình khỏi bị đánh cắp hoặc tìm điện thoại của mình không?</string>
 
 </resources>

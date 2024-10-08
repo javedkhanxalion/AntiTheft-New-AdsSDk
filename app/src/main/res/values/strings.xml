@@ -184,4 +184,7 @@
     <string name="intro_1">Pocket Detection: Sounds an alarm if your phone is removed from your pocket.</string>
     <string name="intro_2">Clap Detection: Find your phone by clapping; the app triggers an alarm.</string>
     <string name="intro_3">Motion Detection: Triggers an alarm if your phone is moved without permission.</string>
+
+
+    <string name="would_you_like_to_continue_unlock_heart1">Would you like to secure your phone from theft or find your phone</string>
 </resources>

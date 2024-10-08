@@ -176,5 +176,6 @@
     <string name="intro_1">Détection de poche : Émet une alarme si votre téléphone est retiré de votre poche.</string>
     <string name="intro_2">Détection des applaudissements : Trouvez votre téléphone en applaudissant l application déclenche une alarme.</string>
     <string name="intro_3">Détection de mouvement : Déclenche une alarme si votre téléphone est déplacé sans permission.</string>
+    <string name="would_you_like_to_continue_unlock_heart1">Souhaitez-vous protéger votre téléphone contre le vol ou le retrouver?</string>
 
 </resources>

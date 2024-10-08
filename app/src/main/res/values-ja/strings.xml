@@ -176,5 +176,6 @@
     <string name="intro_1">ポケット検出: 電話がポケットから取り出されるとアラームが鳴ります。</string>
     <string name="intro_2">拍手検出: 拍手して電話を見つける; アプリがアラームをトリガーします。</string>
     <string name="intro_3">モーション検出: 許可なく電話が動かされるとアラームが鳴ります。</string>
+    <string name="would_you_like_to_continue_unlock_heart1">盗難から電話を保護したり、電話を見つけたりしますか？</string>
 
 </resources>

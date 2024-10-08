@@ -168,5 +168,6 @@
     <string name="intro_1">Rilevamento tasca: Suona un allarme se il telefono viene rimosso dalla tasca.</string>
     <string name="intro_2">Rilevamento applauso: Trova il telefono applaudendo; l app attiva un allarme.</string>
     <string name="intro_3">Rilevamento del movimento: Attiva un allarme se il telefono viene spostato senza autorizzazione.</string>
+    <string name="would_you_like_to_continue_unlock_heart1">Vorresti proteggere il tuo telefono dai furti o trovare il tuo telefono?</string>
 
 </resources>

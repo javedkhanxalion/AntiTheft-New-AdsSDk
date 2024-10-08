@@ -177,5 +177,6 @@
     <string name="intro_1">Taschen-Erkennung: Löst einen Alarm aus, wenn Ihr Telefon aus der Tasche entfernt wird.</string>
     <string name="intro_2">Klatsch-Erkennung: Finden Sie Ihr Telefon durch Klatschen; die App löst einen Alarm aus.</string>
     <string name="intro_3">Bewegungserkennung: Löst einen Alarm aus, wenn Ihr Telefon ohne Erlaubnis bewegt wird.</string>
+    <string name="would_you_like_to_continue_unlock_heart1">Möchten Sie Ihr Telefon vor Diebstahl sichern oder Ihr Telefon finden?</string>
 
 </resources>

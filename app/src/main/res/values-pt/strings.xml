@@ -170,5 +170,6 @@
     <string name="intro_1">Detecção de bolso: Emite um alarme se o seu telefone for removido do seu bolso.</string>
     <string name="intro_2">Detecção de palmas: Encontre o seu telefone aplaudindo; o aplicativo dispara um alarme.</string>
     <string name="intro_3">Detecção de movimento: Dispara um alarme se o seu telefone for movido sem permissão.</string>
+    <string name="would_you_like_to_continue_unlock_heart1">Gostaria de proteger seu telefone contra roubo ou encontrar seu telefone?</string>
 
 </resources>

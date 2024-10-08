@@ -175,6 +175,7 @@
     <string name="intro_1">اكتشاف الجيب: يصدر صوت إنذار إذا تمت إزالة هاتفك من جيبك.</string>
     <string name="intro_2">اكتشاف التصفيق: اعثر على هاتفك بالتصفيق؛ يقوم التطبيق بتشغيل إنذار.</string>
     <string name="intro_3">كشف الحركة: يصدر إنذارًا إذا تم تحريك هاتفك بدون إذن.</string>
+    <string name="would_you_like_to_continue_unlock_heart1">هل ترغب في تأمين هاتفك من السرقة أو العثور على هاتفك؟</string>
 
 
 </resources>

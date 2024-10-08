@@ -168,5 +168,6 @@
     <string name="intro_1">口袋检测：如果您的手机从口袋中取出，将发出警报。</string>
     <string name="intro_2">拍手检测：通过拍手找到您的手机；应用程序会触发警报。</string>
     <string name="intro_3">动作检测：如果手机在未经允许的情况下被移动，将触发警报。</string>
+    <string name="would_you_like_to_continue_unlock_heart1">您想保护手机免受盗窃还是找到手机？</string>
 
 </resources>

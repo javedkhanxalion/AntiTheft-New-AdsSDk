@@ -168,5 +168,6 @@
     <string name="intro_1">Cep Algılama: Telefonunuz cebinizden çıkarıldığında bir alarm çalar.</string>
     <string name="intro_2">Alkış Algılama: Alkışlayarak telefonunuzu bulun; uygulama bir alarm tetikler.</string>
     <string name="intro_3">Hareket Algılama: Telefonunuz izinsiz hareket ettirilirse bir alarm tetiklenir.</string>
+    <string name="would_you_like_to_continue_unlock_heart1">Telefonunuzu hırsızlıktan korumak mı yoksa telefonunuzu bulmak mı istersiniz?</string>
 
 </resources>

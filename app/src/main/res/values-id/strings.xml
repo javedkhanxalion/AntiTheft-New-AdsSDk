@@ -168,5 +168,6 @@
     <string name="intro_1">Deteksi Saku: Mengeluarkan alarm jika ponsel Anda dikeluarkan dari saku Anda.</string>
     <string name="intro_2">Deteksi Tepuk Tangan: Temukan ponsel Anda dengan menepuk tangan; aplikasi memicu alarm.</string>
     <string name="intro_3">Deteksi Gerakan: Memicu alarm jika ponsel Anda dipindahkan tanpa izin.</string>
+    <string name="would_you_like_to_continue_unlock_heart1">Apakah Anda ingin mengamankan ponsel Anda dari pencurian atau menemukan ponsel Anda?</string>
 
 </resources>
