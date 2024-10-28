@@ -239,44 +239,23 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
 
     private fun initializeData() {
         list.add(LanguageAppModel(getString(R.string.english), "en", R.drawable.usa, false))
-        list.add(LanguageAppModel(getString(R.string.spanish), "es", R.drawable.spain, false))
-        list.add(LanguageAppModel(getString(R.string.urdu), "ur", R.drawable.urdu, false))
-        list.add(LanguageAppModel(getString(R.string.hindi), "hi", R.drawable.india, false))
         list.add(LanguageAppModel(getString(R.string.arabic), "ar", R.drawable.sudi, false))
+        list.add(LanguageAppModel(getString(R.string.chinese), "zh", R.drawable.chinese, false))
+        list.add(LanguageAppModel(getString(R.string.dutch), "nl", R.drawable.dutch, false))
         list.add(LanguageAppModel(getString(R.string.french), "fr", R.drawable.france, false))
         list.add(LanguageAppModel(getString(R.string.german), "de", R.drawable.germany, false))
-        list.add(LanguageAppModel(getString(R.string.japanese), "ja", R.drawable.japan, false))
-        list.add(LanguageAppModel(getString(R.string.dutch), "nl", R.drawable.dutch, false))
-        list.add(LanguageAppModel(getString(R.string.korean), "ko", R.drawable.japanese, false))
-        list.add(
-            LanguageAppModel(
-                getString(R.string.portuguese),
-                "pt",
-                R.drawable.portuguese,
-                false
-            )
-        )
-        list.add(LanguageAppModel(getString(R.string.chinese), "zh", R.drawable.chinese, false))
+        list.add(LanguageAppModel(getString(R.string.hindi), "hi", R.drawable.india, false))
         list.add(LanguageAppModel(getString(R.string.italian), "it", R.drawable.italian, false))
+        list.add( LanguageAppModel(  getString(R.string.indonesian),  "id",  R.drawable.indonesian,  false))
+        list.add(LanguageAppModel(getString(R.string.japanese), "ja", R.drawable.japan, false))
+        list.add(LanguageAppModel(getString(R.string.korean), "ko", R.drawable.japanese, false))
+        list.add(LanguageAppModel( getString(R.string.portuguese),"pt",R.drawable.portuguese,false))
         list.add(LanguageAppModel(getString(R.string.russian), "ru", R.drawable.russian, false))
+        list.add(LanguageAppModel(getString(R.string.spanish), "es", R.drawable.spain, false))
         list.add(LanguageAppModel(getString(R.string.turkey), "tr", R.drawable.turkey, false))
-        list.add(
-            LanguageAppModel(
-                getString(R.string.vietnamese),
-                "vi",
-                R.drawable.vietnamese,
-                false
-            )
-        )
         list.add(LanguageAppModel(getString(R.string.thai), "th", R.drawable.ukrainian, false))
-        list.add(
-            LanguageAppModel(
-                getString(R.string.indonesian),
-                "id",
-                R.drawable.indonesian,
-                false
-            )
-        )
+        list.add(LanguageAppModel(getString(R.string.urdu), "ur", R.drawable.urdu, false))
+        list.add( LanguageAppModel( getString(R.string.vietnamese),"vi", R.drawable.vietnamese,false ))
     }
 
 }
