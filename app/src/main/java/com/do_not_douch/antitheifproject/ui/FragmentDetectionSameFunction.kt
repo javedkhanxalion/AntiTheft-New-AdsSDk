@@ -8,9 +8,9 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.FragmentDetailModuleBinding
+import com.do_not_douch.antitheifproject.ads_manager.AdsBanners
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
-import com.do_not_douch.antitheifproject.ads_manager.showTwoInterAd
 import com.do_not_douch.antitheifproject.helper_class.Constants.isServiceRunning
 import com.do_not_douch.antitheifproject.helper_class.DbHelper
 import com.do_not_douch.antitheifproject.model.MainMenuModel
@@ -20,16 +20,12 @@ import com.do_not_douch.antitheifproject.utilities.IS_GRID
 import com.do_not_douch.antitheifproject.utilities.autoServiceFunctionInternalModule
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
-import com.do_not_douch.antitheifproject.utilities.id_adaptive_banner
-import com.do_not_douch.antitheifproject.utilities.id_inter_main_medium
+import com.do_not_douch.antitheifproject.utilities.id_banner_1
 import com.do_not_douch.antitheifproject.utilities.loadImage
 import com.do_not_douch.antitheifproject.utilities.setImage
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.startLottieAnimation
-import com.do_not_douch.antitheifproject.utilities.val_ad_native_intruder_detection_screen
 import com.do_not_douch.antitheifproject.utilities.val_banner_1
-import com.do_not_douch.antitheifproject.utilities.val_inter_language_screen
-import com.do_not_douch.antitheifproject.utilities.val_inter_sound_screen
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
@@ -59,43 +55,21 @@ class FragmentDetectionSameFunction :
             topLay.navMenu.clickWithThrottle {
                 findNavController().navigateUp()
             }
-            gridLayout.soundIcon.clickWithThrottle {
-                adsManager?.let {
-                    showTwoInterAd(
-                        ads = it,
-                        activity = activity ?: return@let,
-                        remoteConfigNormal = val_inter_sound_screen,
-                        adIdNormal = id_inter_main_medium,
-                        tagClass = "main_menu",
-                        isBackPress = false,
-                        layout = _binding?.adsLay ?: return@let,
-                    ) {
-                        findNavController().navigate(
-                            R.id.FragmentSoundSelection,
-                            bundleOf(ANTI_TITLE to model)
-                        )
-                    }
-                }
-            }
-            linearlayout.soundIcon.clickWithThrottle {
-                adsManager?.let {
-                    showTwoInterAd(
-                        ads = it,
-                        activity = activity ?: return@let,
-                        remoteConfigNormal = val_inter_sound_screen,
-                        adIdNormal = id_inter_main_medium,
-                        tagClass = "main_menu",
-                        isBackPress = false,
-                        layout = _binding?.adsLay ?: return@let,
-                    ) {
 
-                    }
-                }
+            gridLayout.soundIcon.clickWithThrottle {
                 findNavController().navigate(
                     R.id.FragmentSoundSelection,
                     bundleOf(ANTI_TITLE to model)
                 )
             }
+
+            linearlayout.soundIcon.clickWithThrottle {
+                findNavController().navigate(
+                    R.id.FragmentSoundSelection,
+                    bundleOf(ANTI_TITLE to model)
+                )
+            }
+
             topLay.setLayoutBtn.clickWithThrottle {
                 loadLayoutDirection(!(isGridLayout ?: return@clickWithThrottle))
             }
@@ -115,7 +89,6 @@ class FragmentDetectionSameFunction :
         loadBanner()
     }
 
-    @SuppressLint("SetTextI18n")
     private fun loadLayoutDirection(isGrid: Boolean) {
         _binding?.run {
             if (isGrid) {
@@ -226,7 +199,7 @@ class FragmentDetectionSameFunction :
                 topLay.setLayoutBtn.setImage(R.drawable.icon_list)
                 linearlayout.topLinear.visibility = View.VISIBLE
                 gridLayout.topGrid.visibility = View.GONE
-                linearlayout.titleText.text = (model?.textTitle ?: return) +" "+(model?.textTitle ?: return)
+                linearlayout.titleText.text = model?.maniTextTitle ?: return
                 model?.subMenuIcon?.let { linearlayout.topImage.loadImage(context, it) }
                 linearlayout.soundImage.loadImage(context, R.drawable.icon_sound)
                 activeAnimationView.clickWithThrottle {
@@ -358,12 +331,6 @@ class FragmentDetectionSameFunction :
     }
 
     private fun loadNativeGrid() {
-
-        if (!model?.remoteValue!! ?: return) {
-            _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
-            _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
-            return
-        }
         val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(
                 model?.nativeLayout ?: return,
@@ -384,8 +351,7 @@ class FragmentDetectionSameFunction :
                     _binding?.gridLayout?.nativeExitAd?.visibility = View.VISIBLE
                     _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
                     if (isAdded && isVisible && !isDetached) {
-                        adsManager?.nativeAds()
-                            ?.nativeViewMediaSplashSplash(context ?: return, currentNativeAd ?: return, adView)
+                        adsManager?.nativeAds()?.nativeViewPolicy(currentNativeAd ?: return, adView)
                         _binding?.gridLayout?.nativeExitAd?.removeAllViews()
                         _binding?.gridLayout?.nativeExitAd?.addView(adView)
                     }
@@ -410,11 +376,6 @@ class FragmentDetectionSameFunction :
     }
 
     private fun loadNativeList() {
-        if (!model?.remoteValue!! ?: return) {
-            _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
-            _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
-            return
-        }
         val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(
                 model?.nativeLayout ?: return,
@@ -435,8 +396,7 @@ class FragmentDetectionSameFunction :
                     _binding?.linearlayout?.nativeExitAd?.visibility = View.VISIBLE
                     _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
                     if (isAdded && isVisible && !isDetached) {
-                        adsManager?.nativeAds()
-                            ?.nativeViewMediaSplashSplash(context ?: return, currentNativeAd ?: return, adView)
+                        adsManager?.nativeAds()?.nativeViewPolicy(currentNativeAd ?: return, adView)
                         _binding?.linearlayout?.nativeExitAd?.removeAllViews()
                         _binding?.linearlayout?.nativeExitAd?.addView(adView)
                     }
@@ -465,10 +425,11 @@ class FragmentDetectionSameFunction :
             view = _binding?.bannerAds!!,
             viewS = _binding?.shimmerLayout!!,
             addConfig = val_banner_1,
-            bannerId = id_adaptive_banner
-        ) {
-            _binding?.shimmerLayout!!.visibility = View.GONE
+            bannerId = id_banner_1
+        ){
+            _binding?.shimmerLayout!!.visibility=View.GONE
         }
     }
+
 
 }

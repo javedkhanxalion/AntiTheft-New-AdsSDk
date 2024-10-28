@@ -31,6 +31,7 @@ import java.util.*
  * on 12/2/2021 , Thu .
  */
 
+
 class AdOpenApp(private val myApplication: Application, private var openAppAdId: String) :
     Application.ActivityLifecycleCallbacks, LifecycleObserver {
     private var customDialog: Dialog? = null
@@ -39,7 +40,7 @@ class AdOpenApp(private val myApplication: Application, private var openAppAdId:
     private var loadTime: Long = 0
     private var loadCallback: AppOpenAd.AppOpenAdLoadCallback? = null
 
-    private fun showCustomDialogAndAd() {
+    fun showCustomDialogAndAd() {
         customDialog = Dialog(currentActivity ?: return)
         val inflater = LayoutInflater.from(currentActivity)
         customDialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -154,10 +155,9 @@ class AdOpenApp(private val myApplication: Application, private var openAppAdId:
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStart() {
-        if (isSplash && !isShowingAd) {
+//        showAdIfAvailable()
+        if (isSplash) {
             showCustomDialogAndAd()
-        }else{
-            fetchAd()
         }
     }
 

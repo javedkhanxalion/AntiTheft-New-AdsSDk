@@ -1,7 +1,6 @@
 package com.do_not_douch.antitheifproject.ads_manager
 
 import android.app.Activity
-import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
@@ -15,7 +14,6 @@ import com.google.android.gms.ads.*
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager.isNetworkAvailable
 import com.do_not_douch.antitheifproject.ads_manager.FunctionClass.checkPurchased
 import com.do_not_douch.antitheifproject.ads_manager.FunctionClass.firebaseAnalytics
-import com.do_not_douch.antitheifproject.utilities.banner_height
 import com.do_not_douch.antitheifproject.utilities.banner_type
 
 object AdsBanners {
@@ -39,10 +37,8 @@ object AdsBanners {
     fun loadCollapsibleBanner(
         activity: Activity,
         view: FrameLayout,
-        viewS: ShimmerFrameLayout,
         addConfig: Boolean,
-        bannerId: String?,
-        bannerListener: () -> Unit
+        bannerId: String?
     ) {
 
         if (isNetworkAvailable(activity) && addConfig && !checkPurchased(activity)) {
@@ -73,22 +69,16 @@ object AdsBanners {
 
                 override fun onAdFailedToLoad(p0: LoadAdError) {
                     Log.d(bannerLogs, "BannerWithSize : onAdFailedToLoad ${p0.message}")
-                    view.visibility=View.GONE
-                    viewS.visibility=View.GONE
-                    bannerListener.invoke()
                     super.onAdFailedToLoad(p0)
                 }
 
                 override fun onAdImpression() {
                     Log.d(bannerLogs, "BannerWithSize : onAdImpression")
-                    viewS.visibility=View.GONE
                     super.onAdImpression()
                 }
 
                 override fun onAdLoaded() {
                     Log.d(bannerLogs, "BannerWithSize : onAdLoaded")
-                    viewS.visibility=View.GONE
-                    bannerListener.invoke()
                     super.onAdLoaded()
                 }
 
@@ -98,8 +88,6 @@ object AdsBanners {
                 }
             }
         } else {
-            Log.d(bannerLogs, "some value is false")
-            viewS.visibility = View.GONE
             view.visibility = View.GONE
         }
     }
@@ -119,25 +107,10 @@ object AdsBanners {
             adView = AdView(activity)
             view.addView(adView)
             adView?.adUnitId = if (isDebug()) bannerTestId else bannerId ?: bannerTestId
-            if(banner_type==0){
-                val display =activity.resources.displayMetrics
-                val adSize1 = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
-                    val windowMatrix =activity.windowManager.currentWindowMetrics
-                    val widthDisplay =windowMatrix.bounds.width()
-                    val density =display.density
-                    val widthAds =(widthDisplay/density)
-                    AdSize.MEDIUM_RECTANGLE
-                    AdSize.getInlineAdaptiveBannerAdSize(widthAds.toInt(), banner_height)
-                }else{
-                    val widthDisplay =display.widthPixels
-                    val density =display.density
-                    val widthAds =(widthDisplay/density)
-                    AdSize.MEDIUM_RECTANGLE
-                    AdSize.getInlineAdaptiveBannerAdSize(widthAds.toInt(), banner_height)
-                }
-                adView?.setAdSize(adSize1)
-            }else{
-                adView?.setAdSize(adSize(activity, view))
+            if(banner_type==0) {
+                adView?.setAdSize(AdSize.MEDIUM_RECTANGLE)
+            }else {
+                adView?.setAdSize(AdSize.BANNER)
             }
             val adRequest =AdRequest.Builder().build()
             adView?.loadAd(adRequest)
@@ -184,6 +157,7 @@ object AdsBanners {
                 override fun onAdOpened() {
                     firebaseAnalytics("bannerAdsOpened", "bannerAdsOpened->click")
                     Log.d(bannerLogs, "BannerWithSize : onAdOpened")
+                    bannerListener.invoke()
                     super.onAdOpened()
                 }
             }
@@ -191,6 +165,7 @@ object AdsBanners {
             Log.d(bannerLogs, "some value is false")
             viewS.visibility = View.GONE
             view.visibility = View.GONE
+            bannerListener.invoke()
         }
     }
 

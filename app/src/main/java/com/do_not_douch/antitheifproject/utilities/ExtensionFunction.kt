@@ -95,9 +95,6 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import java.util.Locale
 import com.google.android.gms.common.ConnectionResult
 
-var isRating = true
-var PurchaseScreen = 0
-
 var isSplash = true
 var isIntroLanguageShow = true
 var isSplashDialog = true
@@ -114,7 +111,6 @@ var val_native_intro_screen = false
 var val_native_intro_screen1 = false
 var val_native_intro_screen2 = false
 var val_inter_exit_screen = false
-var val_banner_setting_screen = false
 
 var val_banner_1 = false
 var val_inter_main_normal = false
@@ -141,34 +137,61 @@ var val_is_inapp = false
 var isInternetAvailable = false
 
 var counter = 0
-var banner_height = 160
-var banner_type = 0
-var appUpdateType = 0
 var inter_frequency_count = 0
-var id_frequency_counter = 10
-var val_inapp_frequency = 10
+var id_frequency_counter = 3
 var id_inter_counter = 3
-var id_inter_main_medium = if (isDebug()) "ca-app-pub-3940256099942544/1033173712" else ""
-var id_native_screen = ""
-var id_app_open_screen = "ca-app-pub-9263479717968951/5800800635"
-var id_adaptive_banner = ""
-var id_inter_splash_Screen = ""
-var id_collapsable_banner = ""
-var id_splash_native = ""
+var id_inter_main_splash = ""
+var id_inter_main_medium = ""
+var id_native_loading_screen = ""
+var id_native_intro_screen = ""
+var id_native_language_screen = ""
+var id_native_sound_screen = ""
+var id_native_intruder_list_screen = ""
+var id_native_show_image_screen = ""
+var id_native_intruder_detection_screen = ""
+var id_native_password_screen = ""
+var id_native_Pocket_Detection_screen = ""
+var id_native_Motion_Detection_screen = ""
+var id_native_Whistle_Detection_screen = ""
+var id_native_hand_free_screen = ""
+var id_native_clap_detection_screen = ""
+var id_native_Remove_Charger_screen = ""
+var id_native_Battery_Detection_screen = ""
+var id_native_main_menu_screen = ""
+var id_native_app_open_screen = ""
+var id_exit_dialog_native = ""
+var id_exit_screen_native: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
+var id_banner_language_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/9214589741" else ""
+var id_banner_1: String = if (isDebug()) "ca-app-pub-3940256099942544/9214589741" else ""
+var id_banner_main_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/6300978111" else ""
 
+var id_native_intro_screen1: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
+var id_native_intro_screen2: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
+var id_app_open_screen: String = ""
+var id_native_intro_screen_full: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
+var id_language_scroll_screen_native: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
+var id_native_Full_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/2247696110" else ""
+var id_banner_splash_screen: String = if (isDebug()) "ca-app-pub-3940256099942544/6300978111" else ""
 
 var val_inter_language_screen = false
 var val_inter_on_bord_screen = false
-var val_inter_sound_screen = false
-var val_inter_image_list_screen = false
 
-
+var language_reload = 0
 var Onboarding_Full_Native = 1
 var sessionOpenlanguage = 1
 var sessionOnboarding = 1
+var fisrt_ad_line_threshold = 2
+var line_count = 2
+var language_native_scroll = 1
+var main_native_scroll = 1
+var fisrt_ad_line_threshold_main = 2
+var line_count_main = 2
 
 //New IDs
 var splash_bottom = 1
+var banner_type = 0
+var appUpdateType = 0
+
 var language_bottom = 1
 var languageinapp_scroll = 1
 var onboarding1_bottom = 1
@@ -196,13 +219,14 @@ var remove_selectsound_bottom = 1
 var battery_native = 1
 var battery_selectsound_bottom = 1
 var test_ui_native = ""
+var language_first_r_scroll = ""
 
 const val NOTIFY_CHANNEL_ID = "AppNameBackgroundService"
 
 const val IS_NOTIFICATION = "IS_NOTIFICATION"
 const val IS_GRID = "IS_GRID"
-const val IS_FIRST = "is_First"
-const val IS_INTRO = "is_Intro"
+//const val IS_FIRST = "is_First"
+//const val IS_INTRO = "is_Intro"
 const val LANG_CODE = "language_code"
 const val LANG_SCREEN = "LANG_SCREEN"
 const val ANTI_TITLE = "ANTI_TITLE"
@@ -215,9 +239,7 @@ const val NOTIFICATION_PERMISSION = "android.permission.POST_NOTIFICATIONS"
 var slideImages = arrayOf(
     R.drawable.intro_1,
     R.drawable.intro_2,
-    R.drawable.intro_3,
-    R.drawable.intro_4,
-    R.drawable.intro_5
+    R.drawable.intro_3
 )
 
 
@@ -226,8 +248,6 @@ fun introHeading(context: Context) :ArrayList<String>{
     list.add(context.getString(R.string.pocket_detection))
     list.add(context.getString(R.string.clap_detection))
     list.add(context.getString(R.string.title_motion_detection))
-    list.add(context.getString(R.string.inturder_selfie))
-    list.add(context.getString(R.string.battery))
     return  list
 }
 fun introDetailText(context : Context) :ArrayList<String>{
@@ -235,8 +255,6 @@ fun introDetailText(context : Context) :ArrayList<String>{
     list.add(context.getString(R.string.intro_1))
     list.add(context.getString(R.string.intro_2))
     list.add(context.getString(R.string.intro_3))
-    list.add(context.getString(R.string.intro_5))
-    list.add(context.getString(R.string.intro_4))
     return  list
 }
 
@@ -861,21 +879,21 @@ fun Fragment.requestCameraPermission(view: Switch) {
             arrayOf(CAMERA_PERMISSION),
             2
         )
-        /*  android.app.AlertDialog.Builder(context).setTitle(getString(R.string.permission_needed))
-              .setMessage(getString(R.string.camera_permission)).setPositiveButton(
-                  getString(R.string.ok)
-              ) { _, _ ->
-                  ActivityCompat.requestPermissions(
-                      requireActivity(),
-                      arrayOf(CAMERA_PERMISSION),
-                      2
-                  )
-              }.setNegativeButton(
-                  getString(R.string.cancel)
-              ) { dialogInterface, _ ->
-                  view.isChecked = false
-                  dialogInterface.dismiss()
-              }.create().show()*/
+      /*  android.app.AlertDialog.Builder(context).setTitle(getString(R.string.permission_needed))
+            .setMessage(getString(R.string.camera_permission)).setPositiveButton(
+                getString(R.string.ok)
+            ) { _, _ ->
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(CAMERA_PERMISSION),
+                    2
+                )
+            }.setNegativeButton(
+                getString(R.string.cancel)
+            ) { dialogInterface, _ ->
+                view.isChecked = false
+                dialogInterface.dismiss()
+            }.create().show()*/
     } else {
         ActivityCompat.requestPermissions(
             requireActivity(),
@@ -924,17 +942,17 @@ fun Fragment.requestCameraPermissionNotification() {
             NOTIFICATION_PERMISSION
         )
     ) {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(NOTIFICATION_PERMISSION),
-            2
-        )
+         ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(NOTIFICATION_PERMISSION),
+                2
+            )
     } else {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(NOTIFICATION_PERMISSION),
-            2
-        )
+         ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(NOTIFICATION_PERMISSION),
+                2
+            )
     }
 }
 
@@ -1363,7 +1381,6 @@ fun askRatings(context: Activity) {
     }
 }
 
-
 fun getRandomColor(): String {
     // List of color codes as strings (you can add more)
     val colors = listOf(
@@ -1375,7 +1392,6 @@ fun getRandomColor(): String {
         "#D80B8E",
         "#6B3499"
     )
-
     // Randomly select and return a color
     return colors.random()
 }
