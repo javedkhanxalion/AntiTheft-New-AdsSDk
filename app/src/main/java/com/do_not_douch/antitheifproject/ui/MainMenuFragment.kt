@@ -51,6 +51,7 @@ import com.do_not_douch.antitheifproject.utilities.shareApp
 import com.do_not_douch.antitheifproject.utilities.showRatingDialog
 import com.do_not_douch.antitheifproject.utilities.showServiceDialog
 import com.do_not_douch.antitheifproject.utilities.showToast
+import com.do_not_douch.antitheifproject.utilities.val_banner_1
 import com.do_not_douch.antitheifproject.utilities.val_banner_main_menu_screen
 import com.do_not_douch.antitheifproject.utilities.val_inter_exit_screen
 import com.do_not_douch.antitheifproject.utilities.val_inter_main_normal
@@ -382,6 +383,11 @@ class MainMenuFragment :
     }
 
     private fun loadBanner() {
+        if(!val_banner_1){
+            _binding?.mainLayout?.bannerAds?.visibility=View.GONE
+            _binding?.mainLayout?.shimmerLayout?.visibility=View.GONE
+            return
+        }
         adsManager?.adsBanners()?.loadBanner(
             activity = activity ?: return,
             view = _binding?.mainLayout?.bannerAds!!,

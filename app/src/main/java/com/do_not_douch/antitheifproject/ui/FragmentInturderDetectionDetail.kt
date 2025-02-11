@@ -589,6 +589,11 @@ class FragmentInturderDetectionDetail :
     }
 
     private fun loadBanner() {
+        if(!val_banner_1){
+            _binding?.bannerAds?.visibility=View.GONE
+            _binding?.shimmerLayout?.visibility=View.GONE
+            return
+        }
         adsManager?.adsBanners()?.loadBanner(
             activity = activity?:return,
             view = _binding?.bannerAds!!,

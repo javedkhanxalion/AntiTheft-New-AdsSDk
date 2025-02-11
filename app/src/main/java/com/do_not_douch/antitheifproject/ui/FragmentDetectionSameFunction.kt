@@ -386,7 +386,7 @@ class FragmentDetectionSameFunction :
                     _binding?.gridLayout?.nativeExitAd?.visibility = View.VISIBLE
                     _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
                     if (isAdded && isVisible && !isDetached) {
-                        adsManager?.nativeAds()?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                        adsManager?.nativeAds()?.nativeViewMedia(currentNativeAd ?: return, adView)
                         _binding?.gridLayout?.nativeExitAd?.removeAllViews()
                         _binding?.gridLayout?.nativeExitAd?.addView(adView)
                     }
@@ -431,7 +431,7 @@ class FragmentDetectionSameFunction :
                     _binding?.linearlayout?.nativeExitAd?.visibility = View.VISIBLE
                     _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
                     if (isAdded && isVisible && !isDetached) {
-                        adsManager?.nativeAds()?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                        adsManager?.nativeAds()?.nativeViewMedia(currentNativeAd ?: return, adView)
                         _binding?.linearlayout?.nativeExitAd?.removeAllViews()
                         _binding?.linearlayout?.nativeExitAd?.addView(adView)
                     }
@@ -455,6 +455,11 @@ class FragmentDetectionSameFunction :
     }
 
     private fun loadBanner() {
+        if(!val_banner_1){
+            _binding?.bannerAds?.visibility=View.GONE
+            _binding?.shimmerLayout?.visibility=View.GONE
+            return
+        }
         adsManager?.adsBanners()?.loadBanner(
             activity = activity ?: return,
             view = _binding?.bannerAds!!,

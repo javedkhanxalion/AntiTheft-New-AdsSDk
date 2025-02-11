@@ -468,7 +468,7 @@ class FragmentPasswordDetail :
                             _binding?.linearlayout?.nativeExitAd?.visibility = View.VISIBLE
                             _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
 
-                            adsManager?.nativeAds()?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                            adsManager?.nativeAds()?.nativeViewMedia(currentNativeAd ?: return, adView)
                             _binding?.linearlayout?.nativeExitAd?.removeAllViews()
                             _binding?.linearlayout?.nativeExitAd?.addView(adView)
                         }
@@ -496,6 +496,11 @@ class FragmentPasswordDetail :
         }
 
     private fun loadBanner() {
+        if(!val_banner_1){
+            _binding?.bannerAds?.visibility=View.GONE
+            _binding?.shimmerLayout?.visibility=View.GONE
+            return
+        }
         adsManager?.adsBanners()?.loadBanner(
             activity = activity?:return,
             view = _binding?.bannerAds!!,
