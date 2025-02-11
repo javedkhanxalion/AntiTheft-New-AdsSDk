@@ -519,7 +519,7 @@ class FragmentInturderDetectionDetail :
                     _binding?.gridLayout?.shimmerLayout?.visibility = View.GONE
                     if (isAdded && isVisible && !isDetached) {
                         adsManager?.nativeAds()
-                            ?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                            ?.nativeViewMedia(currentNativeAd ?: return, adView)
                         _binding?.gridLayout?.nativeExitAd?.removeAllViews()
                         _binding?.gridLayout?.nativeExitAd?.addView(adView)
                     } else {
@@ -562,7 +562,7 @@ class FragmentInturderDetectionDetail :
                     _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
                     if (isAdded && isVisible && !isDetached) {
                         adsManager?.nativeAds()
-                            ?.nativeViewPolicy(currentNativeAd ?: return, adView)
+                            ?.nativeViewMedia(currentNativeAd ?: return, adView)
                         _binding?.linearlayout?.nativeExitAd?.removeAllViews()
                         _binding?.linearlayout?.nativeExitAd?.addView(adView)
                     } else {
@@ -607,14 +607,12 @@ class FragmentInturderDetectionDetail :
 
     private fun isHideAds(isBoolean: Boolean) {
         if (isBoolean) {
-            _binding?.bannerAds?.visibility = View.GONE
             if (isGridLayout == true) {
                 _binding?.gridLayout?.nativeExitAd?.visibility = View.GONE
             } else {
                 _binding?.linearlayout?.nativeExitAd?.visibility = View.GONE
             }
         } else {
-            _binding?.bannerAds?.visibility = View.VISIBLE
             if (isGridLayout == true) {
                 _binding?.gridLayout?.nativeExitAd?.visibility = View.VISIBLE
             } else {

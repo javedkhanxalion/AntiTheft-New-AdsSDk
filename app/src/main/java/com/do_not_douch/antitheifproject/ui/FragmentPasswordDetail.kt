@@ -409,7 +409,6 @@ class FragmentPasswordDetail :
         }
     }
 
-
         private fun loadNativeGrid() {
             val adView = LayoutInflater.from(context).inflate(
                 getNativeLayout(model?.nativeLayout?:return,_binding?.gridLayout?.nativeExitAd!!,context?:return),
@@ -467,7 +466,6 @@ class FragmentPasswordDetail :
                         if (isAdded && isVisible && !isDetached) {
                             _binding?.linearlayout?.nativeExitAd?.visibility = View.VISIBLE
                             _binding?.linearlayout?.shimmerLayout?.visibility = View.GONE
-
                             adsManager?.nativeAds()?.nativeViewMedia(currentNativeAd ?: return, adView)
                             _binding?.linearlayout?.nativeExitAd?.removeAllViews()
                             _binding?.linearlayout?.nativeExitAd?.addView(adView)
