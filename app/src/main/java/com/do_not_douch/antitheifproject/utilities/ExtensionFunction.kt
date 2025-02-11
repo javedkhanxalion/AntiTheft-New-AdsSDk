@@ -140,6 +140,8 @@ var counter = 0
 var inter_frequency_count = 0
 var id_frequency_counter = 3
 var id_inter_counter = 3
+var banner_height = 160
+var val_inapp_frequency = 7
 
 var id_inter_main_medium = if (isDebug()) "ca-app-pub-3940256099942544/1033173712" else ""
 var id_inter_splash_Screen = if (isDebug()) "ca-app-pub-3940256099942544/1033173712" else ""

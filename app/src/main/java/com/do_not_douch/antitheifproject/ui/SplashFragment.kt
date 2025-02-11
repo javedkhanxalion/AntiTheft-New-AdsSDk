@@ -28,6 +28,7 @@ import com.do_not_douch.antitheifproject.utilities.LANG_CODE
 import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
 import com.do_not_douch.antitheifproject.utilities.Onboarding_Full_Native
 import com.do_not_douch.antitheifproject.utilities.appUpdateType
+import com.do_not_douch.antitheifproject.utilities.banner_height
 import com.do_not_douch.antitheifproject.utilities.banner_type
 import com.do_not_douch.antitheifproject.utilities.battery_native
 import com.do_not_douch.antitheifproject.utilities.battery_selectsound_bottom
@@ -102,6 +103,7 @@ import com.do_not_douch.antitheifproject.utilities.val_banner_setting_screen
 import com.do_not_douch.antitheifproject.utilities.val_banner_splash_screen
 import com.do_not_douch.antitheifproject.utilities.val_exit_dialog_native
 import com.do_not_douch.antitheifproject.utilities.val_exit_screen_native
+import com.do_not_douch.antitheifproject.utilities.val_inapp_frequency
 import com.do_not_douch.antitheifproject.utilities.val_inter_exit_screen
 import com.do_not_douch.antitheifproject.utilities.val_inter_image_list_screen
 import com.do_not_douch.antitheifproject.utilities.val_inter_language_screen
@@ -229,7 +231,7 @@ class SplashFragment :
                             activity ?: return@let,
                             remoteConfigNormal = true,
                             adIdNormal = id_inter_main_medium,
-                            layout = _binding?.adsLay!!,
+                            layout = _binding?.adsLayDialog!!,
                             tagClass = "splash"
                         ) {
                             getIntentMove()
