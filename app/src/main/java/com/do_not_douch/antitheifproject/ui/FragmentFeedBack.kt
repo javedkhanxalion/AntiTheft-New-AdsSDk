@@ -17,6 +17,7 @@ import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefe
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.FragmentFeedBackBinding
 import com.bumptech.glide.Glide
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
+import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
 import com.do_not_douch.antitheifproject.utilities.PurchaseScreen
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
@@ -62,7 +63,7 @@ class FragmentFeedBack : BaseFragment<FragmentFeedBackBinding>(FragmentFeedBackB
         super.onViewCreated(view, savedInstanceState)
         if(++PurchaseScreen == val_inapp_frequency){
             PurchaseScreen =0
-            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to false))
+            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf(LANG_SCREEN to false))
             return
         }
         _binding?.sendFeedBack?.setOnClickListener {

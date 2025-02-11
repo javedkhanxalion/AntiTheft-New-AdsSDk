@@ -15,11 +15,13 @@ import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
 import com.do_not_douch.antitheifproject.ads_manager.showTwoInterAdFirst
 import com.do_not_douch.antitheifproject.helper_class.DbHelper
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
+import com.do_not_douch.antitheifproject.utilities.IS_FIRST
+import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
 import com.do_not_douch.antitheifproject.utilities.Onboarding_Full_Native
 import com.do_not_douch.antitheifproject.utilities.firebaseAnalytics
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
 import com.do_not_douch.antitheifproject.utilities.id_inter_main_medium
-import com.do_not_douch.antitheifproject.utilities.id_native_intro_screen
+import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.isInternetAvailable
 import com.do_not_douch.antitheifproject.utilities.isNetworkAvailable
 import com.do_not_douch.antitheifproject.utilities.onboarding1_bottom
@@ -75,6 +77,7 @@ class OnBordScreenNewScreen :
 
         })
         sharedPrefUtils = DbHelper(context ?: return)
+        sharedPrefUtils?.saveData(context ?: return, IS_FIRST, true )
         loadNewNative1()
         setupBackPressedCallback {
             firebaseAnalytics(
@@ -90,11 +93,7 @@ class OnBordScreenNewScreen :
                     layout = _binding?.adsLayDialog!!,
                     isBackPress = true,
                     function = {
-                        if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                            findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
-                        } else {
-                            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to true))
-                        }
+                        findNavController().navigate(R.id.LanguageFragment, bundleOf(LANG_SCREEN to true))
                     }
                 )
             }
@@ -123,11 +122,7 @@ class OnBordScreenNewScreen :
                         layout = _binding?.adsLayDialog!!,
                         isBackPress = true,
                         function = {
-                            if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                                findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
-                            } else {
-                                findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to true))
-                            }
+                            findNavController().navigate(R.id.LanguageFragment, bundleOf(LANG_SCREEN to true))
                         }
                     )
                 }
@@ -149,11 +144,7 @@ class OnBordScreenNewScreen :
                         layout = _binding?.adsLayDialog!!,
                         isBackPress = true,
                         function = {
-                            if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                                findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
-                            } else {
-                                findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to true))
-                            }
+                                findNavController().navigate(R.id.LanguageFragment, bundleOf(LANG_SCREEN to true))
                         }
                     )
                 }
@@ -194,7 +185,7 @@ class OnBordScreenNewScreen :
         ads?.nativeAdsMain()?.loadNativeAd(
             activity ?: return,
             val_native_intro_screen,
-            id_native_intro_screen,
+            id_native_screen,
             object : NativeListener {
                 override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                     _binding?.mainAdsNative?.visibility = View.VISIBLE

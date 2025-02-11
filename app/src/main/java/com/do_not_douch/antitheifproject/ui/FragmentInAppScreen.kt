@@ -14,6 +14,7 @@ import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefe
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.InAppDialogFirstBinding
 import com.do_not_douch.antitheifproject.ads_manager.PurchasePrefs
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
+import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.isSplash
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
@@ -37,7 +38,7 @@ class FragmentInAppScreen :
 
         isSplash = true
         arguments?.let {
-            isSplashFrom = it.getBoolean("isSplash")
+            isSplashFrom = it.getBoolean(LANG_SCREEN)
         }
         billingManager = BillingManager(context ?: return)
         val subsProductIdList =
@@ -92,7 +93,7 @@ class FragmentInAppScreen :
 
         setupBackPressedCallback {
             if (isSplashFrom == true) {
-                findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
+                findNavController().navigate(R.id.myMainMenuFragment, bundleOf(LANG_SCREEN to true))
             } else {
                 findNavController().navigateUp()
             }
@@ -112,14 +113,14 @@ class FragmentInAppScreen :
         }
         _binding?.closeTop?.clickWithThrottle {
             if (isSplashFrom == true) {
-                findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
+                findNavController().navigate(R.id.myMainMenuFragment, bundleOf(LANG_SCREEN to true))
             } else {
                 findNavController().navigateUp()
             }
         }
         _binding?.closeIcon?.clickWithThrottle {
             if (isSplashFrom == true) {
-                findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
+                findNavController().navigate(R.id.myMainMenuFragment, bundleOf(LANG_SCREEN to true))
             } else {
                 findNavController().navigateUp()
             }

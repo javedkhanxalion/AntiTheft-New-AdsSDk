@@ -240,9 +240,10 @@
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ads_lay"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/white"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_120sdp"
+          android:background="@drawable/rect_menu_language"
+          android:backgroundTint="@color/white"
           android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

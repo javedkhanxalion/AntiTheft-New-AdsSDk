@@ -38,7 +38,7 @@ import com.do_not_douch.antitheifproject.utilities.autoServiceFunction
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.firebaseAnalytics
 import com.do_not_douch.antitheifproject.utilities.getMenuListGrid
-import com.do_not_douch.antitheifproject.utilities.id_banner_main_screen
+import com.do_not_douch.antitheifproject.utilities.id_adaptive_banner
 import com.do_not_douch.antitheifproject.utilities.id_inter_main_medium
 import com.do_not_douch.antitheifproject.utilities.moreApp
 import com.do_not_douch.antitheifproject.utilities.privacyPolicy
@@ -60,6 +60,9 @@ import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainMenuFragment :
     BaseFragment<FragmentMainMenuActivityBinding>(FragmentMainMenuActivityBinding::inflate) {
@@ -215,7 +218,6 @@ class MainMenuFragment :
         }
         loadBanner()
 
-
     }
 
     private fun loadLayoutDirection(isGrid: Boolean) {
@@ -345,29 +347,31 @@ class MainMenuFragment :
     override fun onResume() {
         super.onResume()
         arguments?.let {
-            isSplashScreen = it.getBoolean("is_splash")
+            isSplashScreen = it.getBoolean(LANG_SCREEN)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (context?.let {
-                    ContextCompat.checkSelfPermission(
-                        it,
-                        NOTIFICATION_PERMISSION
-                    )
-                } != 0) {
-                requestCameraPermissionNotification()
+        CoroutineScope(Dispatchers.Main).launch {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (context?.let {
+                        ContextCompat.checkSelfPermission(
+                            it,
+                            NOTIFICATION_PERMISSION
+                        )
+                    } != 0) {
+                    requestCameraPermissionNotification()
+                } else {
+                    if (isSplashScreen) askRatings(activity ?: return@launch)
+                }
             } else {
-                if (isSplashScreen) askRatings(activity ?: return)
+                if (isSplashScreen) askRatings(activity ?: return@launch)
             }
-        } else {
-            if (isSplashScreen) askRatings(activity ?: return)
+            sharedPrefUtils?.getBooleanData(context ?: return@launch, IS_NOTIFICATION, false)?.let {
+                _binding?.navViewLayout?.customSwitch?.isChecked = it
+            }
+            // Initialize AppUpdateManager
+            appUpdateManager = AppUpdateManagerFactory.create(context ?: return@launch)
+            // Fetch Remote Config and Check for App Update
+            checkForUpdate()
         }
-        sharedPrefUtils?.getBooleanData(context ?: return, IS_NOTIFICATION, false)?.let {
-            _binding?.navViewLayout?.customSwitch?.isChecked = it
-        }
-        // Initialize AppUpdateManager
-        appUpdateManager = AppUpdateManagerFactory.create(context?:return)
-        // Fetch Remote Config and Check for App Update
-        checkForUpdate()
     }
 
     override fun onPause() {
@@ -383,7 +387,7 @@ class MainMenuFragment :
             view = _binding?.mainLayout?.bannerAds!!,
             viewS = _binding?.mainLayout?.shimmerLayout!!,
             addConfig = val_banner_main_menu_screen,
-            bannerId = id_banner_main_screen
+            bannerId = id_adaptive_banner
         ){
             _binding?.mainLayout?.shimmerLayout!!.visibility=View.GONE
         }

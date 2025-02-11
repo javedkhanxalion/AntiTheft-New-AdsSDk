@@ -16,8 +16,10 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.do_not_douch.antitheifproject.Admin
+import com.do_not_douch.antitheifproject.BillingUtil
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
+import com.do_not_douch.antitheifproject.ads_manager.showTwoInterAd
 import com.do_not_douch.antitheifproject.helper_class.Constants.Intruder_Alarm
 import com.do_not_douch.antitheifproject.helper_class.Constants.isServiceRunning
 import com.do_not_douch.antitheifproject.helper_class.DbHelper
@@ -25,17 +27,23 @@ import com.do_not_douch.antitheifproject.model.MainMenuModel
 import com.do_not_douch.antitheifproject.utilities.ANTI_TITLE
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
 import com.do_not_douch.antitheifproject.utilities.IS_GRID
+import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
+import com.do_not_douch.antitheifproject.utilities.PurchaseScreen
 import com.do_not_douch.antitheifproject.utilities.autoServiceFunctionIntruder
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
-import com.do_not_douch.antitheifproject.utilities.id_banner_1
-import com.do_not_douch.antitheifproject.utilities.id_native_password_screen
+import com.do_not_douch.antitheifproject.utilities.id_adaptive_banner
+import com.do_not_douch.antitheifproject.utilities.id_inter_main_medium
+import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.loadImage
 import com.do_not_douch.antitheifproject.utilities.setImage
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.startLottieAnimation
 import com.do_not_douch.antitheifproject.utilities.val_ad_native_password_screen
 import com.do_not_douch.antitheifproject.utilities.val_banner_1
+import com.do_not_douch.antitheifproject.utilities.val_inapp_frequency
+import com.do_not_douch.antitheifproject.utilities.val_inter_language_screen
+import com.do_not_douch.antitheifproject.utilities.val_inter_sound_screen
 
 class FragmentPasswordDetail :
     BaseFragment<FragmentDetailModuleBinding>(FragmentDetailModuleBinding::inflate) {
@@ -51,6 +59,12 @@ class FragmentPasswordDetail :
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if(++PurchaseScreen == val_inapp_frequency && !BillingUtil(activity?:return).checkPurchased(activity?:return)){
+            PurchaseScreen =0
+            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf(LANG_SCREEN to false))
+            return
+        }
         arguments?.let {
             model = it.getParcelable(ANTI_TITLE) ?: return
         }
@@ -68,16 +82,41 @@ class FragmentPasswordDetail :
                 findNavController().navigateUp()
             }
             gridLayout.soundIcon.clickWithThrottle {
-                findNavController().navigate(
-                    R.id.FragmentSoundSelection,
-                    bundleOf(ANTI_TITLE to model)
-                )
+                adsManager?.let {
+                    showTwoInterAd(
+                        ads = it,
+                        activity = activity ?: return@clickWithThrottle,
+                        remoteConfigNormal = val_inter_sound_screen,
+                        adIdNormal = id_inter_main_medium,
+                        tagClass = "main_menu",
+                        isBackPress = false,
+                        layout = _binding?.adsLay ?: return@clickWithThrottle,
+                    ) {
+                        findNavController().navigate(
+                            R.id.FragmentSoundSelection,
+                            bundleOf(ANTI_TITLE to model)
+                        )
+                    }
+                }
+
             }
             linearlayout.soundIcon.clickWithThrottle {
-                findNavController().navigate(
-                    R.id.FragmentSoundSelection,
-                    bundleOf(ANTI_TITLE to model)
-                )
+                adsManager?.let {
+                    showTwoInterAd(
+                        ads = it,
+                        activity = activity ?: return@clickWithThrottle,
+                        remoteConfigNormal = val_inter_sound_screen,
+                        adIdNormal = id_inter_main_medium,
+                        tagClass = "main_menu",
+                        isBackPress = false,
+                        layout = _binding?.adsLay ?: return@clickWithThrottle,
+                    ) {
+                        findNavController().navigate(
+                            R.id.FragmentSoundSelection,
+                            bundleOf(ANTI_TITLE to model)
+                        )
+                    }
+                }
             }
             topLay.setLayoutBtn.clickWithThrottle {
                 loadLayoutDirection(!(isGridLayout ?: return@clickWithThrottle))
@@ -379,7 +418,7 @@ class FragmentPasswordDetail :
             adsManager?.nativeAds()?.loadNativeAd(
                 activity ?: return,
                 val_ad_native_password_screen,
-                id_native_password_screen,
+                id_native_screen,
                 object : NativeListener {
                     override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                         if (isAdded && isVisible && !isDetached) {
@@ -422,7 +461,7 @@ class FragmentPasswordDetail :
             adsManager?.nativeAds()?.loadNativeAd(
                 activity ?: return,
                 val_ad_native_password_screen,
-                id_native_password_screen,
+                id_native_screen,
                 object : NativeListener {
                     override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                         if (isAdded && isVisible && !isDetached) {
@@ -462,7 +501,7 @@ class FragmentPasswordDetail :
             view = _binding?.bannerAds!!,
             viewS = _binding?.shimmerLayout!!,
             addConfig = val_banner_1,
-            bannerId = id_banner_1
+            bannerId = id_adaptive_banner
         ){
             _binding?.shimmerLayout!!.visibility=View.GONE
         }

@@ -89,7 +89,7 @@ class LanguageGridAdapter(private val items: List<LanguageAppModel>,
                     override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                         adHolder.bindingAds.nativeExitAd.visibility = View.VISIBLE
                         adHolder.bindingAds.shimmerLayout.visibility = View.GONE
-                        ads.nativeAdsMain().nativeViewMedia(context?:return,currentNativeAd ?: return, adLayout)
+                        ads.nativeAdsMain().nativeViewMedia(currentNativeAd ?: return, adLayout)
                         adHolder.bindingAds.nativeExitAd.removeAllViews()
                         adHolder.bindingAds.nativeExitAd.addView(adLayout)
                         super.nativeAdLoaded(currentNativeAd)

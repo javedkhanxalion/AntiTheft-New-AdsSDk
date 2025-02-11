@@ -8,24 +8,30 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.ShowIntruderFragmentBinding
+import com.do_not_douch.antitheifproject.BillingUtil
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.do_not_douch.antitheifproject.adapter.IntruderAdapter
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager
 import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
+import com.do_not_douch.antitheifproject.ads_manager.showTwoInterAd
 import com.do_not_douch.antitheifproject.helper_class.Constants.getAntiTheftDirectory
 import com.do_not_douch.antitheifproject.model.IntruderModels
+import com.do_not_douch.antitheifproject.utilities.ANTI_TITLE
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
+import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
 import com.do_not_douch.antitheifproject.utilities.PurchaseScreen
-import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.firebaseAnalytics
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
+import com.do_not_douch.antitheifproject.utilities.id_inter_main_medium
 import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.intruderimage_bottom
 import com.do_not_douch.antitheifproject.utilities.setupBackPressedCallback
 import com.do_not_douch.antitheifproject.utilities.val_ad_native_intruder_list_screen
 import com.do_not_douch.antitheifproject.utilities.val_inapp_frequency
+import com.do_not_douch.antitheifproject.utilities.val_inter_show_image
+import com.do_not_douch.antitheifproject.utilities.val_inter_sound_screen
 import java.io.File
 
 class FragmentShowIntruder :
@@ -42,9 +48,9 @@ class FragmentShowIntruder :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(++PurchaseScreen == val_inapp_frequency){
+        if(++PurchaseScreen == val_inapp_frequency&& !BillingUtil(activity?:return).checkPurchased(activity?:return)){
             PurchaseScreen =0
-            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to false))
+            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf(LANG_SCREEN to false))
             return
         }
         adsManager = AdsManager.appAdsInit(activity ?: return)
@@ -69,10 +75,23 @@ class FragmentShowIntruder :
     private fun setupRecyclerView() {
         adapter = IntruderAdapter(allIntruderList, requireActivity()) { intruderModel ,uri_->
                     uriPic=uri_
+
+            adsManager?.let {
+                showTwoInterAd(
+                    ads = it,
+                    activity = activity ?: return@let,
+                    remoteConfigNormal = val_inter_show_image,
+                    adIdNormal = id_inter_main_medium,
+                    tagClass = "FragmentShowIntruder",
+                    isBackPress = false,
+                    layout = _binding?.adsLay ?: return@let,
+                ) {
                     findNavController().navigate(
                         R.id.ShowFullImageFragment,
                         bundleOf("obj" to intruderModel)
                     )
+                }
+            }
         }
         _binding?.intruderList?.adapter = adapter
     }

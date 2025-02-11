@@ -96,8 +96,8 @@ import java.util.Locale
 import com.google.android.gms.common.ConnectionResult
 
 var isSplash = true
-var isIntroLanguageShow = true
 var isSplashDialog = true
+var PurchaseScreen = 0
 
 var val_app_open_main = false
 
@@ -154,6 +154,7 @@ var id_collapsable_banner = if (isDebug()) "ca-app-pub-3940256099942544/63009781
 var val_inter_language_screen = false
 var val_inter_on_bord_screen = false
 var val_inter_sound_screen = false
+var val_inter_show_image = false
 var val_inter_image_list_screen = false
 var val_banner_setting_screen = false
 

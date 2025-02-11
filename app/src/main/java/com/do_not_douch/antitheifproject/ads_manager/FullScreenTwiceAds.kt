@@ -146,7 +146,7 @@ fun showTwoInterAd(
 
         })
 
-    }, 200)
+    }, 500)
 }
 
 fun showTwoInterAdExit(
@@ -223,7 +223,7 @@ fun showTwoInterAdExit(
 
         })
 
-    }, 200)
+    }, 1000)
 }
 
 fun showTwoInterAdFirst(
@@ -289,7 +289,7 @@ fun showTwoInterAdFirst(
 
         })
 
-    }, 200)
+    }, 1000)
 }
 
 

@@ -109,6 +109,7 @@ import com.do_not_douch.antitheifproject.utilities.val_inter_image_list_screen
 import com.do_not_douch.antitheifproject.utilities.val_inter_language_screen
 import com.do_not_douch.antitheifproject.utilities.val_inter_main_normal
 import com.do_not_douch.antitheifproject.utilities.val_inter_on_bord_screen
+import com.do_not_douch.antitheifproject.utilities.val_inter_show_image
 import com.do_not_douch.antitheifproject.utilities.val_inter_sound_screen
 import com.do_not_douch.antitheifproject.utilities.val_is_inapp
 import com.do_not_douch.antitheifproject.utilities.val_is_inapp_splash
@@ -229,7 +230,7 @@ class SplashFragment :
                         showNormalInterAdSingle(
                             it,
                             activity ?: return@let,
-                            remoteConfigNormal = true,
+                            remoteConfigNormal = val_inter_main_normal,
                             adIdNormal = id_inter_main_medium,
                             layout = _binding?.adsLayDialog!!,
                             tagClass = "splash"
@@ -245,70 +246,19 @@ class SplashFragment :
     }
 
     private fun getIntentMove() {
-        /*    when (sessionOpenlanguage) {
-                0 -> {
-                    when (sessionOnboarding) {
-                        0 -> {
-                            firebaseAnalytics(
-                                "loading_fragment_load_next_btn_main",
-                                "loading_fragment_load_next_btn_main -->  Click"
-                            )
-                            return if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                                findNavController().navigate(
-                                    R.id.myMainMenuFragment,
-                                    bundleOf("is_splash" to true)
-                                )
-                            } else {
-                                findNavController().navigate(
-                                    R.id.FragmentBuyScreen,
-                                    bundleOf("isSplash" to true)
-                                )
-                            }
-                        }
 
-                        1 -> {
-                            firebaseAnalytics(
-                                "loading_fragment_load_next_btn_intro",
-                                "loading_fragment_load_next_btn_intro -->  Click"
-                            )
-                            return findNavController().navigate(R.id.OnBordScreenNewScreen)
-                        }
-
-                        2 -> {
-                            firebaseAnalytics(
-                                "loading_fragment_load_next_btn_intro",
-                                "loading_fragment_load_next_btn_intro -->  Click"
-                            )
-                            return findNavController().navigate(R.id.OnBordScreenNewScreen)
-                        }
-                    }
-                }
-
-                1 -> {
-                    firebaseAnalytics(
-                        "loading_fragment_load_next_btn_language",
-                        "loading_fragment_load_next_btn_language -->  Click"
-                    )
-                    return findNavController().navigate(
-                        R.id.LanguageFragment,
-                        bundleOf(LANG_SCREEN to true)
-                    )
-                }
-
-                2 -> {
-                    firebaseAnalytics(
-                        "loading_fragment_load_next_btn_language",
-                        "loading_fragment_load_next_btn_language -->  Click"
-                    )
-                    return findNavController().navigate(
-                        R.id.LanguageFragment,
-                        bundleOf(LANG_SCREEN to true)
-                    )
-                }
-            }*/
-        if (dbHelper?.getBooleanData(
-                context ?: return, IS_FIRST, false
-            ) == false && sessionOpenlanguage == 0
+            if (dbHelper?.getBooleanData(
+                    context ?: return, IS_FIRST, false
+                ) == false
+            ) {
+                firebaseAnalytics(
+                    "loading_fragment_load_next_btn_intro",
+                    "loading_fragment_load_next_btn_intro -->  Click"
+                )
+                findNavController().navigate(R.id.OnBordScreenNewScreen)
+            } else if (dbHelper?.getBooleanData(
+                context ?: return, IS_INTRO, false
+            ) == false
         ) {
             firebaseAnalytics(
                 "loading_fragment_load_next_btn_language",
@@ -317,17 +267,9 @@ class SplashFragment :
             findNavController().navigate(
                 R.id.LanguageFragment, bundleOf(LANG_SCREEN to true)
             )
-        } else
-            if (dbHelper?.getBooleanData(
-                    context ?: return, IS_INTRO, false
-                ) == false && sessionOnboarding == 0
-            ) {
-                firebaseAnalytics(
-                    "loading_fragment_load_next_btn_intro",
-                    "loading_fragment_load_next_btn_intro -->  Click"
-                )
-                findNavController().navigate(R.id.OnBordScreenNewScreen)
-            } else {
+        }
+
+        else {
                 firebaseAnalytics(
                     "loading_fragment_load_next_btn_main",
                     "loading_fragment_load_next_btn_main -->  Click"
@@ -335,12 +277,12 @@ class SplashFragment :
                 if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
                     findNavController().navigate(
                         R.id.myMainMenuFragment,
-                        bundleOf("is_splash" to true)
+                        bundleOf(LANG_SCREEN to true)
                     )
                 } else {
                     findNavController().navigate(
                         R.id.FragmentBuyScreen,
-                        bundleOf("isSplash" to true)
+                        bundleOf(LANG_SCREEN to true)
                     )
                 }
 
@@ -349,6 +291,7 @@ class SplashFragment :
 
     private fun loadBanner() {
         _binding?.adsView?.visibility = View.VISIBLE
+        _binding?.shimmerLayout?.visibility = View.VISIBLE
         val adView = LayoutInflater.from(context).inflate(
             getNativeLayout(splash_bottom, _binding?.adsView!!, context ?: return),
             null, false
@@ -356,7 +299,7 @@ class SplashFragment :
         adsManager?.nativeAds()?.loadNativeAd(
             activity ?: return,
             val_banner_splash_screen,
-            "",
+            id_splash_native,
             object : NativeListener {
                 override fun nativeAdLoaded(currentNativeAd: NativeAd?) {
                     if (!isAdded && !isVisible && isDetached) {
@@ -391,6 +334,13 @@ class SplashFragment :
 
 
             })
+        adsManager?.nativeAdsMain()?.loadNativeAd(
+            activity ?: return,
+            val_ad_native_loading_screen,
+            id_splash_native,
+            object : NativeListener {
+            }
+        )
     }
 
     private fun initRemoteIds() {
@@ -518,19 +468,17 @@ class SplashFragment :
                     val_is_inapp_splash = remoteConfig!!["val_is_inapp_splash"].asBoolean()
                     val_is_inapp = remoteConfig!!["val_is_inapp"].asBoolean()
                     val_inter_sound_screen = remoteConfig!!["val_inter_sound_screen"].asBoolean()
+                    val_inter_show_image = remoteConfig!!["val_inter_show_image"].asBoolean()
                     val_inter_image_list_screen = remoteConfig!!["val_inter_image_list_screen"].asBoolean()
                     val_banner_setting_screen = remoteConfig!!["val_banner_setting_screen"].asBoolean()
 
                 } else {
                     Log.d("RemoteConfig", "Fetch failed")
                 }
-                adsManager?.nativeAdsMain()?.loadNativeAd(
-                    activity ?: return@addOnCompleteListener,
-                    val_ad_native_loading_screen,
-                    id_splash_native,
-                    object : NativeListener {
-                    }
-                )
+
+                if(val_ad_native_loading_screen){
+                    loadBanner()
+                }
                 AdOpenApp(activity?.application ?: return@addOnCompleteListener, id_app_open_screen)
                 if (!val_app_open_main) {
                     loadTwoInterAdsSplash(
@@ -541,7 +489,6 @@ class SplashFragment :
                         "splash"
                     )
                 }
-                loadBanner()
                 observeSplashLiveData()
             }
 

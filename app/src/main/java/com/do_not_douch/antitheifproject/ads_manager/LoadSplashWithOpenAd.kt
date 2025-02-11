@@ -53,40 +53,45 @@ fun showNormalInterAdSingle(
     function: ()->Unit
 ) {
     Log.d(TAGGED, "showNormalInterAd->adIdNormal: $adIdNormal")
+    if (!AdsManager.isNetworkAvailable(activity)) {
+        function.invoke()
+        return
+    }
     layout.visibility = View.VISIBLE
     Handler().postDelayed({
-    FullScreenAdsTwo.showAndLoadTwo(activity, remoteConfigNormal, object : AdMobAdListener {
-        override fun fullScreenAdShow() {
-            Log.d(TAGGED, "fullScreenAdShow: normal inter ad show")
-            firebaseAnalytics("inter_normal_show_$tagClass", "inter_Show")
-            layout.visibility = View.GONE
-        }
+        FullScreenAdsTwo.showAndLoadTwo(activity, remoteConfigNormal, object : AdMobAdListener {
+            override fun fullScreenAdShow() {
+                Log.d(TAGGED, "fullScreenAdShow: normal inter ad show")
+                firebaseAnalytics("inter_normal_show_$tagClass", "inter_Show")
+                layout.visibility = View.GONE
+                function.invoke()
+            }
 
-        override fun fullScreenAdDismissed() {
-            Log.d(TAGGED, "fullScreenAdDismissed: normal inter dismiss")
-            firebaseAnalytics("inter_normal_dismisss_$tagClass", "inter_Show")
-            layout.visibility = View.GONE
-            iS_SPLASH_AD_DISMISS = true
-            function.invoke()
-        }
+            override fun fullScreenAdDismissed() {
+                Log.d(TAGGED, "fullScreenAdDismissed: normal inter dismiss")
+                firebaseAnalytics("inter_normal_dismisss_$tagClass", "inter_Show")
+                layout.visibility = View.GONE
+                iS_SPLASH_AD_DISMISS = true
+            }
 
-        override fun fullScreenAdFailedToShow() {
-            Log.d(TAGGED, "fullScreenAdFailedToShow: normal inter failed to show")
-            firebaseAnalytics("inter_normal_failed_show_$tagClass", "inter_Show")
-            layout.visibility = View.GONE
-            function.invoke()
+            override fun fullScreenAdFailedToShow() {
+                Log.d(TAGGED, "fullScreenAdFailedToShow: normal inter failed to show")
+                firebaseAnalytics("inter_normal_failed_show_$tagClass", "inter_Show")
+                layout.visibility = View.GONE
+                function.invoke()
 
-        }
+            }
 
-        override fun fullScreenAdNotAvailable() {
-            Log.d(TAGGED, "fullScreenAdNotAvailable: normal inter not available")
-            firebaseAnalytics("inter_normal_not_Found_$tagClass", "inter_Show")
-            layout.visibility = View.GONE
-            function.invoke()
-        }
+            override fun fullScreenAdNotAvailable() {
+                Log.d(TAGGED, "fullScreenAdNotAvailable: normal inter not available")
+                firebaseAnalytics("inter_normal_not_Found_$tagClass", "inter_Show")
+                layout.visibility = View.GONE
+                function.invoke()
+            }
 
-    }, id_inter_main_medium, object : AdsListener {
-    })
-    }, 500)
+        }, id_inter_main_medium, object : AdsListener {
+        })
+    }, 1000)
 }
+
 

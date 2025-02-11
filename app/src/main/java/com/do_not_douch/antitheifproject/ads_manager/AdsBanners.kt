@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.BuildConfig
+import com.do_not_douch.antitheifproject.BillingUtil
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.*
@@ -38,10 +39,11 @@ object AdsBanners {
         activity: Activity,
         view: FrameLayout,
         addConfig: Boolean,
-        bannerId: String?
+        bannerId: String?,
+        bannerListener: () -> Unit
     ) {
 
-        if (isNetworkAvailable(activity) && addConfig && !checkPurchased(activity)) {
+        if (isNetworkAvailable(activity) && addConfig && !BillingUtil(activity).checkPurchased(activity)) {
 
             Log.d(bannerLogs, "loadAdaptiveBanner : bannerId : $bannerId")
             val extras = Bundle()
@@ -50,40 +52,46 @@ object AdsBanners {
             view.removeAllViews()
             adView = AdView(activity)
             view.addView(adView)
-            adView?.adUnitId = if (isDebug()) bannerTestIdAdaptive else bannerId ?: ""
+            adView?.adUnitId = if (isDebug()) bannerTestId else bannerId ?: bannerTestId
             adView?.setAdSize(adSize(activity, view))
-            val adRequest =
-                AdRequest.Builder().addNetworkExtrasBundle(AdMobAdapter::class.java, extras).build()
+            val adRequest = AdRequest.Builder().addNetworkExtrasBundle(AdMobAdapter::class.java, extras).build()
             adView?.loadAd(adRequest)
 
             adView?.adListener = object : AdListener() {
                 override fun onAdClicked() {
                     Log.d(bannerLogs, "BannerWithSize : onAdClicked")
+                    bannerListener.invoke()
                     super.onAdClicked()
                 }
 
                 override fun onAdClosed() {
                     Log.d(bannerLogs, "BannerWithSize : onAdClosed")
+                    bannerListener.invoke()
                     super.onAdClosed()
                 }
 
                 override fun onAdFailedToLoad(p0: LoadAdError) {
                     Log.d(bannerLogs, "BannerWithSize : onAdFailedToLoad ${p0.message}")
+                    view.visibility=View.GONE
+                    bannerListener.invoke()
                     super.onAdFailedToLoad(p0)
                 }
 
                 override fun onAdImpression() {
                     Log.d(bannerLogs, "BannerWithSize : onAdImpression")
+                    bannerListener.invoke()
                     super.onAdImpression()
                 }
 
                 override fun onAdLoaded() {
                     Log.d(bannerLogs, "BannerWithSize : onAdLoaded")
+                    bannerListener.invoke()
                     super.onAdLoaded()
                 }
 
                 override fun onAdOpened() {
                     Log.d(bannerLogs, "BannerWithSize : onAdOpened")
+                    bannerListener.invoke()
                     super.onAdOpened()
                 }
             }

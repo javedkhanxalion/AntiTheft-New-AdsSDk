@@ -23,20 +23,17 @@ import com.do_not_douch.antitheifproject.ads_manager.showTwoInterAdFirst
 import com.do_not_douch.antitheifproject.helper_class.DbHelper
 import com.do_not_douch.antitheifproject.model.LanguageAppModel
 import com.do_not_douch.antitheifproject.utilities.BaseFragment
+import com.do_not_douch.antitheifproject.utilities.IS_FIRST
+import com.do_not_douch.antitheifproject.utilities.IS_INTRO
 import com.do_not_douch.antitheifproject.utilities.LANG_CODE
 import com.do_not_douch.antitheifproject.utilities.LANG_SCREEN
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.firebaseAnalytics
-import com.do_not_douch.antitheifproject.utilities.fisrt_ad_line_threshold
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
-import com.do_not_douch.antitheifproject.utilities.id_banner_language_screen
 import com.do_not_douch.antitheifproject.utilities.id_inter_main_medium
-import com.do_not_douch.antitheifproject.utilities.id_native_language_screen
 import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.isInternetAvailable
 import com.do_not_douch.antitheifproject.utilities.language_bottom
-import com.do_not_douch.antitheifproject.utilities.language_reload
-import com.do_not_douch.antitheifproject.utilities.line_count
 import com.do_not_douch.antitheifproject.utilities.restartApp
 import com.do_not_douch.antitheifproject.utilities.sessionOnboarding
 import com.do_not_douch.antitheifproject.utilities.setLocaleMain
@@ -53,30 +50,23 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
     private var positionSelected: String = "en"
     private var isLangScreen: Boolean = false
     private var isValue: Int = 0
-    private var recallActive: Int = 1
     private var sharedPrefUtils: DbHelper? = null
     private var adapter: LanguageGridAdapter? = null
     var list: ArrayList<LanguageAppModel> = ArrayList()
-    private var isInternetDialog: Boolean = false
     private var adsManager: AdsManager? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         try {
             firebaseAnalytics("language_fragment_open", "language_fragment_open -->  Click")
             requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+            sharedPrefUtils = DbHelper(context ?: return)
+            sharedPrefUtils?.saveData(context ?: return, IS_INTRO, true )
             initializeData()
             adsManager = AdsManager.appAdsInit(activity ?: return)
             arguments?.let {
                 isLangScreen = it.getBoolean(LANG_SCREEN)
             }
-            if (isInternetAvailable(context ?: return) && !isLangScreen) {
-//                insertAds()
-            }
-//            if (isLangScreen) {
                 loadNative()
-//            } else {
-//                loadBanner()
-//            }
             _binding?.forwardBtn?.clickWithThrottle {
                 if (!isLangScreen) {
                     firebaseAnalytics(
@@ -105,32 +95,10 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                             function = {
                             }
                         )
-                        when (sessionOnboarding) {
-                            0 -> {
-                                firebaseAnalytics(
-                                    "loading_fragment_load_next_btn_main",
-                                    "loading_fragment_load_next_btn_main -->  Click"
-                                )
-
-                                if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
-                                    findNavController().navigate(R.id.myMainMenuFragment, bundleOf("is_splash" to true))
-                                } else {
-                                    findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to true))
-                                }
-                            }
-
-                            1 -> {
-                                    findNavController().navigate(R.id.OnBordScreenNewScreen)
-
-                            }
-
-                            2 -> {
-                                firebaseAnalytics(
-                                    "loading_fragment_load_next_btn_intro",
-                                    "loading_fragment_load_next_btn_intro -->  Click"
-                                )
-                                findNavController().navigate(R.id.OnBordScreenNewScreen)
-                            }
+                        if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
+                            findNavController().navigate(R.id.myMainMenuFragment, bundleOf(LANG_SCREEN to true))
+                        } else {
+                            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf(LANG_SCREEN to true))
                         }
                     }
 
@@ -145,12 +113,12 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                     positionSelected = it.country_code
                     adapter?.selectLanguage(positionSelected)
                     _binding?.forwardBtn?.visibility=View.VISIBLE
-                    if (isLangScreen) {
-//                        reCall()
-                    }
+
                 }
             )
-            adapter?.selectLanguage(positionSelected)
+            if (!isLangScreen) {
+                adapter?.selectLanguage(positionSelected)
+            }
             _binding?.conversationDetail?.layoutManager = GridLayoutManager(context, 2).apply {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
@@ -173,10 +141,11 @@ class LanguageFragment : BaseFragment<FragmentLanguageBinding>(FragmentLanguageB
                     )
                     sharedPrefUtils?.saveData(requireContext(), LANG_CODE, positionSelected) ?: "en"
                     setLocaleMain(positionSelected)
-//                    sharedPrefUtils?.saveData(requireContext(), IS_FIRST, true)
-                    findNavController().navigate(
-                        R.id.OnBordScreenNewScreen
-                    )
+                    if (PurchasePrefs(context).getBoolean("inApp") || !val_is_inapp_splash) {
+                        findNavController().navigate(R.id.myMainMenuFragment, bundleOf(LANG_SCREEN to true))
+                    } else {
+                        findNavController().navigate(R.id.FragmentBuyScreen, bundleOf(LANG_SCREEN to true))
+                    }
                 }
             }
             setupBackPressedCallback {

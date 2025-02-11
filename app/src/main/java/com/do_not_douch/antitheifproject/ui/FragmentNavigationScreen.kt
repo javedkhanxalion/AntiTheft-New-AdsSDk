@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.R
 import com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone.databinding.NavigationLayoutBinding
 import com.bumptech.glide.Glide
+import com.do_not_douch.antitheifproject.BillingUtil
 import com.do_not_douch.antitheifproject.ads_manager.AdsManager
 import com.do_not_douch.antitheifproject.ads_manager.FunctionClass.feedBackWithEmail
 import com.do_not_douch.antitheifproject.ads_manager.PurchasePrefs
@@ -54,9 +55,9 @@ class FragmentNavigationScreen :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(++PurchaseScreen ==val_inapp_frequency){
+        if(++PurchaseScreen == val_inapp_frequency && !BillingUtil(activity?:return).checkPurchased(activity?:return)){
             PurchaseScreen =0
-            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to false))
+            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf(LANG_SCREEN to false))
             return
         }
         sharedPrefUtils = DbHelper(context ?: return)
@@ -96,7 +97,7 @@ class FragmentNavigationScreen :
                     layout = _binding?.adsLay ?: return@setOnClickListener,
                 ) {
                     findNavController().navigate(R.id.LanguageFragment,
-                        bundleOf("isSplash" to false))
+                        bundleOf(LANG_SCREEN to false))
                 }
             }
         }
@@ -114,7 +115,7 @@ class FragmentNavigationScreen :
             requireContext().moreApp()
         }
         _binding?.viewTop?.clickWithThrottle {
-            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf("isSplash" to false))
+            findNavController().navigate(R.id.FragmentBuyScreen, bundleOf(LANG_SCREEN to false))
         }
        _binding?.customerSupportView?.setOnClickListener {
             feedBackWithEmail(
@@ -180,7 +181,6 @@ class FragmentNavigationScreen :
         adsManager?.adsBanners()?.loadCollapsibleBanner(
             activity = activity ?: return,
             view = binding!!.adsView,
-            viewS = binding!!.shimmerLayout,
             addConfig = val_banner_setting_screen,
             bannerId = id_adaptive_banner
         ) {

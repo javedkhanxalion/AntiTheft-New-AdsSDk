@@ -17,7 +17,7 @@ import com.do_not_douch.antitheifproject.ads_manager.interfaces.NativeListener
 import com.do_not_douch.antitheifproject.utilities.Onboarding_Full_Native
 import com.do_not_douch.antitheifproject.utilities.clickWithThrottle
 import com.do_not_douch.antitheifproject.utilities.getNativeLayout
-import com.do_not_douch.antitheifproject.utilities.id_native_intro_screen2
+import com.do_not_douch.antitheifproject.utilities.id_native_screen
 import com.do_not_douch.antitheifproject.utilities.introDetailText
 import com.do_not_douch.antitheifproject.utilities.isInternetAvailable
 import com.do_not_douch.antitheifproject.utilities.onboarding3_bottom
