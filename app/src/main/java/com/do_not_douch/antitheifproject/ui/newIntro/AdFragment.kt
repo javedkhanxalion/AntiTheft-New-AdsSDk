@@ -57,7 +57,7 @@ class AdFragment : Fragment() {
                     _binding?.mainAdsNative?.visibility = View.VISIBLE
                     _binding?.shimmerLayout?.visibility = View.GONE
                     _binding?.progressBar?.visibility = View.GONE
-                    ads?.nativeAdsMain()?.nativeViewMediaSplashSplash(context?:return,currentNativeAd ?: return, adView)
+                    ads?.nativeAdsMain()?.nativeViewMedia(currentNativeAd ?: return, adView)
                     _binding?.mainAdsNative?.removeAllViews()
                     _binding?.mainAdsNative?.addView(adView)
                     super.nativeAdLoaded(currentNativeAd)

@@ -278,5 +278,29 @@
         <key>val_is_inapp</key>
         <value>true</value>
     </entry>
+    <entry>
+        <key>val_inter_sound_screen</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>val_inter_image_list_screen</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>val_banner_setting_screen</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key></key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key></key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key></key>
+        <value>true</value>
+    </entry>
 
 </defaultsMap>

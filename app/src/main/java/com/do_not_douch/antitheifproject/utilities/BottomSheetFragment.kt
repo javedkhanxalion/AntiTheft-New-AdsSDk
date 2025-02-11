@@ -60,7 +60,7 @@ class BottomSheetFragment(val activity: Activity) : BottomSheetDialogFragment() 
                         view?.findViewById<ShimmerFrameLayout>(R.id.shimmerLayout)?.visibility =
                             View.GONE
                         adsManager?.nativeAdsMain()
-                            ?.nativeViewMediaSplashSplash(context?:return,currentNativeAd ?: return, adView)
+                            ?.nativeViewMedia(currentNativeAd ?: return, adView)
                         view?.findViewById<FrameLayout>(R.id.nativeExitAd)?.removeAllViews()
                         view?.findViewById<FrameLayout>(R.id.nativeExitAd)?.addView(adView)
                     }

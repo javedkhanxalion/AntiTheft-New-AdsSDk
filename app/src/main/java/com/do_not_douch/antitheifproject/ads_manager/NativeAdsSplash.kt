@@ -35,10 +35,6 @@ object NativeAdsSplash {
     var currentNativeAd: NativeAd? = null
 
 
-    private var isNativeLoading2nd: Boolean = false
-    private var nativeId2nd: String? = null
-    var currentNativeAd2nd: NativeAd? = null
-
 
     fun nativeAds(): NativeAdsSplash {
         if (nativeAds == null) {
