@@ -99,7 +99,9 @@ class MainMenuFragment :
                         layout = binding?.mainLayout?.adsLay!!,
                         isBackPress = true
                     ) {
-                            findNavController().navigate(R.id.FragmentExitScreen)
+                        if(isVisible && isAdded && !isDetached) {
+                        findNavController().navigate(R.id.FragmentExitScreen)
+                    }
                     }
 
                 }
@@ -113,7 +115,9 @@ class MainMenuFragment :
                 loadLayoutDirection(!(isGridLayout ?: return@clickWithThrottle))
             }
             mainLayout.topLay.settingBtn.clickWithThrottle {
-                findNavController().navigate(R.id.FragmentBuyScreen)
+                if(isVisible && isAdded && !isDetached) {
+                    findNavController().navigate(R.id.FragmentBuyScreen)
+                }
             }
             navViewLayout.rateUsView.clickWithThrottle {
                 showRatingDialog(onPositiveButtonClick = { it, _dialog ->

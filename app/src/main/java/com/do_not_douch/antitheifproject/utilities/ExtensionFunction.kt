@@ -1159,13 +1159,21 @@ fun isNetworkAvailable(context: Context): Boolean {
 // Usage example
 
 fun openWifiSettings(context: Context) {
-    val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
-    context.startActivity(intent)
+    try {
+        val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+        context.startActivity(intent)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }
 
 fun openMobileDataSettings(context: Context) {
-    val intent = Intent(Settings.ACTION_DATA_ROAMING_SETTINGS)
-    context.startActivity(intent)
+    try {
+        val intent = Intent(Settings.ACTION_DATA_ROAMING_SETTINGS)
+        context.startActivity(intent)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }
 
 fun getNativeLayout(position: Int, layout: FrameLayout, context: Context): Int {

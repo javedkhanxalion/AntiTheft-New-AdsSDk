@@ -23,8 +23,8 @@ android {
             "com.antitheft.alarm.donottouch.findmyphone.protector.smartapp.privacydefender.myphone"
         minSdk = 24
         targetSdk = 34
-        versionCode = 5
-        versionName = "5.0"
+        versionCode = 12
+        versionName = "12.0"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "AntiThief_v$versionName($versionCode)")
